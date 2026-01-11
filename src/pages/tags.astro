@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import { slugifyTag } from '@/utils/tags';
+
+const collections = [
+  ...(await getCollection('systems')),
+  ...(await getCollection('sentences')),
+  ...(await getCollection('self')),
+  ...(await getCollection('shelf')),
+  ...(await getCollection('sticky-notes')),
+];
+
+const tagMap = new Map<string, { label: string; count: number }>();
+collections.forEach((entry) => {
+  const tags = entry.data.tags || [];
+  tags.forEach((tag) => {
+    const slug = slugifyTag(tag);
+    if (!slug) return;
+    const current = tagMap.get(slug);
+    if (current) {
+      current.count += 1;
+    } else {
+      tagMap.set(slug, { label: tag, count: 1 });
+    }
+  });
+});
+
+const tags = Array.from(tagMap.entries())
+  .map(([slug, data]) => ({ slug, ...data }))
+  .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+---
+<Layout title="Tags | A Thinking Workspace">
+  <h1>Tags</h1>
+  <p class="tag-intro">Explore the site by theme instead of section.</p>
+
+  <div class="tag-cloud">
+    {tags.map((tag) => (
+      <a class="tag-pill" href={`/tags/${tag.slug}`}>
+        {tag.label} <span class="tag-count">{tag.count}</span>
+      </a>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .tag-intro {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-blockquote-bg);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-body);
+    text-decoration: none;
+  }
+  .tag-count {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+  }
+  .tag-pill:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
+  }
+</style>

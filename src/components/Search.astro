@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 const allContent = [
-  ...(await getCollection('notes')),
+  ...(await getCollection('sticky-notes')),
   ...(await getCollection('sentences')),
   ...(await getCollection('systems')),
   ...(await getCollection('self')),

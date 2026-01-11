@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
+import TagList from '@/components/TagList.astro';
 
 export async function getStaticPaths() {
   const sentences = await getCollection('sentences');
@@ -17,6 +18,7 @@ const { Content } = await sentence.render();
   <div class="sentence-detail-container">
     <div class="sentence-detail">
       <h1>{sentence.data.title}</h1>
+      <TagList tags={sentence.data.tags} label="Tags" />
       <div class="sentence-content">
         <Content />
       </div>

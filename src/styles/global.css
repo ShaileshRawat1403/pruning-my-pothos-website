@@ -85,7 +85,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 2rem;
+        padding: clamp(1.25rem, 3vw, 2rem);
         min-height: 100vh;
     }
 
@@ -104,6 +104,17 @@
     }
     .skip-link:focus {
         top: 1rem;
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
     }
 
     main {
@@ -141,6 +152,13 @@
     a:hover {
         text-decoration-line: underline;
         opacity: 0.8;
+    }
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+        outline: 2px solid color-mix(in srgb, var(--color-accent) 55%, var(--color-text-body));
+        outline-offset: 2px;
+        border-radius: 6px;
     }
 
     /* Inline code has a different background from code blocks */
@@ -190,10 +208,14 @@
         grid-template-columns: auto 1fr auto;
         align-items: center;
         gap: 1rem;
-        padding: 0 1rem 2rem 1rem;
+        padding: 0.6rem 1rem 1.4rem 1rem;
         margin-bottom: 3.5rem;
         border-bottom: 1px solid var(--color-border);
-        position: relative;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+        backdrop-filter: blur(10px);
     }
     .nav-links {
         display: flex;
@@ -305,6 +327,51 @@
         }
     }
 
+    @media (max-width: 720px) {
+        main {
+            padding: 0;
+            max-width: 100%;
+        }
+        h1 { font-size: 2.4rem; }
+        h2 { font-size: 1.9rem; }
+        h3 { font-size: 1.5rem; }
+        .global-nav {
+            gap: 0.75rem;
+            padding-bottom: 1.75rem;
+            margin-bottom: 2.5rem;
+        }
+        .nav-links {
+            gap: 0.6rem 1rem;
+        }
+        .global-nav a {
+            font-size: 0.78rem;
+        }
+        #theme-toggle svg,
+        #search-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+        .search-modal {
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            width: min(92vw, 360px);
+        }
+        .search-modal::before {
+            right: 50%;
+            transform: translateX(50%) rotate(45deg);
+        }
+    }
+
+    @media (max-width: 520px) {
+        .page-content p:first-of-type::first-letter {
+            float: none;
+            margin-right: 0;
+            font-size: 2.2rem;
+            line-height: 1.1;
+        }
+    }
+
     .mermaid {
         margin-bottom: 1.75rem;
         padding: 1rem;
@@ -381,6 +448,14 @@
         font-size: 1rem;
         color: var(--color-text-muted);
         line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+        .card-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
     }
 
     /* Search Modal */

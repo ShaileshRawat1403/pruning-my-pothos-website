@@ -1,0 +1,117 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import { slugifyTag } from '@/utils/tags';
+
+export async function getStaticPaths() {
+  const collections = [
+    ...(await getCollection('systems')),
+    ...(await getCollection('sentences')),
+    ...(await getCollection('self')),
+    ...(await getCollection('shelf')),
+    ...(await getCollection('sticky-notes')),
+  ];
+
+  const tagSet = new Set<string>();
+  collections.forEach((entry) => {
+    const tags = entry.data.tags || [];
+    tags.forEach((tag) => {
+      const slug = slugifyTag(tag);
+      if (slug) {
+        tagSet.add(slug);
+      }
+    });
+  });
+
+  return Array.from(tagSet).map((tag) => ({
+    params: { tag },
+  }));
+}
+
+const { tag } = Astro.params;
+
+const collections = [
+  ...(await getCollection('systems')),
+  ...(await getCollection('sentences')),
+  ...(await getCollection('self')),
+  ...(await getCollection('shelf')),
+  ...(await getCollection('sticky-notes')),
+];
+
+const matches = collections.filter((entry) => {
+  const tags = entry.data.tags || [];
+  return tags.some((entryTag) => slugifyTag(entryTag) === tag);
+});
+
+const tagLabel =
+  matches.flatMap((entry) => entry.data.tags || []).find((entryTag) => slugifyTag(entryTag) === tag) || tag;
+
+const toUrl = (entry: any) => {
+  if (entry.collection === 'shelf') {
+    return `/shelf/${entry.slug}`;
+  }
+  if (entry.collection === 'sticky-notes') {
+    return `/sticky-notes/${entry.slug}`;
+  }
+  return `/${entry.collection}/${entry.slug}`;
+};
+---
+<Layout title={`Tag: ${tagLabel} | A Thinking Workspace`}>
+  <h1>#{tagLabel}</h1>
+  <p class="tag-intro">{matches.length} item(s) tagged with this theme.</p>
+
+  <div class="tag-results">
+    {matches.map((entry) => (
+      <a class="tag-result-card" href={toUrl(entry)}>
+        <span class="tag-result-meta">{entry.collection.replace('-', ' ')}</span>
+        <h2>{entry.data.title}</h2>
+        {entry.data.description && <p>{entry.data.description}</p>}
+      </a>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .tag-intro {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  .tag-results {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .tag-result-card {
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--color-text-body);
+    background: var(--color-blockquote-bg);
+  }
+  .tag-result-card h2 {
+    margin: 0.4rem 0 0.6rem;
+    font-size: 1.4rem;
+  }
+  .tag-result-card p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+  .tag-result-meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .tag-result-card:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
+  }
+  @media (max-width: 640px) {
+    .tag-result-card {
+      padding: 1.2rem;
+    }
+    .tag-result-card h2 {
+      font-size: 1.2rem;
+    }
+  }
+</style>

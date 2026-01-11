@@ -1,6 +1,11 @@
 ---
 title: 'Systems 001: Foundations'
 description: 'A technical field guide to systems as the infrastructure of evolution and communication, from boundaries and feedback to socio-technical layers.'
+tags:
+  - systems
+  - foundations
+  - feedback
+  - socio-technical
 ---
 
 > **Key takeaways**
@@ -376,72 +381,68 @@ Systems are everywhere, from the natural world to the digital tools we use every
   <ol class="references-list">
     <li>
       <span class="ref-title">Ludwig von Bertalanffy, <em>General System Theory</em> (1968).</span>
-      <a class="ref-link" href="https://monoskop.org/images/5/5b/Von_Bertalanffy_Ludwig_General_System_Theory_1968.pdf">monoskop.org/images/5/5b/Von_Bertalanffy_Ludwig_General_System_Theory_1968.pdf</a>
+      <a class="ref-link" href="https://monoskop.org/images/5/5b/Von_Bertalanffy_Ludwig_General_System_Theory_1968.pdf"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">Donella Meadows, <em>Thinking in Systems</em> (2008).</span>
-      <a class="ref-link" href="https://donellameadows.org/archives/a-summary-of-donella-meadows-thinking-in-systems/">donellameadows.org/archives/a-summary-of-donella-meadows-thinking-in-systems/</a>
+      <a class="ref-link" href="https://donellameadows.org/archives/a-summary-of-donella-meadows-thinking-in-systems/"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">Claude Shannon, <em>A Mathematical Theory of Communication</em> (1948).</span>
-      <a class="ref-link" href="https://ieeexplore.ieee.org/document/6773024">ieeexplore.ieee.org/document/6773024</a>
-    </li>
-    <li>
-      <span class="ref-title">Norbert Wiener, <em>Cybernetics</em> (1948).</span>
-      <a class="ref-link" href="https://monoskop.org/images/5/5e/Wiener_Norbert_Cybernetics_Or_Control_and_Communication_in_the_Animal_and_the_Machine_1948.pdf">monoskop.org/images/5/5e/Wiener_Norbert_Cybernetics_Or_Control_and_Communication_in_the_Animal_and_the_Machine_1948.pdf</a>
+      <a class="ref-link" href="https://ieeexplore.ieee.org/document/6773024"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">Charles Goodhart, <em>Monetary Theory and Practice: The UK Experience</em> (1975).</span>
-      <a class="ref-link" href="https://www.bankofengland.co.uk/-/media/boe/files/quarterly-bulletin/1975/monetary-theory-and-practice-the-uk-experience.pdf">bankofengland.co.uk/.../monetary-theory-and-practice-the-uk-experience.pdf</a>
+      <a class="ref-link" href="https://www.bankofengland.co.uk/-/media/boe/files/quarterly-bulletin/1975/monetary-theory-and-practice-the-uk-experience.pdf"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">W. Ross Ashby, <em>An Introduction to Cybernetics</em> (1956).</span>
-      <a class="ref-link" href="http://pespmc1.vub.ac.be/books/ashby.pdf">pespmc1.vub.ac.be/books/ashby.pdf</a>
+      <a class="ref-link" href="http://pespmc1.vub.ac.be/books/ashby.pdf"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">Trist &amp; Bamforth, <em>Socio-technical systems</em> (1951).</span>
-      <a class="ref-link" href="https://journals.sagepub.com/doi/10.1177/001872675100400101">journals.sagepub.com/doi/10.1177/001872675100400101</a>
+      <a class="ref-link" href="https://journals.sagepub.com/doi/10.1177/001872675100400101"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">Process Mining Manifesto (2011).</span>
-      <a class="ref-link" href="https://www.win.tue.nl/ieeetfpm/downloads/Process_Mining_Manifesto.pdf">win.tue.nl/ieeetfpm/downloads/Process_Mining_Manifesto.pdf</a>
+      <a class="ref-link" href="https://www.win.tue.nl/ieeetfpm/downloads/Process_Mining_Manifesto.pdf"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">W3C RDF / OWL.</span>
-      <a class="ref-link" href="https://www.w3.org/RDF/">w3.org/RDF/</a>
-      <a class="ref-link" href="https://www.w3.org/OWL/">w3.org/OWL/</a>
+      <a class="ref-link" href="https://www.w3.org/RDF/"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+      <a class="ref-link" href="https://www.w3.org/OWL/"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">W3C Time Ontology in OWL.</span>
-      <a class="ref-link" href="https://www.w3.org/TR/owl-time/">w3.org/TR/owl-time/</a>
+      <a class="ref-link" href="https://www.w3.org/TR/owl-time/"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">W3C PROV.</span>
-      <a class="ref-link" href="https://www.w3.org/TR/prov-overview/">w3.org/TR/prov-overview/</a>
+      <a class="ref-link" href="https://www.w3.org/TR/prov-overview/"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">NIST AI Risk Management Framework 1.0 (2023).</span>
-      <a class="ref-link" href="https://www.nist.gov/itl/ai-risk-management-framework">nist.gov/itl/ai-risk-management-framework</a>
+      <a class="ref-link" href="https://www.nist.gov/itl/ai-risk-management-framework"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">EU AI Act (2024).</span>
-      <a class="ref-link" href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">eur-lex.europa.eu/eli/reg/2024/1689/oj</a>
+      <a class="ref-link" href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">Open Policy Agent Documentation.</span>
-      <a class="ref-link" href="https://www.openpolicyagent.org/docs/latest/">openpolicyagent.org/docs/latest/</a>
+      <a class="ref-link" href="https://www.openpolicyagent.org/docs/latest/"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">NASA Digital Twin Report (2012).</span>
-      <a class="ref-link" href="https://ntrs.nasa.gov/citations/20120008178">ntrs.nasa.gov/citations/20120008178</a>
+      <a class="ref-link" href="https://ntrs.nasa.gov/citations/20120008178"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">American Heart Association: Heart pumping volume.</span>
-      <a class="ref-link" href="https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease">heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease</a>
+      <a class="ref-link" href="https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
     <li>
       <span class="ref-title">ITU Facts and Figures 2023.</span>
-      <a class="ref-link" href="https://www.itu.int/itu-d/reports/statistics/facts-figures-2023/">itu.int/itu-d/reports/statistics/facts-figures-2023/</a>
+      <a class="ref-link" href="https://www.itu.int/itu-d/reports/statistics/facts-figures-2023/"><span class="sr-only">Open reference link</span><svg class="ref-link-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3h7v7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M10 14L21 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
     </li>
   </ol>
 </div>

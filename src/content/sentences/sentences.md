@@ -1,5 +1,9 @@
 ---
 title: 'Sentences'
+tags:
+  - language
+  - meaning
+  - communication
 ---
 Sentences are the smallest machines of meaning we carry.
 

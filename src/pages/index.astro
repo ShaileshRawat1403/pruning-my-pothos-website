@@ -4,15 +4,15 @@ import { sortedByDate } from '@/utils';
 import Layout from '@/layouts/Layout.astro';
 import FeaturedPosts from '@/components/FeaturedPosts.astro';
 
-const notes = await getCollection('notes');
+const stickyNotes = await getCollection('sticky-notes');
 const self = await getCollection('self');
 const systems = await getCollection('systems');
 
-const latestNote = sortedByDate(notes).slice(0, 1);
+const latestStickyNote = sortedByDate(stickyNotes).slice(0, 1);
 const latestSelf = sortedByDate(self).slice(0, 1);
 const latestSystem = sortedByDate(systems).slice(0, 1);
 
-const featuredPosts = [...latestNote, ...latestSelf, ...latestSystem];
+const featuredPosts = [...latestStickyNote, ...latestSelf, ...latestSystem];
 ---
 
 <Layout title="Home | A Thinking Workspace">
@@ -176,6 +176,27 @@ const featuredPosts = [...latestNote, ...latestSelf, ...latestSystem];
     }
     .illustration-container {
       animation: none;
+    }
+  }
+  @media (max-width: 720px) {
+    .homepage-hero {
+      padding: 2.75rem 0 3.25rem;
+    }
+    .hero-animated-line {
+      width: min(560px, 92vw);
+      margin-bottom: 1.25rem;
+    }
+    .tagline {
+      font-size: 1.75rem;
+    }
+    .intro {
+      font-size: 1rem;
+      padding: 0 0.5rem;
+    }
+  }
+  @media (max-width: 420px) {
+    .hero-animated-line {
+      font-size: clamp(1.35rem, 7.5vw, 2.2rem);
     }
   }
   @keyframes fade-in-up {

@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import type { CollectionEntry } from 'astro:content';
+import TagList from '@/components/TagList.astro';
 
 export async function getStaticPaths() {
   const selfEntries = await getCollection('self');
@@ -24,6 +25,7 @@ const { Content } = await entry.render();
     <header>
       <h1>{entry.data.title}</h1>
       <p class="self-entry-description">{entry.data.description}</p>
+      <TagList tags={entry.data.tags} />
     </header>
     <Content />
   </article>

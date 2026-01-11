@@ -2,15 +2,15 @@
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 
-const notes = await getCollection('notes');
+const stickyNotes = await getCollection('sticky-notes');
 ---
 <Layout title="Sticky Notes | A Thinking Workspace">
   <h1>Sticky Notes</h1>
   <p class="subtitle">A springboard for a shitty life. Kept raw on purpose.</p>
 
   <div class="sticky-wall">
-    {notes.map(note => (
-      <a href={`/notes/${note.slug}`} class="note" style={`--rotation: ${note.data.rotation || 0}deg; --bg: ${note.data.color || 'var(--color-sticky-1)'};`}>
+    {stickyNotes.map(note => (
+      <a href={`/sticky-notes/${note.slug}`} class="note" style={`--rotation: ${note.data.rotation || 0}deg; --bg: ${note.data.color || 'var(--color-sticky-1)'};`}>
         {note.body}
       </a>
     ))}
@@ -49,5 +49,18 @@ const notes = await getCollection('notes');
         border-color: var(--color-accent);
         z-index: 10;
         color: var(--color-text-body);
+    }
+    @media (max-width: 640px) {
+        .sticky-wall {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            padding: 0.5rem 0;
+        }
+        .note {
+            transform: none;
+        }
+        .note:hover {
+            transform: translateY(-2px);
+        }
     }
 </style>

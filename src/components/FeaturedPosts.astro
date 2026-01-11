@@ -29,4 +29,17 @@ const { posts } = Astro.props;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
 }
+@media (max-width: 640px) {
+    .featured-posts {
+        margin: 2.5rem 0;
+    }
+    .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
 </style>

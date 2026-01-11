@@ -1,10 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
+import TagList from '@/components/TagList.astro';
 
 export async function getStaticPaths() {
-  const notes = await getCollection('notes');
-  return notes.map(note => ({
+  const stickyNotes = await getCollection('sticky-notes');
+  return stickyNotes.map(note => ({
     params: { slug: note.slug },
     props: note,
   }));
@@ -16,6 +17,7 @@ const { Content } = await note.render();
 <Layout title={note.data.title}>
   <div class="note-detail">
     <h1>{note.data.title}</h1>
+    <TagList tags={note.data.tags} />
     <div class="note-content">
       <Content />
     </div>

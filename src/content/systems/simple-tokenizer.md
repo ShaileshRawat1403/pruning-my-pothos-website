@@ -1,6 +1,11 @@
 ---
 title: 'A Simple Tokenizer'
 description: 'Exploring the task of tokenization in NLP, from simple rule-based systems to more complex solutions like Byte-Pair Encoding (BPE)...'
+tags:
+  - language
+  - systems
+  - ai
+  - tools
 ---
 
 Consider the task of tokenization in natural language processing. The system must take raw text and convert it into a sequence of tokens. A simple rule-based system might split by whitespace and punctuation. Here is how you might represent that in a snippet of pseudo-code, which uses the 'logic' font (JetBrains Mono).

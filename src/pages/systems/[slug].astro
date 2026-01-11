@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
+import TagList from '@/components/TagList.astro';
 
 export async function getStaticPaths() {
   const systems = await getCollection('systems');
@@ -19,6 +20,7 @@ const { Content } = await system.render();
       <div>
         <h1>{system.data.title}</h1>
         <p class="description">{system.data.description}</p>
+        <TagList tags={system.data.tags} />
       </div>
       <div class="system-controls">
         <span class="control-label">Layout</span>
@@ -115,7 +117,7 @@ const { Content } = await system.render();
 
 <style>
     article {
-        max-width: 72ch;
+        width: min(100%, 72ch);
         margin: 0 auto;
     }
     .system-header {
@@ -184,6 +186,9 @@ const { Content } = await system.render();
     .content-body a {
         text-decoration: underline;
         text-underline-offset: 0.2em;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        white-space: normal;
     }
     .content-body figure {
         margin: 2rem 0;
@@ -275,31 +280,48 @@ const { Content } = await system.render();
         border-radius: 6px;
         padding: 0 0.25em;
     }
-    .content-body .references {
+    :global(.content-body .references) {
         margin-top: 1.5rem;
     }
-    .content-body .references-list {
+    :global(.content-body .references-list) {
         font-size: 0.9rem;
         line-height: 1.6;
         padding-left: 1.25rem;
         column-gap: 2.5rem;
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
-    .content-body .references-list li {
+    :global(.content-body .references-list li) {
         margin-bottom: 0.85rem;
         break-inside: avoid;
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
-    .content-body .ref-title {
+    :global(.content-body .ref-title) {
         display: block;
         color: var(--color-text-body);
         margin-bottom: 0.2rem;
     }
-    .content-body .ref-link {
-        font-family: var(--font-mono);
-        font-size: 0.82rem;
+    :global(.content-body .ref-link) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        border: none;
+        background: transparent;
         color: var(--color-text-muted);
-        word-break: break-word;
+        text-decoration: none;
+        padding: 0;
     }
-    .content-body .ref-link:hover {
+    :global(.content-body .ref-link svg) {
+        width: 14px;
+        height: 14px;
+    }
+    :global(.content-body .ref-link + .ref-link) {
+        margin-left: 0.4rem;
+    }
+    :global(.content-body .ref-link:hover) {
         color: var(--color-accent);
     }
     @media (min-width: 960px) {
@@ -331,10 +353,43 @@ const { Content } = await system.render();
         :global(html[data-systems-layout='wide'] .toc) {
             margin: 0;
         }
+        :global(html[data-systems-layout='wide'] .references-list) {
+            columns: 1;
+        }
     }
     @media (max-width: 640px) {
-        .content-body .definition-list {
+        .system-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .system-controls {
+            display: none;
+        }
+        article {
+            padding: 0 0.5rem;
+        }
+        :global(.content-body .references-list) {
+            padding-left: 1rem;
+        }
+        :global(.content-body ul),
+        :global(.content-body ol) {
+            padding-left: 1.1rem;
+        }
+        :global(.content-body .definition-list) {
             grid-template-columns: 1fr;
+        }
+    }
+    @media (max-width: 520px) {
+        .description {
+            border-left: none;
+            border-top: 2px solid var(--color-border);
+            padding-left: 0;
+            padding-top: 1rem;
+            margin-bottom: 2rem;
+        }
+        .content-body {
+            font-size: 1rem;
+            line-height: 1.75;
         }
     }
 </style>

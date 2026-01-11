@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import type { CollectionEntry } from 'astro:content';
+import TagList from '@/components/TagList.astro';
 
 export async function getStaticPaths() {
   const movieEntries = await getCollection('shelf', ({ id }) => id.startsWith('movies/'));
@@ -22,5 +23,6 @@ const { Content } = await entry.render();
 <Layout title={entry.data.title}>
   <h1>{entry.data.title}</h1>
   <p>{entry.data.description}</p>
+  <TagList tags={entry.data.tags} label="Tags" />
   <Content />
 </Layout>

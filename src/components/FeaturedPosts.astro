@@ -1,0 +1,32 @@
+---
+import PostCard from './PostCard.astro';
+interface Props {
+    posts: any[];
+}
+const { posts } = Astro.props;
+---
+<section class="featured-posts">
+    <h2 class="section-title">Latest from the Workspace</h2>
+    <div class="card-grid">
+        {posts.map(post => <PostCard entry={post} />)}
+    </div>
+</section>
+<style>
+.featured-posts {
+    width: 100%;
+    max-width: 1200px;
+    margin: 4rem 0;
+}
+.section-title {
+    font-size: 2rem;
+    font-family: var(--font-heading);
+    color: var(--color-text-heading);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+</style>

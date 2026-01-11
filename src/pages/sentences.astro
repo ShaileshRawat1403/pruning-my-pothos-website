@@ -7,6 +7,7 @@ const sentenceColors = ['var(--color-sentence-1)', 'var(--color-sentence-2)', 'v
 ---
 <Layout title="Sentences | A Thinking Workspace">
   <h1>Sentences</h1>
+  <p class="subtitle">Slow thoughts, distilled.</p>
   
   <div class="sentences-grid">
     {sentences.map((sentence, index) => (
@@ -18,6 +19,11 @@ const sentenceColors = ['var(--color-sentence-1)', 'var(--color-sentence-2)', 'v
 </Layout>
 
 <style>
+  .subtitle {
+    color: var(--color-text-muted);
+    text-align: center;
+    margin-bottom: 4rem;
+  }
   .sentences-grid {
     margin-top: 4rem;
     display: grid;

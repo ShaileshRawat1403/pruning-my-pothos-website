@@ -1,0 +1,61 @@
+---
+interface Props {
+    entry: any;
+}
+const { entry } = Astro.props;
+const { collection, slug } = entry;
+let url = `/${collection}/${slug}`;
+if (collection === 'shelf') {
+    url = `/shelf/${slug}`;
+}
+---
+<a href={url} class="card">
+    <div class="card-content">
+        <span class="card-category">{collection}</span>
+        <h2 class="card-title">{entry.data.title}</h2>
+        <p class="card-description">{entry.data.description}</p>
+    </div>
+</a>
+<style>
+.card {
+    display: block;
+    background-color: var(--color-blockquote-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--color-text-body);
+    transition: all 0.2s ease;
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border-color: var(--color-accent);
+}
+.card-content {
+    padding: 1.5rem;
+}
+.card-category {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+}
+.card-title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem 0;
+    color: var(--color-text-heading);
+}
+.card-description {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+</style>

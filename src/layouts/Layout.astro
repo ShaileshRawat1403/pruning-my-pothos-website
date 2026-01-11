@@ -7,6 +7,7 @@ import logo from '../assets/my-self-portrait-vector-clean.svg?raw';
 import moonIcon from '../assets/moon.svg?raw';
 import sunIcon from '../assets/sun.svg?raw';
 import bookIcon from '../assets/book.svg?raw';
+import Footer from '@/components/Footer.astro';
 
 interface Props {
 	title: string;
@@ -68,6 +69,7 @@ const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
 		<main id="main-content">
             <slot />
         </main>
+        <Footer />
         
         {/* Mermaid.js for diagrams */}
         <script type="module">
@@ -190,9 +192,7 @@ const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
 
                 if (!searchToggle || !searchModal) return;
 
-                if (searchModal) {
-                    searchModal.hidden = true;
-                }
+                searchModal.hidden = true;
 
                 const closeSearch = () => {
                     searchModal.hidden = true;

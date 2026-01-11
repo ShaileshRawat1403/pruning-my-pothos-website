@@ -1,5 +1,18 @@
 ---
+import { getCollection } from 'astro:content';
+import { sortedByDate } from '@/utils';
 import Layout from '@/layouts/Layout.astro';
+import FeaturedPosts from '@/components/FeaturedPosts.astro';
+
+const notes = await getCollection('notes');
+const self = await getCollection('self');
+const systems = await getCollection('systems');
+
+const latestNote = sortedByDate(notes).slice(0, 1);
+const latestSelf = sortedByDate(self).slice(0, 1);
+const latestSystem = sortedByDate(systems).slice(0, 1);
+
+const featuredPosts = [...latestNote, ...latestSelf, ...latestSystem];
 ---
 
 <Layout title="Home | A Thinking Workspace">
@@ -22,6 +35,7 @@ import Layout from '@/layouts/Layout.astro';
       A personal workspace for exploring ideas in artificial intelligence, language, and systems. This site is a collection of notes, essays, and frameworks in various states of completion.
     </p>
   </section>
+  <FeaturedPosts posts={featuredPosts} />
 </Layout>
 
 <style>

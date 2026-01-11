@@ -7,15 +7,36 @@ import Layout from '@/layouts/Layout.astro';
   <p>
     A collection of my favorite books, movies, and music.
   </p>
-  <ul>
-    <li>
-      <a href="/shelf/books">Books</a>
-    </li>
-    <li>
-      <a href="/shelf/movies">Movies</a>
-    </li>
-    <li>
-      <a href="/shelf/music">Music</a>
-    </li>
-  </ul>
+  <div class="card-grid shelf-grid">
+    <a href="/shelf/books" class="card shelf-card">
+      <div class="card-content">
+        <h2 class="card-title">Books</h2>
+        <p class="card-description">Ideas, systems, and stories worth keeping close.</p>
+      </div>
+    </a>
+    <a href="/shelf/movies" class="card shelf-card">
+      <div class="card-content">
+        <h2 class="card-title">Movies</h2>
+        <p class="card-description">Frames, moods, and narratives that stick.</p>
+      </div>
+    </a>
+    <a href="/shelf/music" class="card shelf-card">
+      <div class="card-content">
+        <h2 class="card-title">Music</h2>
+        <p class="card-description">Soundtracks for focus, drift, and flow.</p>
+      </div>
+    </a>
+    <a href="/shelf/culture" class="card shelf-card">
+        <div class="card-content">
+            <h2 class="card-title">Culture</h2>
+            <p class="card-description">Ideas, people, and projects that inspire.</p>
+        </div>
+    </a>
+  </div>
 </Layout>
+
+<style>
+  .shelf-grid {
+    margin-top: 2.5rem;
+  }
+</style>

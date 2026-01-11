@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import {sortedByDate} from '@/utils';
+
+const bookEntries = await getCollection('shelf', ({ id }) => id.startsWith('books/'));
+const sortedBooks = sortedByDate(bookEntries);
+---
+
+<Layout title="Books | Shelf">
+  <h1>Books</h1>
+  <p>
+    A collection of my favorite books.
+  </p>
+  <div class="card-grid">
+    {sortedBooks.map(entry => (
+      <a href={`/shelf/books/${entry.slug.split('/')[1]}`} class="card">
+        <div class="card-img">Image Placeholder</div>
+        <div class="card-content">
+          <h2 class="card-title">{entry.data.title}</h2>
+          <p class="card-description">{entry.data.description}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</Layout>

@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+
+const notes = await getCollection('notes');
+---
+<Layout title="Sticky Notes | A Thinking Workspace">
+  <h1>Sticky Notes</h1>
+  <p class="subtitle">A springboard for a shitty life. Kept raw on purpose.</p>
+
+  <div class="sticky-wall">
+    {notes.map(note => (
+      <a href={`/notes/${note.slug}`} class="note" style={`--rotation: ${note.data.rotation || 0}deg; --bg: ${note.data.color || 'var(--color-sticky-1)'};`}>
+        {note.body}
+      </a>
+    ))}
+  </div>
+</Layout>
+
+<style>
+    .subtitle {
+        color: var(--color-text-muted);
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+    .sticky-wall {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 2rem;
+        padding: 1rem;
+    }
+    .note {
+        padding: 1.5rem;
+        background-color: var(--bg, var(--color-sticky-1));
+        border: 1px solid var(--color-sticky-border);
+        border-radius: 12px;
+        font-family: var(--font-hand);
+        font-size: 1.1rem;
+        line-height: 1.6;
+        box-shadow: 0 6px 14px var(--color-sticky-shadow);
+        transform: rotate(var(--rotation, 0deg));
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        text-decoration: none;
+        color: var(--color-text-body);
+    }
+    .note:hover {
+        transform: translateY(-2px) rotate(var(--rotation, 0deg));
+        box-shadow: 0 10px 20px var(--color-sticky-shadow);
+        border-color: var(--color-accent);
+        z-index: 10;
+        color: var(--color-text-body);
+    }
+</style>

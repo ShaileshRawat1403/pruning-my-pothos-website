@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map(note => ({
+    params: { slug: note.slug },
+    props: note,
+  }));
+}
+
+const note = Astro.props;
+const { Content } = await note.render();
+---
+<Layout title={note.data.title}>
+  <div class="note-detail">
+    <h1>{note.data.title}</h1>
+    <div class="note-content">
+      <Content />
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .note-detail {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 4rem 0;
+  }
+  .note-detail h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .note-content {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
+</style>

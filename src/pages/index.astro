@@ -1,0 +1,177 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout title="Home | A Thinking Workspace">
+  <section class="homepage-hero">
+    <p class="hero-animated-line">
+      <a href="/self/diy" class="hero-diy-cta">D.I.Y.</a>
+      <span class="hero-highlight hero-intel">
+        <span class="hero-aura" aria-hidden="true"></span>
+        <span class="hero-bounce hero-bounce-1">i</span>ntell<span class="hero-bounce hero-bounce-2">i</span>gence
+      </span>
+    </p>
+    <iframe
+      class="illustration-container"
+      src="/portrait.html"
+      frameborder="0"
+      scrolling="no"
+    ></iframe>
+    <h1 class="tagline">Thinker. Tinkerer. Translator.</h1>
+    <p class="intro">
+      A personal workspace for exploring ideas in artificial intelligence, language, and systems. This site is a collection of notes, essays, and frameworks in various states of completion.
+    </p>
+  </section>
+</Layout>
+
+<style>
+  .homepage-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 0;
+  }
+  .hero-animated-line {
+    width: min(720px, 90vw);
+    margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 5.4vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    text-align: center;
+  }
+  .hero-diy-cta {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border-radius: 999px;
+    background-color: transparent;
+    border: 1px solid rgba(249, 115, 22, 0.4);
+    color: #f97316;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.8em;
+    transition: all 0.2s ease;
+    animation: fade-in-up 0.8s ease 0.5s forwards;
+    opacity: 0;
+  }
+  .hero-diy-cta:hover {
+    background-color: rgba(249, 115, 22, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  }
+  .hero-highlight {
+    background-image: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-accent) 70%, var(--color-bg)),
+      var(--color-accent),
+      color-mix(in srgb, var(--color-accent) 70%, var(--color-text-heading))
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: hero-gradient-shift 8s ease infinite;
+    text-shadow: 0 0 1px rgba(0,0,0,0.1);
+  }
+  .hero-intel {
+    position: relative;
+    display: inline-block;
+    margin-left: 0.2em;
+    white-space: nowrap;
+  }
+  .hero-aura {
+    position: absolute;
+    inset: -22% -10%;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--color-accent) 30%, transparent),
+      transparent 70%
+    );
+    border-radius: 999px;
+    filter: blur(12px);
+    opacity: 0.5;
+    z-index: -1;
+  }
+  .hero-bounce {
+    display: inline-block;
+    position: relative;
+    animation: hero-bounce 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  }
+  .hero-bounce-2 {
+    animation-delay: 0.1s;
+  }
+  .illustration-container {
+    width: clamp(160px, 32vw, 260px);
+    aspect-ratio: 1 / 1;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    color: var(--color-text-heading);
+    transition: transform 0.25s ease;
+    border: none;
+  }
+  .illustration-container:hover {
+    transform: translateY(-1px);
+  }
+  .tagline {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+  }
+  .intro {
+    max-width: 500px;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  @keyframes portrait-breathe {
+    0%,
+    100% {
+      transform: scale(1) rotate(0deg);
+    }
+    50% {
+      transform: scale(1.02) rotate(-0.6deg);
+    }
+  }
+  @keyframes hero-gradient-shift {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  @keyframes hero-bounce {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0);
+      color: inherit;
+      text-shadow: none;
+    }
+    50% {
+      transform: translateY(-6px) rotate(-5deg);
+      color: #f97316;
+      text-shadow: 0 0 10px #f97316;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-highlight,
+    .hero-bounce {
+      animation: none;
+    }
+    .illustration-container {
+      animation: none;
+    }
+  }
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

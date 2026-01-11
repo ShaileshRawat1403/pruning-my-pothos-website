@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import {sortedByDate} from '@/utils';
+
+const musicEntries = await getCollection('shelf', ({ id }) => id.startsWith('music/'));
+const sortedMusic = sortedByDate(musicEntries);
+---
+
+<Layout title="Music | Shelf">
+  <h1>Music</h1>
+  <p>
+    A collection of my favorite music.
+  </p>
+  <div class="card-grid">
+    {sortedMusic.map(entry => (
+      <a href={`/shelf/music/${entry.slug.split('/')[1]}`} class="card">
+        <div class="card-img">Image Placeholder</div>
+        <div class="card-content">
+          <h2 class="card-title">{entry.data.title}</h2>
+          <p class="card-description">{entry.data.description}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</Layout>

@@ -1,0 +1,244 @@
+---
+import searchIcon from '@/assets/search.svg?raw';
+import Search from '@/components/Search.astro';
+import { ViewTransitions } from 'astro:transitions';
+import '../styles/global.css';
+import logo from '../assets/my-self-portrait-vector-clean.svg?raw';
+import moonIcon from '../assets/moon.svg?raw';
+import sunIcon from '../assets/sun.svg?raw';
+import bookIcon from '../assets/book.svg?raw';
+
+interface Props {
+	title: string;
+}
+
+const pathname = Astro.url.pathname;
+const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="A thinking workspace." />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{Astro.props.title}</title>
+
+        <ViewTransitions />
+        <script is:inline>
+            const getTheme = () => {
+              if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+                return localStorage.getItem('theme');
+              }
+              if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+              }
+              return 'light';
+            };
+            const theme = getTheme();
+            document.documentElement.setAttribute('data-theme', theme);
+        </script>
+	</head>
+	<body class:list={[bodyClass]}>
+        <a class="skip-link" href="#main-content">Skip to content</a>
+        <nav class="global-nav">
+            <a href="/" class="nav-logo" aria-label="Home" set:html={logo}></a>
+            <div class="nav-links">
+                <a href="/systems" class:list={[{ active: pathname.startsWith('/systems') }]}>/systems</a>
+                <a href="/sentences" class:list={[{ active: pathname.startsWith('/sentences') }]}>/sentences</a>
+                <a href="/sticky-notes" class:list={[{ active: pathname.startsWith('/sticky-notes') }]}>/sticky-notes</a>
+                <a href="/self" class:list={[{ active: pathname.startsWith('/self') }]}>/self</a>
+                <a href="/shelf" class:list={[{ active: pathname.startsWith('/shelf') }]}>/shelf</a>
+                <a href="/about" class:list={[{ active: pathname === '/about' }]}>/about</a>
+            </div>
+            <div class="nav-actions">
+                <button id="search-toggle" title="Search" aria-label="Open search">
+                    <span class="icon-placeholder" set:html={searchIcon}></span>
+                </button>
+                <button id="theme-toggle" title="Cycle Theme" aria-label="Toggle theme">
+                    <span class="icon-placeholder"></span>
+                </button>
+                <div id="search-modal" class="search-modal" hidden>
+                    <Search />
+                </div>
+            </div>
+        </nav>
+		<main id="main-content">
+            <slot />
+        </main>
+        
+        {/* Mermaid.js for diagrams */}
+        <script type="module">
+            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+            
+            const initMermaid = () => {
+                const theme = document.documentElement.getAttribute('data-theme') || 'light';
+                let mermaidTheme = 'default';
+                if (theme === 'dark') mermaidTheme = 'dark';
+                if (theme === 'sepia') mermaidTheme = 'neutral';
+
+                mermaid.initialize({ 
+                    startOnLoad: false,
+                    theme: mermaidTheme,
+                    themeVariables: {
+                        'primaryColor': getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim(),
+                        'mainBkg': getComputedStyle(document.documentElement).getPropertyValue('--color-blockquote-bg').trim(),
+                        'textColor': getComputedStyle(document.documentElement).getPropertyValue('--color-text-body').trim(),
+                        'lineColor': getComputedStyle(document.documentElement).getPropertyValue('--color-border').trim(),
+                    }
+                });
+                
+                // Find all mermaid divs and render them
+                document.querySelectorAll('div.mermaid').forEach((div, i) => {
+                    const id = `mermaid-graph-${Date.now()}-${i}`;
+                    const source = div.textContent;
+                    div.textContent = '';
+                    mermaid.render(id, source).then(({svg}) => {
+                        div.innerHTML = svg;
+                    });
+                });
+            };
+
+            // Initial call
+            initMermaid();
+
+            // Re-run on theme change and Astro page transitions
+            document.addEventListener('astro:page-load', initMermaid);
+            document.addEventListener('click', (e) => {
+                if (e.target && e.target.closest('#theme-toggle')) {
+                    // Re-init after a short delay to allow theme attributes to update
+                    setTimeout(initMermaid, 100);
+                }
+            });
+        </script>
+
+        <script define:vars={{ moonIcon, sunIcon, bookIcon }}>
+            const themes = ['light', 'dark', 'sepia'];
+            const icons = {
+                light: sunIcon,
+                dark: moonIcon,
+                sepia: bookIcon
+            };
+
+            const initThemeToggle = () => {
+                const themeToggle = document.getElementById('theme-toggle');
+                if (!themeToggle) return;
+
+                const themeIcon = themeToggle.querySelector('.icon-placeholder');
+                const setThemeIcon = (theme) => {
+                    if (themeIcon) {
+                        themeIcon.innerHTML = icons[theme];
+                    }
+                };
+
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                setThemeIcon(currentTheme);
+
+                if (themeToggle.dataset.bound === 'true') {
+                    return;
+                }
+                themeToggle.dataset.bound = 'true';
+
+                themeToggle.addEventListener('click', () => {
+                    const activeTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                    const currentIndex = themes.indexOf(activeTheme);
+                    const nextIndex = (currentIndex + 1) % themes.length;
+                    const nextTheme = themes[nextIndex];
+                    
+                    document.documentElement.setAttribute('data-theme', nextTheme);
+                    localStorage.setItem('theme', nextTheme);
+                    setThemeIcon(nextTheme);
+                });
+            };
+
+            initThemeToggle();
+            document.addEventListener('astro:page-load', initThemeToggle);
+            document.addEventListener('astro:after-swap', initThemeToggle);
+        </script>
+        <script is:inline>
+            const setExternalLinkTargets = () => {
+                const links = document.querySelectorAll('a[href]');
+                links.forEach((link) => {
+                    const href = link.getAttribute('href');
+                    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+                        return;
+                    }
+                    let url;
+                    try {
+                        url = new URL(href, window.location.href);
+                    } catch {
+                        return;
+                    }
+                    if (url.origin !== window.location.origin) {
+                        link.setAttribute('target', '_blank');
+                        link.setAttribute('rel', 'noopener noreferrer');
+                    }
+                });
+            };
+
+            setExternalLinkTargets();
+            document.addEventListener('astro:page-load', setExternalLinkTargets);
+            document.addEventListener('astro:after-swap', setExternalLinkTargets);
+        </script>
+        <script>
+            const initSearch = () => {
+                const searchToggle = document.getElementById('search-toggle');
+                const searchModal = document.getElementById('search-modal');
+                const searchInput = searchModal ? searchModal.querySelector('input') : null;
+
+                if (!searchToggle || !searchModal) return;
+
+                if (searchModal) {
+                    searchModal.hidden = true;
+                }
+
+                const closeSearch = () => {
+                    searchModal.hidden = true;
+                    if (searchInput) {
+                        searchInput.value = '';
+                    }
+                };
+
+                if (searchToggle.dataset.bound === 'true') {
+                    return;
+                }
+                searchToggle.dataset.bound = 'true';
+
+                searchToggle.addEventListener('click', () => {
+                    searchModal.hidden = !searchModal.hidden;
+                    if (!searchModal.hidden && searchInput) {
+                        searchInput.focus();
+                    }
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (searchModal.hidden) return;
+                    const target = event.target;
+                    if (!(target instanceof Node)) return;
+                    if (searchModal.contains(target) || searchToggle.contains(target)) {
+                        return;
+                    }
+                    closeSearch();
+                });
+
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape' && !searchModal.hidden) {
+                        closeSearch();
+                    }
+                });
+
+                document.addEventListener('astro:after-swap', () => {
+                    if (!searchModal.hidden) {
+                        closeSearch();
+                    }
+                });
+            };
+
+            initSearch();
+            document.addEventListener('astro:page-load', initSearch);
+            document.addEventListener('astro:after-swap', initSearch);
+        </script>
+	</body>
+	</html>

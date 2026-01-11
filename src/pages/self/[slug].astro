@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const selfEntries = await getCollection('self');
+  return selfEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'self'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout title={`${entry.data.title} | A Thinking Workspace`}>
+  <article class="self-entry">
+    <header>
+      <h1>{entry.data.title}</h1>
+      <p class="self-entry-description">{entry.data.description}</p>
+    </header>
+    <Content />
+  </article>
+</Layout>
+
+<style>
+  .self-entry {
+    text-align: left;
+  }
+  .self-entry p:first-of-type::first-letter {
+    float: none;
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+  }
+  .self-entry-description {
+    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+  }
+</style>

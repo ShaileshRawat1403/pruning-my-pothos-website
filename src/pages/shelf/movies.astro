@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import {sortedByDate} from '@/utils';
+
+const movieEntries = await getCollection('shelf', ({ id }) => id.startsWith('movies/'));
+const sortedMovies = sortedByDate(movieEntries);
+---
+
+<Layout title="Movies | Shelf">
+  <h1>Movies</h1>
+  <p>
+    A collection of my favorite movies.
+  </p>
+  <div class="card-grid">
+    {sortedMovies.map(entry => (
+      <a href={`/shelf/movies/${entry.slug.split('/')[1]}`} class="card">
+        <div class="card-img">Image Placeholder</div>
+        <div class="card-content">
+          <h2 class="card-title">{entry.data.title}</h2>
+          <p class="card-description">{entry.data.description}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</Layout>

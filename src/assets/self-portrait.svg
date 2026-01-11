@@ -1,0 +1,92 @@
+<svg viewBox="0 0 240 300" xmlns="http://www.w3.org/2000/svg">
+  <g class="portrait-line" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <path
+      d="M76 94
+         C74 66 90 42 116 40
+         C130 38 148 46 160 62
+         C170 76 172 94 168 114
+         C164 136 154 154 140 170
+         C130 182 124 188 120 190
+         C116 188 110 182 100 170
+         C86 154 76 136 72 114
+         C70 102 72 98 76 94 Z"
+    />
+    <path
+      d="M54 118
+         C40 118 30 134 30 152
+         C30 174 46 188 66 188
+         C82 188 94 174 94 152
+         C94 134 80 118 54 118 Z"
+    />
+    <path
+      d="M186 118
+         C210 118 218 134 218 152
+         C218 174 204 188 184 188
+         C168 188 154 174 154 152
+         C154 134 168 118 186 118 Z"
+    />
+    <path d="M56 136 C66 140 70 154 62 166" stroke-width="4" />
+    <path d="M64 152 C66 162 60 170 52 174" stroke-width="4" />
+    <path d="M184 136 C174 140 170 154 178 166" stroke-width="4" />
+    <path d="M176 152 C174 162 180 170 188 174" stroke-width="4" />
+    <path d="M88 124 C100 116 114 116 128 124" stroke-width="4" />
+    <path d="M112 124 C126 116 140 116 152 124" stroke-width="4" />
+    <path d="M92 132 C102 136 114 136 124 132" stroke-width="4" />
+    <path d="M116 132 C126 136 138 136 148 132" stroke-width="4" />
+    <path d="M120 136 C116 156 116 166 120 174" stroke-width="4" />
+    <path d="M110 178 C116 182 124 182 130 178" stroke-width="4" />
+    <path d="M96 238 C118 224 160 224 184 238" stroke-width="6" />
+    <path d="M70 262 C112 242 170 242 214 262" stroke-width="6" />
+    <path d="M90 76 C94 62 108 52 124 50" stroke-width="4" />
+    <path d="M88 112 C98 106 110 106 120 112" stroke-width="4" />
+    <path d="M120 112 C130 106 142 106 152 112" stroke-width="4" />
+    <path d="M92 148 C98 144 106 144 112 148" stroke-width="3.5" />
+    <path d="M128 148 C134 144 142 144 148 148" stroke-width="3.5" />
+    <circle cx="54" cy="196" r="4" fill="none" stroke="currentColor" stroke-width="4" />
+  </g>
+
+  <g class="portrait-fill" fill="currentColor">
+    <path
+      d="M78 70
+         C84 52 102 42 120 40
+         C106 54 92 64 78 70 Z"
+    />
+    <path
+      d="M84 118
+         C100 104 122 104 138 112
+         C124 126 98 128 84 118 Z"
+    />
+    <path
+      d="M102 112
+         C118 104 140 104 156 118
+         C140 128 116 126 102 112 Z"
+    />
+    <path
+      d="M82 162
+         C96 148 144 148 158 162
+         C150 180 134 188 120 190
+         C106 188 90 180 82 162 Z"
+    />
+    <path
+      d="M78 166
+         L72 178
+         L76 194
+         L88 206
+         L104 218
+         L120 224
+         L136 218
+         L152 206
+         L164 194
+         L168 178
+         L162 166
+         C152 184 136 196 120 198
+         C104 196 88 184 78 166 Z"
+    />
+  </g>
+
+  <circle class="eye" cx="106" cy="140" r="3.2" />
+  <circle class="eye" cx="134" cy="140" r="3.2" />
+  <circle cx="86" cy="118" r="3" fill="currentColor" />
+  <circle cx="90" cy="128" r="3" fill="currentColor" />
+  <circle cx="94" cy="138" r="3" fill="currentColor" />
+</svg>

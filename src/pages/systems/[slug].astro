@@ -1,0 +1,340 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const systems = await getCollection('systems');
+  return systems.map(system => ({
+    params: { slug: system.slug },
+    props: system,
+  }));
+}
+
+const system = Astro.props;
+const { Content } = await system.render();
+---
+<Layout title={system.data.title}>
+  <article id="systems-article">
+    <header class="system-header">
+      <div>
+        <h1>{system.data.title}</h1>
+        <p class="description">{system.data.description}</p>
+      </div>
+      <div class="system-controls">
+        <span class="control-label">Layout</span>
+        <button id="systems-layout-toggle" class="layout-toggle" type="button" aria-pressed="false">
+          <span class="layout-label">Standard</span>
+        </button>
+      </div>
+    </header>
+    <div class="content-body">
+        <div class="content-main">
+            <Content />
+        </div>
+        <aside class="content-sidebar" aria-label="On-page navigation"></aside>
+    </div>
+  </article>
+</Layout>
+
+<script>
+  const initSystemsLayoutToggle = () => {
+    const toggle = document.getElementById('systems-layout-toggle');
+    if (!toggle) return;
+
+    const label = toggle.querySelector('.layout-label');
+    const storageKey = 'systemsLayout';
+
+    const setLayout = (layout) => {
+      document.documentElement.setAttribute('data-systems-layout', layout);
+      const isWide = layout === 'wide';
+      toggle.setAttribute('aria-pressed', String(isWide));
+      if (label) {
+        label.textContent = isWide ? 'Wide' : 'Standard';
+      }
+      initSystemsToc();
+    };
+
+    if (toggle.dataset.bound === 'true') {
+      return;
+    }
+    toggle.dataset.bound = 'true';
+
+    const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(storageKey) : null;
+    setLayout(saved || 'standard');
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-systems-layout') || 'standard';
+      const next = current === 'wide' ? 'standard' : 'wide';
+      setLayout(next);
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(storageKey, next);
+      }
+    });
+  };
+
+  const initSystemsToc = () => {
+    const toc = document.querySelector('.toc');
+    const anchor = document.getElementById('toc-anchor');
+    const sidebar = document.querySelector('.content-sidebar');
+    if (!toc || !anchor || !sidebar) return;
+
+    const mq = window.matchMedia('(min-width: 1200px)');
+    const placeToc = () => {
+      const isWide = document.documentElement.getAttribute('data-systems-layout') === 'wide';
+      if (mq.matches && isWide) {
+        if (!sidebar.contains(toc)) {
+          sidebar.appendChild(toc);
+        }
+      } else if (toc.previousElementSibling !== anchor) {
+        anchor.after(toc);
+      }
+    };
+
+    placeToc();
+    if (toc.dataset.bound === 'true') {
+      return;
+    }
+    toc.dataset.bound = 'true';
+    mq.addEventListener('change', placeToc);
+  };
+
+  initSystemsLayoutToggle();
+  initSystemsToc();
+  document.addEventListener('astro:page-load', () => {
+    initSystemsLayoutToggle();
+    initSystemsToc();
+  });
+  document.addEventListener('astro:after-swap', () => {
+    initSystemsLayoutToggle();
+    initSystemsToc();
+  });
+  document.addEventListener('astro:before-swap', () => {
+    document.documentElement.removeAttribute('data-systems-layout');
+  });
+</script>
+
+<style>
+    article {
+        max-width: 72ch;
+        margin: 0 auto;
+    }
+    .system-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+    .system-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-family: var(--font-mono);
+        color: var(--color-text-muted);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+    .layout-toggle {
+        border: 1px solid var(--color-border);
+        background: var(--color-bg);
+        color: var(--color-text-body);
+        padding: 0.35rem 0.9rem;
+        border-radius: 999px;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .layout-toggle:hover {
+        border-color: var(--color-accent);
+        transform: translateY(-1px);
+    }
+    .description {
+        font-size: 1.2rem;
+        color: var(--color-text-muted);
+        margin-bottom: 3rem;
+        border-left: 2px solid var(--color-border);
+        padding-left: 1.5rem;
+    }
+    .content-body {
+        font-size: 1.1rem;
+        line-height: 1.85;
+    }
+    .content-main {
+        min-width: 0;
+    }
+    .content-body h2 {
+        margin-top: 3rem;
+    }
+    .content-body h3 {
+        margin-top: 2.5rem;
+    }
+    .content-body p {
+        margin: 1.2rem 0;
+    }
+    .content-body ul,
+    .content-body ol {
+        padding-left: 1.5rem;
+        margin: 1rem 0 1.5rem;
+    }
+    .content-body li {
+        margin-bottom: 0.5rem;
+    }
+    .content-body a {
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+    }
+    .content-body figure {
+        margin: 2rem 0;
+    }
+    .content-body figcaption {
+        color: var(--color-text-muted);
+        font-size: 0.95rem;
+        margin-top: 0.75rem;
+    }
+    .content-body .diagram {
+        border: 1px solid var(--color-border);
+        border-radius: 14px;
+        padding: 1.25rem;
+        background: rgba(0, 0, 0, 0.02);
+    }
+    .content-body .diagram-hero {
+        padding: 1.5rem;
+    }
+    .content-body .callout {
+        border: 1px solid var(--color-border);
+        border-left: 4px solid var(--color-accent);
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        background: rgba(0, 0, 0, 0.03);
+        margin: 1.5rem 0;
+    }
+    .content-body .callout p {
+        margin: 0;
+    }
+    .content-body .definition-list {
+        display: grid;
+        grid-template-columns: minmax(140px, 1fr) 3fr;
+        gap: 0.5rem 1.5rem;
+        margin: 1.5rem 0 2rem;
+    }
+    .content-body .definition-list dt {
+        font-weight: 600;
+        color: var(--color-text-heading);
+    }
+    .content-body .definition-list dd {
+        margin: 0;
+        color: var(--color-text-body);
+    }
+    .content-body .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0 2.5rem;
+        font-size: 0.98rem;
+    }
+    .content-body .comparison-table th,
+    .content-body .comparison-table td {
+        border: 1px solid var(--color-border);
+        padding: 0.75rem 0.9rem;
+        text-align: left;
+        vertical-align: top;
+    }
+    .content-body .comparison-table th {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--color-text-muted);
+        background: rgba(0, 0, 0, 0.02);
+    }
+    .content-body .toc {
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin: 1.5rem 0 2rem;
+        background: rgba(0, 0, 0, 0.02);
+    }
+    .content-body .toc-title {
+        margin: 0;
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        color: var(--color-text-heading);
+    }
+    .content-body .toc ol {
+        margin: 0.75rem 0 0;
+    }
+    .content-body .toc a {
+        text-decoration: none;
+    }
+    .content-body .toc a:hover {
+        text-decoration: underline;
+    }
+    .content-body .keyword {
+        background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+        border-radius: 6px;
+        padding: 0 0.25em;
+    }
+    .content-body .references {
+        margin-top: 1.5rem;
+    }
+    .content-body .references-list {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        padding-left: 1.25rem;
+        column-gap: 2.5rem;
+    }
+    .content-body .references-list li {
+        margin-bottom: 0.85rem;
+        break-inside: avoid;
+    }
+    .content-body .ref-title {
+        display: block;
+        color: var(--color-text-body);
+        margin-bottom: 0.2rem;
+    }
+    .content-body .ref-link {
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        color: var(--color-text-muted);
+        word-break: break-word;
+    }
+    .content-body .ref-link:hover {
+        color: var(--color-accent);
+    }
+    @media (min-width: 960px) {
+        .content-body .references-list {
+            columns: 2;
+        }
+    }
+    @media (min-width: 1200px) {
+        :global(html[data-systems-layout='wide'] main) {
+            max-width: 1080px;
+        }
+        :global(html[data-systems-layout='wide'] #systems-article) {
+            max-width: none;
+        }
+        :global(html[data-systems-layout='wide'] .content-body) {
+            display: flex;
+            align-items: flex-start;
+            gap: 2.5rem;
+        }
+        :global(html[data-systems-layout='wide'] .content-main) {
+            flex: 1 1 auto;
+        }
+        :global(html[data-systems-layout='wide'] .content-sidebar) {
+            flex: 0 0 220px;
+            position: sticky;
+            top: 2.5rem;
+            align-self: flex-start;
+        }
+        :global(html[data-systems-layout='wide'] .toc) {
+            margin: 0;
+        }
+    }
+    @media (max-width: 640px) {
+        .content-body .definition-list {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import { sortedByDate } from '@/utils';
+import Layout from '@/layouts/Layout.astro';
+
+const selfEntries = await getCollection('self');
+const sortedSelf = sortedByDate(selfEntries);
+---
+
+<Layout title="Self | A Thinking Workspace">
+  <section class="self-page">
+    <h1>Self</h1>
+    <p>
+      A collection of thoughts on self-awakening, improvement, discovery, and existentialism.
+    </p>
+    <ul class="self-list">
+      {sortedSelf.map(entry => (
+        <li>
+          <a href={`/self/${entry.slug}`}>{entry.data.title}</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Layout>
+
+<style>
+  .self-page p:first-of-type::first-letter {
+    float: none;
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+  }
+  .self-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+  }
+  .self-list li + li {
+    margin-top: 0.75rem;
+  }
+  .self-list a {
+    font-size: 1.05rem;
+  }
+</style>

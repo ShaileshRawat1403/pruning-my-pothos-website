@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const sentences = await getCollection('sentences');
+  return sentences.map(sentence => ({
+    params: { slug: sentence.slug },
+    props: sentence,
+  }));
+}
+
+const sentence = Astro.props;
+const { Content } = await sentence.render();
+---
+<Layout title={sentence.data.title}>
+  <div class="sentence-detail-container">
+    <div class="sentence-detail">
+      <h1>{sentence.data.title}</h1>
+      <div class="sentence-content">
+        <Content />
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .sentence-detail-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+  }
+  .sentence-detail {
+    max-width: 760px;
+    border-left: 3px solid var(--color-accent);
+    padding: 2rem;
+  }
+  .sentence-detail h1 {
+    font-family: var(--font-serif);
+    font-size: 2.3rem;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+  }
+  .sentence-content {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
+</style>

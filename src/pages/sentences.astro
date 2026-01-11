@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+
+const sentences = await getCollection('sentences');
+const sentenceColors = ['var(--color-sentence-1)', 'var(--color-sentence-2)', 'var(--color-sentence-3)'];
+---
+<Layout title="Sentences | A Thinking Workspace">
+  <h1>Sentences</h1>
+  
+  <div class="sentences-grid">
+    {sentences.map((sentence, index) => (
+        <a href={`/sentences/${sentence.slug}`} class="sentence-card" style={`background-color: ${sentenceColors[index % sentenceColors.length]}`}>
+            {sentence.data.title}
+        </a>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .sentences-grid {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  .sentence-card {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    line-height: 1.6;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 2rem;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-text-body);
+    text-decoration: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .sentence-card:hover {
+      border-color: var(--color-accent);
+      color: var(--color-text-body);
+  }
+</style>

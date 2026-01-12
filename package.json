@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "deploy:zip": "npm run build && rm -f site.zip && cd dist && zip -r ../site.zip .",
     "preview": "astro preview",
     "astro": "astro"
   },

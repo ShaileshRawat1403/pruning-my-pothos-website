@@ -1,79 +1,69 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
-
-const systems = await getCollection('systems');
-const systemColors = ['var(--color-sentence-1)', 'var(--color-sentence-2)', 'var(--color-sentence-3)'];
+import { systemCategories } from '../utils/systemCategories';
 ---
 <Layout title="Systems | A Thinking Workspace">
-  <h1>Systems</h1>
-  <p class="subtitle">Long-form thinking about frameworks, AI, documentation, and structure.</p>
+  <div class="section-head">
+    <h1>Systems</h1>
+    <p class="mode-line lead">How things are built and governed.</p>
+    <p class="subtitle">Long-form thinking about frameworks, AI, documentation, and structure.</p>
+  </div>
 
-  <div class="systems-grid">
-    {systems.map((system, index) => (
-        <div class="system-card" style={`background-color: ${systemColors[index % systemColors.length]}`}>
-            <h2>{system.data.title}</h2>
-            <p>{system.data.description}</p>
-            <a href={`/systems/${system.slug}`} class="read-more">Read more &rarr;</a>
-        </div>
+  <div class="systems-categories">
+    {systemCategories.map((category) => (
+      <a
+        class="systems-category-card"
+        href={`/systems/${category.slug}`}
+        style={`--category-tone: ${category.tone}`}
+      >
+        <h2>{category.title}</h2>
+        <p>{category.description}</p>
+      </a>
     ))}
-    <div class="system-card placeholder">
-      <h2>Future System</h2>
-      <p>A placeholder for the next idea or framework to be explored and documented.</p>
-    </div>
   </div>
 </Layout>
 
 <style>
-    .subtitle {
-        color: var(--color-text-muted);
-        text-align: left;
-        margin-bottom: 4rem;
-        font-size: 1.1rem;
-    }
-  .systems-grid {
+  .systems-categories {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.75rem;
   }
-  .system-card {
-    background-color: transparent;
+  .systems-category-card {
     border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 2rem;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
-    color: var(--color-text-body);
+    border-radius: 16px;
+    padding: 1.75rem;
+    background: color-mix(in srgb, var(--category-tone) 28%, var(--color-bg));
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0.6rem;
   }
-  .system-card:hover {
-      border-color: var(--color-accent);
+  .systems-category-card:hover {
+    background: color-mix(in srgb, var(--category-tone) 40%, var(--color-bg));
+    border-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-border));
+    transform: translateY(-2px);
   }
-  .system-card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--color-text-heading);
+  .systems-category-card h2 {
+    font-size: 1.35rem;
+    margin: 0;
+    min-height: 3.6em;
+    line-height: 1.2;
   }
-  .system-card p {
+  .systems-category-card p {
     color: var(--color-text-muted);
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.98rem;
+    margin: 0;
+    min-height: 4.8em;
+    line-height: 1.5;
   }
-  .system-card.placeholder {
-      background: repeating-linear-gradient(
-          -45deg,
-          rgba(128, 128, 128, 0.05),
-          rgba(128, 128, 128, 0.05) 10px,
-          rgba(128, 128, 128, 0.08) 10px,
-          rgba(128, 128, 128, 0.08) 20px
-      );
-      border-style: dashed;
-  }
-  .read-more {
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      color: var(--color-accent);
-      text-decoration: none;
-  }
-  .read-more:hover {
-      text-decoration: underline;
+  @media (max-width: 1000px) {
+    .systems-categories {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

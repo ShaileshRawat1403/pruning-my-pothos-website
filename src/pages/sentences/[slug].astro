@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import TagList from '@/components/TagList.astro';
+import ContinueBlock from '@/components/ContinueBlock.astro';
+import { getAdjacentEntries, getRelatedEntries } from '@/utils/navigation';
 
 export async function getStaticPaths() {
   const sentences = await getCollection('sentences');
@@ -13,6 +15,13 @@ export async function getStaticPaths() {
 
 const sentence = Astro.props;
 const { Content } = await sentence.render();
+const sentences = await getCollection('sentences');
+const { previous, next } = getAdjacentEntries(sentences, sentence.slug);
+const relatedEntries = getRelatedEntries(sentences, sentence.slug, sentence.data.tags, 2);
+const toLink = (entry) => ({ title: entry.data.title, href: `/sentences/${entry.slug}` });
+const previousLink = previous ? toLink(previous) : null;
+const nextLink = next ? toLink(next) : null;
+const relatedLinks = relatedEntries.map(toLink);
 ---
 <Layout title={sentence.data.title}>
   <div class="sentence-detail-container">
@@ -22,6 +31,13 @@ const { Content } = await sentence.render();
       <div class="sentence-content">
         <Content />
       </div>
+      <ContinueBlock
+        sectionLabel="/sentences"
+        sectionHref="/sentences"
+        previous={previousLink}
+        next={nextLink}
+        related={relatedLinks}
+      />
     </div>
   </div>
 </Layout>

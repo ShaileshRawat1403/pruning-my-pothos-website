@@ -25,6 +25,7 @@ const systemsCollection = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
+        category: z.enum(['Explanations', 'Concepts', 'How-things-fit-together']),
         tags: tagSchema,
     }),
 });

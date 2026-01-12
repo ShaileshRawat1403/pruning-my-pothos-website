@@ -1,6 +1,7 @@
 ---
 title: 'A Simple Tokenizer'
 description: 'Exploring the task of tokenization in NLP, from simple rule-based systems to more complex solutions like Byte-Pair Encoding (BPE)...'
+category: 'How-things-fit-together'
 tags:
   - language
   - systems

@@ -1,6 +1,7 @@
 ---
 title: 'Systems 001: Foundations'
-description: 'A technical field guide to systems as the infrastructure of evolution and communication, from boundaries and feedback to socio-technical layers.'
+description: '<span class="highlight">A technical field guide to systems</span> as the infrastructure of evolution and communication, from boundaries and feedback to socio-technical layers.'
+category: 'Concepts'
 tags:
   - systems
   - foundations
@@ -10,7 +11,7 @@ tags:
 
 > **Key takeaways**
 > - A system is a set of interconnected parts that forms a unified whole.
-> - Boundaries, interfaces, and feedback loops determine behavior more than any single component.
+> - Boundaries, interfaces, and <span class="highlight">feedback loops</span> determine behavior more than any single component.
 > - Systems fail predictably through drift, metric capture, and variety mismatch.
 > - Resilient systems recover because they sense, adapt, and learn.
 > - By 2026, most real systems are socio-technical: human intent and machine execution are interdependent.
@@ -127,7 +128,7 @@ Systems fail in recognizable patterns. The most common is <span class="keyword">
 
 A third failure mode is <span class="keyword">variety mismatch</span>. Ashby's Law of Requisite Variety states that a system must have at least as much internal variety as the environment it needs to control. If the environment is more complex than the system, the system becomes unstable or irrelevant ([Ashby, 1956](http://pespmc1.vub.ac.be/books/ashby.pdf)). This is why simple automation breaks in complex domains, and why human oversight remains essential in high-variance decisions.
 
-Resilience is the counter-strategy. <span class="keyword">Resilient systems</span> do not just avoid failure; they are designed to recover and learn. That is why modern systems emphasize observability, incident response, and postmortems as core features rather than afterthoughts. In a socio-technical system, resilience is cultural as well as technical: people must be able to interpret the system's signals and act on them without delay.
+Resilience is the counter-strategy. <span class="highlight">Resilient systems</span> do not just avoid failure; they are designed to recover and learn. That is why modern systems emphasize observability, incident response, and postmortems as core features rather than afterthoughts. In a socio-technical system, resilience is cultural as well as technical: people must be able to interpret the system's signals and act on them without delay.
 
 <table class="comparison-table">
   <thead>
@@ -197,7 +198,7 @@ These numbers are not trivia. They are signals of the scale at which systems now
 
 ## 2026: the socio-technical merge
 
-By 2026, the old divide between "people" and "software" has evolved into a unified socio-technical system: an interdependent mesh of human intent, organizational culture, and machine execution. The idea is not new, but the scale and speed are new ([Trist & Bamforth, 1951](https://journals.sagepub.com/doi/10.1177/001872675100400101)).
+By 2026, the old divide between "people" and "software" has evolved into a <span class="highlight">unified socio-technical system</span>: an interdependent mesh of human intent, organizational culture, and machine execution. The idea is not new, but the scale and speed are new ([Trist & Bamforth, 1951](https://journals.sagepub.com/doi/10.1177/001872675100400101)).
 
 This shift matters because it changes what technical work is. You are no longer documenting just code. You are documenting a composite system where algorithms, teams, and governance are part of a single operating loop.
 
@@ -278,7 +279,7 @@ Two patterns define the 2026 socio-technical layer:
 
 ## Systems thinking in business strategy
 
-Systems thinking is not just an academic exercise; it is a practical tool for business strategy. Organizations are systems: departments, customers, partners, and incentives are components that interact through processes and feedback loops.
+<span class="highlight">Systems thinking</span> is not just an academic exercise; it is a practical tool for business strategy. Organizations are systems: departments, customers, partners, and incentives are components that interact through processes and feedback loops.
 
 Applied well, systems thinking helps leaders:
 
@@ -371,7 +372,7 @@ So the technical goal is not just to build systems that work, but systems that a
 
 ## Conclusion
 
-Systems are everywhere, from the natural world to the digital tools we use every day. By understanding the core principles of systems thinking, we can better interpret the world and make more informed decisions. The future is complex and interconnected, and systems thinking is an essential skill for navigating it. The system is the message, and the message is that we are all part of a larger whole.
+Systems are everywhere, from the natural world to the digital tools we use every day. By understanding the core principles of <span class="highlight">systems thinking</span>, we can better interpret the world and make more informed decisions. The future is complex and interconnected, and systems thinking is an essential skill for navigating it. <span class="highlight">The system is the message</span>, and the message is that we are all part of a larger whole.
 
 ---
 
@@ -446,3 +447,12 @@ Systems are everywhere, from the natural world to the digital tools we use every
     </li>
   </ol>
 </div>
+
+<!-- Adding style for marker effect -->
+<style>
+  .highlight {
+    background: linear-gradient(180deg, transparent 65%, color-mix(in srgb, var(--color-accent) 40%, transparent) 0);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+</style>

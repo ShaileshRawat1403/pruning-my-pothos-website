@@ -1,6 +1,7 @@
 ---
 title: 'On Mental Frameworks'
 description: 'A system is a set of interacting or interdependent components forming an integrated whole. In thinking, this is a model that allows us to simplify complexity...'
+category: 'Explanations'
 tags:
   - systems
   - frameworks

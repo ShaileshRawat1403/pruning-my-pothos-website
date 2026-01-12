@@ -3,10 +3,12 @@ import Layout from '@/layouts/Layout.astro';
 ---
 
 <Layout title="Shelf | A Thinking Workspace">
-  <h1>Shelf</h1>
-  <p>
-    A collection of my favorite books, movies, and music.
-  </p>
+  <div class="section-head">
+    <h1>Shelf</h1>
+    <p class="subtitle lead">
+      A collection of my favorite books, movies, and music.
+    </p>
+  </div>
   <div class="card-grid shelf-grid">
     <a href="/shelf/books" class="card shelf-card">
       <div class="card-content">
@@ -34,9 +36,3 @@ import Layout from '@/layouts/Layout.astro';
     </a>
   </div>
 </Layout>
-
-<style>
-  .shelf-grid {
-    margin-top: 2.5rem;
-  }
-</style>

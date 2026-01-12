@@ -9,10 +9,12 @@ const sortedSelf = sortedByDate(selfEntries);
 
 <Layout title="Self | A Thinking Workspace">
   <section class="self-page">
-    <h1>Self</h1>
-    <p>
-      A collection of thoughts on self-awakening, improvement, discovery, and existentialism.
-    </p>
+    <div class="section-head">
+      <h1>Self</h1>
+      <p class="subtitle lead">
+        A collection of thoughts on self-awakening, improvement, discovery, and existentialism.
+      </p>
+    </div>
     <ul class="self-list">
       {sortedSelf.map(entry => (
         <li>
@@ -24,21 +26,31 @@ const sortedSelf = sortedByDate(selfEntries);
 </Layout>
 
 <style>
-  .self-page p:first-of-type::first-letter {
-    float: none;
-    font-size: inherit;
-    line-height: inherit;
-    margin: 0;
-  }
   .self-list {
     list-style: none;
     padding: 0;
     margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
   }
   .self-list li + li {
-    margin-top: 0.75rem;
+    margin-top: 0;
   }
   .self-list a {
     font-size: 1.05rem;
+    display: block;
+    padding: 1.25rem 1.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-blockquote-bg);
+    color: var(--color-text-body);
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .self-list a:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
   }
 </style>

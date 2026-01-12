@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import type { CollectionEntry } from 'astro:content';
 import TagList from '@/components/TagList.astro';
+import ContinueBlock from '@/components/ContinueBlock.astro';
+import { getAdjacentEntries, getRelatedEntries } from '@/utils/navigation';
 
 export async function getStaticPaths() {
   const selfEntries = await getCollection('self');
@@ -18,6 +20,13 @@ interface Props {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+const selfEntries = await getCollection('self');
+const { previous, next } = getAdjacentEntries(selfEntries, entry.slug);
+const relatedEntries = getRelatedEntries(selfEntries, entry.slug, entry.data.tags, 2);
+const toLink = (item) => ({ title: item.data.title, href: `/self/${item.slug}` });
+const previousLink = previous ? toLink(previous) : null;
+const nextLink = next ? toLink(next) : null;
+const relatedLinks = relatedEntries.map(toLink);
 ---
 
 <Layout title={`${entry.data.title} | A Thinking Workspace`}>
@@ -28,6 +37,13 @@ const { Content } = await entry.render();
       <TagList tags={entry.data.tags} />
     </header>
     <Content />
+    <ContinueBlock
+      sectionLabel="/self"
+      sectionHref="/self"
+      previous={previousLink}
+      next={nextLink}
+      related={relatedLinks}
+    />
   </article>
 </Layout>
 

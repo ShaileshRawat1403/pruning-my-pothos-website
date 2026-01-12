@@ -46,7 +46,7 @@ const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
         <a class="skip-link" href="#main-content">Skip to content</a>
         <nav class="global-nav">
             <a href="/" class="nav-logo" aria-label="Home" set:html={logo}></a>
-            <div class="nav-links">
+            <div id="primary-navigation" class="nav-links" aria-label="Primary">
                 <a href="/systems" class:list={[{ active: pathname.startsWith('/systems') }]}>/systems</a>
                 <a href="/sentences" class:list={[{ active: pathname.startsWith('/sentences') }]}>/sentences</a>
                 <a href="/sticky-notes" class:list={[{ active: pathname.startsWith('/sticky-notes') }]}>/sticky-notes</a>
@@ -55,6 +55,17 @@ const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
                 <a href="/about" class:list={[{ active: pathname === '/about' }]}>/about</a>
             </div>
             <div class="nav-actions">
+                <button
+                    id="nav-toggle"
+                    class="nav-toggle"
+                    title="Menu"
+                    aria-label="Open menu"
+                    aria-controls="primary-navigation"
+                    aria-expanded="false"
+                >
+                    <span class="nav-toggle-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Toggle menu</span>
+                </button>
                 <button id="search-toggle" title="Search" aria-label="Open search">
                     <span class="icon-placeholder" set:html={searchIcon}></span>
                 </button>
@@ -239,6 +250,68 @@ const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
             initSearch();
             document.addEventListener('astro:page-load', initSearch);
             document.addEventListener('astro:after-swap', initSearch);
+        </script>
+        <script>
+            const initMobileNav = () => {
+                const nav = document.querySelector('.global-nav');
+                const navToggle = document.getElementById('nav-toggle');
+                const navLinks = document.getElementById('primary-navigation');
+
+                if (!nav || !navToggle || !navLinks) return;
+
+                const closeNav = () => {
+                    nav.dataset.open = 'false';
+                    navToggle.setAttribute('aria-expanded', 'false');
+                    navToggle.setAttribute('aria-label', 'Open menu');
+                };
+
+                const openNav = () => {
+                    nav.dataset.open = 'true';
+                    navToggle.setAttribute('aria-expanded', 'true');
+                    navToggle.setAttribute('aria-label', 'Close menu');
+                };
+
+                if (navToggle.dataset.bound === 'true') {
+                    return;
+                }
+                navToggle.dataset.bound = 'true';
+
+                navToggle.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const isOpen = nav.dataset.open === 'true';
+                    if (isOpen) {
+                        closeNav();
+                    } else {
+                        openNav();
+                    }
+                });
+
+                navLinks.addEventListener('click', (event) => {
+                    const target = event.target;
+                    if (target instanceof Element && target.closest('a')) {
+                        closeNav();
+                    }
+                });
+
+                document.addEventListener('click', (event) => {
+                    const target = event.target;
+                    if (!(target instanceof Node)) return;
+                    if (nav.contains(target)) return;
+                    closeNav();
+                });
+
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') {
+                        closeNav();
+                    }
+                });
+
+                document.addEventListener('astro:after-swap', closeNav);
+            };
+
+            initMobileNav();
+            document.addEventListener('astro:page-load', initMobileNav);
+            document.addEventListener('astro:after-swap', initMobileNav);
         </script>
 	</body>
 	</html>

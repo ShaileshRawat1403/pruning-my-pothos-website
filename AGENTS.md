@@ -30,6 +30,7 @@ Instructions for CLI agents working in this repo.
 - Tables should use the `comparison-table` class so grid lines render.
 - Diagrams, when needed, should be small inline SVGs in the body (no external assets).
 - Do not add inline CSS inside Markdown.
+- Systems docs are MDX (`.mdx`) so inline SVG/HTML renders correctly.
 
 ## Navigation + interlinking
 - End-of-article "Continue" block should stay consistent across types.

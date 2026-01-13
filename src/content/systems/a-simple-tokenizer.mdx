@@ -21,13 +21,13 @@ tags:
     <title id="token-hero-title">Text to Numbers Pipeline</title>
     <desc id="token-hero-desc">Visualizing the transformation of the phrase 'AI is math' into tokens and then IDs.</desc>
 
-    <!-- Input Text -->
+    {/* Input Text */}
     <text x="100" y="135" font-family="var(--font-serif)" font-size="24" fill="currentColor">"AI is math"</text>
 
-    <!-- Arrow 1 -->
+    {/* Arrow 1 */}
     <path d="M 220 130 H 280" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
 
-    <!-- Tokenization (Splitting) -->
+    {/* Tokenization (Splitting) */}
     <g transform="translate(300, 100)">
       <rect x="0" y="0" width="50" height="60" rx="4" fill="var(--color-bg)" stroke="var(--color-accent)" stroke-width="2" />
       <text x="25" y="35" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">AI</text>
@@ -39,10 +39,10 @@ tags:
       <text x="155" y="35" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">math</text>
     </g>
 
-    <!-- Arrow 2 -->
+    {/* Arrow 2 */}
     <path d="M 500 130 H 560" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
 
-    <!-- IDs (Integers) -->
+    {/* IDs (Integers) */}
     <g transform="translate(580, 100)">
       <rect x="0" y="0" width="60" height="60" rx="4" fill="var(--color-blockquote-bg)" stroke="currentColor" stroke-width="2" />
       <text x="30" y="35" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">1045</text>
@@ -98,6 +98,16 @@ But the word "Smartification" (a made-up word) might be split into three tokens:
 3.  `cation` (ID: `1102`)
 
 The model processes these three integers in sequence. It learns that `5421` followed by `892` usually implies a transformation of the concept "Smart".
+
+Here is a **toy tokenizer** you can run locally. It is not BPE, but it shows the idea of splitting text into chunks.
+
+```python
+import re
+
+text = "Smartification!"
+tokens = re.findall(r"[A-Za-z]+|[^A-Za-z\\s]", text)
+print(tokens)
+```
 
 ## The Reality: Subword Tokenization
 

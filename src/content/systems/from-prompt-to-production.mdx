@@ -22,32 +22,32 @@ tags:
     <desc id="checklist-hero-desc">A stepped path showing Intent, Risk, Interface, Validate, Monitor, and Fallback.</desc>
     <line x1="100" y1="130" x2="800" y2="130" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
 
-    <!-- Step 1 -->
+    {/* Step 1 */}
     <circle cx="150" cy="130" r="20" fill="var(--color-bg)" stroke="currentColor" stroke-width="2" />
     <text x="150" y="135" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">1</text>
     <text x="150" y="170" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">Intent</text>
 
-    <!-- Step 2 -->
+    {/* Step 2 */}
     <circle cx="270" cy="130" r="20" fill="var(--color-bg)" stroke="currentColor" stroke-width="2" />
     <text x="270" y="135" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">2</text>
     <text x="270" y="170" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">Risk</text>
 
-    <!-- Step 3 -->
+    {/* Step 3 */}
     <circle cx="390" cy="130" r="20" fill="var(--color-bg)" stroke="currentColor" stroke-width="2" />
     <text x="390" y="135" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">3</text>
     <text x="390" y="170" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">Interface</text>
 
-    <!-- Step 4 -->
+    {/* Step 4 */}
     <circle cx="510" cy="130" r="20" fill="var(--color-bg)" stroke="currentColor" stroke-width="2" />
     <text x="510" y="135" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">4</text>
     <text x="510" y="170" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">Validate</text>
 
-    <!-- Step 5 -->
+    {/* Step 5 */}
     <circle cx="630" cy="130" r="20" fill="var(--color-bg)" stroke="currentColor" stroke-width="2" />
     <text x="630" y="135" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">5</text>
     <text x="630" y="170" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">Monitor</text>
 
-    <!-- Step 6 -->
+    {/* Step 6 */}
     <circle cx="750" cy="130" r="20" fill="var(--color-accent)" stroke="none" />
     <text x="750" y="135" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="#fff">6</text>
     <text x="750" y="170" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--color-accent)">Fallback</text>
@@ -102,6 +102,23 @@ Natural language is fluid, but your business systems are not. Define the structu
 
 Forcing the model to output structured data (JSON) is the single best way to make it reliable for software integration.
 
+Here is a simple **prompt contract** you can copy into your docs or configs:
+
+```yaml
+intent: summarize_support_ticket
+inputs:
+  - id: ticket_body
+    type: string
+outputs:
+  - id: summary
+    type: string
+  - id: sentiment
+    type: string
+constraints:
+  max_words: 120
+  pii: disallow
+```
+
 ## 4. Validate (The Eval)
 
 Do not deploy until you have run your prompt against at least 50 examples.
@@ -134,13 +151,13 @@ Probabilistic systems **will** fail. You need a plan for when (not if) that happ
     <polygon points="220,80 270,40 320,80 270,120" fill="var(--color-blockquote-bg)" stroke="currentColor" stroke-width="2" />
     <text x="270" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="currentColor">Confidence?</text>
 
-    <!-- High Path -->
+    {/* High Path */}
     <path d="M 320 80 H 400" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
     <text x="360" y="70" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--color-text-muted)">High</text>
     <rect x="400" y="60" width="120" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2" />
     <text x="460" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">User</text>
 
-    <!-- Low Path -->
+    {/* Low Path */}
     <path d="M 270 120 V 140 H 400" stroke="var(--color-accent)" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
     <text x="300" y="155" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--color-accent)">Low</text>
     <rect x="400" y="120" width="120" height="40" rx="4" fill="none" stroke="var(--color-accent)" stroke-width="2" />

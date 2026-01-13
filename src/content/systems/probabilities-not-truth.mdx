@@ -21,7 +21,7 @@ tags:
     <title id="prob-hero-title">Likelihood vs Truth</title>
     <desc id="prob-hero-desc">A comparison between a Database (Truth lookup) and an LLM (Probability roll).</desc>
 
-    <!-- Left: Database -->
+    {/* Left: Database */}
     <g transform="translate(50, 40)">
       <text x="100" y="20" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor" font-weight="bold">Database (Truth)</text>
       <rect x="20" y="40" width="160" height="100" rx="4" fill="none" stroke="currentColor" stroke-width="2" />
@@ -33,17 +33,17 @@ tags:
       <path d="M 100 130 V 150" stroke="currentColor" stroke-width="2" marker-start="url(#arrowhead)" />
     </g>
 
-    <!-- Divider -->
+    {/* Divider */}
     <line x1="300" y1="20" x2="300" y2="240" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4" />
 
-    <!-- Right: LLM -->
+    {/* Right: LLM */}
     <g transform="translate(350, 40)">
       <text x="250" y="20" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor" font-weight="bold">LLM (Probability)</text>
 
-      <!-- Input -->
+      {/* Input */}
       <text x="50" y="100" font-family="var(--font-serif)" font-size="18" fill="currentColor">"The first person on Mars was"</text>
 
-      <!-- Probabilities -->
+      {/* Probabilities */}
       <g transform="translate(300, 60)">
         <rect x="0" y="0" width="180" height="30" rx="4" fill="var(--color-blockquote-bg)" stroke="none" />
         <rect x="0" y="0" width="90" height="30" rx="4" fill="var(--color-accent)" opacity="0.3" />
@@ -58,10 +58,10 @@ tags:
         <text x="10" y="100" font-family="var(--font-mono)" font-size="12" fill="currentColor">Elon Musk (20%)</text>
       </g>
 
-      <!-- Arrow -->
+      {/* Arrow */}
       <path d="M 260 75 H 290" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
 
-      <!-- Result -->
+      {/* Result */}
       <text x="390" y="150" text-anchor="middle" font-family="var(--font-serif)" font-size="18" fill="var(--color-accent)" font-style="italic">"John Boone"</text>
       <text x="390" y="170" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--color-text-muted)">(Plausible, but fiction)</text>
     </g>

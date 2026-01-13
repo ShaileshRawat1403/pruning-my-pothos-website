@@ -22,16 +22,16 @@ tags:
     <title id="model-hero-title">The Prediction Engine</title>
     <desc id="model-hero-desc">A visualization showing input text entering a matrix of numbers and outputting a probability distribution for the next word.</desc>
 
-    <!-- Input -->
+    {/* Input */}
     <text x="50" y="135" font-family="var(--font-serif)" font-size="20" fill="currentColor">"The sky is"</text>
     <path d="M 160 130 H 220" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
 
-    <!-- The Model (Black Box / Matrix) -->
+    {/* The Model (Black Box / Matrix) */}
     <rect x="220" y="60" width="200" height="140" rx="8" fill="var(--color-bg)" stroke="currentColor" stroke-width="2" />
     <text x="320" y="90" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">The Model</text>
     <text x="320" y="110" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--color-text-muted)">(Billions of weights)</text>
 
-    <!-- Matrix visualization -->
+    {/* Matrix visualization */}
     <g transform="translate(250, 130)" opacity="0.5">
         <rect x="0" y="0" width="10" height="10" fill="currentColor" />
         <rect x="20" y="0" width="10" height="10" fill="currentColor" opacity="0.6" />
@@ -41,10 +41,10 @@ tags:
         <rect x="40" y="20" width="10" height="10" fill="currentColor" opacity="0.9" />
     </g>
 
-    <!-- Arrow -->
+    {/* Arrow */}
     <path d="M 420 130 H 480" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
 
-    <!-- Probabilities -->
+    {/* Probabilities */}
     <g transform="translate(480, 60)">
         <rect x="0" y="10" width="180" height="30" rx="4" fill="var(--color-blockquote-bg)" stroke="none" />
         <rect x="0" y="10" width="160" height="30" rx="4" fill="var(--color-accent)" opacity="0.2" />
@@ -59,7 +59,7 @@ tags:
         <text x="10" y="110" font-family="var(--font-mono)" font-size="14" fill="currentColor">limit (1%)</text>
     </g>
 
-    <!-- Selection -->
+    {/* Selection */}
     <path d="M 670 85 H 730" stroke="var(--color-accent)" stroke-width="2" marker-end="url(#arrowhead)" />
     <text x="750" y="90" font-family="var(--font-serif)" font-size="20" fill="var(--color-accent)">"blue"</text>
 
@@ -130,7 +130,7 @@ This is what happens when you use ChatGPT. The model is "frozen." It takes your 
     <title id="lifecycle-title">Training vs Inference</title>
     <desc id="lifecycle-desc">Comparison of Training (Massive data -> Static Model) and Inference (Prompt -> Output).</desc>
 
-    <!-- Training Side -->
+    {/* Training Side */}
     <g transform="translate(50, 40)">
         <text x="100" y="20" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor" font-weight="bold">Training</text>
         <rect x="0" y="40" width="200" height="100" rx="8" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
@@ -140,10 +140,10 @@ This is what happens when you use ChatGPT. The model is "frozen." It takes your 
         <text x="300" y="95" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="#fff">Model</text>
     </g>
 
-    <!-- Divider -->
+    {/* Divider */}
     <line x1="450" y1="20" x2="450" y2="180" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" />
 
-    <!-- Inference Side -->
+    {/* Inference Side */}
     <g transform="translate(500, 40)">
         <text x="100" y="20" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor" font-weight="bold">Inference</text>
         <rect x="20" y="60" width="80" height="60" rx="4" fill="var(--color-accent)" stroke="none" opacity="0.5" />

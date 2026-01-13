@@ -1,0 +1,150 @@
+---
+title: "Training, Fine-Tuning, and Inference"
+description: "Clarifying the AI lifecycle. Why you probably don't need to train a model, and where business value is actually created."
+category: "Concepts"
+tags:
+  - training
+  - inference
+  - fine-tuning
+  - lifecycle
+---
+
+> **Key takeaways**
+>
+> - **Training** is the expensive process of teaching a model language patterns from scratch.
+> - **Fine-tuning** is adapting an existing model to a specific style or task.
+> - **Inference** is using the model to generate text. This is where 99% of business applications live.
+> - A model does not "learn" from your prompts during inference; it only uses them as temporary context.
+> - Most business customization happens via **Context (RAG)**, not training.
+
+<figure class="diagram diagram-hero">
+  <svg viewBox="0 0 900 260" role="img" aria-labelledby="lifecycle-hero-title lifecycle-hero-desc" style="width: 100%; height: auto; display: block;">
+    <title id="lifecycle-hero-title">The AI Lifecycle</title>
+    <desc id="lifecycle-hero-desc">Three stages: Pre-training (General Knowledge), Fine-tuning (Specialization), and Inference (Application).</desc>
+
+    <!-- Stage 1: Pre-training -->
+    <g transform="translate(50, 40)">
+      <text x="100" y="20" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--color-text-muted)">STAGE 1</text>
+      <text x="100" y="40" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor" font-weight="bold">Pre-training</text>
+      <rect x="20" y="60" width="160" height="100" rx="8" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
+      <text x="100" y="115" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">The Internet</text>
+      <text x="100" y="180" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--color-text-muted)">Months / $$$$</text>
+    </g>
+
+    <path d="M 220 110 H 260" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
+
+    <!-- Stage 2: Fine-tuning -->
+    <g transform="translate(270, 40)">
+      <text x="100" y="20" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--color-text-muted)">STAGE 2</text>
+      <text x="100" y="40" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor" font-weight="bold">Fine-tuning</text>
+      <rect x="20" y="60" width="160" height="100" rx="8" fill="var(--color-bg)" stroke="currentColor" stroke-width="2" />
+      <rect x="40" y="80" width="120" height="60" rx="4" fill="var(--color-accent)" opacity="0.1" />
+      <text x="100" y="115" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">Specialized Data</text>
+      <text x="100" y="180" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--color-text-muted)">Hours / $$</text>
+    </g>
+
+    <path d="M 440 110 H 480" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
+
+    <!-- Stage 3: Inference -->
+    <g transform="translate(490, 40)">
+      <text x="100" y="20" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--color-text-muted)">STAGE 3</text>
+      <text x="100" y="40" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor" font-weight="bold">Inference</text>
+      <rect x="20" y="60" width="160" height="100" rx="8" fill="var(--color-blockquote-bg)" stroke="currentColor" stroke-width="2" />
+      <text x="100" y="115" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">Your Prompt</text>
+      <text x="100" y="180" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--color-text-muted)">Milliseconds / ¢</text>
+    </g>
+
+    <!-- Output Arrow -->
+    <path d="M 660 110 H 700" stroke="var(--color-accent)" stroke-width="2" marker-end="url(#arrowhead)" />
+    <text x="750" y="115" text-anchor="middle" font-family="var(--font-serif)" font-size="18" fill="var(--color-accent)">Value</text>
+
+  </svg>
+  <figcaption>Most organizations only ever operate in Stage 3.</figcaption>
+</figure>
+
+There is a persistent myth that to use AI for your business, you need to "train" it on your data. This is almost always wrong.
+
+Understanding the difference between training, fine-tuning, and inference is critical for making the right architectural decisions. It is the difference between building a car engine (Training), tuning the suspension for a race (Fine-tuning), and driving to the grocery store (Inference).
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <ol>
+    <li><a href="#1-training-building-the-brain">1. Training: Building the Brain</a></li>
+    <li><a href="#2-fine-tuning-specialized-education">2. Fine-Tuning: Specialized Education</a></li>
+    <li><a href="#3-inference-the-runtime">3. Inference: The Runtime</a></li>
+    <li><a href="#why-you-probably-dont-need-to-train">Why You Probably Don't Need to Train</a></li>
+    <li><a href="#what-this-changes-in-practice">What This Changes in Practice</a></li>
+  </ol>
+</nav>
+
+## 1. Training: Building the Brain
+
+**Pre-training** is the process of creating a base model (like GPT-4 or Claude). It involves feeding a neural network trillions of tokens of text from the internet.
+
+- **Goal:** Teach the model the structure of language, facts about the world, and reasoning patterns.
+- **Cost:** Millions of dollars.
+- **Outcome:** A "Base Model" that can predict the next word but has no specific personality or instruction-following ability.
+
+You will likely never do this.
+
+## 2. Fine-Tuning: Specialized Education
+
+**Fine-tuning** takes a base model and trains it further on a smaller, curated dataset.
+
+- **Goal:** Adapt the model to a specific task (e.g., writing code, speaking medical jargon) or style (e.g., "always answer in JSON").
+- **Cost:** Hundreds to thousands of dollars.
+- **Outcome:** A model that is better at _one thing_ but potentially worse at general tasks.
+
+Fine-tuning changes the model's weights. It is permanent. It is useful when you need the model to learn a new "grammar" or "behavior" that is too complex to explain in a prompt.
+
+## 3. Inference: The Runtime
+
+**Inference** is what happens when you send a prompt to ChatGPT or an API. The model is "frozen." It does not change. It simply processes your input and predicts the output.
+
+- **Goal:** Solve a specific problem right now.
+- **Cost:** Fractions of a cent per request.
+- **Outcome:** Immediate value.
+
+Crucially, **inference is stateless**. If you tell the model "My name is Sarah" in one chat, and then open a new chat, it does not know your name. It did not "learn" anything; it just held your name in its temporary working memory (context window) for that session.
+
+## Why You Probably Don't Need to Train
+
+Business leaders often say, "We need to train a model on our documents."
+
+What they usually mean is: "We need the model to _know_ about our documents."
+
+You do not achieve this by training. You achieve this by **Retrieval-Augmented Generation (RAG)**.
+
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Analogy</th>
+      <th>Best For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Training</strong></td>
+      <td>Sending a child to school for 12 years.</td>
+      <td>Creating a new foundation of intelligence.</td>
+    </tr>
+    <tr>
+      <td><strong>Fine-Tuning</strong></td>
+      <td>Sending a graduate to medical school.</td>
+      <td>Teaching specific jargon, style, or format.</td>
+    </tr>
+    <tr>
+      <td><strong>RAG (Context)</strong></td>
+      <td>Giving a doctor a patient's file to read.</td>
+      <td>Answering questions about specific, private data.</td>
+    </tr>
+  </tbody>
+</table>
+
+## What This Changes in Practice
+
+1.  **Stop asking for "training":** Ask for "context" or "knowledge retrieval."
+2.  **Use RAG for facts:** If you want the model to know your company policy, put the policy in the prompt (or use RAG). Do not fine-tune on it. Fine-tuning is for _behavior_, not _knowledge_.
+3.  **Treat prompts as transient:** Remember that nothing you type into the model sticks. If you want persistence, you must build it into your application layer (database), not the model layer.

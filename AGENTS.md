@@ -18,6 +18,19 @@ Instructions for CLI agents working in this repo.
 - Tags are first-class: update tags in content files and show tag chips consistently.
 - Avoid duplicate content files; keep only the fuller version.
 
+## Sticky notes rules (do not violate)
+- Sticky notes are micro‑notes (1–3 short lines). No essays.
+- Do not import assets or components in sticky notes (no `import`, no `<Image>`, no inline SVG).
+- Frontmatter allowed: `title`, `rotation`, `color`, optional `tags`. No other fields.
+- Keep the tone minimal; avoid blockquotes, headings, figures, or links.
+
+## Systems doc standards (match Systems 001)
+- Use plain‑text `description` in frontmatter (no HTML).
+- Keep the 3‑act structure with clear section headers and a short lead.
+- Tables should use the `comparison-table` class so grid lines render.
+- Diagrams, when needed, should be small inline SVGs in the body (no external assets).
+- Do not add inline CSS inside Markdown.
+
 ## Navigation + interlinking
 - End-of-article "Continue" block should stay consistent across types.
 - Keep links succinct; avoid long URLs in body text.

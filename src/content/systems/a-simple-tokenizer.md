@@ -1,0 +1,119 @@
+---
+title: "From Text to Tokens"
+description: "Explaining tokenization without the math. Why models don't read words, and why that matters for your prompts."
+category: "Explanations"
+tags:
+  - tokenization
+  - nlp
+  - foundations
+---
+
+> **Key takeaways**
+>
+> - **Tokenization** is the process of converting text into numbers (tokens) that a model can process.
+> - Models do not see characters or words; they see a sequence of <span class="highlight">integers</span>.
+> - A "token" is not always a word. It can be part of a word, a space, or a punctuation mark.
+> - This abstraction explains why models struggle with spelling ("Strawberry") and simple math.
+> - "Shorter" text is not always "simpler" for a model if it uses rare tokens.
+
+<figure class="diagram diagram-hero">
+  <svg viewBox="0 0 900 260" role="img" aria-labelledby="token-hero-title token-hero-desc" style="width: 100%; height: auto; display: block;">
+    <title id="token-hero-title">Text to Numbers Pipeline</title>
+    <desc id="token-hero-desc">Visualizing the transformation of the phrase 'AI is math' into tokens and then IDs.</desc>
+
+    <!-- Input Text -->
+    <text x="100" y="135" font-family="var(--font-serif)" font-size="24" fill="currentColor">"AI is math"</text>
+
+    <!-- Arrow 1 -->
+    <path d="M 220 130 H 280" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
+
+    <!-- Tokenization (Splitting) -->
+    <g transform="translate(300, 100)">
+      <rect x="0" y="0" width="50" height="60" rx="4" fill="var(--color-bg)" stroke="var(--color-accent)" stroke-width="2" />
+      <text x="25" y="35" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">AI</text>
+
+      <rect x="60" y="0" width="50" height="60" rx="4" fill="var(--color-bg)" stroke="var(--color-accent)" stroke-width="2" />
+      <text x="85" y="35" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">is</text>
+
+      <rect x="120" y="0" width="70" height="60" rx="4" fill="var(--color-bg)" stroke="var(--color-accent)" stroke-width="2" />
+      <text x="155" y="35" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">math</text>
+    </g>
+
+    <!-- Arrow 2 -->
+    <path d="M 500 130 H 560" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
+
+    <!-- IDs (Integers) -->
+    <g transform="translate(580, 100)">
+      <rect x="0" y="0" width="60" height="60" rx="4" fill="var(--color-blockquote-bg)" stroke="currentColor" stroke-width="2" />
+      <text x="30" y="35" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">1045</text>
+
+      <rect x="70" y="0" width="60" height="60" rx="4" fill="var(--color-blockquote-bg)" stroke="currentColor" stroke-width="2" />
+      <text x="100" y="35" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">318</text>
+
+      <rect x="140" y="0" width="60" height="60" rx="4" fill="var(--color-blockquote-bg)" stroke="currentColor" stroke-width="2" />
+      <text x="170" y="35" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">8921</text>
+    </g>
+
+    <text x="390" y="190" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--color-text-muted)">Tokenization</text>
+    <text x="680" y="190" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--color-text-muted)">Encoding</text>
+
+  </svg>
+  <figcaption>The machine never sees the words. It only sees the IDs.</figcaption>
+</figure>
+
+Before a Large Language Model (LLM) can "think," it must read. But computers cannot read text; they can only process numbers. The **Tokenizer** is the bridge component that chops human language into atomic units called tokens and assigns each one a unique integer ID.
+
+This seems like a trivial implementation detail, but it dictates the fundamental capabilities and limitations of the model.
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <ol>
+    <li><a href="#why-not-just-characters">Why Not Just Characters?</a></li>
+    <li><a href="#what-a-token-actually-looks-like">What a Token Actually Looks Like</a></li>
+    <li><a href="#the-reality-subword-tokenization">The Reality: Subword Tokenization</a></li>
+    <li><a href="#why-this-matters-for-systems">Why This Matters for Systems</a></li>
+  </ol>
+</nav>
+
+## Why Not Just Characters?
+
+We could map `a=1`, `b=2`, `c=3`. This is simple, but inefficient.
+
+- **Context window:** If every letter is a token, the sentence "The quick brown fox" is 19 tokens.
+- **Compute cost:** Attention mechanisms scale quadratically with sequence length. Longer sequences = much slower and more expensive models.
+
+Conversely, we could map every _word_ to a number. But English has hundreds of thousands of words, and new ones are invented daily. The vocabulary would be too large to compute efficiently.
+
+The solution is **Subword Tokenization**: break common words into whole tokens (`"apple"`) and rare words into chunks (`"un"`, `"friend"`, `"li"`, `"ness"`).
+
+## What a Token Actually Looks Like
+
+To a human, the word "Smart" is a single concept. To a tokenizer, it might be one token (ID: `5421`).
+
+But the word "Smartification" (a made-up word) might be split into three tokens:
+
+1.  `Smart` (ID: `5421`)
+2.  `ifi` (ID: `892`)
+3.  `cation` (ID: `1102`)
+
+The model processes these three integers in sequence. It learns that `5421` followed by `892` usually implies a transformation of the concept "Smart".
+
+## The Reality: Subword Tokenization
+
+Real systems (like GPT-4 or Claude) use algorithms like **Byte Pair Encoding (BPE)**. BPE starts with characters and iteratively merges the most frequent adjacent pairs until a target vocabulary size is reached.
+
+This explains why LLMs struggle with tasks that seem easy to humans:
+
+1.  **Spelling:** The model sees the token ID `12345` for "Strawberry". It does not inherently see the letters `r-r`. It has to memorize the spelling as a separate fact.
+2.  **Math:** The number `9.11` might be tokenized as `[9, ., 11]` while `9.9` is `[9, ., 9]`. To the model, `11` is "bigger" than `9`, so it might hallucinate that 9.11 is greater than 9.9.
+
+## Why This Matters for Systems
+
+When designing systems around LLMs, tokenization creates invisible constraints:
+
+- **Cost:** You pay per token. Verbose prompts cost more.
+- **Performance:** "Prompt Engineering" is often just finding words that tokenize into patterns the model recognizes more strongly.
+- **Security:** Some "jailbreaks" work by forcing the tokenizer to split forbidden words in ways that bypass safety filters (e.g., splitting "bomb" into "b-omb").
+
+Understanding the tokenizer means understanding the raw material of the intelligence you are orchestrating.

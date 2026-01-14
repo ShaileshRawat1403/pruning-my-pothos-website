@@ -63,17 +63,35 @@ This checklist is designed for **non-technical leaders** and **product owners** 
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
-  <ol>
-    <li><a href="#1-define-intent-the-contract">1. Define Intent (The Contract)</a></li>
-    <li><a href="#2-identify-risks-the-red-team">2. Identify Risks (The Red Team)</a></li>
-    <li><a href="#3-set-inputsoutputs-the-interface">3. Set Inputs/Outputs (The Interface)</a></li>
-    <li><a href="#4-validate-the-eval">4. Validate (The Eval)</a></li>
-    <li><a href="#5-monitor-drift-the-pulse">5. Monitor Drift (The Pulse)</a></li>
-    <li><a href="#6-human-fallback-the-safety-net">6. Human Fallback (The Safety Net)</a></li>
-  </ol>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#define-intent-the-contract">Define Intent (The Contract)</a></li>
+        <li><a href="#identify-risks-the-red-team">Identify Risks (The Red Team)</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#set-inputsoutputs-the-interface">Set Inputs/Outputs (The Interface)</a></li>
+        <li><a href="#validate-the-eval">Validate (The Eval)</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#monitor-drift-the-pulse">Monitor Drift (The Pulse)</a></li>
+        <li><a href="#human-fallback-the-safety-net">Human Fallback (The Safety Net)</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
 </nav>
 
-## 1. Define Intent (The Contract)
+## Act I: The fundamentals
+
+### Define Intent (The Contract)
 
 Before writing a prompt, write a sentence describing exactly what the AI should do—and what it should **not** do.
 
@@ -81,7 +99,7 @@ Before writing a prompt, write a sentence describing exactly what the AI should 
 - **Constraint:** "Do not invent details. If the ticket is unclear, state 'Unclear'."
 - **Persona:** "Act as a senior support agent."
 
-## 2. Identify Risks (The Red Team)
+### Identify Risks (The Red Team)
 
 What is the worst thing that could happen? Be specific.
 
@@ -93,7 +111,9 @@ What is the worst thing that could happen? Be specific.
   <p><strong>Action:</strong> Create a "Red Team" document where you try to break your own prompt. Feed it confusing, angry, or malicious inputs and see what happens.</p>
 </aside>
 
-## 3. Set Inputs/Outputs (The Interface)
+## Act II: The modern paradigm
+
+### Set Inputs/Outputs (The Interface)
 
 Natural language is fluid, but your business systems are not. Define the structure.
 
@@ -119,7 +139,7 @@ constraints:
   pii: disallow
 ```
 
-## 4. Validate (The Eval)
+### Validate (The Eval)
 
 Do not deploy until you have run your prompt against at least 50 examples.
 
@@ -127,7 +147,9 @@ Do not deploy until you have run your prompt against at least 50 examples.
 - **Metric:** How many did it get right?
 - **Threshold:** "We will not deploy until accuracy > 90%."
 
-## 5. Monitor Drift (The Pulse)
+## Act III: Principles in practice
+
+### Monitor Drift (The Pulse)
 
 Once deployed, the system will degrade. Not because the code rots, but because the world changes.
 
@@ -135,7 +157,7 @@ Once deployed, the system will degrade. Not because the code rots, but because t
 - **Spot checks:** Have a human review 1% of daily traffic.
 - **User feedback:** Add a "thumbs down" button. If a user clicks it, that data point goes straight to the engineering team.
 
-## 6. Human Fallback (The Safety Net)
+### Human Fallback (The Safety Net)
 
 Probabilistic systems **will** fail. You need a plan for when (not if) that happens.
 
@@ -168,5 +190,9 @@ Probabilistic systems **will** fail. You need a plan for when (not if) that happ
 </figure>
 
 If the AI's confidence score is low, or if a guardrail is triggered, the system should **fail gracefully** to a human. Do not show the user a hallucination. Show them a message: _"I'm not sure about that, let me connect you to a specialist."_
+
+### What this changes in practice
+
+Ship fewer demos and more reliable systems: lock intent, validate early, and plan for human fallback before launch.
 
 ---

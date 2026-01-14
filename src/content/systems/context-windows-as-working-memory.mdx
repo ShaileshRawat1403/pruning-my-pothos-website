@@ -1,0 +1,85 @@
+---
+title: "Context Windows as Working Memory"
+description: "Why context is limited, expensive, and shapes reliability."
+category: "Concepts"
+tags:
+  - llm
+  - context
+  - memory
+  - reliability
+---
+
+The context window of a Large Language Model is best understood as its working memory. It is a finite, temporary space where the model holds the information it needs to process a request. Everything inside this window is accessible; everything outside is forgotten.
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#the-hard-limit">The hard limit</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#the-long-context-illusion">The long-context illusion</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#operating-the-window">Operating the window</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: The fundamentals
+
+### The hard limit
+
+A context window is the maximum number of tokens a model can process at once. This includes both the input prompt and the generated output. For example, a model with a 4,096-token context window can handle a combined input and output of up to 4,096 tokens. If a conversation exceeds this limit, the oldest tokens are pushed out of memory.
+
+This is a hard technical constraint. The computational resources required to process context grow quadratically with the number of tokens. A longer context window requires significantly more memory and processing power, making it more expensive and slower to operate.
+
+<figure class="diagram">
+  <svg viewBox="0 0 900 240" role="img" aria-labelledby="context-window-title context-window-desc">
+    <title id="context-window-title">Context Window as a Finite Buffer</title>
+    <desc id="context-window-desc">A diagram showing tokens filling up a limited context window, with older tokens being pushed out.</desc>
+    <rect x="40" y="70" width="820" height="100" rx="12" fill="none" stroke="currentColor" stroke-width="2" />
+    <text x="60" y="125" font-size="13" font-family="var(--font-mono)">[Token 1]</text>
+    <text x="160" y="125" font-size="13" font-family="var(--font-mono)">[Token 2]</text>
+    <text x="260" y="125" font-size="13" font-family="var(--font-mono)">...</text>
+    <text x="700" y="125" font-size="13" font-family="var(--font-mono)">[Token N]</text>
+    <path d="M 780 120 L 840 120" stroke="var(--color-accent)" stroke-width="2" />
+    <path d="M 830 120 L 840 115 L 840 125 Z" fill="var(--color-accent)" />
+    <text x="60" y="50" font-size="12" font-family="var(--font-mono)">Start of Context</text>
+    <text x="750" y="50" font-size="12" font-family="var(--font-mono)">End of Context (Limit)</text>
+  </svg>
+  <figcaption>The context window is a fixed-size buffer; once full, old information is lost.</figcaption>
+</figure>
+
+## Act II: The modern paradigm
+
+### The long-context illusion
+
+Modern models feature increasingly large context windows, with some supporting over a million tokens. This seems to promise a future of infinite memory, where a model can hold entire books or codebases in its working memory. However, this is not a perfect solution.
+
+Research shows that models often struggle to pay attention to information in the middle of very long contexts, a phenomenon known as the "lost in the middle" problem. The model's attention is sharpest at the very beginning and the very end of the context window. Information buried in the middle can be ignored or forgotten, even if it is still technically within the window.
+
+Furthermore, the cost and latency of processing large contexts remain significant. Just because a large context window is available does not mean it is efficient or practical to use it for every task.
+
+## Act III: Principles in practice
+
+### Operating the window
+
+Effective use of an LLM requires managing its working memory carefully. You cannot assume the model remembers everything you have ever told it. You must ensure that the information it needs to perform a task is present and prominent within the current context window.
+
+This has several practical implications. For long conversations, a summary of past interactions should be included in the prompt. For knowledge-intensive tasks, Retrieval-Augmented Generation (RAG) is used to find the most relevant information from an external database and place it at the top of the acontext window. This technique is more efficient and reliable than simply expanding the context to include an entire library of documents.
+
+### What this changes in practice
+
+Treat the context window as a scarce resource and place the most important information at the beginning or end of your prompt.

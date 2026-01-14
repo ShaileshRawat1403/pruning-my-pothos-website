@@ -1,0 +1,92 @@
+---
+title: "Evaluation Is a Human Problem"
+description: "Why benchmarks are not enough and judgment defines quality."
+category: "Explanations"
+tags:
+  - evaluation
+  - quality
+  - judgment
+  - reliability
+---
+
+The quality of a Large Language Model is not a number. While automated benchmarks can measure performance on standardized tests, the real measure of quality—whether a model is helpful, safe, and reliable for a specific purpose—is a matter of human judgment. Evaluation is the process of encoding that judgment into a repeatable system.
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#benchmarks-and-their-limits">Benchmarks and their limits</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#human-rubrics-and-rlhf">Human rubrics and RLHF</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#governance-and-tradeoffs">Governance and tradeoffs</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: The fundamentals
+
+### Benchmarks and their limits
+
+Early methods for evaluating language models relied on automated metrics that compared a model's output to a "reference" or "golden" answer. Metrics like BLEU and ROUGE measure the overlap of words and phrases, which is useful for tasks like translation but fails to capture the semantic meaning or factual accuracy of a response.
+
+The next step was the creation of large-scale benchmarks like MMLU (Massive Multitask Language Understanding), which test a model's ability to answer multiple-choice questions across a wide range of subjects. These are valuable for comparing the general knowledge of different models, but they do not tell you if a model is suitable for your specific application.
+
+<figure class="diagram">
+  <svg viewBox="0 0 900 300" role="img" aria-labelledby="eval-loop-title eval-loop-desc">
+    <title id="eval-loop-title">Human-in-the-Loop Evaluation Cycle</title>
+    <desc id="eval-loop-desc">A circular diagram showing the steps: Define Rubric, Generate, Score, Analyze, and Refine.</desc>
+    <path d="M 450, 50 A 200 200 0 0 1 450 250 A 200 200 0 0 1 450 50" fill="none" stroke="currentColor" stroke-width="2" />
+    <circle cx="450" cy="50" r="10" fill="var(--color-accent)" />
+    <text x="430" y="30" font-size="12" font-family="var(--font-mono)">1. Define Rubric</text>
+    <circle cx="633" cy="150" r="10" fill="var(--color-accent)" />
+    <text x="650" y="155" font-size="12" font-family="var(--font-mono)">2. Generate & Score</text>
+    <circle cx="450" cy="250" r="10" fill="var(--color-accent)" />
+    <text x="430" y="275" font-size="12" font-family="var(--font-mono)">3. Analyze Gaps</text>
+    <circle cx="267" cy="150" r="10" fill="var(--color-accent)" />
+    <text x="180" y="155" font-size="12" font-family="var(--font-mono)">4. Refine</text>
+  </svg>
+  <figcaption>Evaluation is a continuous loop where human judgment is used to refine the system's behavior.</figcaption>
+</figure>
+
+## Act II: The modern paradigm
+
+### Human rubrics and RLHF
+
+The modern approach to evaluation accepts that "quality" is context-dependent. The definition of a "good" answer for a customer service bot is different from that of a "good" answer for a creative writing assistant. This has led to the rise of human-in-the-loop evaluation.
+
+This process involves:
+1.  **Defining a rubric:** A detailed set of criteria that defines what a high-quality response looks like for a specific use case. The rubric might include measures for helpfulness, honesty, harmlessness, tone, and factual accuracy.
+2.  **Human rating:** Human reviewers score the model's responses against the rubric. They provide not just a score, but also detailed feedback on why a response failed.
+3.  **Reinforcement Learning from Human Feedback (RLHF):** This feedback is used to train a "reward model" that learns to predict how a human would score a given response. This reward model is then used to fine-tune the original LLM, teaching it to produce outputs that are more aligned with human preferences.
+
+## Act III: Principles in practice
+
+### Governance and tradeoffs
+
+Evaluation is not a one-time event; it is a continuous process. As you discover new failure modes or as your requirements change, your definition of quality—and therefore your evaluation rubric—must also evolve.
+
+Building a good evaluation system is more of a governance and process design challenge than a purely technical one. It requires answering difficult, subjective questions:
+-   Who gets to decide what "good" means?
+-   How do we ensure consistency across human raters?
+-   How do we handle disagreements and edge cases?
+-   What tradeoffs are we willing to make between, for example, helpfulness and harmlessness?
+
+The robustness of your evaluation framework is the ultimate ceiling on the quality and safety of your AI system. An automated benchmark can tell you if your model is powerful, but only a human-centered evaluation process can tell you if it is useful.
+
+### What this changes in practice
+
+Spend more time defining and measuring what "good" means for your specific use case than comparing your model's performance on generic industry benchmarks.

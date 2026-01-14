@@ -1,0 +1,86 @@
+---
+title: "What Large Language Models Are Optimized For"
+description: "Why next-token prediction shapes both capability and failure modes."
+category: "Concepts"
+tags:
+  - llm
+  - optimization
+  - reasoning
+  - reliability
+---
+
+Large Language Models (LLMs) are not optimized for truth, accuracy, or user intent. They are optimized for one simple goal: predicting the most probable next token in a sequence. This core mechanic is the source of their incredible capabilities and their most frustrating failure modes.
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#the-next-token-objective">The next-token objective</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#emergent-behavior-and-hallucination">Emergent behavior and hallucination</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#prompting-shapes-output">Prompting shapes output</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: The fundamentals
+
+### The next-token objective
+
+At its heart, an LLM is a sequence prediction engine. During training, it is fed vast amounts of text from the internet and books. For every sequence of tokens (words or parts of words), it is trained to predict the token that is most likely to come next. It adjusts its internal weights—billions of them—to minimize the difference between its prediction and the actual next token in the training data.
+
+This process is repeated trillions of time. The model isn't learning concepts, facts, or reasoning in the human sense. It is learning statistical patterns in language. A statement like "The sky is blue" is not stored as a fact, but as a high-probability sequence of tokens.
+
+<figure class="diagram">
+  <svg viewBox="0 0 900 240" role="img" aria-labelledby="next-token-title next-token-desc">
+    <title id="next-token-title">Next-Token Prediction Loop</title>
+    <desc id="next-token-desc">A diagram showing a sequence of tokens being fed into a model, which then predicts the most probable next token.</desc>
+    <rect x="40" y="90" width="200" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
+    <text x="60" y="128" font-size="13" font-family="var(--font-mono)">Input: "The cat sat on the"</text>
+    <rect x="350" y="50" width="200" height="140" rx="12" fill="none" stroke="currentColor" stroke-width="2" />
+    <text x="400" y="128" font-size="13" font-family="var(--font-mono)">LLM Predicts</text>
+    <rect x="660" y="90" width="200" height="60" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="2" />
+    <text x="680" y="128" font-size="13" font-family="var(--font-mono)">Output: "mat" (p=0.8)</text>
+    <path d="M 240 120 H 340" stroke="currentColor" stroke-width="2" />
+    <path d="M 330 120 L 340 115 L 340 125 Z" fill="currentColor" />
+    <path d="M 550 120 H 650" stroke="currentColor" stroke-width="2" />
+    <path d="M 640 120 L 650 115 L 650 125 Z" fill="currentColor" />
+  </svg>
+  <figcaption>The model's core function is to find the most statistically likely token to complete a sequence.</figcaption>
+</figure>
+
+## Act II: The modern paradigm
+
+### Emergent behavior and hallucination
+
+The surprising discovery is that a simple objective, when scaled, produces complex, emergent behaviors. To get the next token right in a sophisticated text, the model must implicitly learn grammar, syntax, and even basic reasoning. For example, to correctly complete the sequence "The lawyer advised her client to...", the model must have learned something about the legal profession and client relationships.
+
+This is why modern LLMs appear to "understand." They have created a world model made of linguistic patterns. When you ask a question, you are providing a starting sequence. The model completes it with the most plausible-sounding text it can generate based on its training data. The "answer" is simply the completion of your prompt.
+
+This also explains why they "hallucinate." If the training data contains conflicting or incorrect information, the model learns those patterns, too. It has no external source of truth to check against. It only has its internal statistical model of language.
+
+## Act III: Principles in practice
+
+### Prompting shapes output
+
+Treating an LLM as a database or a reasoning engine will lead to frustration. Instead, you must treat it as a powerful text-completion machine that is trying to find the most plausible continuation of your prompt.
+
+This means that the quality of your input directly shapes the quality of the output. A vague prompt will get a vague and generic completion. A precise prompt with clear constraints and context will guide the model toward a more reliable and useful response. This is the art of prompt engineering: structuring the input sequence to make the desired output the most probable one.
+
+### What this changes in practice
+
+Instead of asking "Is this answer true?", you should ask "Is this the most useful completion of my prompt, given the patterns in the training data?"

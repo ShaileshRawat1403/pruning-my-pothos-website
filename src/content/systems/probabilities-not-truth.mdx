@@ -79,15 +79,32 @@ This is the fundamental nature of the technology: it is a **probability engine**
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
-  <ol>
-    <li><a href="#the-confidence-trick">The Confidence Trick</a></li>
-    <li><a href="#hallucination-is-a-feature-not-a-bug">Hallucination Is a Feature, Not a Bug</a></li>
-    <li><a href="#accuracy-vs-trustworthiness">Accuracy vs Trustworthiness</a></li>
-    <li><a href="#what-this-changes-in-practice">What This Changes in Practice</a></li>
-  </ol>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#the-confidence-trick">The Confidence Trick</a></li>
+        <li><a href="#hallucination-is-a-feature-not-a-bug">Hallucination Is a Feature, Not a Bug</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#accuracy-vs-trustworthiness">Accuracy vs Trustworthiness</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
 </nav>
 
-## The Confidence Trick
+## Act I: The fundamentals
+
+### The Confidence Trick
 
 Why do models sound so confident even when they are wrong?
 
@@ -98,7 +115,7 @@ Because they are trained on human writing, and humans usually write confidently.
 
 If you ask a question, the most probable continuation is a confident answer, not a hesitant one. The model isn't "feeling" confident; it is simply completing the pattern of a confident expert.
 
-## Hallucination Is a Feature, Not a Bug
+### Hallucination Is a Feature, Not a Bug
 
 We call it "hallucination" when the model makes things up. But to the model, there is no difference between "recalling a fact" and "inventing a fact." Both are just predicting the next token.
 
@@ -111,7 +128,9 @@ The model is designed to be **creative** and **fluent**. The same mechanism that
   <p><strong>Insight.</strong> Hallucination is just "creativity" applied to the wrong context.</p>
 </aside>
 
-## Accuracy vs Trustworthiness
+## Act II: The modern paradigm
+
+### Accuracy vs Trustworthiness
 
 In traditional software, we expect 100% accuracy. If a calculator says 2+2=5, it is broken.
 
@@ -122,7 +141,11 @@ In AI, we cannot expect 100% accuracy. Instead, we must design for **trustworthi
 
 Current models are high-accuracy but low-trustworthiness. They are often right, but they don't know when they are wrong. This makes them dangerous if used without supervision.
 
-## What This Changes in Practice
+## Act III: Principles in practice
+
+The goal is not to eliminate uncertainty, but to design around it. If the system is probabilistic, then your workflows must be explicit about verification, constraints, and fallback paths.
+
+### What this changes in practice
 
 Since we cannot rely on the model to be truthful, we must change how we build systems around it:
 

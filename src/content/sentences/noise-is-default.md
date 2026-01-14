@@ -26,4 +26,4 @@ If everything feels urgent, nothing is. Attention is how you decide which signal
   <figcaption>Attention filters noise into a usable signal.</figcaption>
 </figure>
 
-**What this changes in practice:** Pick one signal to track before you respond.
+**What this changes in practice:**** Pick one signal to track before you respond.

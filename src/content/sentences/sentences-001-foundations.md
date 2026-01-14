@@ -48,4 +48,4 @@ A foundation sentence does three jobs:
   <figcaption>Sentences align attention, scope, and response.</figcaption>
 </figure>
 
-**What this changes in practice:** Write the sentence that aligns your team before you add more.
+**What this changes in practice:**** Write the sentence that aligns your team before you add more.

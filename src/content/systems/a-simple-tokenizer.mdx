@@ -68,15 +68,33 @@ This seems like a trivial implementation detail, but it dictates the fundamental
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
-  <ol>
-    <li><a href="#why-not-just-characters">Why Not Just Characters?</a></li>
-    <li><a href="#what-a-token-actually-looks-like">What a Token Actually Looks Like</a></li>
-    <li><a href="#the-reality-subword-tokenization">The Reality: Subword Tokenization</a></li>
-    <li><a href="#why-this-matters-for-systems">Why This Matters for Systems</a></li>
-  </ol>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#why-not-just-characters">Why Not Just Characters?</a></li>
+        <li><a href="#what-a-token-actually-looks-like">What a Token Actually Looks Like</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#the-reality-subword-tokenization">The Reality: Subword Tokenization</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#why-this-matters-for-systems">Why This Matters for Systems</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
 </nav>
 
-## Why Not Just Characters?
+## Act I: The fundamentals
+
+### Why Not Just Characters?
 
 We could map `a=1`, `b=2`, `c=3`. This is simple, but inefficient.
 
@@ -87,7 +105,7 @@ Conversely, we could map every _word_ to a number. But English has hundreds of t
 
 The solution is **Subword Tokenization**: break common words into whole tokens (`"apple"`) and rare words into chunks (`"un"`, `"friend"`, `"li"`, `"ness"`).
 
-## What a Token Actually Looks Like
+### What a Token Actually Looks Like
 
 To a human, the word "Smart" is a single concept. To a tokenizer, it might be one token (ID: `5421`).
 
@@ -109,7 +127,9 @@ tokens = re.findall(r"[A-Za-z]+|[^A-Za-z\\s]", text)
 print(tokens)
 ```
 
-## The Reality: Subword Tokenization
+## Act II: The modern paradigm
+
+### The Reality: Subword Tokenization
 
 Real systems (like GPT-4 or Claude) use algorithms like **Byte Pair Encoding (BPE)**. BPE starts with characters and iteratively merges the most frequent adjacent pairs until a target vocabulary size is reached.
 
@@ -118,7 +138,9 @@ This explains why LLMs struggle with tasks that seem easy to humans:
 1.  **Spelling:** The model sees the token ID `12345` for "Strawberry". It does not inherently see the letters `r-r`. It has to memorize the spelling as a separate fact.
 2.  **Math:** The number `9.11` might be tokenized as `[9, ., 11]` while `9.9` is `[9, ., 9]`. To the model, `11` is "bigger" than `9`, so it might hallucinate that 9.11 is greater than 9.9.
 
-## Why This Matters for Systems
+## Act III: Principles in practice
+
+### Why This Matters for Systems
 
 When designing systems around LLMs, tokenization creates invisible constraints:
 
@@ -127,3 +149,7 @@ When designing systems around LLMs, tokenization creates invisible constraints:
 - **Security:** Some "jailbreaks" work by forcing the tokenizer to split forbidden words in ways that bypass safety filters (e.g., splitting "bomb" into "b-omb").
 
 Understanding the tokenizer means understanding the raw material of the intelligence you are orchestrating.
+
+### What this changes in practice
+
+Treat tokenization as a design constraint: it shapes cost, reliability, and the kinds of prompts your system can handle.

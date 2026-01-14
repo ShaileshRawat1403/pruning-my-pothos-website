@@ -23,6 +23,23 @@ Instructions for CLI agents working in this repo.
 - Do not change `category` enums; only use: `Explanations`, `Concepts`, `How-things-fit-together`.
 - When adding new docs, follow the existing frontmatter keys and order.
 
+## External agent guardrails (Gemini, etc.)
+- Only edit files in `src/content/sentences/`.
+- Do not edit `sentences-001-foundations.md` or `confidence-is-cheap.md`.
+- Do not change layouts, components, styles, or `src/content/config.ts`.
+- Do not rename, move, or delete files.
+- Keep frontmatter exactly: `title`, `summary`, `category`, `tags`.
+- `category` must be one of: `Attention`, `Meaning`, `Judgment`.
+- Markdown only (no MDX, no HTML tags, no inline SVG).
+- No inline CSS, no `<style>`, no `<script>`.
+- No code blocks or tables in sentences docs.
+
+## Sentences doc standards
+- Short, reflective, plain language; 2–5 short paragraphs.
+- One idea per doc; avoid lists unless essential.
+- Keep the tone calm and precise; no hype, no emojis.
+- End with a short "What this changes in practice" line.
+
 ## Sticky notes rules (do not violate)
 - Sticky notes are micro‑notes (1–3 short lines). No essays.
 - Do not import assets or components in sticky notes (no `import`, no `<Image>`, no inline SVG).

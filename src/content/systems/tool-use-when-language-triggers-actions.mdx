@@ -1,0 +1,95 @@
+---
+title: "Tool Use: When Language Triggers Actions"
+description: "Why execution changes accountability and requires guardrails."
+category: "How-things-fit-together"
+tags:
+  - tools
+  - automation
+  - safety
+  - accountability
+---
+
+Tool use gives a Large Language Model the ability to interact with the outside world. It transforms the model from a passive text generator into an active agent that can query databases, call APIs, and perform actions. This capability is powerful, but it introduces significant new risks and responsibilities.
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#the-tool-use-loop">The tool-use loop</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#application-as-gatekeeper">Application as gatekeeper</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#guardrails-and-accountability">Guardrails and accountability</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: The fundamentals
+
+### The tool-use loop
+
+By itself, an LLM can only process text. It cannot access real-time information, interact with other software, or affect the physical world. Tool use, also known as function calling, bridges this gap.
+
+The process begins by providing the LLM with a list of available "tools." Each tool is a function in your application's code, described in natural language (e.g., `get_current_weather(location: string)`). When a user issues a prompt, the model can decide that it needs to use one of these tools. Instead of generating a text response, it generates a structured JSON object specifying the tool to call and the arguments to use.
+
+<figure class="diagram">
+  <svg viewBox="0 0 900 320" role="img" aria-labelledby="tool-use-loop-title tool-use-loop-desc">
+    <title id="tool-use-loop-title">Tool Use Loop</title>
+    <desc id="tool-use-loop-desc">A diagram showing the flow where a user prompt leads an LLM to request a tool call, which the application executes, returning the result to the LLM for a final answer.</desc>
+    <rect x="40" y="40" width="150" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
+    <text x="60" y="78" font-size="13" font-family="var(--font-mono)">User Prompt</text>
+    <path d="M 190 70 H 340" stroke="currentColor" stroke-width="2" />
+    <path d="M 330 70 L 340 65 L 340 75 Z" fill="currentColor" />
+    <rect x="350" y="40" width="200" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
+    <text x="370" y="78" font-size="13" font-family="var(--font-mono)">LLM: "Call Tool X"</text>
+    <path d="M 450 100 V 150" stroke="currentColor" stroke-width="2" />
+    <path d="M 450 140 L 445 150 L 455 150 Z" fill="currentColor" />
+    <rect x="350" y="160" width="200" height="60" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="2" />
+    <text x="370" y="198" font-size="13" font-family="var(--font-mono)">App: Execute Tool X</text>
+    <path d="M 450 220 V 270" stroke="var(--color-accent)" stroke-width="2" />
+    <path d="M 450 260 L 445 270 L 455 270 Z" fill="var(--color-accent)" />
+    <rect x="350" y="280" width="200" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
+    <text x="370" y="318" font-size="13" font-family="var(--font-mono)">LLM: Final Answer</text>
+    <path d="M 550 190 H 700" stroke="currentColor" stroke-width="2" />
+    <text x="560" y="210" font-size="12" font-family="var(--font-mono)">[Result of Tool X]</text>
+    <path d="M 700 190 V 70" stroke="currentColor" stroke-width="2" />
+    <path d="M 690 70 L 700 65 L 700 75 Z" fill="currentColor" />
+  </svg>
+  <figcaption>The tool-use cycle: the LLM requests an action, the application executes it, and the result informs the final response.</figcaption>
+</figure>
+
+## Act II: The modern paradigm
+
+### Application as gatekeeper
+
+The application code acts as an intermediary. It inspects the JSON object from the LLM and, if it deems the call safe and valid, executes the requested function. For example, if the LLM generates `{ "tool": "get_current_weather", "arguments": { "location": "Boston, MA" } }`, the application would call its internal weather function for Boston.
+
+The result of that function call (e.g., `{ "temperature": "72F", "conditions": "Sunny" }`) is then passed back to the LLM as part of a new prompt. The LLM, now equipped with this real-time information, generates the final, human-readable response: "The current weather in Boston is 72°F and sunny." This entire loop can happen in a single turn of conversation.
+
+## Act III: Principles in practice
+
+### Guardrails and accountability
+
+The moment an LLM can trigger an action, the stakes become much higher. A bug is no longer just a poorly worded sentence; it could be an accidental purchase, a deleted file, or an incorrect database query. This elevates the importance of safety and accountability.
+
+-   **Never trust the LLM's output directly.** Always validate the tool name and arguments against a strict schema before execution.
+-   **Implement guardrails.** Use confirmation steps for any destructive or costly actions. A prompt like "Are you sure you want to delete this file?" is a critical safety mechanism.
+-   **Provide precise tool descriptions.** The LLM's decision to use a tool is based entirely on the description you provide. Vague or ambiguous descriptions will lead to incorrect tool usage.
+-   **Plan for failure.** The tool might fail, an API could be down, or the result might be an error. Your system must be able to handle these failures gracefully and report them back to the LLM.
+
+### What this changes in practice
+
+When you give a model tools, you must shift your focus from prompt quality to a system of validation, error handling, and safety guardrails.

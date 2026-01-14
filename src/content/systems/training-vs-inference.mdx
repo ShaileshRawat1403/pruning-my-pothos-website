@@ -69,16 +69,33 @@ Understanding the difference between training, fine-tuning, and inference is cri
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
-  <ol>
-    <li><a href="#1-training-building-the-brain">1. Training: Building the Brain</a></li>
-    <li><a href="#2-fine-tuning-specialized-education">2. Fine-Tuning: Specialized Education</a></li>
-    <li><a href="#3-inference-the-runtime">3. Inference: The Runtime</a></li>
-    <li><a href="#why-you-probably-dont-need-to-train">Why You Probably Don't Need to Train</a></li>
-    <li><a href="#what-this-changes-in-practice">What This Changes in Practice</a></li>
-  </ol>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#training-building-the-brain">Training: Building the Brain</a></li>
+        <li><a href="#fine-tuning-specialized-education">Fine-Tuning: Specialized Education</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#inference-the-runtime">Inference: The Runtime</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#why-you-probably-dont-need-to-train">Why You Probably Don't Need to Train</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
 </nav>
 
-## 1. Training: Building the Brain
+## Act I: The fundamentals
+
+### Training: Building the Brain
 
 **Pre-training** is the process of creating a base model (like GPT-4 or Claude). It involves feeding a neural network trillions of tokens of text from the internet.
 
@@ -88,7 +105,7 @@ Understanding the difference between training, fine-tuning, and inference is cri
 
 You will likely never do this.
 
-## 2. Fine-Tuning: Specialized Education
+### Fine-Tuning: Specialized Education
 
 **Fine-tuning** takes a base model and trains it further on a smaller, curated dataset.
 
@@ -98,7 +115,9 @@ You will likely never do this.
 
 Fine-tuning changes the model's weights. It is permanent. It is useful when you need the model to learn a new "grammar" or "behavior" that is too complex to explain in a prompt.
 
-## 3. Inference: The Runtime
+## Act II: The modern paradigm
+
+### Inference: The Runtime
 
 **Inference** is what happens when you send a prompt to ChatGPT or an API. The model is "frozen." It does not change. It simply processes your input and predicts the output.
 
@@ -108,7 +127,9 @@ Fine-tuning changes the model's weights. It is permanent. It is useful when you 
 
 Crucially, **inference is stateless**. If you tell the model "My name is Sarah" in one chat, and then open a new chat, it does not know your name. It did not "learn" anything; it just held your name in its temporary working memory (context window) for that session.
 
-## Why You Probably Don't Need to Train
+## Act III: Principles in practice
+
+### Why You Probably Don't Need to Train
 
 Business leaders often say, "We need to train a model on our documents."
 
@@ -143,7 +164,7 @@ You do not achieve this by training. You achieve this by **Retrieval-Augmented G
   </tbody>
 </table>
 
-## What This Changes in Practice
+### What this changes in practice
 
 1.  **Stop asking for "training":** Ask for "context" or "knowledge retrieval."
 2.  **Use RAG for facts:** If you want the model to know your company policy, put the policy in the prompt (or use RAG). Do not fine-tune on it. Fine-tuning is for _behavior_, not _knowledge_.

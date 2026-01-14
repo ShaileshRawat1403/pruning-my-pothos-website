@@ -70,4 +70,4 @@ Language is a powerful interface now. The responsibility is to keep questioning,
 
 Cheap confidence is everywhere. Earned understanding is rare.
 
-**What this changes in practice:** Build time for verification, not just speed.
+**What this changes in practice:**** Build time for verification, not just speed.

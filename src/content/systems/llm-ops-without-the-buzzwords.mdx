@@ -70,16 +70,34 @@ In the era of Large Language Models (LLMs), "Ops" changes fundamental meaning. T
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
-  <ol>
-    <li><a href="#the-operational-shift">The Operational Shift</a></li>
-    <li><a href="#evaluation-is-the-new-unit-test">Evaluation Is the New Unit Test</a></li>
-    <li><a href="#drift-semantic-vs-data">Drift: Semantic vs Data</a></li>
-    <li><a href="#governance-as-a-loop">Governance as a Loop</a></li>
-    <li><a href="#conclusion">Conclusion</a></li>
-  </ol>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#the-operational-shift">The Operational Shift</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#evaluation-is-the-new-unit-test">Evaluation Is the New Unit Test</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#drift-semantic-vs-data">Drift: Semantic vs Data</a></li>
+        <li><a href="#governance-as-a-loop">Governance as a Loop</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
 </nav>
 
-## The Operational Shift
+## Act I: The fundamentals
+
+### The Operational Shift
 
 The move from deterministic code to probabilistic models requires a shift in mindset. We are no longer managing "functions" that return the same output for the same input. We are managing "agents" that reason, approximate, and sometimes hallucinate.
 
@@ -115,7 +133,9 @@ The move from deterministic code to probabilistic models requires a shift in min
   </tbody>
 </table>
 
-## Evaluation Is the New Unit Test
+## Act II: The modern paradigm
+
+### Evaluation Is the New Unit Test
 
 In 2026, you cannot deploy an AI system without an **Evaluation Suite**. An eval suite is a dataset of inputs and "ideal" outputs (or criteria) used to grade the model's performance.
 
@@ -167,7 +187,9 @@ print(f"accuracy={accuracy:.2f}")
   <figcaption>If you can't measure it, you can't improve it.</figcaption>
 </figure>
 
-## Drift: Semantic vs Data
+## Act III: Principles in practice
+
+### Drift: Semantic vs Data
 
 In traditional ML, we worry about **data drift** (the input distribution changes). In LLM-Ops, we worry about **semantic drift**.
 
@@ -179,14 +201,18 @@ Semantic drift happens when the model's understanding of the world diverges from
 
 Monitoring for drift requires tracking **feedback signals** (thumbs up/down, rewrites) rather than just CPU usage.
 
-## Governance as a Loop
+### Governance as a Loop
 
 Governance is often seen as a bottleneck—a compliance team saying "no." In a mature LLM-Ops practice, governance is a feedback loop.
 
 Policies (e.g., "Do not give financial advice") are encoded into **System Prompts** and **Guardrail Models**. When a violation is detected, it doesn't just block the request; it logs an incident for the governance team to review. This turns "compliance" into "dataset improvement."
 
-## Conclusion
+### Conclusion
 
 LLM-Ops is the bridge between a cool demo and a reliable business process. It acknowledges that AI is probabilistic, and therefore requires a system of checks, balances, and continuous measurement to be trusted. It turns the "magic" of AI into the "engineering" of reliability.
+
+### What this changes in practice
+
+Treat LLM-Ops as lifecycle ownership: define evals early, monitor drift continuously, and make governance a routine loop, not an audit event.
 
 ---

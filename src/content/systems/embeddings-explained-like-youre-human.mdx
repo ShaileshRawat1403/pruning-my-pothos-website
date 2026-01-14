@@ -1,0 +1,90 @@
+---
+title: "Embeddings Explained Like You're Human"
+description: "Similarity over meaning, and why search works until it doesn't."
+category: "Concepts"
+tags:
+  - embeddings
+  - search
+  - meaning
+  - similarity
+---
+
+An embedding is a way to turn a complex concept, like a word or a sentence, into a list of numbers. This list, or "vector," acts as a coordinate, placing the concept in a high-dimensional "semantic space." In this space, distance equals a difference in meaning.
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#embedding-space-as-distance">Embedding space as distance</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#semantic-search-in-practice">Semantic search in practice</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#limits-bias-and-drift">Limits, bias, and drift</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: The fundamentals
+
+### Embedding space as distance
+
+Imagine a library where books are not organized by author or title, but by the ideas they contain. Books about dogs would be in one corner, books about cats in another, and books about dog training would be somewhere in between. This is what embeddings do for language.
+
+An embedding model takes a piece of text and maps it to a vector. The model is trained on vast amounts of text to learn the relationships between words. For example, the vectors for "king" and "queen" will be closer together than the vectors for "king" and "cabbage." More interestingly, the relationship between vectors can capture meaning, as in the famous example: vector('king') - vector('man') + vector('woman') ≈ vector('queen').
+
+<figure class="diagram">
+  <svg viewBox="0 0 900 280" role="img" aria-labelledby="embedding-space-title embedding-space-desc">
+    <title id="embedding-space-title">Embedding Space</title>
+    <desc id="embedding-space-desc">A 2D space showing related words clustered together, like 'dog' and 'puppy', and 'cat' and 'kitten'.</desc>
+    <rect x="40" y="40" width="820" height="200" rx="12" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 5" />
+    <circle cx="200" cy="100" r="5" fill="var(--color-accent)" />
+    <text x="210" y="105" font-size="13" font-family="var(--font-mono)">dog</text>
+    <circle cx="240" cy="120" r="5" fill="var(--color-accent)" />
+    <text x="250" y="125" font-size="13" font-family="var(--font-mono)">puppy</text>
+    <circle cx="650" cy="180" r="5" fill="var(--color-accent)" />
+    <text x="660" y="185" font-size="13" font-family="var(--font-mono)">cat</text>
+    <circle cx="680" cy="200" r="5" fill="var(--color-accent)" />
+    <text x="690" y="205" font-size="13" font-family="var(--font-mono)">kitten</text>
+    <circle cx="450" cy="140" r="5" fill="currentColor" />
+    <text x="460" y="145" font-size="13" font-family="var(--font-mono)">car</text>
+  </svg>
+  <figcaption>In embedding space, proximity represents semantic similarity.</figcaption>
+</figure>
+
+## Act II: The modern paradigm
+
+### Semantic search in practice
+
+This ability to capture meaning as proximity has revolutionized how we work with unstructured data. The primary application is semantic search. Instead of matching keywords, we can now search for meaning. A search for "small dog" can return documents containing the word "puppy," even if "small dog" is never explicitly mentioned.
+
+This powers a wide range of applications:
+- **Recommendation engines:** Find items (products, articles, songs) similar to what a user has liked.
+- **Classification:** Categorize text by finding the closest known category in the embedding space.
+- **Clustering:** Identify groups of related documents in a large corpus without pre-defined labels.
+
+These systems work by converting both the query and the documents into embeddings and then finding the "nearest neighbors" in the vector space.
+
+## Act III: Principles in practice
+
+### Limits, bias, and drift
+
+The key limitation of embeddings is that they model statistical similarity, not true understanding or factual accuracy. They learn from the text they are trained on, and they will faithfully reproduce its biases and associations. If the training data frequently associates "doctor" with "he" and "nurse" with "she," the embedding space will reflect that bias.
+
+Furthermore, context is critical. The word "bank" has very different meanings in "river bank" and "investment bank." While modern models are better at handling this, a single, static embedding for a word can still be a source of error. The embedding is an approximation of meaning, not meaning itself.
+
+### What this changes in practice
+
+Use embeddings for finding things that are "like" each other, but do not mistake that similarity for a guarantee of factual correctness or conceptual understanding.

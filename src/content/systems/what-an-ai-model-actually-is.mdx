@@ -74,15 +74,32 @@ Under the hood, an AI model is a **static file** sitting on a hard drive. It is 
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
-  <ol>
-    <li><a href="#the-statistical-engine">The Statistical Engine</a></li>
-    <li><a href="#patterns-vs-meaning">Patterns vs Meaning</a></li>
-    <li><a href="#training-vs-inference">Training vs Inference</a></li>
-    <li><a href="#what-this-changes-in-practice">What This Changes in Practice</a></li>
-  </ol>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#the-statistical-engine">The Statistical Engine</a></li>
+        <li><a href="#patterns-vs-meaning">Patterns vs Meaning</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#training-vs-inference">Training vs Inference</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
 </nav>
 
-## The Statistical Engine
+## Act I: The fundamentals
+
+### The Statistical Engine
 
 At its core, a Large Language Model (LLM) is a "next-token prediction engine."
 
@@ -95,7 +112,7 @@ An LLM does this, but on the scale of the entire internet. It calculates the sta
 
 It does not "answer your question." It "predicts the text that is most likely to follow your question."
 
-## Patterns vs Meaning
+### Patterns vs Meaning
 
 Humans use language to convey **meaning**. Models use language to complete **patterns**.
 
@@ -107,7 +124,9 @@ It does not check a database of facts. It checks a database of linguistic associ
   <p><strong>Insight.</strong> The model is not trying to be right. It is trying to be plausible. It optimizes for what <em>sounds</em> like a correct answer, based on the patterns of human writing.</p>
 </aside>
 
-## Training vs Inference
+## Act II: The modern paradigm
+
+### Training vs Inference
 
 There is often confusion about when a model learns. It helps to separate the lifecycle into two distinct phases.
 
@@ -156,7 +175,11 @@ This is what happens when you use ChatGPT. The model is "frozen." It takes your 
   <figcaption>Training creates the engine. Inference runs the engine.</figcaption>
 </figure>
 
-## What This Changes in Practice
+## Act III: Principles in practice
+
+The practical takeaway is to treat a model like a probabilistic component. You are not asking it to "know"—you are shaping the conditions that make the desired output the most likely.
+
+### What this changes in practice
 
 Understanding that the model is a statistical engine changes how you use it:
 

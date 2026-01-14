@@ -1,0 +1,31 @@
+<figure class="diagram">
+  <svg
+    viewBox="0 0 900 220"
+    role="img"
+    aria-labelledby="embedding-flow-title embedding-flow-desc"
+    style="width: 100%; height: auto; display: block;"
+  >
+    <title id="embedding-flow-title">Sentence to vector embedding process</title>
+    <desc id="embedding-flow-desc">
+      A sentence moves through an embedding model and becomes a semantic vector.
+    </desc>
+    <rect x="40" y="70" width="240" height="80" rx="12" stroke="currentColor" stroke-width="2" fill="none" />
+    <text x="60" y="105" font-size="14" fill="currentColor" font-family="var(--font-mono)">"Add user to project"</text>
+    <text x="60" y="128" font-size="10" fill="var(--color-text-muted)" font-family="var(--font-mono)">Unstructured intent</text>
+
+    <path d="M 280 110 H 360" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="6,6" />
+    <path d="M 352 110 L 360 106 L 360 114 Z" fill="currentColor" />
+
+    <rect x="370" y="60" width="180" height="100" rx="14" stroke="currentColor" stroke-width="2" fill="none" />
+    <text x="392" y="100" font-size="12" fill="currentColor" font-family="var(--font-mono)">Embedding Model</text>
+    <text x="430" y="122" font-size="10" fill="var(--color-text-muted)" font-family="var(--font-mono)">(LLM)</text>
+
+    <path d="M 550 110 H 630" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    <path d="M 622 110 L 630 106 L 630 114 Z" fill="currentColor" />
+
+    <rect x="640" y="70" width="220" height="80" rx="12" stroke="var(--color-accent)" stroke-width="2" fill="none" />
+    <text x="660" y="105" font-size="12" fill="var(--color-accent)" font-family="var(--font-mono)">[0.12, -0.45, 0.88, ...]</text>
+    <text x="660" y="128" font-size="10" fill="var(--color-accent)" font-family="var(--font-mono)">Semantic vector</text>
+  </svg>
+  <figcaption>The sentence becomes a point in semantic space.</figcaption>
+</figure>

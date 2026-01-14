@@ -1,0 +1,86 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  items: CollectionEntry<'sentences'>[];
+  tone?: string;
+  columns?: number;
+}
+
+const { items, tone = 'var(--color-sentence-1)', columns = 2 } = Astro.props;
+---
+
+{items.length > 0 ? (
+  <div class="sentences-grid" style={`--grid-columns: ${columns}; --card-tone: ${tone}`}>
+    {items.map((sentence) => (
+      <a
+        href={`/sentences/${sentence.slug}`}
+        class="sentence-card"
+      >
+        <h2>{sentence.data.title}</h2>
+        <p>{sentence.data.summary}</p>
+        <span class="read-more">Read more &rarr;</span>
+      </a>
+    ))}
+  </div>
+) : (
+  <p class="sentences-empty">No entries yet. First note coming soon.</p>
+)}
+
+<style>
+  .sentences-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+    justify-items: stretch;
+  }
+  .sentence-card {
+    background: color-mix(in srgb, var(--card-tone) 25%, var(--color-bg));
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+    color: var(--color-text-body);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .sentence-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+  .sentence-card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-heading);
+    min-height: 3.2em;
+    line-height: 1.2;
+  }
+  .sentence-card p {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+    min-height: 4.5em;
+  }
+  .read-more {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--color-accent);
+    text-decoration: none;
+    margin-top: auto;
+  }
+  @media (max-width: 800px) {
+    .sentences-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .sentences-empty {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+</style>

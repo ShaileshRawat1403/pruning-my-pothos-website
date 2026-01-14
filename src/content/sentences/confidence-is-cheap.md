@@ -1,7 +1,9 @@
 ---
 title: 'Confidence Is Cheap. Understanding Is Costly.'
+summary: 'Confidence is fast, but understanding is earned with time and proof.'
+category: 'Judgment'
 tags:
-  - AI
+  - ai
   - thinking
   - understanding
   - learning
@@ -67,3 +69,5 @@ Language is a powerful interface now. The responsibility is to keep questioning,
 </figure>
 
 Cheap confidence is everywhere. Earned understanding is rare.
+
+**What this changes in practice:** Build time for verification, not just speed.

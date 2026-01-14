@@ -24,6 +24,9 @@
         --color-sticky-border: #cdd9ea;
         --color-sticky-sheen: rgba(255, 255, 255, 0.65);
         --color-sticky-shadow: rgba(15, 23, 42, 0.12);
+        --color-sentence-1: #e4f0ff;
+        --color-sentence-2: #e6f6ee;
+        --color-sentence-3: #f6efe3;
     }
 
     html[data-theme='dark'] {
@@ -42,6 +45,9 @@
         --color-sticky-border: #3a4b66;
         --color-sticky-sheen: rgba(255, 255, 255, 0.12);
         --color-sticky-shadow: rgba(0, 0, 0, 0.45);
+        --color-sentence-1: #22314a;
+        --color-sentence-2: #1f342a;
+        --color-sentence-3: #342b1f;
     }
 
     html[data-theme='sepia'] {
@@ -60,6 +66,9 @@
         --color-sticky-border: #c7d1df;
         --color-sticky-sheen: rgba(255, 255, 255, 0.55);
         --color-sticky-shadow: rgba(67, 52, 34, 0.18);
+        --color-sentence-1: #e0edf7;
+        --color-sentence-2: #dfefe6;
+        --color-sentence-3: #efe5cf;
     }
 
     /* Basic Reset */
@@ -581,6 +590,15 @@
     }
     .content-figure.figure-interface {
         --figure-accent: #4e9c7e;
+    }
+    .content-figure.figure-attention {
+        --figure-accent: #5b8bf2;
+    }
+    .content-figure.figure-meaning {
+        --figure-accent: #4e9c7e;
+    }
+    .content-figure.figure-judgment {
+        --figure-accent: #b98953;
     }
 
     .page-content main {

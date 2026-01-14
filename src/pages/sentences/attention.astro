@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import SentencesList from '@/components/SentencesList.astro';
+import { sentenceCategories } from '../../utils/sentenceCategories';
+
+const category = sentenceCategories.find((item) => item.slug === 'attention');
+if (!category) {
+  throw new Error('Sentences category not found: attention');
+}
+const sentences = await getCollection('sentences', ({ data }) => data.category === category.title);
+---
+<Layout title={`Sentences | ${category.title}`}>
+  <a class="category-back" href="/sentences">Back to /sentences</a>
+  <div class="section-head section-head--centered">
+    <h1>{category.title}</h1>
+    <p class="mode-line">{category.description}</p>
+  </div>
+
+  <SentencesList items={sentences} tone={category.tone} columns={2} />
+</Layout>
+
+<style>
+  .category-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .category-back:hover {
+    color: var(--color-text-body);
+  }
+</style>

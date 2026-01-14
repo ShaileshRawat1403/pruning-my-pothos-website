@@ -1,9 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
-
-const sentences = await getCollection('sentences');
-const sentenceColors = ['var(--color-sentence-1)', 'var(--color-sentence-2)', 'var(--color-sentence-3)'];
+import { sentenceCategories } from '../utils/sentenceCategories';
 ---
 <Layout title="Sentences | A Thinking Workspace">
   <div class="section-head">
@@ -12,39 +9,61 @@ const sentenceColors = ['var(--color-sentence-1)', 'var(--color-sentence-2)', 'v
     <p class="subtitle">Slow thoughts, distilled.</p>
   </div>
   
-  <div class="sentences-grid">
-    {sentences.map((sentence, index) => (
-        <a href={`/sentences/${sentence.slug}`} class="sentence-card" style={`background-color: ${sentenceColors[index % sentenceColors.length]}`}>
-            {sentence.data.title}
-        </a>
+  <div class="sentences-categories">
+    {sentenceCategories.map((category) => (
+      <a
+        class="sentence-category-card"
+        href={`/sentences/${category.slug}`}
+        style={`--category-tone: ${category.tone}`}
+      >
+        <h2>{category.title}</h2>
+        <p>{category.description}</p>
+      </a>
     ))}
   </div>
 </Layout>
 
 <style>
-  .sentences-grid {
+  .sentences-categories {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.75rem;
   }
-  .sentence-card {
-    font-family: var(--font-serif);
-    font-size: 1.3rem;
-    line-height: 1.6;
+  .sentence-category-card {
     border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 2rem;
-    min-height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--color-text-body);
+    border-radius: 16px;
+    padding: 1.75rem;
+    background: color-mix(in srgb, var(--category-tone) 28%, var(--color-bg));
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
     text-decoration: none;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0.6rem;
   }
-  .sentence-card:hover {
-      border-color: var(--color-accent);
-      color: var(--color-text-body);
+  .sentence-category-card:hover {
+    background: color-mix(in srgb, var(--category-tone) 40%, var(--color-bg));
+    border-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-border));
+    transform: translateY(-2px);
+  }
+  .sentence-category-card h2 {
+    font-size: 1.35rem;
+    margin: 0;
+    min-height: 3.2em;
+    line-height: 1.2;
+  }
+  .sentence-category-card p {
+    color: var(--color-text-muted);
+    font-size: 0.98rem;
+    margin: 0;
+    min-height: 3.6em;
+    line-height: 1.5;
+  }
+  @media (max-width: 1000px) {
+    .sentences-categories {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

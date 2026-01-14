@@ -16,6 +16,8 @@ const sentencesCollection = defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
+        summary: z.string(),
+        category: z.enum(['Attention', 'Meaning', 'Judgment']),
         tags: tagSchema,
     }),
 });

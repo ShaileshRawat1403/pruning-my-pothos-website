@@ -18,20 +18,30 @@ For a Large Language Model's output to be useful in an automated system, it must
     <details open>
       <summary>Act I: The fundamentals</summary>
       <ol>
-        <li><a href="#why-format-matters">Why format matters</a></li>
+        <li>
+          <a href="#why-format-matters">Why format matters</a>
+        </li>
       </ol>
     </details>
     <details>
       <summary>Act II: The modern paradigm</summary>
       <ol>
-        <li><a href="#enforcement-techniques">Enforcement techniques</a></li>
+        <li>
+          <a href="#enforcement-techniques">Enforcement techniques</a>
+        </li>
       </ol>
     </details>
     <details>
       <summary>Act III: Principles in practice</summary>
       <ol>
-        <li><a href="#workflow-design">Workflow design</a></li>
-        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+        <li>
+          <a href="#workflow-design">Workflow design</a>
+        </li>
+        <li>
+          <a href="#what-this-changes-in-practice">
+            What this changes in practice
+          </a>
+        </li>
       </ol>
     </details>
   </div>
@@ -48,18 +58,60 @@ To solve this, we need to constrain the model to produce output that conforms to
 <figure class="diagram">
   <svg viewBox="0 0 900 240" role="img" aria-labelledby="structure-compare-title structure-compare-desc">
     <title id="structure-compare-title">Unstructured vs. Structured Output</title>
-    <desc id="structure-compare-desc">A diagram comparing a block of free-form text on the left with a clean JSON object on the right, showing the same information in different formats.</desc>
-    <text x="40" y="60" font-size="13" font-family="var(--font-mono)">Unstructured Text:</text>
-    <rect x="40" y="70" width="300" height="80" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="60" y="95" font-size="12" font-family="var(--font-mono)">"The capital of France is Paris."</text>
-    <text x="500" y="60" font-size="13" font-family="var(--font-mono)">Structured JSON:</text>
-    <rect x="500" y="70" width="360" height="120" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="2" />
-    <text x="520" y="95" font-size="12" font-family="var(--font-mono)">{</text>
-    <text x="540" y="115" font-size="12" font-family="var(--font-mono)">"country": "France",</text>
-    <text x="540" y="135" font-size="12" font-family="var(--font-mono)">"capital": "Paris"</text>
-    <text x="520" y="155" font-size="12" font-family="var(--font-mono)">}</text>
+    <desc id="structure-compare-desc">
+      A diagram comparing a block of free-form text on the left with a clean JSON
+      object on the right, showing the same information in different formats.
+    </desc>
+
+    <text x="40" y="60" font-size="13" font-family="var(--font-mono)">
+      Unstructured Text:
+    </text>
+    <rect
+      x="40"
+      y="70"
+      width="300"
+      height="80"
+      rx="10"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    />
+    <text x="60" y="95" font-size="12" font-family="var(--font-mono)">
+      "The capital of France is Paris."
+    </text>
+
+    <text x="500" y="60" font-size="13" font-family="var(--font-mono)">
+      Structured JSON:
+    </text>
+    <rect
+      x="500"
+      y="70"
+      width="360"
+      height="120"
+      rx="10"
+      fill="none"
+      stroke="var(--color-accent)"
+      stroke-width="2"
+    />
+
+    <text x="520" y="95" font-size="12" font-family="var(--font-mono)">
+      {"{"}
+    </text>
+    <text x="540" y="115" font-size="12" font-family="var(--font-mono)">
+      "country": "France",
+    </text>
+    <text x="540" y="135" font-size="12" font-family="var(--font-mono)">
+      "capital": "Paris"
+    </text>
+    <text x="520" y="155" font-size="12" font-family="var(--font-mono)">
+      {"}"}
+    </text>
+
   </svg>
-  <figcaption>Structured output makes information machine-readable and reliable.</figcaption>
+
+  <figcaption>
+    Structured output makes information machine-readable and reliable.
+  </figcaption>
 </figure>
 
 ## Act II: The modern paradigm
@@ -67,9 +119,21 @@ To solve this, we need to constrain the model to produce output that conforms to
 ### Enforcement techniques
 
 There are several techniques to enforce structured output, with varying levels of reliability:
--   **Prompting:** The simplest method is to ask the model to generate a specific format. For example, "Please respond with a JSON object containing the keys 'country' and 'capital'." This works surprisingly well but can fail if the model misunderstands or becomes "distracted."
--   **Few-shot examples:** Providing examples of the desired JSON structure in the prompt significantly increases reliability. The model learns the pattern from your examples.
--   **JSON mode and tool use:** Many modern models offer a dedicated "JSON mode." When enabled, the model is constrained at a lower level to only output text that forms a valid JSON object. This is often tied to "tool use" or "function calling" features, where the model generates a JSON object that is then used as arguments to a function call in your code. This is the most reliable method.
+
+- **Prompting:** The simplest method is to ask the model to generate a specific
+  format. For example, "Please respond with a JSON object containing the keys
+  'country' and 'capital'." This works surprisingly well but can fail if the
+  model misunderstands or becomes distracted.
+
+- **Few-shot examples:** Providing examples of the desired JSON structure in the
+  prompt significantly increases reliability. The model learns the pattern from
+  your examples.
+
+- **JSON mode and tool use:** Many modern models offer a dedicated JSON mode.
+  When enabled, the model is constrained at a lower level to only output text
+  that forms a valid JSON object. This is often tied to tool use or function
+  calling features, where the model generates a JSON object that is then used
+  as arguments to a function call in your code. This is the most reliable method.
 
 These techniques are not mutually exclusive and are often combined.
 
@@ -77,10 +141,21 @@ These techniques are not mutually exclusive and are often combined.
 
 ### Workflow design
 
-Structured output is the bridge between probabilistic AI and deterministic software. It is the key to building reliable, multi-step workflows that use LLMs as components. For example, you could have one LLM call that extracts information from an email into a JSON object, and a second call that takes that JSON object as input to categorize it. This chain would be impossible with unstructured text.
+Structured output is the bridge between probabilistic AI and deterministic
+software. It is the key to building reliable, multi-step workflows that use
+LLMs as components.
 
-When designing a system that uses an LLM, always define a schema for its output first. This schema becomes part of the contract with the model. Your prompt should be designed to produce output that validates against this schema, and your code should include a validation step to handle cases where the model fails to do so.
+For example, you could have one LLM call that extracts information from an
+email into a JSON object, and a second call that takes that JSON object as
+input to categorize it. This chain would be impossible with unstructured text.
+
+When designing a system that uses an LLM, always define a schema for its output
+first. This schema becomes part of the contract with the model. Your prompt
+should be designed to produce output that validates against this schema, and
+your code should include a validation step to handle cases where the model
+fails to do so.
 
 ### What this changes in practice
 
-Always demand structured output from a model when its response needs to be processed by another piece of software.
+Always demand structured output from a model when its response needs to be
+processed by another piece of software.

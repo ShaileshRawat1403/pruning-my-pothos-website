@@ -6,6 +6,10 @@ tags:
   - attention
   - focus
   - discipline
+featured: true
+contentType: 'quick-read'
+readingTime: 2
+difficulty: 'intermediate'
 ---
 
 We have a finite amount of attention. Every day, we are given a certain number of coins to spend. Every task, every distraction, every notification costs us one of those coins.

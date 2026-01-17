@@ -2,6 +2,12 @@ import { defineCollection, z } from 'astro:content';
 
 const tagSchema = z.array(z.string()).optional().default([]);
 
+// Discovery-related schemas
+const featuredSchema = z.boolean().optional().default(false);
+const readingTimeSchema = z.number().optional();
+const contentTypeSchema = z.enum(['quick-read', 'deep-dive', 'technical']).optional();
+const difficultySchema = z.enum(['beginner', 'intermediate', 'advanced']).optional();
+
 const stickyNotesCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -9,6 +15,10 @@ const stickyNotesCollection = defineCollection({
     rotation: z.number().optional(),
     color: z.string().optional(),
     tags: tagSchema,
+    featured: featuredSchema,
+    readingTime: readingTimeSchema,
+    contentType: contentTypeSchema,
+    difficulty: difficultySchema,
   }),
 });
 
@@ -19,6 +29,10 @@ const sentencesCollection = defineCollection({
         summary: z.string(),
         category: z.enum(['Attention', 'Meaning', 'Judgment']),
         tags: tagSchema,
+        featured: featuredSchema,
+        readingTime: readingTimeSchema,
+        contentType: contentTypeSchema,
+        difficulty: difficultySchema,
     }),
 });
 
@@ -29,6 +43,10 @@ const systemsCollection = defineCollection({
         description: z.string(),
         category: z.enum(['Explanations', 'Concepts', 'How-things-fit-together']),
         tags: tagSchema,
+        featured: featuredSchema,
+        readingTime: readingTimeSchema,
+        contentType: contentTypeSchema,
+        difficulty: difficultySchema,
     }),
 });
 
@@ -39,6 +57,10 @@ const selfCollection = defineCollection({
         description: z.string(),
         publishDate: z.string().transform((str) => new Date(str)),
         tags: tagSchema,
+        featured: featuredSchema,
+        readingTime: readingTimeSchema,
+        contentType: contentTypeSchema,
+        difficulty: difficultySchema,
     }),
 });
 
@@ -49,6 +71,10 @@ const shelfCollection = defineCollection({
         description: z.string(),
         publishDate: z.string().transform((str) => new Date(str)),
         tags: tagSchema,
+        featured: featuredSchema,
+        readingTime: readingTimeSchema,
+        contentType: contentTypeSchema,
+        difficulty: difficultySchema,
     }),
 });
 

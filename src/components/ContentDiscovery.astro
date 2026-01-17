@@ -1,0 +1,292 @@
+---
+import FeaturedGrid from './FeaturedGrid.astro';
+
+interface Props {
+    posts: any[];
+}
+
+const { posts } = Astro.props;
+
+// Group content by collection for stats
+const contentStats = posts.reduce((stats, post) => {
+    const collection = post.collection;
+    stats[collection] = (stats[collection] || 0) + 1;
+    return stats;
+}, {});
+
+// Get popular tags (top 6)
+const allTags = posts.flatMap(post => post.data.tags || []);
+const tagCounts = allTags.reduce((counts, tag) => {
+    counts[tag] = (counts[tag] || 0) + 1;
+    return counts;
+}, {});
+
+const popularTags = Object.entries(tagCounts)
+    .sort(([,a], [,b]) => b - a)
+    .slice(0, 6)
+    .map(([tag, count]) => ({ tag, count }));
+
+// Collection display names
+const collectionNames = {
+    'sticky-notes': 'Sticky Notes',
+    'sentences': 'Sentences', 
+    'systems': 'Systems',
+    'self': 'Self',
+    'shelf': 'Shelf'
+};
+---
+
+<section class="content-discovery">
+    <!-- Section 1: Featured/Latest Content -->
+    <section class="discovery-featured">
+        <div class="section-header">
+            <h2 class="section-title">Featured from the Workspace</h2>
+            <p class="section-subtitle">Hand-picked insights from across the collections</p>
+        </div>
+        <FeaturedGrid posts={posts} maxDisplay={8} />
+    </section>
+
+    <!-- Section 2: Browse by Interest -->
+    <section class="discovery-browse">
+        <div class="section-header">
+            <h2 class="section-title">Browse by Interest</h2>
+            <p class="section-subtitle">Explore content by collection and topic</p>
+        </div>
+        
+        <div class="browse-grid">
+            <div class="collection-stats">
+                <h3>By Collection</h3>
+                <div class="stats-grid">
+                    {Object.entries(contentStats).map(([collection, count]) => (
+                        <a href={`/${collection}`} class="stat-item">
+                            <span class="stat-name">{collectionNames[collection] || collection}</span>
+                            <span class="stat-count">{count}</span>
+                        </a>
+                    ))}
+                </div>
+            </div>
+            
+            {popularTags.length > 0 && (
+                <div class="popular-tags">
+                    <h3>Popular Topics</h3>
+                    <div class="tag-cloud">
+                        {popularTags.map(({tag, count}) => (
+                            <a href={`/tags/${tag}`} class="popular-tag" data-count={count}>
+                                {tag}
+                                <span class="tag-count">{count}</span>
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    </section>
+</section>
+
+<style>
+.content-discovery {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.discovery-featured {
+    margin: 4rem 0;
+}
+
+.discovery-browse {
+    margin: 6rem 0 4rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-family: var(--font-heading);
+    color: var(--color-text-heading);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.browse-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.collection-stats,
+.popular-tags {
+    background-color: var(--color-blockquote-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.collection-stats h3,
+.popular-tags h3 {
+    font-size: 1.3rem;
+    font-family: var(--font-heading);
+    color: var(--color-text-heading);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.stats-grid {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--color-text-body);
+    transition: all 0.2s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-1px);
+    border-color: var(--color-accent);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.stat-name {
+    font-weight: 500;
+    color: var(--color-text-heading);
+}
+
+.stat-count {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    min-width: 1.5rem;
+    text-align: center;
+}
+
+.tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.popular-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--color-text-body);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.popular-tag:hover {
+    transform: translateY(-1px);
+    border-color: var(--color-accent);
+    background-color: color-mix(in srgb, var(--color-accent) 10%, var(--color-bg));
+}
+
+.popular-tag::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, var(--color-accent), transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 999px;
+}
+
+.popular-tag:hover::before {
+    opacity: 0.1;
+}
+
+.tag-count {
+    background-color: var(--color-code-bg);
+    color: var(--color-text-muted);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .content-discovery {
+        padding: 0 0.5rem;
+    }
+    
+    .discovery-featured {
+        margin: 3rem 0;
+    }
+    
+    .discovery-browse {
+        margin: 4rem 0 2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .browse-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .collection-stats,
+    .popular-tags {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-header {
+        margin-bottom: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .collection-stats,
+    .popular-tags {
+        padding: 1rem;
+    }
+    
+    .stat-item {
+        padding: 0.6rem 0.8rem;
+    }
+    
+    .popular-tag {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+</style>

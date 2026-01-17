@@ -2,17 +2,38 @@
 import { getCollection } from 'astro:content';
 import { sortedByDate } from '@/utils';
 import Layout from '@/layouts/Layout.astro';
-import FeaturedPosts from '@/components/FeaturedPosts.astro';
+import ContentDiscovery from '@/components/ContentDiscovery.astro';
 
+// Load all content collections
 const stickyNotes = await getCollection('sticky-notes');
+const sentences = await getCollection('sentences');
 const self = await getCollection('self');
 const systems = await getCollection('systems');
+const shelf = await getCollection('shelf');
 
-const latestStickyNote = sortedByDate(stickyNotes).slice(0, 1);
-const latestSelf = sortedByDate(self).slice(0, 1);
-const latestSystem = sortedByDate(systems).slice(0, 1);
+// Combine all content with collection metadata
+const allContent = [
+    ...stickyNotes.map(item => ({...item, collection: 'sticky-notes'})),
+    ...sentences.map(item => ({...item, collection: 'sentences'})),
+    ...self.map(item => ({...item, collection: 'self'})),
+    ...systems.map(item => ({...item, collection: 'systems'})),
+    ...shelf.map(item => ({...item, collection: 'shelf'}))
+];
 
-const featuredPosts = [...latestStickyNote, ...latestSelf, ...latestSystem];
+// Sort by date (if available) or by default order
+const sortedContent = allContent.sort((a, b) => {
+    // For collections with publish dates, use those
+    if (a.data.publishDate && b.data.publishDate) {
+        return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+    }
+    // For content without dates, maintain original order or put featured first
+    if (a.data.featured && !b.data.featured) return -1;
+    if (!a.data.featured && b.data.featured) return 1;
+    return 0;
+});
+
+// Get all content for discovery section
+const discoveryPosts = sortedContent;
 ---
 
 <Layout title="Home | A Thinking Workspace">
@@ -35,7 +56,7 @@ const featuredPosts = [...latestStickyNote, ...latestSelf, ...latestSystem];
       A personal workspace for exploring ideas in artificial intelligence, language, and systems. This site is a collection of notes, essays, and frameworks in various states of completion.
     </p>
   </section>
-  <FeaturedPosts posts={featuredPosts} />
+  <ContentDiscovery posts={discoveryPosts} />
 </Layout>
 
 <style>

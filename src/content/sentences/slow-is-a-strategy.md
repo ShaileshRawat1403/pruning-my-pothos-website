@@ -6,6 +6,10 @@ tags:
   - judgment
   - strategy
   - pace
+featured: true
+contentType: 'quick-read'
+readingTime: 2
+difficulty: 'intermediate'
 ---
 
 The pressure to move fast is immense. We are told that speed is a competitive advantage, that to hesitate is to lose. But not all races are won by the swift. Some are won by the steady.

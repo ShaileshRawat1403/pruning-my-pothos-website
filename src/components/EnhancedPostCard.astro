@@ -1,0 +1,66 @@
+---
+interface Props {
+    entry: any;
+    featured?: boolean;
+}
+
+const { entry, featured = false } = Astro.props;
+const { collection, slug } = entry;
+
+// Calculate URL
+let url = `/${collection}/${slug}`;
+if (collection === 'shelf') {
+    url = `/shelf/${slug}`;
+}
+
+// Get content metadata
+const title = entry.data.title;
+const description = entry.data.description || entry.data.summary;
+const tags = entry.data.tags || [];
+
+// Reading time calculation (if not provided)
+const readingTime = entry.data.readingTime || Math.ceil((entry.body?.length || 0) / 1000);
+
+// Content type determination
+const contentType = entry.data.contentType || (() => {
+    const length = entry.body?.length || 0;
+    if (length < 1000) return 'quick-read';
+    if (length < 3000) return 'deep-dive';
+    return 'technical';
+})();
+
+// Content type config
+const contentTypeConfig = {
+    'quick-read': { label: 'Quick', color: 'var(--color-accent)' },
+    'deep-dive': { label: 'Deep', color: '#10b981' },
+    'technical': { label: 'Technical', color: '#f59e0b' }
+};
+
+const typeInfo = contentTypeConfig[contentType] || contentTypeConfig['quick-read'];
+
+// Format collection name
+const collectionLabel = collection.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+// Get display tags (max 3)
+const displayTags = tags.slice(0, 3);
+---
+<a href={url} class="enhanced-card">
+    <div class="card-header">
+        <span class="card-collection">{collectionLabel}</span>
+        {contentType && <span class="card-type" style={`color: ${typeInfo.color}`}>{typeInfo.label}</span>}
+    </div>
+    <div class="card-content">
+        <h2 class="card-title">{title}</h2>
+        <p class="card-description">{description}</p>
+        <div class="card-meta">
+            {displayTags.length > 0 && (
+                <div class="card-tags">
+                    {displayTags.map(tag => <span class="tag">{tag}</span>)}
+                </div>
+            )}
+            <div class="card-stats">
+                <span class="reading-time">{readingTime} min read</span>
+            </div>
+        </div>
+    </div>
+</a>

@@ -49,6 +49,8 @@ Instructions for CLI agents working in this repo.
 ## Systems doc standards (match Systems 001)
 - Use plain‑text `description` in frontmatter (no HTML).
 - Keep the 3‑act structure with clear section headers and a short lead.
+- Include a **Key takeaways** blockquote near the top of every systems doc.
+- Use the shared 3‑act TOC pattern (details + Act headings).
 - Tables should use the `comparison-table` class so grid lines render.
 - Diagrams, when needed, should be small inline SVGs in the body (no external assets).
 - Do not add inline CSS or `<script>` inside MDX.

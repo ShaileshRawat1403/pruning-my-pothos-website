@@ -195,6 +195,9 @@
     pre[class*="language-"],
     pre.astro-code {
         position: relative;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
         padding: 2.6em 1.25em 1.25em;
         overflow-x: auto;
         border-radius: 10px;
@@ -238,6 +241,9 @@
         padding: 0;
         border: none;
         line-height: 1.65;
+        white-space: pre;
+        word-break: normal;
+        overflow-wrap: normal;
     }
 
     .code-copy {
@@ -263,6 +269,32 @@
     .code-copy:focus-visible {
         outline: 2px solid color-mix(in srgb, var(--color-accent) 55%, var(--color-text-body));
         outline-offset: 2px;
+    }
+
+    @media (max-width: 640px) {
+        pre,
+        pre[class*="language-"],
+        pre.astro-code {
+            padding: 2.2em 1rem 1rem;
+            font-size: 0.9rem;
+            margin-left: 0;
+            margin-right: 0;
+        }
+        pre::before {
+            height: 1.9rem;
+        }
+        pre::after {
+            top: 0.55rem;
+            left: 0.7rem;
+            width: 0.45rem;
+            height: 0.45rem;
+        }
+        .code-copy {
+            top: 0.55rem;
+            right: 0.55rem;
+            font-size: 0.62rem;
+            padding: 0.2rem 0.5rem;
+        }
     }
 
     blockquote {
@@ -548,6 +580,18 @@
         justify-items: center;
         gap: 0.75rem;
         width: min(100%, 520px);
+        box-sizing: border-box;
+    }
+    .content-figure pre {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        overflow-x: auto;
+        font-family: var(--font-mono);
+        line-height: 1.6;
+    }
+    .content-figure pre code {
+        white-space: pre;
     }
     .content-figure svg {
         width: min(100%, 440px);
@@ -599,6 +643,25 @@
     }
     .content-figure.figure-judgment {
         --figure-accent: #b98953;
+    }
+
+    @media (max-width: 640px) {
+        .content-figure {
+            width: 100%;
+            padding: 1rem;
+            gap: 0.6rem;
+        }
+        .content-figure svg {
+            width: 100%;
+            max-width: 100%;
+        }
+        .content-figure pre,
+        .content-figure pre[class*="language-"],
+        .content-figure pre.astro-code {
+            padding: 2.1em 0.9em 0.9em;
+            font-size: 0.85rem;
+            box-shadow: 0 6px 16px color-mix(in srgb, var(--color-text-body) 10%, transparent);
+        }
     }
 
     .page-content main {

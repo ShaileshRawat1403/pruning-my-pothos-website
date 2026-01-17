@@ -220,6 +220,13 @@ const relatedLinks = relatedEntries.map(toLink);
         padding: 1.25rem;
         background: rgba(0, 0, 0, 0.02);
     }
+    :global(.content-body .diagram-scroll) {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
     :global(.content-body .diagram svg) {
         width: 100%;
         height: auto;
@@ -442,6 +449,40 @@ const relatedLinks = relatedEntries.map(toLink);
         }
         article {
             padding: 0 0.5rem;
+        }
+        :global(.content-body .diagram) {
+            padding: 1rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        :global(.content-body .diagram svg) {
+            min-height: 140px;
+            min-width: 420px;
+            max-width: none;
+        }
+        :global(.content-body .diagram-scroll svg) {
+            min-width: 640px;
+        }
+        :global(.content-body .diagram svg text) {
+            font-size: clamp(10px, 3.2vw, 12px) !important;
+        }
+        :global(.content-body .toc) {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        :global(.content-body .toc ol) {
+            padding-left: 1rem;
+        }
+        :global(.content-body .comparison-table) {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        :global(.content-body .comparison-table th),
+        :global(.content-body .comparison-table td) {
+            min-width: 180px;
         }
         :global(.content-body .references-list) {
             padding-left: 1rem;

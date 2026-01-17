@@ -24,7 +24,7 @@ const nextLink = next ? toLink(next) : null;
 const relatedLinks = relatedEntries.map(toLink);
 ---
 <Layout title={system.data.title}>
-  <article id="systems-article">
+  <article id="systems-article" data-slug={system.slug}>
     <header class="system-header">
       <div>
         <h1>{system.data.title}</h1>
@@ -507,5 +507,16 @@ const relatedLinks = relatedEntries.map(toLink);
             font-size: 1rem;
             line-height: 1.75;
         }
+    }
+    :global(#systems-article[data-slug="natural-language-is-the-new-api"] .content-body) {
+        overflow-x: hidden;
+    }
+    :global(#systems-article[data-slug="natural-language-is-the-new-api"] .content-body .diagram-scroll) {
+        max-width: 100%;
+        width: 100%;
+    }
+    :global(#systems-article[data-slug="natural-language-is-the-new-api"] .content-body .diagram-scroll svg) {
+        min-width: 0;
+        width: 100%;
     }
 </style>

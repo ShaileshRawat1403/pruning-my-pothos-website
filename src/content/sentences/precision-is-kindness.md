@@ -6,6 +6,10 @@ tags:
   - precision
   - clarity
   - meaning
+featured: true
+contentType: 'quick-read'
+readingTime: 2
+difficulty: 'beginner'
 ---
 
 We often think of precision as a cold, technical quality. But in practice, precision is an act of kindness. It is a way of respecting the time and attention of your reader.

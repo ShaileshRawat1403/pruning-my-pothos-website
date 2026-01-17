@@ -1,0 +1,323 @@
+    ---
+    import SimpleEnhancedPostCard from './SimpleEnhancedPostCard.astro';
+
+    interface Props {
+        posts: any[];
+        maxDisplay?: number;
+    }
+
+    const { posts, maxDisplay = 12 } = Astro.props;
+
+    // Enhanced content prioritization
+    const featuredPosts = posts
+        .filter(post => post.data.featured === true)
+        .sort((a, b) => {
+            // Multi-factor scoring system
+            const getScore = (post) => {
+                let score = 0;
+                
+                // Collection priority (higher is more important)
+                const collectionPriority = {
+                    'self': 10,
+                    'systems': 8,
+                    'sentences': 6,
+                    'sticky-notes': 4,
+                    'shelf': 5
+                };
+                score += collectionPriority[post.collection] || 0;
+                
+                // Content type bonus
+                const contentType = post.data.contentType || 'quick-read';
+                if (contentType === 'deep-dive') score += 3;
+                if (contentType === 'technical') score += 2;
+                
+                // Tag relevance bonus (based on important tags)
+                const importantTags = ['intelligence', 'attention', 'meaning', 'judgment', 'systems'];
+                const postTags = post.data.tags || [];
+                const tagBonus = postTags.filter(tag => 
+                    importantTags.some(important => 
+                        tag.toLowerCase().includes(important.toLowerCase())
+                    )
+                ).length * 2;
+                score += tagBonus;
+                
+                // Recency bonus (if publish date available)
+                if (post.data.publishDate) {
+                    const daysSincePublish = (Date.now() - post.data.publishDate.getTime()) / (1000 * 60 * 60 * 24);
+                    if (daysSincePublish < 7) score += 5;
+                    else if (daysSincePublish < 30) score += 2;
+                }
+                
+                // Content length bonus (prefer substantial content)
+                const contentLength = post.body?.length || 0;
+                if (contentLength > 3000) score += 2;
+                else if (contentLength > 1500) score += 1;
+                
+                return score;
+            };
+
+            const aScore = getScore(a);
+            const bScore = getScore(b);
+            
+            // Sort by score (descending), then by title alphabetically as tiebreaker
+            if (aScore !== bScore) {
+                return bScore - aScore;
+            }
+            
+            return a.data.title.localeCompare(b.data.title);
+        })
+        .slice(0, maxDisplay);
+
+// Debug logging (remove in production)
+if (import.meta.env.DEV) {
+    console.log('Featured posts:', featuredPosts.length, featuredPosts.map(p => ({ 
+        title: p.data.title, 
+        collection: p.collection,
+        contentType: p.data.contentType,
+        tags: p.data.tags,
+        hasPublishDate: !!p.data.publishDate
+    })));
+}
+    ---
+
+    <section class="featured-grid">
+        <div class="featured-grid-3x4">
+        {featuredPosts.map((post, index) => (
+            <div class="grid-card" data-index={index}>
+                <SimpleEnhancedPostCard 
+                    entry={post} 
+                />
+            </div>
+        ))}
+    </div>
+    </section>
+
+    <style>
+    .featured-grid {
+        width: 100%;
+        margin: 0;
+    }
+
+    /* Standardized 2x4 Grid System - Fixed Heights */
+    .featured-grid-3x4 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 320px);
+        gap: 2rem;
+        align-items: stretch;
+        justify-items: stretch;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* All cards have consistent height */
+    .featured-grid-3x4 .grid-card {
+        height: 320px;
+        min-height: 320px;
+        max-height: 320px;
+    }
+
+    /* Mobile: Adjustments for smaller screens */
+    @media (max-width: 1199px) {
+        .featured-grid-3x4 {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(4, 300px);
+            gap: 1.8rem;
+        }
+
+        .featured-grid-3x4 .grid-card {
+            height: 300px;
+            min-height: 300px;
+            max-height: 300px;
+        }
+    }
+
+    /* Mobile: 1-column Grid with fixed heights */
+    @media (max-width: 767px) {
+        .featured-grid-3x4 {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(4, 280px);
+            gap: 1.2rem;
+            padding: 0 0.5rem;
+        }
+
+        .featured-grid-3x4 .grid-card {
+            height: 280px;
+            min-height: 280px;
+            max-height: 280px;
+        }
+        
+    /* Mobile optimization */
+    @media (max-width: 767px) {
+        .featured-grid-3x4 {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(4, 280px);
+            gap: 1.2rem;
+            padding: 0 0.5rem;
+        }
+
+        .featured-grid-3x4 .grid-card {
+            height: 280px;
+            min-height: 280px;
+            max-height: 280px;
+        }
+    }
+    }
+
+    /* Card consistency - All cards same size */
+    .grid-card {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+
+    .grid-card .enhanced-card {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--color-blockquote-bg);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        text-decoration: none;
+        color: var(--color-text-body);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .grid-card .enhanced-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        border-color: var(--color-accent);
+    }
+
+
+
+    /* Content alignment within cards */
+    .grid-card .enhanced-card .card-header {
+        padding: 1rem 1.5rem 0.5rem;
+    }
+
+    .grid-card .enhanced-card .card-title {
+        font-family: var(--font-serif);
+        font-weight: 600;
+        font-size: 1.25rem;
+        margin: 0.5rem 0 1rem 0;
+        color: var(--color-text-heading);
+        line-height: 1.4;
+    }
+
+    .grid-card .enhanced-card .card-description {
+        font-size: 1rem;
+        color: var(--color-text-muted);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+        flex: 1;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    .grid-card .enhanced-card .card-meta {
+        padding: 0 1.5rem 1rem;
+        margin-top: auto;
+    }
+
+    .grid-card .enhanced-card .card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .grid-card .enhanced-card .tag {
+        display: inline-block;
+        padding: 0.2rem 0.5rem;
+        background-color: var(--color-code-bg);
+        border-radius: 4px;
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        font-weight: 500;
+    }
+
+    .grid-card .enhanced-card .reading-time {
+        font-size: 0.8rem;
+        color: var(--color-text-muted);
+        font-weight: 500;
+    }
+
+    /* Mobile optimization - uniform cards */
+    @media (max-width: 767px) {
+        .grid-card .enhanced-card .card-title {
+            font-size: 1.1rem;
+        }
+
+        .grid-card .enhanced-card .card-description {
+            font-size: 0.85rem;
+            -webkit-line-clamp: 2;
+        }
+    }
+
+    /* Enhanced staggered animations */
+    .grid-card {
+        animation: fadeInScale 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        opacity: 0;
+        transform-origin: center;
+    }
+
+    /* Dynamic animation delays based on grid position */
+    .grid-card:nth-child(1) { animation-delay: 0.05s; }
+    .grid-card:nth-child(2) { animation-delay: 0.1s; }
+    .grid-card:nth-child(3) { animation-delay: 0.15s; }
+    .grid-card:nth-child(4) { animation-delay: 0.2s; }
+    .grid-card:nth-child(5) { animation-delay: 0.25s; }
+    .grid-card:nth-child(6) { animation-delay: 0.3s; }
+    .grid-card:nth-child(7) { animation-delay: 0.35s; }
+    .grid-card:nth-child(8) { animation-delay: 0.4s; }
+    .grid-card:nth-child(9) { animation-delay: 0.45s; }
+    .grid-card:nth-child(10) { animation-delay: 0.5s; }
+    .grid-card:nth-child(11) { animation-delay: 0.55s; }
+    .grid-card:nth-child(12) { animation-delay: 0.6s; }
+
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+
+
+
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+        .grid-card {
+            animation: none;
+            opacity: 1;
+        }
+    }
+
+    /* Large screens optimization */
+    @media (min-width: 1400px) {
+        .featured-grid-3x4 {
+            gap: 2rem;
+        }
+    }
+
+    /* Empty state */
+    .featured-grid-3x4:empty::after {
+        content: 'No featured content available.';
+        display: block;
+        text-align: center;
+        color: var(--color-text-muted);
+        font-style: italic;
+        padding: 3rem;
+    }
+    </style>

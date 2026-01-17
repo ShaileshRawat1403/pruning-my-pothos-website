@@ -6,6 +6,10 @@ tags:
   - clarity
   - focus
   - attention
+featured: true
+contentType: 'quick-read'
+readingTime: 2
+difficulty: 'beginner'
 ---
 
 We often treat clarity as if it were a happy accident, a moment of insight that arrives on its own. But clarity is not a gift. It is the result of hard work. It is the choice to face ambiguity and wrestle it into submission.

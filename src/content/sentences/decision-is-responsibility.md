@@ -5,6 +5,10 @@ category: 'Judgment'
 tags:
   - judgment
   - responsibility
+featured: true
+contentType: 'quick-read'
+readingTime: 2
+difficulty: 'intermediate'
 ---
 
 We often treat decisions as preferences. We weigh our options, we pick the one we like best, and we move on. But a decision is not a statement of taste. It is a commitment. It is the acceptance of responsibility for the outcome.

@@ -7,6 +7,10 @@ tags:
   - meaning
   - communication
   - foundations
+featured: true
+contentType: 'deep-dive'
+readingTime: 3
+difficulty: 'beginner'
 ---
 
 <p class="lead">Sentences are the smallest machines of meaning we carry. They turn instinct into language, and language into shared direction.</p>

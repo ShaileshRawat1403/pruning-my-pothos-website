@@ -7,6 +7,10 @@ tags:
   - philosophy
   - identity
   - practice
+featured: true
+contentType: 'deep-dive'
+readingTime: 5
+difficulty: 'intermediate'
 ---
 
 To build or repair something yourself is to draw a small circle of control in a world that often feels chaotic. The act of "doing it yourself" is a quiet rebellion against the black-box nature of modern life. It is a refusal to be a passive consumer and an assertion that you can understand, influence, and take responsibility for your immediate environment.

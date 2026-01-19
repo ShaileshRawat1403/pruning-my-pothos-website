@@ -24,7 +24,10 @@ if [[ ! -d dist ]]; then
   exit 1
 fi
 
-FTP_REMOTE_DIR="${FTP_REMOTE_DIR:-/public_html}"
+FTP_REMOTE_DIR="${FTP_REMOTE_DIR:-/}"
+if [[ "$FTP_REMOTE_DIR" == *"/public_html/public_html"* ]]; then
+  FTP_REMOTE_DIR="${FTP_REMOTE_DIR/public_html\/public_html/public_html}"
+fi
 
 lftp -e "set ftp:ssl-allow no; set net:max-retries 2; set net:timeout 20; set ftp:passive-mode on; mirror -R --delete --verbose dist/ ${FTP_REMOTE_DIR%/}/; bye" \
   -p "$FTP_PORT" -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER"

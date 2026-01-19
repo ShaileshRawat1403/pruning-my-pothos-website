@@ -8,13 +8,13 @@ const stickyNotes = await getCollection('sticky-notes');
   <div class="section-head">
     <h1>Sticky Notes</h1>
     <p class="mode-line lead">How ideas actually begin - messy, partial, human.</p>
-    <p class="subtitle">A springboard for a shitty life. Kept raw on purpose.</p>
+    <p class="subtitle">A springboard for a silly (sh🤬ty) life. Kept raw on purpose.</p>
   </div>
 
   <div class="sticky-wall">
     {stickyNotes.map(note => (
       <a href={`/sticky-notes/${note.slug}`} class="note" style={`--rotation: ${note.data.rotation || 0}deg; --bg: ${note.data.color || 'var(--color-sticky-1)'};`}>
-        {note.body}
+        <span class="note-title">{note.data.title}</span>
       </a>
     ))}
   </div>
@@ -22,12 +22,15 @@ const stickyNotes = await getCollection('sticky-notes');
 
 <style>
     .sticky-wall {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 2rem;
+        column-width: 220px;
+        column-gap: 1.5rem;
         padding: 1rem;
+        align-items: start;
     }
     .note {
+        display: inline-block;
+        width: 100%;
+        margin: 0 0 1.5rem;
         padding: 1.5rem;
         background-color: var(--bg, var(--color-sticky-1));
         border: 1px solid var(--color-sticky-border);
@@ -35,11 +38,19 @@ const stickyNotes = await getCollection('sticky-notes');
         font-family: var(--font-hand);
         font-size: 1.1rem;
         line-height: 1.6;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        break-inside: avoid;
         box-shadow: 0 6px 14px var(--color-sticky-shadow);
         transform: rotate(var(--rotation, 0deg));
         transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         text-decoration: none;
         color: var(--color-text-body);
+    }
+    .note-title {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0;
     }
     .note:hover {
         transform: translateY(-2px) rotate(var(--rotation, 0deg));
@@ -50,8 +61,9 @@ const stickyNotes = await getCollection('sticky-notes');
     }
     @media (max-width: 640px) {
         .sticky-wall {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
+            column-width: auto;
+            column-count: 1;
+            column-gap: 0;
             padding: 0.5rem 0;
         }
         .note {

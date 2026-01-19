@@ -745,6 +745,12 @@
         color: var(--color-text-muted);
         font-size: 0.9rem;
     }
+    .card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
 
     .card-content {
         padding: 1.5rem;
@@ -762,6 +768,11 @@
         font-size: 1rem;
         color: var(--color-text-muted);
         line-height: 1.6;
+    }
+    .card-subtitle {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.95rem;
+        color: var(--color-text-muted);
     }
 
     @media (max-width: 640px) {

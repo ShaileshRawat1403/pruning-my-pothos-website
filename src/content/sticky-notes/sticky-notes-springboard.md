@@ -1,5 +1,5 @@
 ---
-title: 'Sticky Notes: Springboard for a Shitty Life'
+title: 'Sticky Notes: the scraps that move us'
 rotation: 1
 color: 'var(--color-sticky-4)'
 tags:
@@ -8,12 +8,7 @@ tags:
   - evolution
   - reflection
 ---
-A scrap of language,
-handed forward like a tool.
-
-We climb on small words,
-and call it progress.
-
-Every note is a signal
-that wants to evolve,
-and be heard.
+A scrap of language, passed hand to hand.
+We climb on small words and call it progress.
+Keep the raw signal. It still hums.
+The note is a seed, not a verdict.

@@ -9,6 +9,7 @@
     "deploy:zip": "npm run build && rm -f site.zip && cd dist && zip -r ../site.zip .",
     "deploy:ftp": "npm run build && bash scripts/deploy-ftp.sh",
     "preview": "astro preview",
+    "shelf:music:fetch": "node scripts/fetch-music-metadata.mjs",
     "astro": "astro"
   },
   "dependencies": {

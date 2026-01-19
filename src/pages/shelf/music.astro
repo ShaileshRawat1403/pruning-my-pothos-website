@@ -15,9 +15,16 @@ const sortedMusic = sortedByDate(musicEntries);
   <div class="card-grid">
     {sortedMusic.map(entry => (
       <a href={`/shelf/music/${entry.slug.split('/')[1]}`} class="card">
-        <div class="card-img">Image Placeholder</div>
+        <div class="card-img">
+          {entry.data.coverUrl ? (
+            <img src={entry.data.coverUrl} alt={`Album art for ${entry.data.title}`} loading="lazy" />
+          ) : (
+            <span>Album art</span>
+          )}
+        </div>
         <div class="card-content">
           <h2 class="card-title">{entry.data.title}</h2>
+          {entry.data.artist && <p class="card-subtitle">{entry.data.artist}</p>}
           <p class="card-description">{entry.data.description}</p>
         </div>
       </a>

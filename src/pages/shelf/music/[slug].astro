@@ -21,8 +21,83 @@ const { Content } = await entry.render();
 ---
 
 <Layout title={entry.data.title}>
-  <h1>{entry.data.title}</h1>
-  <p>{entry.data.description}</p>
+  <div class="music-header">
+    {entry.data.coverUrl && (
+      <img class="music-cover" src={entry.data.coverUrl} alt={`Album art for ${entry.data.title}`} loading="lazy" />
+    )}
+    <div class="music-meta">
+      <h1>{entry.data.title}</h1>
+      {entry.data.artist && <p class="music-artist">{entry.data.artist}</p>}
+      {entry.data.album && <p class="music-album">{entry.data.album}</p>}
+      {entry.data.year && <p class="music-year">{entry.data.year}</p>}
+      <p class="music-description">{entry.data.description}</p>
+      <div class="music-links">
+        {entry.data.appleMusicUrl && (
+          <a class="music-link" href={entry.data.appleMusicUrl} target="_blank" rel="noreferrer">Apple Music</a>
+        )}
+      </div>
+    </div>
+  </div>
   <TagList tags={entry.data.tags} label="Tags" />
   <Content />
 </Layout>
+
+<style>
+  .music-header {
+    display: grid;
+    grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+    margin-bottom: 2rem;
+  }
+  .music-cover {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 10px 20px var(--color-sticky-shadow);
+    object-fit: cover;
+  }
+  .music-meta h1 {
+    margin: 0 0 0.5rem 0;
+  }
+  .music-artist {
+    font-weight: 600;
+    margin: 0 0 0.4rem 0;
+  }
+  .music-album,
+  .music-year {
+    margin: 0 0 0.4rem 0;
+    color: var(--color-text-muted);
+  }
+  .music-description {
+    margin: 1rem 0;
+  }
+  .music-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .music-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    color: var(--color-text-body);
+    background: var(--color-blockquote-bg);
+  }
+  .music-link:hover {
+    border-color: var(--color-accent);
+  }
+  @media (max-width: 720px) {
+    .music-header {
+      grid-template-columns: 1fr;
+    }
+    .music-cover {
+      max-width: 240px;
+    }
+  }
+</style>

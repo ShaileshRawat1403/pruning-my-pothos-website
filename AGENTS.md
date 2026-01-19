@@ -41,10 +41,29 @@ Instructions for CLI agents working in this repo.
 - End with a short "What this changes in practice" line.
 
 ## Sticky notes rules (do not violate)
-- Sticky notes are micro‑notes (1–3 short lines). No essays.
+- Sticky notes are micro‑notes (3–5 short lines) with enough juice to explain intent.
 - Do not import assets or components in sticky notes (no `import`, no `<Image>`, no inline SVG).
 - Frontmatter allowed: `title`, `rotation`, `color`, optional `tags`. No other fields.
 - Keep the tone minimal; avoid blockquotes, headings, figures, or links.
+ 
+## Sticky notes section instructions
+- Keep the masonry column layout in `src/pages/sticky-notes.astro`; avoid fixed heights or hard truncation.
+- Notes should render Markdown via `note.Content` with `note-title` and `note-body` wrappers.
+- Preserve wrapping (`overflow-wrap`) and prevent note splitting (`break-inside: avoid`).
+- New notes should use `color: 'var(--color-sticky-*)'` and modest `rotation` (roughly -3 to 3).
+
+## Self section guidelines
+- Use a short lead line with `<p class="lead">` at the top of each entry.
+- Aim for 3–5 compact paragraphs; keep tone reflective, calm, and concrete.
+- Use sparse `<span class="highlight">` emphasis on key phrases (1–3 per doc).
+- Keep frontmatter order: `title`, `description`, `publishDate`, `tags`, optional metadata fields.
+- Include a small inline SVG diagram inside `<figure class="content-figure">` with a short figcaption; keep it responsive (no inline styles).
+
+## Shelf (music) guidelines
+- Music entries live in `src/content/shelf/music/` and must keep frontmatter order.
+- Required frontmatter: `title`, `description`, `publishDate`, `tags`.
+- Optional metadata fields: `artist`, `album`, `year`, `coverUrl`, `appleMusicUrl`.
+- Use the metadata fetch script for enrichment: `npm run shelf:music:fetch`.
 
 ## Systems doc standards (match Systems 001)
 - Use plain‑text `description` in frontmatter (no HTML).

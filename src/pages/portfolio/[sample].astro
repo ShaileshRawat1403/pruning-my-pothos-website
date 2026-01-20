@@ -1,0 +1,106 @@
+---
+import PortfolioLayout from '../../layouts/PortfolioLayout.astro';
+import { portfolioSamples } from '../../data/portfolio-samples';
+
+export function getStaticPaths() {
+  return portfolioSamples.map((sample) => ({
+    params: { sample: sample.slug },
+    props: { sample },
+  }));
+}
+
+const { sample } = Astro.props;
+---
+
+<PortfolioLayout title={`${sample.title} | Portfolio`}>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand-link" href="/portfolio/">
+        <div class="brand-mark">S</div>
+        <span>Shailesh Rawat</span>
+      </a>
+      <div class="nav-links">
+        <a href="/portfolio/#samples">Samples</a>
+        <a href="/portfolio/#contact">Contact</a>
+      </div>
+      <div class="link-row">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle theme">
+          <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3a1 1 0 0 1 1 1v1.2a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1Zm6.36 2.64a1 1 0 0 1 1.41 0l.85.85a1 1 0 0 1-1.41 1.41l-.85-.85a1 1 0 0 1 0-1.41ZM21 11a1 1 0 0 1 0 2h-1.2a1 1 0 0 1 0-2H21Zm-2.38 6.36a1 1 0 0 1 0 1.41l-.85.85a1 1 0 0 1-1.41-1.41l.85-.85a1 1 0 0 1 1.41 0ZM13 19.8a1 1 0 0 1-2 0V19a1 1 0 0 1 2 0v.8ZM6.36 17.36a1 1 0 0 1-1.41 0l-.85-.85a1 1 0 0 1 1.41-1.41l.85.85a1 1 0 0 1 0 1.41ZM4.2 13a1 1 0 0 1 0-2H3a1 1 0 0 1 0-2h1.2a1 1 0 0 1 0 2H4.2Zm2.16-7.36a1 1 0 0 1 1.41 0l.85.85a1 1 0 0 1-1.41 1.41l-.85-.85a1 1 0 0 1 0-1.41ZM12 7.5a4.5 4.5 0 1 1-4.5 4.5A4.5 4.5 0 0 1 12 7.5Z" fill="currentColor"/>
+          </svg>
+          <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.5 14.3A9 9 0 0 1 9.7 3.5a1 1 0 0 0-1.1 1.2A9 9 0 1 0 20.5 15.4a1 1 0 0 0 0-1.1Z" fill="currentColor"/>
+          </svg>
+        </button>
+        <a class="btn btn-nav" href="/portfolio/">Back to portfolio</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page">
+    <section class="hero reveal">
+      <div class="hero-inner">
+        <span class="badge">Documentation sample</span>
+        <h1>{sample.title}</h1>
+        <p>{sample.summary}</p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="section-inner">
+        <div class="card">
+          <div class="tag-row">
+            {sample.meta.map((item) => (
+              <span class="tag">{item.label}</span>
+            ))}
+          </div>
+          <div class="meta-list">
+            {sample.meta.map((item) => (
+              <div>
+                <strong>{item.label}:</strong> <span class="muted">{item.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {sample.sections.map((section) => (
+      <section class="section">
+        <div class="section-inner">
+          <h2 class="section-title">{section.title}</h2>
+          <div set:html={section.body} />
+        </div>
+      </section>
+    ))}
+
+    <section class="section">
+      <div class="section-inner">
+        <div class="card">
+          <h3>Author note</h3>
+          <p class="muted">{sample.authorNote}</p>
+        </div>
+        <div class="footer footer-tight">
+          <a href="https://pruningmypothos.com">Personal Blog - pruningmypothos.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const savedTheme = localStorage.getItem('portfolio-theme');
+    if (savedTheme) {
+      root.dataset.theme = savedTheme;
+    } else {
+      root.dataset.theme = 'light';
+    }
+
+    const toggle = document.querySelector('[data-theme-toggle]');
+    toggle?.addEventListener('click', () => {
+      const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = nextTheme;
+      localStorage.setItem('portfolio-theme', nextTheme);
+    });
+  </script>
+</PortfolioLayout>

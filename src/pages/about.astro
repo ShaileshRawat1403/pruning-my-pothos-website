@@ -13,6 +13,9 @@ import Layout from '@/layouts/Layout.astro';
   <p>
     The core thesis is that the process of thinking is as valuable as the finished product. I'm sharing notes, fragments, and long-form essays, in the hope to create a more honest and dynamic representation of my work. The content here is intentionally fluid and subject to change as my understanding evolves.
   </p>
+  <p>
+    If you're looking for a focused view of my documentation and enablement work, the portfolio lives here: <a class="about-portfolio-link" href="/portfolio/">/portfolio</a>.
+  </p>
   <p class="about-social-intro">You can find me here:</p>
   <div class="about-social-links">
     <a href="mailto:shailesh.rawat1403@gmail.com" class="about-social-link" aria-label="Email Shailesh Rawat">
@@ -66,5 +69,13 @@ import Layout from '@/layouts/Layout.astro';
   .about-social-link:hover {
     border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
     color: var(--color-text-heading);
+  }
+  .about-portfolio-link {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-family: var(--font-mono);
+  }
+  .about-portfolio-link:hover {
+    text-decoration: underline;
   }
 </style>

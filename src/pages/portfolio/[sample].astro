@@ -1,5 +1,6 @@
 ---
 import PortfolioLayout from '../../layouts/PortfolioLayout.astro';
+import Footer from '../../components/Footer.astro';
 import { portfolioSamples } from '../../data/portfolio-samples';
 
 export function getStaticPaths() {
@@ -80,9 +81,7 @@ const { sample } = Astro.props;
           <h3>Author note</h3>
           <p class="muted">{sample.authorNote}</p>
         </div>
-        <div class="footer footer-tight">
-          <a href="https://pruningmypothos.com">Personal Blog - pruningmypothos.com</a>
-        </div>
+        <Footer />
       </div>
     </section>
   </main>

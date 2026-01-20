@@ -1,5 +1,6 @@
 ---
 import PortfolioLayout from '../layouts/PortfolioLayout.astro';
+import Footer from '../components/Footer.astro';
 import { portfolioSamples } from '../data/portfolio-samples';
 
 const focusAreas = [
@@ -310,16 +311,8 @@ const iconPaths = {
           </a>
         ))}
       </div>
-      <div class="section-inner footer">
-        <div>Reading lists and reflections:</div>
-        <a class="footer-link" href="https://pruningmypothos.com">
-          pruningmypothos.com
-          <svg class="footer-link-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M14 3h7v7 M10 14l11-11 M21 14v6a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
     </section>
+    <Footer variant="portfolio" />
   </main>
 
   <script>

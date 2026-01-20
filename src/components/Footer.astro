@@ -1,12 +1,42 @@
 ---
+const { variant = 'site' } = Astro.props;
 const today = new Date();
+const links =
+    variant === 'portfolio'
+        ? [{ label: 'pruningmypothos.com', href: 'https://pruningmypothos.com', external: true }]
+        : [
+              { label: 'Email', href: 'mailto:shailesh.rawat1403@gmail.com' },
+              {
+                  label: 'LinkedIn',
+                  href: 'https://www.linkedin.com/in/shailesh-rawat',
+                  external: true,
+              },
+              {
+                  label: 'GitHub',
+                  href: 'https://github.com/ShaileshRawat1403',
+                  external: true,
+              },
+              {
+                  label: 'pruningmypothos.com',
+                  href: 'https://pruningmypothos.com',
+                  external: true,
+                  primary: true,
+              },
+          ];
 ---
-<footer class="footer">
+<footer class="footer" data-variant={variant}>
     <div class="footer-inner">
         <div class="footer-links">
-            <a class="footer-link-pill" href="mailto:shailesh.rawat1403@gmail.com">Email</a>
-            <a class="footer-link-pill" href="https://www.linkedin.com/in/shailesh-rawat" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a class="footer-link-pill" href="https://github.com/ShaileshRawat1403" target="_blank" rel="noopener noreferrer">GitHub</a>
+            {links.map((link) => (
+                <a
+                    class={`footer-link-pill${link.primary ? ' footer-link-primary' : ''}`}
+                    href={link.href}
+                    target={link.external ? '_blank' : undefined}
+                    rel={link.external ? 'noopener noreferrer' : undefined}
+                >
+                    {link.label}
+                </a>
+            ))}
         </div>
         <div class="footer-copyright">
             &copy; {today.getFullYear()} Shailesh Rawat (san_serif_sentiments). All rights reserved.
@@ -17,7 +47,7 @@ const today = new Date();
 .footer {
     width: 100%;
     max-width: min(1100px, 100%);
-    margin: clamp(3rem, 7vw, 4.5rem) 0 2rem 0;
+    margin: clamp(3rem, 7vw, 4.5rem) auto 2rem auto;
     padding: 1.5rem 1rem 0;
     border-top: 1px solid var(--color-border);
 }
@@ -27,6 +57,7 @@ const today = new Date();
     align-items: center;
     flex-wrap: nowrap;
     gap: 1rem;
+    width: 100%;
 }
 .footer-links {
     display: flex;
@@ -49,6 +80,34 @@ const today = new Date();
 .footer-link-pill:hover {
     color: var(--color-text-body);
     border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
+}
+.footer-link-primary {
+    color: var(--color-text-body);
+    border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
+    background-color: var(--color-blockquote-bg);
+}
+[data-variant='portfolio'] .footer-inner {
+    justify-content: space-between;
+    text-align: left;
+    flex-wrap: nowrap;
+}
+[data-variant='portfolio'] .footer-links {
+    justify-content: flex-start;
+    width: auto;
+}
+[data-variant='portfolio'] .footer-copyright {
+    flex-basis: auto;
+    text-align: right;
+}
+[data-variant='portfolio'] .footer-link-primary {
+    color: var(--color-text-body);
+    border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-border));
+    background-color: var(--color-blockquote-bg);
+}
+[data-variant='portfolio'] .footer-link-primary:hover {
+    color: var(--color-text-body);
+    border-color: color-mix(in srgb, var(--color-accent) 70%, var(--color-border));
+    transform: translateY(-1px);
 }
 .footer-copyright {
     font-family: var(--font-mono);

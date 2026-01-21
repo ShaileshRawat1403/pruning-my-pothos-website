@@ -317,18 +317,14 @@ const iconPaths = {
 
   <script>
     const root = document.documentElement;
-    const savedTheme = localStorage.getItem('portfolio-theme');
-    if (savedTheme) {
-      root.dataset.theme = savedTheme;
-    } else {
-      root.dataset.theme = 'light';
-    }
+    const storedTheme = localStorage.getItem('theme');
+    root.dataset.theme = storedTheme === 'dark' ? 'dark' : 'light';
 
     const toggle = document.querySelector('[data-theme-toggle]');
     toggle?.addEventListener('click', () => {
       const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
       root.dataset.theme = nextTheme;
-      localStorage.setItem('portfolio-theme', nextTheme);
+      localStorage.setItem('theme', nextTheme);
     });
 
     const tabs = document.querySelectorAll('.tab');

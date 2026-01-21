@@ -41,6 +41,15 @@ const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
             };
             const theme = getTheme();
             document.documentElement.setAttribute('data-theme', theme);
+
+            const syncTheme = () => {
+              const stored = localStorage.getItem('theme');
+              if (stored) {
+                document.documentElement.setAttribute('data-theme', stored);
+              }
+            };
+            document.addEventListener('astro:page-load', syncTheme);
+            document.addEventListener('astro:after-swap', syncTheme);
         </script>
 	</head>
 	<body class:list={[bodyClass]}>
@@ -56,6 +65,12 @@ const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
                 <a href="/about" class:list={[{ active: pathname === '/about' }]}>/about</a>
             </div>
             <div class="nav-actions">
+                <button id="search-toggle" title="Search" aria-label="Open search">
+                    <span class="icon-placeholder" set:html={searchIcon}></span>
+                </button>
+                <button id="theme-toggle" title="Cycle Theme" aria-label="Toggle theme">
+                    <span class="icon-placeholder"></span>
+                </button>
                 <button
                     id="nav-toggle"
                     class="nav-toggle"
@@ -66,12 +81,6 @@ const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
                 >
                     <span class="nav-toggle-icon" aria-hidden="true"></span>
                     <span class="sr-only">Toggle menu</span>
-                </button>
-                <button id="search-toggle" title="Search" aria-label="Open search">
-                    <span class="icon-placeholder" set:html={searchIcon}></span>
-                </button>
-                <button id="theme-toggle" title="Cycle Theme" aria-label="Toggle theme">
-                    <span class="icon-placeholder"></span>
                 </button>
                 <div id="search-modal" class="search-modal" hidden>
                     <Search />

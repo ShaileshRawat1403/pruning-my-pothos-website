@@ -9,6 +9,20 @@ const { title = 'Portfolio' } = Astro.props;
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
+    <script is:inline>
+      const getPortfolioTheme = () => {
+        const stored = localStorage.getItem('theme');
+        if (stored) {
+          return stored === 'dark' ? 'dark' : 'light';
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      };
+
+      document.documentElement.setAttribute('data-theme', getPortfolioTheme());
+    </script>
     <style is:global>
       @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 

@@ -71,9 +71,10 @@ export const portfolioSamples = [
             </svg>
             <figcaption>Governance flows from Hub to Project to Workload.</figcaption>
           </figure>
-          <div class="media-placeholder">
-            <span>Mental model diagram: Hub -> Project -> Workload</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/azure-foundry/foundry-mental-model.svg" alt="AI Hub to Project to Workload flow in Azure AI Foundry." />
+            <figcaption>Mental model diagram: Hub to Project to Workload.</figcaption>
+          </figure>
         `,
       },
       {
@@ -96,9 +97,10 @@ export const portfolioSamples = [
             </div>
           </div>
           <p><strong>Developer callout:</strong> You will not create the Hub. You will inherit it.</p>
-          <div class="media-placeholder">
-            <span>Screenshot: AI Hub creation with RBAC roles</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/azure-foundry/ai-hub-setup.svg" alt="AI Hub creation form with RBAC roles and networking settings." />
+            <figcaption>AI Hub creation with RBAC roles.</figcaption>
+          </figure>
         `,
       },
       {
@@ -120,9 +122,10 @@ export const portfolioSamples = [
               <p>Apply project-specific rate limits and budget alerts.</p>
             </div>
           </div>
-          <div class="media-placeholder">
-            <span>Screenshot: Project setup with quotas and owners</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/azure-foundry/project-setup.svg" alt="Project setup showing owners, quotas, and budget limits." />
+            <figcaption>Project setup with quotas and owners.</figcaption>
+          </figure>
         `,
       },
       {
@@ -144,9 +147,10 @@ export const portfolioSamples = [
               <p>Capture refusal behavior and edge cases early.</p>
             </div>
           </div>
-          <div class="media-placeholder">
-            <span>Screenshot: Chat Playground with approved system prompt</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/azure-foundry/chat-playground.svg" alt="Chat Playground with system prompt and sample conversation." />
+            <figcaption>Chat Playground with approved system prompt.</figcaption>
+          </figure>
         `,
       },
       {
@@ -191,9 +195,10 @@ const response = await client.chat.completions.create({
 });
 
 console.log(response.choices[0].message.content);</code></pre>
-          <div class="media-placeholder">
-            <span>Screenshot: API deployment + key vault configuration</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/azure-foundry/api-deployment-keyvault.svg" alt="Deployment list with key vault secrets configuration." />
+            <figcaption>API deployment and key vault configuration.</figcaption>
+          </figure>
         `,
       },
       {
@@ -216,9 +221,10 @@ console.log(response.choices[0].message.content);</code></pre>
             </div>
           </div>
           <p><strong>Leadership framing:</strong> Guardrails are a cost and trust control, not a blocker.</p>
-          <div class="media-placeholder">
-            <span>Screenshot: Content filter configuration and budget alert</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/azure-foundry/guardrails-config.svg" alt="Content filters with budget alerts enabled." />
+            <figcaption>Content filter configuration and budget alerts.</figcaption>
+          </figure>
         `,
       },
       {
@@ -253,9 +259,10 @@ console.log(response.choices[0].message.content);</code></pre>
             <li><strong>Operational:</strong> An on-call owner and rollback path are documented.</li>
           </ul>
           <p><span class="highlight">Business impact:</span> Faster onboarding, fewer incidents, and higher confidence across teams.</p>
-          <div class="media-placeholder">
-            <span>Screenshot: Readiness checklist completed in Project</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/azure-foundry/readiness-checklist.svg" alt="Project readiness checklist marked complete." />
+            <figcaption>Readiness checklist completed in Project.</figcaption>
+          </figure>
         `,
       },
     ],
@@ -332,9 +339,10 @@ console.log(response.choices[0].message.content);</code></pre>
             </svg>
             <figcaption>Policy decisions are enforced through guardrails before workloads ship.</figcaption>
           </figure>
-          <div class="media-placeholder">
-            <span>Screenshot: Policy to guardrail flow</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/safe-usage/policy-guardrail-flow.svg" alt="Policy to guardrail flow for safe usage limits." />
+            <figcaption>Policy to guardrail flow.</figcaption>
+          </figure>
         `,
       },
       {
@@ -356,9 +364,10 @@ console.log(response.choices[0].message.content);</code></pre>
               <p>PII extraction, surveillance, or sensitive profiling.</p>
             </div>
           </div>
-          <div class="media-placeholder">
-            <span>Screenshot: Azure content filters configured</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/safe-usage/content-filters.svg" alt="Content filters configured for prohibited and restricted usage." />
+            <figcaption>Azure content filters configured.</figcaption>
+          </figure>
         `,
       },
       {
@@ -380,6 +389,10 @@ console.log(response.choices[0].message.content);</code></pre>
               <p>Policy events are logged and reviewed monthly.</p>
             </div>
           </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/safe-usage/project-enforcement.svg" alt="Project-level enforcement with owners, budgets, and policy logs." />
+            <figcaption>Project-level enforcement with owners, budgets, and logs.</figcaption>
+          </figure>
         `,
       },
       {
@@ -395,22 +408,7 @@ console.log(response.choices[0].message.content);</code></pre>
         `,
       },
       {
-        title: "5. Escalation workflow (proof of compliance)",
-        body: `
-          <p><strong>Outcome:</strong> Fast decisions without compliance bottlenecks.</p>
-          <ol>
-            <li>Flag the use case and assign risk level.</li>
-            <li>Route to legal and policy within 48 hours.</li>
-            <li>Document the decision and mitigation steps.</li>
-            <li>Publish the approved pattern to the shared library.</li>
-          </ol>
-          <div class="media-placeholder">
-            <span>Screenshot: Escalation workflow and decision log</span>
-          </div>
-        `,
-      },
-      {
-        title: "6. Guardrails and limits (preventing early failures)",
+        title: "5. Guardrails and limits (preventing early failures)",
         body: `
           <p><strong>Outcome:</strong> Lower violations and fewer emergency rollbacks.</p>
           <p>Enable Azure content filters, enforce prompt templates, and set usage alerts.</p>
@@ -428,6 +426,26 @@ console.log(response.choices[0].message.content);</code></pre>
               <p>Record prompt changes and policy exceptions.</p>
             </div>
           </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/safe-usage/guardrails-limits.svg" alt="Guardrails and usage limits overview." />
+            <figcaption>Guardrails and usage limits overview.</figcaption>
+          </figure>
+        `,
+      },
+      {
+        title: "6. Escalation workflow (proof of compliance)",
+        body: `
+          <p><strong>Outcome:</strong> Fast decisions without compliance bottlenecks.</p>
+          <ol>
+            <li>Flag the use case and assign risk level.</li>
+            <li>Route to legal and policy within 48 hours.</li>
+            <li>Document the decision and mitigation steps.</li>
+            <li>Publish the approved pattern to the shared library.</li>
+          </ol>
+          <figure class="media-shot">
+            <img src="/images/portfolio/safe-usage/escalation-workflow.svg" alt="Escalation workflow and decision log steps." />
+            <figcaption>Escalation workflow and decision log.</figcaption>
+          </figure>
         `,
       },
       {
@@ -537,9 +555,10 @@ console.log(response.choices[0].message.content);</code></pre>
             </svg>
             <figcaption>Account-level governance flows into project execution and workloads.</figcaption>
           </figure>
-          <div class="media-placeholder">
-            <span>Mental model diagram: Account -> Project -> Workload</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/aws-bedrock/bedrock-mental-model.svg" alt="Account to Project to Workload flow for AWS Bedrock." />
+            <figcaption>Mental model diagram: Account to Project to Workload.</figcaption>
+          </figure>
         `,
       },
       {
@@ -562,9 +581,10 @@ console.log(response.choices[0].message.content);</code></pre>
             </div>
           </div>
           <p><strong>Developer callout:</strong> You inherit the account guardrails. You do not create them.</p>
-          <div class="media-placeholder">
-            <span>Screenshot: IAM roles and Bedrock access policy</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/aws-bedrock/account-guardrails.svg" alt="IAM roles with Bedrock access policy settings." />
+            <figcaption>IAM roles and Bedrock access policy.</figcaption>
+          </figure>
         `,
       },
       {
@@ -586,9 +606,10 @@ console.log(response.choices[0].message.content);</code></pre>
               <p>Apply cost alerts and usage thresholds per project.</p>
             </div>
           </div>
-          <div class="media-placeholder">
-            <span>Screenshot: Project budgets and alert setup</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/aws-bedrock/project-budgets.svg" alt="Project budget and alert setup." />
+            <figcaption>Project budgets and alert setup.</figcaption>
+          </figure>
         `,
       },
       {
@@ -610,9 +631,10 @@ console.log(response.choices[0].message.content);</code></pre>
               <p>Capture refusal behavior and unsafe outputs.</p>
             </div>
           </div>
-          <div class="media-placeholder">
-            <span>Screenshot: Bedrock playground with approved prompt</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/aws-bedrock/console-playground.svg" alt="Bedrock console playground with approved system prompt." />
+            <figcaption>Bedrock playground with approved prompt.</figcaption>
+          </figure>
         `,
       },
       {
@@ -658,9 +680,10 @@ const command = new InvokeModelCommand({
 const response = await client.send(command);
 const result = JSON.parse(new TextDecoder().decode(response.body));
 console.log(result.completion);</code></pre>
-          <div class="media-placeholder">
-            <span>Screenshot: CloudWatch logs for first request</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/aws-bedrock/cloudwatch-logs.svg" alt="CloudWatch logs for the first Bedrock request." />
+            <figcaption>CloudWatch logs for first request.</figcaption>
+          </figure>
         `,
       },
       {
@@ -682,9 +705,10 @@ console.log(result.completion);</code></pre>
               <p>Track usage per model and alert on anomalies.</p>
             </div>
           </div>
-          <div class="media-placeholder">
-            <span>Screenshot: Guardrail policy and budget alert</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/aws-bedrock/guardrails-alerts.svg" alt="Bedrock guardrails with budget alerts." />
+            <figcaption>Guardrail policy and budget alert.</figcaption>
+          </figure>
         `,
       },
       {
@@ -719,9 +743,10 @@ console.log(result.completion);</code></pre>
             <li><strong>Operational:</strong> Owners and rollback paths are documented.</li>
           </ul>
           <p><span class="highlight">Business impact:</span> Faster onboarding, fewer incidents, higher trust across teams.</p>
-          <div class="media-placeholder">
-            <span>Screenshot: Readiness checklist completed</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/aws-bedrock/readiness-checklist.svg" alt="Readiness checklist completed for Bedrock." />
+            <figcaption>Readiness checklist completed.</figcaption>
+          </figure>
         `,
       },
     ],
@@ -798,9 +823,10 @@ console.log(result.completion);</code></pre>
             </svg>
             <figcaption>Local governance starts at the host and flows into projects and workloads.</figcaption>
           </figure>
-          <div class="media-placeholder">
-            <span>Mental model diagram: Host -> Project -> Workload</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/ollama/ollama-mental-model.svg" alt="Host to Project to Workload flow for Ollama." />
+            <figcaption>Mental model diagram: Host to Project to Workload.</figcaption>
+          </figure>
         `,
       },
       {
@@ -822,13 +848,41 @@ console.log(result.completion);</code></pre>
               <p>Decide where request logs and usage metrics go.</p>
             </div>
           </div>
-          <div class="media-placeholder">
-            <span>Screenshot: Host standards and access checklist</span>
+          <figure class="media-shot">
+            <img src="/images/portfolio/ollama/host-standards.svg" alt="Host standards and access checklist." />
+            <figcaption>Host standards and access checklist.</figcaption>
+          </figure>
+        `,
+      },
+      {
+        title: "3. Install Ollama (macOS + Windows)",
+        body: `
+          <p><strong>Outcome:</strong> A working local runtime before teams touch prompts or APIs.</p>
+          <p>Install on a governed host first, then verify the runtime is running before any project work.</p>
+          <div class="focus-grid">
+            <div class="card">
+              <strong>macOS</strong>
+              <p>Install via Homebrew and start the service.</p>
+              <pre><code class="language-bash">brew install ollama
+ollama serve</code></pre>
+            </div>
+            <div class="card">
+              <strong>Windows</strong>
+              <p>Install via winget or the official installer.</p>
+              <pre><code class="language-bash">winget install Ollama.Ollama
+ollama serve</code></pre>
+            </div>
+            <div class="card">
+              <strong>Verify</strong>
+              <p>Pull a small model and run a quick prompt.</p>
+              <pre><code class="language-bash">ollama run llama3
+ollama list</code></pre>
+            </div>
           </div>
         `,
       },
       {
-        title: "3. Creating a project (isolation and safety)",
+        title: "4. Creating a project (isolation and safety)",
         body: `
           <p><strong>Outcome:</strong> Teams can experiment without affecting others or overrunning capacity.</p>
           <p>Define a project workspace with model access, quotas, and prompt ownership.</p>
@@ -846,13 +900,26 @@ console.log(result.completion);</code></pre>
               <p>Set concurrency or request rate guidelines per project.</p>
             </div>
           </div>
-          <div class="media-placeholder">
-            <span>Screenshot: Project registry and model approvals</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/ollama/project-registry.svg" alt="Project registry and model approvals." />
+            <figcaption>Project registry and model approvals.</figcaption>
+          </figure>
         `,
       },
       {
-        title: "4. Playground testing (learning before building)",
+        title: "5. Model selection and hardware sizing",
+        body: `
+          <p><strong>Outcome:</strong> Teams start with models that match the host budget and workload needs.</p>
+          <ul>
+            <li><strong>CPU-friendly starts:</strong> 7B to 8B class instruct models for quick validation.</li>
+            <li><strong>Balanced default:</strong> Mistral or Llama 8B for most internal tooling.</li>
+            <li><strong>GPU-required:</strong> 13B+ models only when VRAM and latency targets allow.</li>
+          </ul>
+          <p><strong>Hardware guidance:</strong> CPU-only is fine for prototypes but slower. GPUs improve latency and throughput; larger models need more VRAM even when quantized.</p>
+        `,
+      },
+      {
+        title: "6. Playground testing (learning before building)",
         body: `
           <p><strong>Outcome:</strong> Teams document model behavior before writing production code.</p>
           <p>Use a simple prompt harness to test tone, refusal behavior, and edge cases.</p>
@@ -870,13 +937,14 @@ console.log(result.completion);</code></pre>
               <p>Document unsafe or hallucinated outputs.</p>
             </div>
           </div>
-          <div class="media-placeholder">
-            <span>Screenshot: Prompt harness results</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/ollama/prompt-harness.svg" alt="Prompt harness results comparing model outputs." />
+            <figcaption>Prompt harness results.</figcaption>
+          </figure>
         `,
       },
       {
-        title: "5. First API call (proof of access)",
+        title: "7. First API call (proof of access)",
         body: `
           <p><strong>Outcome:</strong> Verified local access with traceable logs.</p>
           <p>Use the local Ollama API to validate connectivity.</p>
@@ -900,13 +968,14 @@ response = requests.post(
 )
 
 print(response.json()["response"])</code></pre>
-          <div class="media-placeholder">
-            <span>Screenshot: Local API call with response and timing</span>
-          </div>
+          <figure class="media-shot">
+            <img src="/images/portfolio/ollama/local-api-call.svg" alt="Local API call response with timing and tokens." />
+            <figcaption>Local API call with response and timing.</figcaption>
+          </figure>
         `,
       },
       {
-        title: "6. Guardrails and limits (preventing early failures)",
+        title: "8. Guardrails and limits (preventing early failures)",
         body: `
           <p><strong>Outcome:</strong> Stable performance and predictable behavior on local hosts.</p>
           <p>Local deployments still need guardrails: prompt standards, model version pinning, and access controls.</p>
@@ -930,7 +999,7 @@ print(response.json()["response"])</code></pre>
         `,
       },
       {
-        title: "7. Common failure modes (what breaks in real orgs)",
+        title: "9. Common failure modes (what breaks in real orgs)",
         body: `
           <p>Local stacks fail for predictable reasons. Plan for them early.</p>
           <div class="focus-grid">
@@ -951,7 +1020,7 @@ print(response.json()["response"])</code></pre>
         `,
       },
       {
-        title: "8. What \"ready\" actually means",
+        title: "10. What \"ready\" actually means",
         body: `
           <p>A local Ollama project is ready when the following are true:</p>
           <ul>

@@ -1,0 +1,56 @@
+pipeline:
+  name: website-build
+  identifier: website_build
+  projectIdentifier: demopipelineobservability
+  orgIdentifier: default
+
+  stages:
+    - stage:
+        name: build
+        identifier: build
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: install
+                  identifier: install
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:20
+                    shell: Sh
+                    command: |
+                      node -v
+                      npm -v
+                      npm ci
+
+              - step:
+                  type: Run
+                  name: build
+                  identifier: build_step
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:20
+                    shell: Sh
+                    command: |
+                      npm run build
+                      test -d dist
+
+              - step:
+                  type: Run
+                  name: list-dist
+                  identifier: list_dist
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:20
+                    shell: Sh
+                    command: |
+                      ls -la dist

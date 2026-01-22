@@ -1,0 +1,58 @@
+pipeline:
+  name: website-build
+  identifier: websitebuild
+  projectIdentifier: demopipelineobservability
+  orgIdentifier: default
+  properties:
+    ci:
+      codebase:
+        connectorRef: <your_github_connector_identifier>
+        repoName: pruning-my-pothos-website
+        build:
+          type: branch
+          spec:
+            branch: feature/new-work
+  stages:
+    - stage:
+        name: build
+        identifier: build
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: install-dependencies
+                  identifier: install_dependencies
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:20
+                    shell: Sh
+                    command: npm ci
+              - step:
+                  type: Run
+                  name: build-astro
+                  identifier: build_astro
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:20
+                    shell: Sh
+                    command: npm run build test -d dist
+              - step:
+                  type: Run
+                  name: verify-output
+                  identifier: verify_output
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: node:20
+                    shell: Sh
+                    command: |
+                      echo "Build output:"
+                      ls -la dist

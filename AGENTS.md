@@ -14,6 +14,8 @@ Instructions for CLI agents working in this repo.
 - Avoid inline styles inside Markdown; use classes and scoped CSS.
 - Do not change nav structure, hero layout, or footer layout without explicit approval.
 - Avoid typography changes (fonts, sizes, line-heights) unless requested.
+- Keep card content alignment consistent across the site; use uniform spacing and alignment patterns so card sections line up.
+- Keep sample docs chronological and coherent; introduce setup before usage, and avoid calling out prerequisites later.
 
 ## Content + collections
 - Content lives in `src/content/*`; keep schema in `src/content/config.ts` in sync.

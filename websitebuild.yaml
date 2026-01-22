@@ -1,56 +1,106 @@
 pipeline:
-  name: website-build
-  identifier: website_build
+  name: pruning-my-pothos-deploy
+  identifier: pruning_my_pothos_deploy
   projectIdentifier: demopipelineobservability
   orgIdentifier: default
-
   stages:
     - stage:
-        name: build
-        identifier: build
-        type: CI
+        name: Deploy
+        identifier: Deploy
+        type: Deployment
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
         spec:
-          cloneCodebase: true
-          platform:
-            os: Linux
-            arch: Amd64
-          runtime:
-            type: Cloud
-            spec: {}
+          deploymentType: Kubernetes
+          service:
+            serviceRef: pruningmypothos
+            serviceInputs:
+              serviceDefinition:
+                type: Kubernetes
+                spec:
+                  artifacts:
+                    primary:
+                      type: DockerRegistry
+                      spec:
+                        connectorRef: ghcr_pruning_my_pothos
+                        imagePath: shaileshrawat1403/pruning-my-pothos-website
+                        tag: latest
+                  manifests:
+                    - manifest:
+                        identifier: k8s_manifest
+                        type: K8sManifest
+                        spec:
+                          store:
+                            type: Inline
+                            spec:
+                              content: |-
+                                apiVersion: v1
+                                kind: Namespace
+                                metadata:
+                                  name: local-dd-k8s
+                                ---
+                                apiVersion: apps/v1
+                                kind: Deployment
+                                metadata:
+                                  name: pruning-my-pothos
+                                  namespace: local-dd-k8s
+                                spec:
+                                  replicas: 1
+                                  selector:
+                                    matchLabels:
+                                      app: pruning-my-pothos
+                                  template:
+                                    metadata:
+                                      labels:
+                                        app: pruning-my-pothos
+                                    spec:
+                                      containers:
+                                        - name: web
+                                          image: <+artifacts.primary.image>
+                                          imagePullPolicy: Always
+                                          ports:
+                                            - containerPort: 80
+                                ---
+                                apiVersion: v1
+                                kind: Service
+                                metadata:
+                                  name: pruning-my-pothos
+                                  namespace: local-dd-k8s
+                                spec:
+                                  selector:
+                                    app: pruning-my-pothos
+                                  ports:
+                                    - name: http
+                                      port: 80
+                                      targetPort: 80
+                                  type: LoadBalancer
+          environment:
+            environmentRef: localk8s
+            infrastructureDefinitions:
+              - identifier: local_dd_k8s_infra
+                inputs:
+                  identifier: local_dd_k8s_infra
+                  type: KubernetesDirect
+                  spec:
+                    connectorRef: k8s_docker_desktop
+                    namespace: local-dd-k8s
+                    releaseName: pruning-my-pothos
           execution:
             steps:
               - step:
-                  type: Run
-                  name: install
-                  identifier: install
-                  spec:
-                    connectorRef: account.harnessImage
-                    image: node:20
-                    shell: Sh
-                    command: |
-                      node -v
-                      npm -v
-                      npm ci
-
+                  name: Rollout Deployment
+                  identifier: rollout
+                  type: K8sRollingDeploy
+                  timeout: 10m
+                  spec: {}
+            rollbackSteps:
               - step:
-                  type: Run
-                  name: build
-                  identifier: build_step
-                  spec:
-                    connectorRef: account.harnessImage
-                    image: node:20
-                    shell: Sh
-                    command: |
-                      npm run build
-                      test -d dist
-
-              - step:
-                  type: Run
-                  name: list-dist
-                  identifier: list_dist
-                  spec:
-                    connectorRef: account.harnessImage
-                    image: node:20
-                    shell: Sh
-                    command: |
-                      ls -la dist
+                  name: Rollback
+                  identifier: rollback
+                  type: K8sRollingRollback
+                  timeout: 10m
+                  spec: {}

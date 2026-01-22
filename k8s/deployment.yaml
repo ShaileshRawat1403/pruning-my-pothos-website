@@ -1,0 +1,24 @@
+cat > k8s/deployment.yaml <<'YAML'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pruning-my-pothos
+  labels:
+    app: pruning-my-pothos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pruning-my-pothos
+  template:
+    metadata:
+      labels:
+        app: pruning-my-pothos
+    spec:
+      containers:
+        - name: web
+          image: "ghcr.io/shaileshrawat1403/pruning-my-pothos-website:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+YAML

@@ -1,0 +1,17 @@
+cat > k8s/service.yaml <<'YAML'
+apiVersion: v1
+kind: Service
+metadata:
+  name: pruning-my-pothos
+  labels:
+    app: pruning-my-pothos
+spec:
+  selector:
+    app: pruning-my-pothos
+  type: NodePort
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 30080
+YAML

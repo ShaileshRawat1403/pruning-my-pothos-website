@@ -195,9 +195,18 @@ const { title = 'Portfolio' } = Astro.props;
       }
 
       .btn.btn-nav {
-        padding: 0.45rem 1rem;
-        font-size: 0.8rem;
-        border-radius: 12px;
+        padding: 0.4rem 0.85rem;
+        font-size: 0.78rem;
+        border-radius: 10px;
+        box-shadow: none;
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      .btn.btn-nav svg {
+        width: 12px;
+        height: 12px;
       }
 
       .btn:hover {
@@ -215,6 +224,17 @@ const { title = 'Portfolio' } = Astro.props;
         display: inline-flex;
         align-items: center;
         gap: 0.75rem;
+      }
+
+      @media (max-width: 720px) {
+        .btn.btn-nav {
+          padding: 0.35rem 0.7rem;
+          font-size: 0.75rem;
+        }
+
+        .btn.btn-nav svg {
+          margin-left: -0.1rem;
+        }
       }
 
       .btn-hero:hover {
@@ -772,6 +792,8 @@ const { title = 'Portfolio' } = Astro.props;
         font-weight: 600;
       }
 
+ 
+
       .quote-card {
         background: var(--panel-bg);
         color: #e2e8f0;
@@ -953,9 +975,9 @@ const { title = 'Portfolio' } = Astro.props;
         background: transparent;
         color: var(--muted);
         padding: 0;
-        width: 40px;
-        height: 40px;
-        border-radius: 14px;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
         font-size: 0.75rem;
         font-weight: 600;
         cursor: pointer;
@@ -966,8 +988,8 @@ const { title = 'Portfolio' } = Astro.props;
       }
 
       .theme-toggle svg {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
         display: block;
       }
 
@@ -987,6 +1009,13 @@ const { title = 'Portfolio' } = Astro.props;
       .theme-toggle:hover {
         border-color: var(--primary);
         color: var(--primary);
+      }
+
+      @media (max-width: 720px) {
+        .theme-toggle {
+          width: 32px;
+          height: 32px;
+        }
       }
 
       .reveal {

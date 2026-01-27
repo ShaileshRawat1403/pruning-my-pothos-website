@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import { sortedByDate } from '@/utils';
+
+const experimentEntries = await getCollection('shelf', ({ id }) => id.startsWith('local-experiments/'));
+const sortedExperiments = sortedByDate(experimentEntries);
+---
+
+<Layout title="Local Experiments | Shelf">
+  <div class="section-head">
+    <h1>Local Experiments</h1>
+    <p class="subtitle lead">
+      Notes from hands-on trials, benchmarks, and real-world setup work.
+    </p>
+  </div>
+  <div class="card-grid">
+    {sortedExperiments.map(entry => (
+      <a href={`/shelf/local-experiments/${entry.slug.split('/')[1]}`} class="card">
+        <div class="card-img">
+          {entry.data.coverUrl ? (
+            <img src={entry.data.coverUrl} alt={`Cover image for ${entry.data.title}`} loading="lazy" />
+          ) : (
+            <span>Cover image</span>
+          )}
+        </div>
+        <div class="card-content">
+          <h2 class="card-title">{entry.data.title}</h2>
+          <p class="card-description">{entry.data.description}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</Layout>

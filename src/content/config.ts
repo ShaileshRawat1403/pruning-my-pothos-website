@@ -74,7 +74,8 @@ const shelfCollection = defineCollection({
         artist: z.string().optional(),
         album: z.string().optional(),
         year: z.number().optional(),
-        coverUrl: z.string().url().optional(),
+        // Allow local public paths (e.g. /covers/...) as well as absolute URLs.
+        coverUrl: z.string().optional(),
         appleMusicUrl: z.string().url().optional(),
         featured: featuredSchema,
         readingTime: readingTimeSchema,

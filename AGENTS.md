@@ -67,6 +67,41 @@ Instructions for CLI agents working in this repo.
 - Optional metadata fields: `artist`, `album`, `year`, `coverUrl`, `appleMusicUrl`.
 - Use the metadata fetch script for enrichment: `npm run shelf:music:fetch`.
 
+## Shelf (tools) guidelines
+- Tool entries live in `src/content/shelf/tools/`.
+- Required frontmatter: `title`, `description`, `publishDate`, `tags`.
+- Each entry covers a single tool only (no mixed notes).
+- Include sections: Benefits, Prerequisites, Quick snippets, Resources, Where it fails.
+- Links should be short and descriptive (avoid raw URLs in body text).
+- Use a unique cover image per entry (no repeated placeholders).
+
+## Shelf (notes) guidelines
+- Notes entries live in `src/content/shelf/notes/`.
+- Required frontmatter: `title`, `description`, `publishDate`, `tags`.
+- Each entry is notes-only (no tool reviews).
+- Keep tone reflective and compact (3–5 short paragraphs).
+- Use a unique cover image per entry (no repeated placeholders).
+
+## Shelf (philosophy) guidelines
+- Philosophy entries live in `src/content/shelf/philosophy/`.
+- Required frontmatter: `title`, `description`, `publishDate`, `tags`.
+- Tone: reflective, calm, personal; 2–4 short paragraphs.
+- Include a brief line on the source or event that shaped the belief.
+- Use a unique cover image per entry (no repeated placeholders).
+
+## Shelf (local experiments) guidelines
+- Local experiment entries live in `src/content/shelf/local-experiments/`.
+- Required frontmatter: `title`, `description`, `publishDate`, `tags`, `coverUrl`.
+- Tone: story-led technical writing; teach the architecture, not just steps.
+- Use a **Key takeaways** blockquote near the top.
+- Use the Systems-style TOC pattern with Acts (`details` + headings) and `#toc-anchor`.
+- Prefer conceptual diagrams (inline SVG in `<figure class="diagram">`) over UI screenshots.
+- Screenshots are allowed only when user-supplied; store them under `public/images/screenshots` and include a brief caption noting UI may change.
+- Use concise, repeatable sections: What happened, The two gates, Setup walkthrough (or Portal walkthrough), First-time config, Quick checks, Failure modes, What made the difference, What I would do next time.
+- Keep code blocks short and purpose-driven; include a quick verification loop.
+- Links should be short and descriptive (avoid raw URLs in body text).
+- Use a unique cover image per entry (no repeated placeholders).
+
 ## Systems doc standards (match Systems 001)
 - Use plain‑text `description` in frontmatter (no HTML).
 - Keep the 3‑act structure with clear section headers and a short lead.

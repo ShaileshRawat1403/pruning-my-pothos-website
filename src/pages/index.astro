@@ -9,7 +9,14 @@ const stickyNotes = await getCollection('sticky-notes');
 const sentences = await getCollection('sentences');
 const self = await getCollection('self');
 const systems = await getCollection('systems');
-const shelf = await getCollection('shelf');
+const shelf = await getCollection('shelf', ({ id }) =>
+  id.startsWith('music/')
+  || id.startsWith('local-experiments/')
+  || id.startsWith('notes/')
+  || id.startsWith('tools/')
+  || id.startsWith('philosophy/')
+  || id.startsWith('shared-resources/')
+);
 
 // Combine all content with collection metadata
 const allContent = [

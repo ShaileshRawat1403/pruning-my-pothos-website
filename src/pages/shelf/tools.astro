@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import { sortedByDate } from '@/utils';
+
+const toolEntries = await getCollection('shelf', ({ id }) => id.startsWith('tools/'));
+const sortedTools = sortedByDate(toolEntries);
+---
+
+<Layout title="Tools | Shelf">
+  <div class="section-head">
+    <h1>Tools</h1>
+    <p class="subtitle lead">
+      Tools I actually use, with the trade-offs I live with.
+    </p>
+  </div>
+  <div class="card-grid">
+    {sortedTools.map(entry => (
+      <a href={`/shelf/tools/${entry.slug.split('/')[1]}`} class="card">
+        <div class="card-img">
+          {entry.data.coverUrl ? (
+            <img src={entry.data.coverUrl} alt={`Cover image for ${entry.data.title}`} loading="lazy" />
+          ) : (
+            <span>Cover image</span>
+          )}
+        </div>
+        <div class="card-content">
+          <h2 class="card-title">{entry.data.title}</h2>
+          <p class="card-description">{entry.data.description}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</Layout>

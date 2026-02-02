@@ -124,6 +124,11 @@ Instructions for CLI agents working in this repo.
 - Do not introduce new nav items without updating all pages.
 - No new interactive UI patterns (modals, drawers, search behavior) without approval.
 
+## Resource embeds
+- For shelf presentation/resource entries with PDFs, use the shared `ResourcePdf` component on detail pages.
+- Keep embeds optional/expandable (preview behind a disclosure) and always include open/download actions.
+- Keep the embed container calm and editorial (bordered, rounded, no heavy viewer chrome by default).
+
 ## Safety checks (before pushing)
 - Check these pages: home, a systems doc, sentences doc, sticky note, self, shelf.
 - Verify mobile layout for any layout changes.

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="t d">
+  <title id="t">I-7 Reliability Standard cover</title>
+  <desc id="d">Seven-step circular loop representing controlled reliability.</desc>
+  <rect width="1200" height="630" fill="#eef2ff"/>
+  <circle cx="600" cy="315" r="190" fill="none" stroke="#4f46e5" stroke-width="8"/>
+  <g fill="#1f2937">
+    <circle cx="600" cy="125" r="12"/>
+    <circle cx="748" cy="179" r="12"/>
+    <circle cx="826" cy="315" r="12"/>
+    <circle cx="748" cy="451" r="12"/>
+    <circle cx="600" cy="505" r="12"/>
+    <circle cx="452" cy="451" r="12"/>
+    <circle cx="374" cy="315" r="12"/>
+  </g>
+  <text x="430" y="325" font-family="'JetBrains Mono', monospace" font-size="36" fill="#111827">I-7</text>
+  <text x="430" y="362" font-family="'JetBrains Mono', monospace" font-size="26" fill="#334155">Reliability</text>
+  <text x="80" y="92" font-family="'JetBrains Mono', monospace" font-size="40" fill="#111827">The I-7 Reliability Standard</text>
+</svg>

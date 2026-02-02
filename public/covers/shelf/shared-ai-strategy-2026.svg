@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="t d">
+  <title id="t">AI Strategy 2026 cover</title>
+  <desc id="d">Abstract layered roadmap with directional lines.</desc>
+  <rect width="1200" height="630" fill="#eef4ff"/>
+  <path d="M120 500 C260 410, 420 410, 560 320 C700 230, 860 230, 1080 140" fill="none" stroke="#3b82f6" stroke-width="10"/>
+  <path d="M120 560 C280 520, 420 520, 620 460 C820 400, 930 350, 1080 260" fill="none" stroke="#94a3b8" stroke-width="6"/>
+  <circle cx="280" cy="410" r="14" fill="#1f2937"/>
+  <circle cx="560" cy="320" r="14" fill="#1f2937"/>
+  <circle cx="860" cy="230" r="14" fill="#1f2937"/>
+  <text x="90" y="90" font-family="'JetBrains Mono', monospace" font-size="42" fill="#111827">AI Strategy 2026</text>
+</svg>

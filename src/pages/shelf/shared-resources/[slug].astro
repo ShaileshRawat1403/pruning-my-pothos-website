@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import type { CollectionEntry } from 'astro:content';
 import TagList from '@/components/TagList.astro';
+import ResourcePdf from '@/components/ResourcePdf.astro';
 
 export async function getStaticPaths() {
   const resourceEntries = await getCollection('shelf', ({ id }) => id.startsWith('shared-resources/'));
@@ -21,8 +22,32 @@ const { Content } = await entry.render();
 ---
 
 <Layout title={entry.data.title}>
-  <h1>{entry.data.title}</h1>
-  <p>{entry.data.description}</p>
-  <TagList tags={entry.data.tags} label="Tags" />
-  <Content />
+  <article class="resource-entry">
+    <h1>{entry.data.title}</h1>
+    <p class="lead">{entry.data.description}</p>
+    <TagList tags={entry.data.tags} label="Tags" />
+    {entry.data.pdfUrl ? (
+      <ResourcePdf
+        title={entry.data.title}
+        pdfUrl={entry.data.pdfUrl}
+        coverUrl={entry.data.coverUrl}
+        highlights={entry.data.resourceHighlights}
+      />
+    ) : null}
+    <Content />
+  </article>
 </Layout>
+
+<style>
+  .resource-entry {
+    width: min(100%, 72ch);
+    margin: 0 auto;
+  }
+  .lead {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    border-left: 2px solid var(--color-border);
+    padding-left: 1rem;
+    margin-bottom: 2rem;
+  }
+</style>

@@ -232,6 +232,44 @@ const { Content } = await entry.render();
   :global(.content-body .callout p) {
     margin: 0;
   }
+  :global(.content-body .table-scroll-wrap) {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1.5rem 0 2.5rem;
+  }
+  :global(.content-body .comparison-table) {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 0.98rem;
+    border: 2px solid color-mix(in srgb, var(--color-text-heading) 35%, var(--color-border));
+    background: transparent;
+  }
+  :global(.content-body .comparison-table th),
+  :global(.content-body .comparison-table td) {
+    border: 2px solid color-mix(in srgb, var(--color-text-heading) 35%, var(--color-border));
+    padding: 0.85rem 1rem;
+    text-align: left;
+    vertical-align: top;
+    line-height: 1.5;
+    min-width: 170px;
+    word-break: normal;
+    overflow-wrap: break-word;
+    hyphens: none;
+  }
+  :global(.content-body .comparison-table th) {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  }
+  :global(.content-body .comparison-table tbody tr:nth-child(even)) {
+    background: color-mix(in srgb, var(--color-text-heading) 3%, transparent);
+  }
   :global(.content-body .toc) {
     border: 1px solid var(--color-border);
     border-radius: 12px;
@@ -385,6 +423,13 @@ const { Content } = await entry.render();
       width: 100%;
       max-width: 100%;
       box-sizing: border-box;
+    }
+    :global(.content-body .table-scroll-wrap) {
+      margin: 1.25rem 0 2rem;
+    }
+    :global(.content-body .comparison-table th),
+    :global(.content-body .comparison-table td) {
+      min-width: 150px;
     }
     :global(.content-body .toc ol) {
       padding-left: 1rem;

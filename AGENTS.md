@@ -12,6 +12,9 @@ Instructions for CLI agents working in this repo.
 - Use the shared `section-head` pattern for section pages.
 - Drop caps only apply to `.lead` paragraphs. Add `.lead` on the intended line.
 - Avoid inline styles inside Markdown; use classes and scoped CSS.
+- Tables must never clip text or force per-letter wrapping; prefer horizontal scroll.
+- For any data table, use `comparison-table` and ensure it can scroll on overflow (desktop + mobile).
+- When tables can exceed content width, wrap them in a `table-scroll-wrap` container (or equivalent auto-wrap behavior) so they scroll inside the content column and never overlap TOC/sidebar.
 - Do not change nav structure, hero layout, or footer layout without explicit approval.
 - Avoid typography changes (fonts, sizes, line-heights) unless requested.
 - Keep card content alignment consistent across the site; use uniform spacing and alignment patterns so card sections line up.
@@ -108,6 +111,8 @@ Instructions for CLI agents working in this repo.
 - Include a **Key takeaways** blockquote near the top of every systems doc.
 - Use the shared 3‑act TOC pattern (details + Act headings).
 - Tables should use the `comparison-table` class so grid lines render.
+- Systems tables must stay readable: no clipped cells; allow horizontal scrolling when width is tight.
+- Systems pages with sticky TOC must keep tables constrained to main content: scrolling should happen in-content, not under the sidebar.
 - Diagrams, when needed, should be small inline SVGs in the body (no external assets).
 - Do not add inline CSS or `<script>` inside MDX.
 - Do not use HTML comments (`<!-- -->`) inside MDX; use `{/* ... */}` if needed.

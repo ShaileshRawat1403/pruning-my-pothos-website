@@ -261,10 +261,17 @@ const relatedLinks = relatedEntries.map(toLink);
         margin: 0;
         color: var(--color-text-body);
     }
-    :global(.content-body .comparison-table) {
+    :global(.content-body .table-scroll-wrap) {
         width: 100%;
-        border-collapse: collapse;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         margin: 1.5rem 0 2.5rem;
+    }
+    :global(.content-body .comparison-table) {
+        width: max-content;
+        min-width: 100%;
+        border-collapse: collapse;
+        margin: 0;
         font-size: 0.98rem;
         border: 2px solid color-mix(in srgb, var(--color-text-heading) 35%, var(--color-border));
         background: transparent;
@@ -276,6 +283,10 @@ const relatedLinks = relatedEntries.map(toLink);
         text-align: left;
         vertical-align: top;
         line-height: 1.5;
+        min-width: 170px;
+        word-break: normal;
+        overflow-wrap: break-word;
+        hyphens: none;
     }
     :global(.content-body .comparison-table th) {
         font-family: var(--font-mono);
@@ -474,15 +485,12 @@ const relatedLinks = relatedEntries.map(toLink);
         :global(.content-body .toc ol) {
             padding-left: 1rem;
         }
-        :global(.content-body .comparison-table) {
-            display: block;
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+        :global(.content-body .table-scroll-wrap) {
+            margin: 1.25rem 0 2rem;
         }
         :global(.content-body .comparison-table th),
         :global(.content-body .comparison-table td) {
-            min-width: 180px;
+            min-width: 150px;
         }
         :global(.content-body .references-list) {
             padding-left: 1rem;

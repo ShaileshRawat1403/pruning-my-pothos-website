@@ -181,6 +181,23 @@ const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
             document.addEventListener('astro:after-swap', initThemeToggle);
         </script>
         <script is:inline>
+            const initTableScrollWrap = () => {
+                const tables = document.querySelectorAll('table.comparison-table');
+                tables.forEach((table) => {
+                    const parent = table.parentElement;
+                    if (!parent || parent.classList.contains('table-scroll-wrap')) return;
+                    const wrap = document.createElement('div');
+                    wrap.className = 'table-scroll-wrap';
+                    parent.insertBefore(wrap, table);
+                    wrap.appendChild(table);
+                });
+            };
+
+            initTableScrollWrap();
+            document.addEventListener('astro:page-load', initTableScrollWrap);
+            document.addEventListener('astro:after-swap', initTableScrollWrap);
+        </script>
+        <script is:inline>
             const setExternalLinkTargets = () => {
                 const links = document.querySelectorAll('a[href]');
                 links.forEach((link) => {

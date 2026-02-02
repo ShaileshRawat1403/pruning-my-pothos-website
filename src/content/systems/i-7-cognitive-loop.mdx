@@ -1,0 +1,283 @@
+---
+title: 'I-7 Cognitive Loop: A new standard for Human-AI interaction'
+description: 'A governance-first interaction model that extends Norman’s stages for AI-assisted work.'
+category: 'Concepts'
+tags:
+  - systems
+  - hci
+  - ai
+  - agents
+  - interaction
+featured: false
+contentType: 'deep-dive'
+readingTime: 10
+difficulty: 'intermediate'
+---
+
+> **Key takeaways**
+> - I-7 does not replace Norman; it extends Norman for non-deterministic systems.
+> - The shift is from direct manipulation to delegated execution.
+> - In AI-assisted work, visibility and intervention are design requirements.
+> - The seven stages make human oversight operational, not optional.
+
+Norman remains the foundation. The seven stages of action still describe how people form goals, act, and evaluate outcomes. The difference is that modern AI systems can reason, choose tools, and execute intermediate steps on their own. I-7 is an advanced layer for this environment: the age of AI-assisted development, where human judgment stays central.
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The shift</summary>
+      <ol>
+        <li><a href="#why-norman-needs-an-extension">Why Norman needs an extension</a></li>
+        <li><a href="#the-i-7-loop">The I-7 loop</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The seven phases</summary>
+      <ol>
+        <li><a href="#intent">Intent</a></li>
+        <li><a href="#inform">Inform</a></li>
+        <li><a href="#interpret">Interpret</a></li>
+        <li><a href="#initiate">Initiate</a></li>
+        <li><a href="#inspect">Inspect</a></li>
+        <li><a href="#intervene">Intervene</a></li>
+        <li><a href="#iterate">Iterate</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Using the loop</summary>
+      <ol>
+        <li><a href="#ai-assisted-not-ai-generated">AI-assisted, not AI-generated</a></li>
+        <li><a href="#a-practical-run-loop">A practical run loop</a></li>
+        <li><a href="#related-systems">Related systems</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: The shift
+
+### Why Norman needs an extension
+
+Norman’s model was shaped around tools where execution was explicit and deterministic. You click, the system does the exact action, and you compare the result.
+
+Agentic systems change that middle layer. Between intent and output, there is now hidden reasoning, retrieval, tool calls, and probabilistic generation. That creates a practical gap: users can still state goals, but they cannot safely trust execution unless reasoning and control points are visible.
+
+The I-7 loop addresses that gap by inserting operational checkpoints before, during, and after execution.
+
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Norman's Stage</th>
+      <th>I-7 Cognitive Stage</th>
+      <th>Nature of the Shift</th>
+      <th>Key Cognitive Demand</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Goal Formation</td>
+      <td>Intent</td>
+      <td>Vague internal states become structured intent.</td>
+      <td>Role-task alignment and explicit boundaries.</td>
+    </tr>
+    <tr>
+      <td>Intent/Specification</td>
+      <td>Inform</td>
+      <td>Focus moves from "how to click" to "what context is required."</td>
+      <td>Context engineering and attention management.</td>
+    </tr>
+    <tr>
+      <td>Execution</td>
+      <td>Initiate</td>
+      <td>The system begins action through autonomous reasoning.</td>
+      <td>Reasoning-action control and safe execution contracts.</td>
+    </tr>
+    <tr>
+      <td>Perception</td>
+      <td>Interpret</td>
+      <td>Human and agent build a shared model before execution scales.</td>
+      <td>Semantic alignment and assumption testing.</td>
+    </tr>
+    <tr>
+      <td>Interpretation</td>
+      <td>Inspect</td>
+      <td>Post-hoc reading becomes evidence-based runtime inspection.</td>
+      <td>Observability of reasoning traces and outputs.</td>
+    </tr>
+    <tr>
+      <td>Evaluation</td>
+      <td>Intervene</td>
+      <td>Evaluation becomes active pause/correct authority.</td>
+      <td>Human-in-the-loop governance and autonomy scaling.</td>
+    </tr>
+    <tr>
+      <td>Not in Norman</td>
+      <td>Iterate</td>
+      <td>Each run is folded into a learning loop for better future runs.</td>
+      <td>Golden examples, policy updates, and PDCA discipline.</td>
+    </tr>
+  </tbody>
+</table>
+
+### The I-7 loop
+
+I-7 runs as a repeatable control cycle:
+
+- Intent -> Inform -> Interpret -> Initiate -> Inspect -> Intervene -> Iterate
+
+The value is not the labels alone. The value is that each label marks a decision point where responsibility is explicit.
+
+<figure class="diagram">
+  <svg viewBox="0 0 900 360" role="img" aria-labelledby="i7-loop-title i7-loop-desc">
+    <title id="i7-loop-title">The I-7 loop</title>
+    <desc id="i7-loop-desc">A circular loop with seven labeled stages.</desc>
+    <rect width="900" height="360" fill="#f8fafc" />
+    <circle cx="450" cy="180" r="120" fill="none" stroke="currentColor" stroke-width="2" />
+    <text x="450" y="70" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Intent</text>
+    <text x="560" y="100" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Inform</text>
+    <text x="610" y="180" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Interpret</text>
+    <text x="560" y="260" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Initiate</text>
+    <text x="450" y="290" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Inspect</text>
+    <text x="340" y="260" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Intervene</text>
+    <text x="290" y="180" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Iterate</text>
+  </svg>
+  <figcaption>The I-7 stages map responsibility across planning, execution, and governance.</figcaption>
+</figure>
+
+<aside class="callout">
+  <p><strong>Operational rule.</strong> If a stage cannot be observed or audited, it does not exist in production terms. Add logging, checkpoints, or human gates until it is visible.</p>
+</aside>
+
+## Act II: The seven phases
+
+### Intent
+
+Intent is the contract. It defines role, task, boundaries, and failure conditions.
+
+If skipped: the system optimizes for fluency over correctness.
+
+Examples:
+- **Developer:** "Refactor this module without changing the public API."
+- **Product manager:** "Draft a v1 PRD for onboarding with scope limits and non-goals."
+- **Researcher:** "Summarize only claims directly supported by cited sources."
+
+### Inform
+
+Inform is context governance. You choose what evidence the system may use.
+
+If skipped: low-signal context causes plausible but ungrounded outputs.
+
+Examples:
+- **Developer:** provide failing tests, target files, and logs.
+- **Product manager:** provide interview notes, key metrics, and constraints.
+- **Researcher:** provide canonical papers and explicit exclusions.
+
+### Interpret
+
+Interpret is pre-execution alignment. The system states plan and assumptions in plain language.
+
+If skipped: users discover misalignment only after execution side effects.
+
+Examples:
+- **Developer:** ask for a step plan before file edits.
+- **Product manager:** ask for trade-off framing before writing.
+- **Researcher:** ask for hypothesis and evidence chain before synthesis.
+
+### Initiate
+
+Initiate is guarded execution. Actions should pass schema and policy checks.
+
+If skipped: malformed tool calls and unsafe actions move into runtime.
+
+Examples:
+- **Developer:** patch only after diff preview and lint/test gate.
+- **Product manager:** ticket creation only after required fields validate.
+- **Researcher:** data queries only after schema and source checks pass.
+
+### Inspect
+
+Inspect is output verification against evidence and acceptance criteria.
+
+If skipped: hallucinations and logic drift become part of the baseline.
+
+Examples:
+- **Developer:** verify tests, type checks, and behavior diffs.
+- **Product manager:** verify PRD traceability to source interviews.
+- **Researcher:** verify every claim maps to a source fragment.
+
+### Intervene
+
+Intervene is explicit human authority to pause, redirect, or reject.
+
+If skipped: autonomy scales faster than accountability.
+
+Examples:
+- **Developer:** block migration without rollback proof.
+- **Product manager:** stop launch when success metrics are ambiguous.
+- **Researcher:** halt conclusions where evidence conflicts remain unresolved.
+
+### Iterate
+
+Iterate turns corrections into reusable system memory: tests, prompts, policies, and examples.
+
+If skipped: the same errors recur in new language.
+
+Examples:
+- **Developer:** convert incident fixes into regression tests.
+- **Product manager:** convert review feedback into template constraints.
+- **Researcher:** convert corrected citations into a retrieval benchmark set.
+
+## Act III: Using the loop
+
+### AI-assisted, not AI-generated
+
+I-7 is designed for AI-assisted development. The system contributes speed and synthesis; the human owns intent, judgment, and accountability.
+
+### A practical run loop
+
+Use this five-minute loop in any agent workflow:
+
+1. Write Intent in one sentence (role, task, boundary).
+2. Attach only required context for the task.
+3. Ask for plan and assumptions before execution.
+4. Run with explicit guardrails and inspect outputs.
+5. Save one correction as a reusable artifact.
+
+<figure class="diagram">
+  <svg viewBox="0 0 900 240" role="img" aria-labelledby="i7-gates-title i7-gates-desc">
+    <title id="i7-gates-title">I-7 control gates</title>
+    <desc id="i7-gates-desc">Linear execution with checkpoints before and after action.</desc>
+    <rect width="900" height="240" fill="#f8fafc" />
+    <rect x="60" y="100" width="120" height="40" rx="10" fill="white" stroke="currentColor" stroke-width="2" />
+    <rect x="220" y="100" width="120" height="40" rx="10" fill="white" stroke="currentColor" stroke-width="2" />
+    <rect x="380" y="100" width="120" height="40" rx="10" fill="white" stroke="currentColor" stroke-width="2" />
+    <rect x="540" y="100" width="120" height="40" rx="10" fill="white" stroke="currentColor" stroke-width="2" />
+    <rect x="700" y="100" width="120" height="40" rx="10" fill="white" stroke="currentColor" stroke-width="2" />
+    <line x1="180" y1="120" x2="220" y2="120" stroke="currentColor" stroke-width="2" />
+    <line x1="340" y1="120" x2="380" y2="120" stroke="currentColor" stroke-width="2" />
+    <line x1="500" y1="120" x2="540" y2="120" stroke="currentColor" stroke-width="2" />
+    <line x1="660" y1="120" x2="700" y2="120" stroke="currentColor" stroke-width="2" />
+    <text x="120" y="125" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Intent</text>
+    <text x="280" y="125" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Inform</text>
+    <text x="440" y="125" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Interpret</text>
+    <text x="600" y="125" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Initiate</text>
+    <text x="760" y="125" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Inspect</text>
+  </svg>
+  <figcaption>Execution is fast when checkpoints are explicit.</figcaption>
+</figure>
+
+### Related systems
+
+For adjacent concepts:
+
+- [Systems 001: Foundations](/systems/systems-001-foundations)
+- [Retrieval-Augmented Generation in plain terms](/systems/retrieval-augmented-generation-in-plain-terms)
+- [Training vs inference](/systems/training-vs-inference)
+- [Context windows as working memory](/systems/context-windows-as-working-memory)
+
+### What this changes in practice
+
+You stop treating interaction as prompt-in, answer-out. You start treating it as a governed loop with observable state transitions. That shift is the difference between impressive demos and reliable systems.

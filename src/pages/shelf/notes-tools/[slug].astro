@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import type { CollectionEntry } from 'astro:content';
+import TagList from '@/components/TagList.astro';
+
+export async function getStaticPaths() {
+  const notesEntries = await getCollection('shelf', ({ id }) => id.startsWith('notes-tools/'));
+  return notesEntries.map(entry => ({
+    params: { slug: entry.slug.split('/')[1] },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'shelf'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout title={entry.data.title}>
+  <h1>{entry.data.title}</h1>
+  <p>{entry.data.description}</p>
+  <TagList tags={entry.data.tags} label="Tags" />
+  <Content />
+</Layout>

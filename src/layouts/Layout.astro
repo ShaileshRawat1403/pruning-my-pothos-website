@@ -42,11 +42,40 @@ const jsonLdWebPage = {
 		url: siteUrl.toString(),
 	},
 };
+const jsonLdWebSite = {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: 'A Thinking Workspace',
+	alternateName: 'pruningmypothos.com',
+	url: siteUrl.toString(),
+	inLanguage: 'en',
+};
+const jsonLdOrganization = {
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	name: 'A Thinking Workspace',
+	url: siteUrl.toString(),
+	logo: new URL('/favicon.png', siteUrl).toString(),
+	founder: {
+		'@type': 'Person',
+		name: 'Shailesh Rawat',
+	},
+	sameAs: [
+		'https://www.linkedin.com/in/shailesh-rawat',
+		'https://github.com/ShaileshRawat1403',
+	],
+};
 const jsonLdPerson = {
 	'@context': 'https://schema.org',
 	'@type': 'Person',
 	name: 'Shailesh Rawat',
 	url: siteUrl.toString(),
+	jobTitle: 'Technical Writer and AI Systems Educator',
+	worksFor: {
+		'@type': 'Organization',
+		name: 'A Thinking Workspace',
+		url: siteUrl.toString(),
+	},
 	sameAs: [
 		'https://www.linkedin.com/in/shailesh-rawat',
 		'https://github.com/ShaileshRawat1403',
@@ -76,6 +105,8 @@ const jsonLdPerson = {
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={socialImage} />
 		<title>{title}</title>
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLdWebSite)}></script>
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLdOrganization)}></script>
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLdWebPage)}></script>
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLdPerson)}></script>
 

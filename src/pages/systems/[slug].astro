@@ -22,8 +22,41 @@ const toLink = (entry) => ({ title: entry.data.title, href: `/systems/${entry.sl
 const previousLink = previous ? toLink(previous) : null;
 const nextLink = next ? toLink(next) : null;
 const relatedLinks = relatedEntries.map(toLink);
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const canonical = new URL(`/systems/${system.slug}`, siteUrl).toString();
+const articleImage = new URL('/covers/shelf/shared-semantic-bridge.svg', siteUrl).toString();
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: system.data.title,
+  description: system.data.description,
+  image: [articleImage],
+  articleSection: system.data.category,
+  keywords: (system.data.tags ?? []).join(', '),
+  mainEntityOfPage: canonical,
+  author: {
+    '@type': 'Person',
+    name: 'Shailesh Rawat',
+    url: siteUrl.toString(),
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'A Thinking Workspace',
+    url: siteUrl.toString(),
+    logo: {
+      '@type': 'ImageObject',
+      url: new URL('/favicon.png', siteUrl).toString(),
+    },
+  },
+};
 ---
-<Layout title={system.data.title}>
+<Layout
+  title={system.data.title}
+  description={system.data.description}
+  image="/covers/shelf/shared-semantic-bridge.svg"
+  ogType="article"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
   <article id="systems-article" data-slug={system.slug}>
     <header class="system-header">
       <div>

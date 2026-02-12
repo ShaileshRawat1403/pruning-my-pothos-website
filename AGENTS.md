@@ -153,6 +153,14 @@ Instructions for CLI agents working in this repo.
 - Ensure `site.zip` stays out of git (already in `.gitignore`).
 - Restart the dev server after content schema or MDX changes.
 
+## Agent handoff memory protocol
+- Maintain `docs/agent-handoff/current.md` as the active handoff state for future agents.
+- Update it whenever major changes are made to: IA/navigation, SEO metadata/schema, content model/schema, or visual system rules.
+- Every handoff update must include: date, summary of changes, affected files, decisions made, open risks, and next suggested actions.
+- Keep entries concise and factual; avoid speculative notes that cannot be verified in-repo.
+- When starting new work, read `docs/agent-handoff/current.md` first to preserve continuity.
+- Do not store secrets, credentials, or private tokens in handoff files.
+
 ## Editing style
 - Use ASCII by default.
 - Keep styles scoped and reusable; avoid one-off hacks.

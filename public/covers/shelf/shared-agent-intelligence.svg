@@ -1,14 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
   <title id="t">Architecting Agent Intelligence cover</title>
-  <desc id="d">Abstract nodes and links representing agent orchestration.</desc>
-  <rect width="1200" height="630" fill="#f5f7ff"/>
-  <circle cx="260" cy="320" r="54" fill="#dbeafe" stroke="#3b82f6" stroke-width="4"/>
-  <circle cx="560" cy="190" r="46" fill="#e0e7ff" stroke="#6366f1" stroke-width="4"/>
-  <circle cx="560" cy="450" r="46" fill="#ede9fe" stroke="#8b5cf6" stroke-width="4"/>
-  <circle cx="900" cy="320" r="60" fill="#d1fae5" stroke="#10b981" stroke-width="4"/>
-  <line x1="312" y1="300" x2="514" y2="212" stroke="#1f2937" stroke-width="4"/>
-  <line x1="312" y1="340" x2="514" y2="428" stroke="#1f2937" stroke-width="4"/>
-  <line x1="606" y1="190" x2="840" y2="292" stroke="#1f2937" stroke-width="4"/>
-  <line x1="606" y1="450" x2="840" y2="348" stroke="#1f2937" stroke-width="4"/>
-  <text x="80" y="92" font-family="'JetBrains Mono', monospace" font-size="40" fill="#111827">Architecting Agent Intelligence</text>
+  <desc id="d">Editorial cover for architecting agent intelligence deck.</desc>
+  <rect width="1200" height="675" fill="#111827"/>
+  <circle cx="260" cy="340" r="62" fill="#1e293b" stroke="#38bdf8" stroke-width="4"/>
+  <circle cx="560" cy="210" r="54" fill="#1f2937" stroke="#60a5fa" stroke-width="4"/>
+  <circle cx="560" cy="470" r="54" fill="#1f2937" stroke="#22d3ee" stroke-width="4"/>
+  <circle cx="910" cy="340" r="68" fill="#1e293b" stroke="#0ea5e9" stroke-width="4"/>
+  <line x1="322" y1="320" x2="505" y2="230" stroke="#94a3b8" stroke-width="5"/>
+  <line x1="322" y1="360" x2="505" y2="450" stroke="#94a3b8" stroke-width="5"/>
+  <line x1="615" y1="210" x2="845" y2="315" stroke="#94a3b8" stroke-width="5"/>
+  <line x1="615" y1="470" x2="845" y2="365" stroke="#94a3b8" stroke-width="5"/>
+  <text x="100" y="125" fill="#e5e7eb" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">Shared Resource</text>
+  <text x="100" y="230" fill="#f9fafb" font-family="Georgia, 'Times New Roman', serif" font-size="66">Architecting Agent Intelligence</text>
+  <text x="100" y="295" fill="#cbd5e1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30">Control points, orchestration, and reliability loops</text>
 </svg>

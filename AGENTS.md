@@ -105,6 +105,24 @@ Instructions for CLI agents working in this repo.
 - Links should be short and descriptive (avoid raw URLs in body text).
 - Use a unique cover image per entry (no repeated placeholders).
 
+## Shelf (shared resources) guidelines
+- Shared resource entries live in `src/content/shelf/shared-resources/`.
+- Required frontmatter: `title`, `description`, `publishDate`, `tags`, `coverUrl`.
+- Optional metadata fields: `pdfUrl`, `videoUrl`, `resourceHighlights`.
+- For PDF resources, use `pdfUrl` so the shared `ResourcePdf` experience renders on detail pages.
+- For video resources, use `videoUrl` with short context links in the body.
+- Keep body links short and descriptive; avoid raw URLs in prose.
+- Include 2-3 related internal links per entry to keep cross-navigation strong.
+
+## Shelf resource cover style (mandatory)
+- Store resource covers in `public/covers/shelf/` and use stable, slug-like names.
+- Use unique editorial SVG covers; do not reuse generic placeholders.
+- Keep a calm, intentional visual language: limited palette, one focal motif, and clear title hierarchy.
+- Cover text should be short and readable at card size (title line + subtitle line max).
+- Prefer abstract/system motifs (nodes, flows, blocks, signals) over literal screenshots.
+- Avoid visual noise: no dense textures, no heavy gradients, no overly decorative effects.
+- Every new shared resource must include a new cover following `docs/style-guides/shelf-resource-cover-style.md`.
+
 ## Systems doc standards (match Systems 001)
 - Use plain‑text `description` in frontmatter (no HTML).
 - Keep the 3‑act structure with clear section headers and a short lead.

@@ -1,9 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
-  <rect width="1200" height="800" fill="#0b0f17"/>
-  <rect x="220" y="200" width="760" height="360" rx="20" fill="#111827" stroke="#1f2937" stroke-width="2"/>
-  <rect x="300" y="260" width="420" height="12" rx="6" fill="#94a3b8"/>
-  <rect x="300" y="300" width="360" height="10" rx="5" fill="#64748b"/>
-  <rect x="300" y="340" width="400" height="10" rx="5" fill="#475569"/>
-  <rect x="760" y="260" width="140" height="140" rx="18" fill="#0f172a" stroke="#334155" stroke-width="2"/>
-  <path d="M790 330 L820 360 L860 300" fill="none" stroke="#22c55e" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+  <title id="t">Evaluation and prompting references cover</title>
+  <desc id="d">Editorial cover for evaluation and prompting references.</desc>
+  <rect width="1200" height="675" fill="#0b0f17"/>
+  <rect x="170" y="150" width="860" height="380" rx="24" fill="#111827" stroke="#1f2937" stroke-width="2"/>
+  <rect x="250" y="230" width="430" height="12" rx="6" fill="#94a3b8"/>
+  <rect x="250" y="275" width="370" height="10" rx="5" fill="#64748b"/>
+  <rect x="250" y="318" width="410" height="10" rx="5" fill="#475569"/>
+  <rect x="740" y="220" width="180" height="180" rx="18" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+  <path d="M775 315 L815 355 L885 275" fill="none" stroke="#22c55e" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="100" y="110" fill="#e5e7eb" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">Shared Resource</text>
+  <text x="100" y="585" fill="#f9fafb" font-family="Georgia, 'Times New Roman', serif" font-size="58">Evaluation and Prompting</text>
+  <text x="100" y="625" fill="#cbd5e1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="29">Shortlist for safer, measurable model behavior</text>
 </svg>

@@ -1,0 +1,589 @@
+---
+title: "Tech Stack for NLPg-Driven AI-Assisted SDLC"
+description: "A language-first SDLC design: from intent and compiled instruction to governed execution, validation, and delivery."
+category: "How-things-fit-together"
+tags:
+  - nlpg
+  - ai-assisted-sdlc
+  - governance
+  - developer-experience
+  - product
+  - stack
+contentType: 'technical'
+readingTime: 16
+difficulty: 'advanced'
+---
+
+> **Key takeaways**
+>
+> - Vibe coding optimizes for local speed. NLPg SDLC optimizes for <span class="highlight">reliable delivery over time</span>.
+> - In NLPg, language is the primary artifact and code is an execution artifact.
+> - The differentiator is not model choice. It is <span class="keyword">instruction quality</span>, policy gates, and traceability.
+> - If the method does not reduce ambiguity, defect rate, and rollback frequency, it is still a concept, not a system.
+
+This document defines a staged, method-aligned stack for NLPg-driven AI-assisted SDLC. The goal is to move from "prompt to deploy" toward a repeatable flow: intent, structure, execution, validation, and governed change.
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The fundamentals</summary>
+      <ol>
+        <li><a href="#why-this-is-not-vibe-coding">Why this is not vibe coding</a></li>
+        <li><a href="#altitude-analogy-blueprint-vs-bricklaying">Altitude analogy: blueprint vs bricklaying</a></li>
+        <li><a href="#the-nlpg-sdlc-loop">The NLPg SDLC loop</a></li>
+        <li><a href="#instruction-spec-as-contract">Instruction spec as contract</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The modern paradigm</summary>
+      <ol>
+        <li><a href="#staged-rollout-plan">Staged rollout plan</a></li>
+        <li><a href="#stack-layers-method-aligned">Stack layers, method-aligned</a></li>
+        <li><a href="#workflow-diagram-intent-to-governed-delivery">Workflow diagram: intent to governed delivery</a></li>
+        <li><a href="#mindmap-nlpg-system-surface">Mindmap: NLPg system surface</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Principles in practice</summary>
+      <ol>
+        <li><a href="#governance-primitives">Governance primitives</a></li>
+        <li><a href="#risk-gate-matrix">Risk gate matrix</a></li>
+        <li><a href="#workflow-example-a-rbac-auth-risk">Workflow example A: RBAC (auth risk)</a></li>
+        <li><a href="#workflow-example-b-stripe-billing-billing-risk">Workflow example B: Stripe billing (billing risk)</a></li>
+        <li><a href="#operating-metrics-for-this-method">Operating metrics for this method</a></li>
+        <li><a href="#template-repo-shape">Template repo shape</a></li>
+        <li><a href="#minimal-cli-surface">Minimal CLI surface</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: The fundamentals
+
+### Why this is not vibe coding
+
+The distinction is not semantic. It changes where engineering control lives.
+
+<div class="table-scroll-wrap">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Approach</th>
+        <th>Flow</th>
+        <th>Primary optimization</th>
+        <th>Main failure mode</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Vibe coding</td>
+        <td>Prompt -> Generate -> Ship</td>
+        <td>Local speed</td>
+        <td>Hidden assumptions ship to production</td>
+      </tr>
+      <tr>
+        <td>Surface AI-assisted SDLC</td>
+        <td>Prompt -> Code -> Fix -> Deploy</td>
+        <td>Code throughput</td>
+        <td>Governance arrives late, after behavior exists</td>
+      </tr>
+      <tr>
+        <td>NLPg-driven SDLC</td>
+        <td>Language -> Logic -> Structure -> Execution -> Validation -> Governance</td>
+        <td>Reliability over time</td>
+        <td>Overhead if teams skip compiler and gates</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+In NLPg, language is not ad hoc input. It is a <span class="keyword">structured interface</span> for system behavior. That places language above code in the design pyramid: intent first, implementation second.
+
+### Altitude analogy: blueprint vs bricklaying
+
+A useful analogy is construction. Bricklaying speed matters, but a faster crew cannot rescue a bad blueprint.
+
+- Vibe coding treats the request like a sketch on a napkin and optimizes how quickly the wall appears.
+- NLPg treats the request as a blueprint with load assumptions, safety constraints, and inspection checkpoints.
+
+Another analogy is air traffic control.
+
+- The pilot is execution.
+- Air traffic control is governance.
+- Weather radar is validation.
+- The flight plan is the instruction spec.
+
+Without the plan and checkpoints, takeoff is fast and arrival is uncertain.
+
+### The NLPg SDLC loop
+
+1. **Intent**
+2. **Instruction spec**
+3. **Compilation**
+4. **Execution**
+5. **Validation**
+6. **Approval**
+7. **Delivery**
+8. **Telemetry back into learning**
+
+Most software failures begin before code: ambiguity, hidden assumptions, and unstated constraints. NLPg reduces this by forcing intent into machine-interpretable structure before any file is changed.
+
+### Instruction spec as contract
+
+The minimum contract for safe execution is explicit and versionable.
+
+```yaml
+objective: Add role-based access control for dashboard
+inputs:
+  - routes
+  - api_handlers
+constraints:
+  - do_not_modify_billing_routes
+  - preserve_existing_session_model
+acceptance_criteria:
+  - unauthorized_users_receive_403
+  - role_persisted_in_users_table
+risk:
+  category: auth-change
+  level: high
+approval_gates:
+  - before_db_migration
+  - before_middleware_deploy
+rollback:
+  - revert_migration
+  - revert_middleware
+```
+
+<aside class="callout">
+  <p><strong>Definition.</strong> An instruction spec is the executable contract between human intent and agent execution. If it is ambiguous, the run is unsafe by default.</p>
+</aside>
+
+## Act II: The modern paradigm
+
+### Staged rollout plan
+
+You can stage this method from documentation to runtime without overbuilding early.
+
+<div class="table-scroll-wrap">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Goal</th>
+        <th>Core deliverables</th>
+        <th>Signal of readiness</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Stage 0: Documentation-only method</td>
+        <td>Make the process usable manually</td>
+        <td>Spec format, risk taxonomy, approval gates, work-note format, examples</td>
+        <td>Two humans produce similar plans from the same intent</td>
+      </tr>
+      <tr>
+        <td>Stage 1: GitHub template repo</td>
+        <td>Create a reproducible baseline</td>
+        <td>Next.js + Supabase + Stripe + Resend + CI + policy rules + demo flows</td>
+        <td>New contributors can run the full loop in one day</td>
+      </tr>
+      <tr>
+        <td>Stage 2: CLI system</td>
+        <td>Turn method into executable workflow</td>
+        <td>Spec validation, plan compilation, approval checks, ledger, PR context</td>
+        <td>High-risk changes are auto-paused without manual policing</td>
+      </tr>
+      <tr>
+        <td>Stage 3: SaaS layer</td>
+        <td>Enable team-wide adoption</td>
+        <td>Spec UI, approval queue, policy UI, ledger browser, roles/permissions</td>
+        <td>Non-dev stakeholders can approve with full context</td>
+      </tr>
+      <tr>
+        <td>Stage 4: Agent runtime and integrations</td>
+        <td>Embed in existing work loops</td>
+        <td>GitHub app, Slack gates, preview deploy hooks, telemetry integrations</td>
+        <td>Workflow runs where teams already collaborate</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Stack layers, method-aligned
+
+The familiar execution stack still matters. It moves down the hierarchy while language and policy move up.
+
+<div class="table-scroll-wrap">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Purpose</th>
+        <th>Artifacts and tools</th>
+        <th>Quality question</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Layer 1: Intent and instruction</td>
+        <td>Convert request into clear constraints</td>
+        <td><code>instruction.yaml</code>, <code>plan.yaml</code>, JSON Schema or Zod</td>
+        <td>Do we know exactly what success and failure mean?</td>
+      </tr>
+      <tr>
+        <td>Layer 2: Execution</td>
+        <td>Generate and apply change safely</td>
+        <td>Next.js, Supabase, Stripe, Resend, Vercel</td>
+        <td>Can the change be reproduced by another agent or engineer?</td>
+      </tr>
+      <tr>
+        <td>Layer 3: Governance and approvals</td>
+        <td>Pause risky actions intentionally</td>
+        <td>Risk classification, policy rules, approval checkpoints</td>
+        <td>Who is accountable for high-impact decisions?</td>
+      </tr>
+      <tr>
+        <td>Layer 4: Validation and evaluation</td>
+        <td>Verify behavior before merge</td>
+        <td>Schema checks, diff checks, tests, secret scanning, dependency checks</td>
+        <td>What objective evidence supports merge confidence?</td>
+      </tr>
+      <tr>
+        <td>Layer 5: Delivery and telemetry</td>
+        <td>Ship and learn from production</td>
+        <td>CI checks, preview deploys, telemetry feedback into spec and policy</td>
+        <td>What feedback updates next run quality?</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Workflow diagram: intent to governed delivery
+
+<figure class="diagram">
+  <svg viewBox="0 0 1100 520" role="img" aria-labelledby="nlpg-workflow-title nlpg-workflow-desc">
+    <title id="nlpg-workflow-title">NLPg governed workflow</title>
+    <desc id="nlpg-workflow-desc">Swimlane view of intent, compiler, execution, and governance validation gates.</desc>
+
+    <rect x="20" y="30" width="1060" height="80" rx="10" fill="#f8fafc" stroke="currentColor" stroke-width="1.5" />
+    <rect x="20" y="130" width="1060" height="80" rx="10" fill="#f8fafc" stroke="currentColor" stroke-width="1.5" />
+    <rect x="20" y="230" width="1060" height="80" rx="10" fill="#f8fafc" stroke="currentColor" stroke-width="1.5" />
+    <rect x="20" y="330" width="1060" height="80" rx="10" fill="#f8fafc" stroke="currentColor" stroke-width="1.5" />
+
+    <text x="34" y="60" font-size="14" font-family="var(--font-mono)" fill="currentColor">Intent lane</text>
+    <text x="34" y="160" font-size="14" font-family="var(--font-mono)" fill="currentColor">Compiler lane</text>
+    <text x="34" y="260" font-size="14" font-family="var(--font-mono)" fill="currentColor">Execution lane</text>
+    <text x="34" y="360" font-size="14" font-family="var(--font-mono)" fill="currentColor">Governance lane</text>
+
+    <rect x="180" y="48" width="180" height="44" rx="8" fill="#e2e8f0" stroke="currentColor" stroke-width="1.5" />
+    <text x="194" y="75" font-size="13" font-family="var(--font-mono)" fill="currentColor">Business intent</text>
+
+    <rect x="410" y="148" width="220" height="44" rx="8" fill="#dbeafe" stroke="currentColor" stroke-width="1.5" />
+    <text x="424" y="175" font-size="13" font-family="var(--font-mono)" fill="currentColor">Compile to instruction spec</text>
+
+    <rect x="680" y="248" width="190" height="44" rx="8" fill="#dcfce7" stroke="currentColor" stroke-width="1.5" />
+    <text x="694" y="275" font-size="13" font-family="var(--font-mono)" fill="currentColor">Agent executes plan</text>
+
+    <polygon points="410,352 455,322 500,352 455,382" fill="#fef3c7" stroke="currentColor" stroke-width="1.5" />
+    <text x="438" y="357" font-size="12" font-family="var(--font-mono)" fill="currentColor">Risk</text>
+
+    <rect x="560" y="338" width="210" height="30" rx="8" fill="#fde68a" stroke="currentColor" stroke-width="1.5" />
+    <text x="572" y="358" font-size="12" font-family="var(--font-mono)" fill="currentColor">Approval gate if high risk</text>
+
+    <rect x="820" y="338" width="200" height="30" rx="8" fill="#cffafe" stroke="currentColor" stroke-width="1.5" />
+    <text x="833" y="358" font-size="12" font-family="var(--font-mono)" fill="currentColor">Validation + ledger write</text>
+
+    <line x1="360" y1="70" x2="410" y2="170" stroke="currentColor" stroke-width="2" />
+    <line x1="630" y1="170" x2="680" y2="270" stroke="currentColor" stroke-width="2" />
+    <line x1="775" y1="292" x2="500" y2="352" stroke="currentColor" stroke-width="2" />
+    <line x1="500" y1="352" x2="560" y2="352" stroke="currentColor" stroke-width="2" />
+    <line x1="770" y1="352" x2="820" y2="352" stroke="currentColor" stroke-width="2" />
+
+    <text x="840" y="458" font-size="13" font-family="var(--font-mono)" fill="currentColor">Release only after gates and checks pass</text>
+  </svg>
+  <figcaption>Execution is one lane. Governance and validation are parallel lanes, not afterthoughts.</figcaption>
+</figure>
+
+### Mindmap: NLPg system surface
+
+<figure class="diagram">
+  <svg viewBox="0 0 1100 560" role="img" aria-labelledby="nlpg-mindmap-title nlpg-mindmap-desc">
+    <title id="nlpg-mindmap-title">NLPg mindmap</title>
+    <desc id="nlpg-mindmap-desc">Mindmap of NLPg SDLC capabilities around a central methodology node.</desc>
+
+    <circle cx="550" cy="280" r="86" fill="#e0f2fe" stroke="currentColor" stroke-width="2" />
+    <text x="505" y="270" font-size="18" font-family="var(--font-mono)" fill="currentColor">NLPg</text>
+    <text x="480" y="295" font-size="18" font-family="var(--font-mono)" fill="currentColor">SDLC Method</text>
+
+    <rect x="160" y="90" width="250" height="80" rx="14" fill="#fef3c7" stroke="currentColor" stroke-width="1.5" />
+    <text x="178" y="120" font-size="14" font-family="var(--font-mono)" fill="currentColor">Intent layer</text>
+    <text x="178" y="145" font-size="12" font-family="var(--font-mono)" fill="currentColor">objective, scope, constraints</text>
+
+    <rect x="690" y="80" width="250" height="80" rx="14" fill="#dbeafe" stroke="currentColor" stroke-width="1.5" />
+    <text x="708" y="110" font-size="14" font-family="var(--font-mono)" fill="currentColor">Instruction compiler</text>
+    <text x="708" y="135" font-size="12" font-family="var(--font-mono)" fill="currentColor">language -> executable plan</text>
+
+    <rect x="780" y="240" width="250" height="80" rx="14" fill="#dcfce7" stroke="currentColor" stroke-width="1.5" />
+    <text x="798" y="270" font-size="14" font-family="var(--font-mono)" fill="currentColor">Execution runtime</text>
+    <text x="798" y="295" font-size="12" font-family="var(--font-mono)" fill="currentColor">agents, code, migrations, tests</text>
+
+    <rect x="700" y="400" width="250" height="80" rx="14" fill="#fee2e2" stroke="currentColor" stroke-width="1.5" />
+    <text x="718" y="430" font-size="14" font-family="var(--font-mono)" fill="currentColor">Governance layer</text>
+    <text x="718" y="455" font-size="12" font-family="var(--font-mono)" fill="currentColor">risk score, approval, policy</text>
+
+    <rect x="190" y="400" width="250" height="80" rx="14" fill="#e0e7ff" stroke="currentColor" stroke-width="1.5" />
+    <text x="208" y="430" font-size="14" font-family="var(--font-mono)" fill="currentColor">Validation harness</text>
+    <text x="208" y="455" font-size="12" font-family="var(--font-mono)" fill="currentColor">schema, tests, diff checks</text>
+
+    <rect x="70" y="240" width="250" height="80" rx="14" fill="#ecfccb" stroke="currentColor" stroke-width="1.5" />
+    <text x="88" y="270" font-size="14" font-family="var(--font-mono)" fill="currentColor">Delivery + telemetry</text>
+    <text x="88" y="295" font-size="12" font-family="var(--font-mono)" fill="currentColor">CI, previews, feedback loops</text>
+
+    <line x1="480" y1="230" x2="410" y2="170" stroke="currentColor" stroke-width="2" />
+    <line x1="620" y1="225" x2="690" y2="160" stroke="currentColor" stroke-width="2" />
+    <line x1="640" y1="280" x2="780" y2="280" stroke="currentColor" stroke-width="2" />
+    <line x1="620" y1="335" x2="700" y2="400" stroke="currentColor" stroke-width="2" />
+    <line x1="470" y1="335" x2="440" y2="400" stroke="currentColor" stroke-width="2" />
+    <line x1="460" y1="280" x2="320" y2="280" stroke="currentColor" stroke-width="2" />
+  </svg>
+  <figcaption>The method scales by explicit artifacts, not by more prompts.</figcaption>
+</figure>
+
+## Act III: Principles in practice
+
+### Governance primitives
+
+To keep NLPg operational, four primitives are non-negotiable.
+
+1. **Instruction schema**: objective, inputs, constraints, acceptance criteria, risk, rollback.
+2. **Prompt compiler**: natural language to structured execution plan.
+3. **Execution ledger**: what changed, why, risk score, approvals, validation outcomes.
+4. **Validation harness**: lint, schema validation, tests, static risk checks before merge.
+
+This is where many teams stall. They add an agent runtime before they define policy grammar. The result is automated output without accountable control.
+
+### Risk gate matrix
+
+<div class="table-scroll-wrap">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Risk category</th>
+        <th>Examples</th>
+        <th>Mandatory gates</th>
+        <th>Minimum validation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="keyword">auth-change</span></td>
+        <td>role model, middleware, token/session flow</td>
+        <td>Before DB migration, before middleware deploy</td>
+        <td>access matrix tests, regression on protected routes</td>
+      </tr>
+      <tr>
+        <td><span class="keyword">billing-change</span></td>
+        <td>Stripe webhook, entitlement checks, pricing logic</td>
+        <td>Before webhook deploy, before entitlement enforcement</td>
+        <td>signature verification tests, replay protection checks</td>
+      </tr>
+      <tr>
+        <td><span class="keyword">db-migration</span></td>
+        <td>schema change, destructive update</td>
+        <td>Before migration apply in staging and production</td>
+        <td>migration dry-run, rollback rehearsal</td>
+      </tr>
+      <tr>
+        <td><span class="keyword">external-api</span></td>
+        <td>new provider call, data egress change</td>
+        <td>Before secret registration and live traffic</td>
+        <td>contract tests, timeout and retry behavior</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Workflow example A: RBAC (auth risk)
+
+**Instruction spec**
+
+```yaml
+objective: Add role-based access control for dashboard
+scope:
+  - dashboard_routes
+  - api_route_handlers
+roles:
+  - admin
+  - editor
+  - viewer
+constraints:
+  - do_not_change_billing_routes
+  - preserve_session_model
+acceptance_criteria:
+  - unauthorized_users_receive_403
+  - role_stored_in_users_table
+risk:
+  category: auth-change
+  level: high
+approval_gates:
+  - before_db_migration
+  - before_middleware_deploy
+rollback:
+  - revert_migration
+  - revert_middleware
+```
+
+**Compiled plan**
+
+1. Add `role` column to `users`.
+2. Add role seed and defaults.
+3. Add dashboard middleware gating.
+4. Add API authorization checks.
+5. Add access-matrix tests.
+6. Verify no impact to billing routes.
+
+**Gate behavior**
+
+The run halts before migration and middleware deploy. The ledger stores risk category, approver identity, and validation traces.
+
+### Workflow example B: Stripe billing (billing risk)
+
+**Instruction spec**
+
+```yaml
+objective: Add subscription billing using Stripe
+constraints:
+  - no_secrets_committed
+  - verify_webhook_signature
+acceptance_criteria:
+  - subscription_status_stored_in_db
+  - premium_routes_gated_by_entitlement
+risk:
+  category: billing-change
+  level: high
+approval_gates:
+  - before_webhook_deploy
+  - before_entitlement_enforcement
+rollback:
+  - disable_webhook
+  - revert_entitlement_middleware
+```
+
+**Compiled plan**
+
+1. Install Stripe SDK.
+2. Create `subscriptions` table.
+3. Implement webhook endpoint with signature verification.
+4. Update entitlement state on webhook events.
+5. Gate premium routes.
+6. Add tests for verification and entitlement checks.
+
+This is the practical break from vibe coding: billing changes are treated as <span class="highlight">high-risk operations</span> with mandatory controls.
+
+### Operating metrics for this method
+
+A method is real only if outcomes move.
+
+<div class="table-scroll-wrap">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Why it matters</th>
+        <th>Target trend</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Spec completeness score</td>
+        <td>Measures ambiguity before execution</td>
+        <td>Upward</td>
+      </tr>
+      <tr>
+        <td>Approval bypass incidents</td>
+        <td>Detects governance drift</td>
+        <td>Downward</td>
+      </tr>
+      <tr>
+        <td>Rollback frequency (high-risk changes)</td>
+        <td>Shows production quality under risk</td>
+        <td>Downward</td>
+      </tr>
+      <tr>
+        <td>Mean lead time from spec to merge</td>
+        <td>Balances control with throughput</td>
+        <td>Stable to downward</td>
+      </tr>
+      <tr>
+        <td>Post-merge defect rate</td>
+        <td>Core quality outcome</td>
+        <td>Downward</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Template repo shape
+
+```text
+nlpg-sdlc-template/
+  docs/
+    method/
+      01-intent-to-spec.md
+      02-spec-schema.md
+      03-risk-taxonomy.md
+      04-approval-gates.md
+      05-ledger-format.md
+      06-validation-harness.md
+      examples/
+        rbac.md
+        stripe-billing.md
+  nlpg/
+    schemas/
+      instruction.schema.json
+      plan.schema.json
+      ledger.schema.json
+    policy/
+      policy.yaml
+    specs/
+    plans/
+    ledger/
+  app/
+  supabase/
+    migrations/
+  .github/
+    workflows/
+      ci.yaml
+```
+
+### Minimal CLI surface
+
+```bash
+nlpg init
+nlpg spec new
+nlpg spec validate
+nlpg plan
+nlpg run
+nlpg gate
+nlpg ledger view
+nlpg pr create
+```
+
+A practical storage model is file-first: specs and plans as YAML, ledger as append-only JSONL.
+
+### What this changes in practice
+
+NLPg-assisted SDLC changes your engineering center of gravity. The differentiator is no longer how fast code appears. It is how reliably intent becomes governed, verifiable change.
+
+Treat <span class="keyword">language as contract</span>, compilation as control, and governance as default. Speed then compounds instead of amplifying risk.
+
+### Related resources
+
+- [From Prompt to Production: A Human Checklist](/systems/from-prompt-to-production)
+- [What LLM-Ops Actually Means](/systems/llm-ops-without-the-buzzwords)
+- [Natural Language Is the New API](/systems/natural-language-is-the-new-api)
+- [The I-7 Reliability Standard deck](/shelf/shared-resources/i-7-reliability-standard-deck)
+- [Everything as Code deck](/shelf/shared-resources/everything-as-code-deck)

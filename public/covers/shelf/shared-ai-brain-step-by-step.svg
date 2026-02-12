@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+  <title id="t">Building an AI Brain cover</title>
+  <desc id="d">Editorial cover for building an AI brain step by step resource.</desc>
+  <rect width="1200" height="675" fill="#0f172a"/>
+  <circle cx="250" cy="190" r="120" fill="#1d4ed8" opacity="0.35"/>
+  <circle cx="940" cy="500" r="170" fill="#0ea5e9" opacity="0.3"/>
+  <path d="M180 500 C360 330, 620 610, 1020 280" stroke="#93c5fd" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <text x="80" y="120" fill="#e2e8f0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">Shared Resource</text>
+  <text x="80" y="250" fill="#f8fafc" font-family="Georgia, 'Times New Roman', serif" font-size="66">Building an AI Brain</text>
+  <text x="80" y="320" fill="#bae6fd" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="34">Step by step architecture deck</text>
+</svg>

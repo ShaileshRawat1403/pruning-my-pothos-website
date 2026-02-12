@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+  <title id="t">ContentOps cover</title>
+  <desc id="d">Editorial cover for ContentOps resource.</desc>
+  <rect width="1200" height="675" fill="#111827"/>
+  <rect x="90" y="90" width="1020" height="495" rx="28" fill="#1f2937" stroke="#475569" stroke-width="3"/>
+  <rect x="150" y="170" width="220" height="70" rx="10" fill="#22c55e" opacity="0.3"/>
+  <rect x="430" y="170" width="260" height="70" rx="10" fill="#f59e0b" opacity="0.3"/>
+  <rect x="750" y="170" width="300" height="70" rx="10" fill="#38bdf8" opacity="0.3"/>
+  <line x1="190" y1="330" x2="1010" y2="330" stroke="#64748b" stroke-width="4" stroke-dasharray="12 10"/>
+  <text x="150" y="430" fill="#f8fafc" font-family="Georgia, 'Times New Roman', serif" font-size="72">ContentOps</text>
+  <text x="152" y="490" fill="#cbd5e1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30">Operating model for reliable content systems</text>
+</svg>

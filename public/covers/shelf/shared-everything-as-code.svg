@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+  <title id="t">Everything as code cover</title>
+  <desc id="d">Editorial cover for everything as code resource.</desc>
+  <rect width="1200" height="675" fill="#172554"/>
+  <g stroke="#93c5fd" stroke-width="3" fill="none" opacity="0.8">
+    <rect x="120" y="130" width="280" height="130" rx="16"/>
+    <rect x="460" y="130" width="280" height="130" rx="16"/>
+    <rect x="800" y="130" width="280" height="130" rx="16"/>
+    <rect x="290" y="370" width="280" height="130" rx="16"/>
+    <rect x="630" y="370" width="280" height="130" rx="16"/>
+    <line x1="400" y1="195" x2="460" y2="195"/>
+    <line x1="740" y1="195" x2="800" y2="195"/>
+    <line x1="540" y1="260" x2="430" y2="370"/>
+    <line x1="660" y1="260" x2="770" y2="370"/>
+  </g>
+  <text x="130" y="575" fill="#dbeafe" font-family="Georgia, 'Times New Roman', serif" font-size="68">Everything as Code</text>
+  <text x="132" y="625" fill="#bfdbfe" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30">A control-plane mindset for modern delivery</text>
+</svg>

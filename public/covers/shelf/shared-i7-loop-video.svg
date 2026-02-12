@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+  <title id="t">I-7 loop video cover</title>
+  <desc id="d">Editorial cover for I-7 loop video resource.</desc>
+  <rect width="1200" height="675" fill="#111827"/>
+  <circle cx="600" cy="338" r="210" fill="#1e293b" stroke="#38bdf8" stroke-width="6"/>
+  <path d="M540 250 L720 338 L540 426 Z" fill="#bae6fd"/>
+  <text x="120" y="130" fill="#e5e7eb" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30">Video Resource</text>
+  <text x="120" y="200" fill="#f9fafb" font-family="Georgia, 'Times New Roman', serif" font-size="62">The I-7 Loop for Reliable AI</text>
+  <text x="120" y="560" fill="#cbd5e1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="31">Operational walkthrough of reliability stages</text>
+</svg>

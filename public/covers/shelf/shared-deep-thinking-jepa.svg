@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+  <title id="t">Deep Thinking AI JEPA cover</title>
+  <desc id="d">Editorial cover for Deep Thinking AI JEPA resource.</desc>
+  <rect width="1200" height="675" fill="#052e16"/>
+  <g stroke="#86efac" stroke-width="2" fill="none" opacity="0.55">
+    <circle cx="320" cy="320" r="70"/>
+    <circle cx="420" cy="320" r="110"/>
+    <circle cx="560" cy="320" r="170"/>
+    <circle cx="760" cy="320" r="240"/>
+  </g>
+  <rect x="80" y="78" width="560" height="130" rx="16" fill="#14532d" opacity="0.7"/>
+  <text x="110" y="145" fill="#dcfce7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30">Shared Resource</text>
+  <text x="110" y="430" fill="#f0fdf4" font-family="Georgia, 'Times New Roman', serif" font-size="70">Deep Thinking AI</text>
+  <text x="110" y="500" fill="#bbf7d0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="34">JEPA framing and system implications</text>
+</svg>

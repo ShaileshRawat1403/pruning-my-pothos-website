@@ -77,6 +77,8 @@ const shelfCollection = defineCollection({
         // Allow local public paths (e.g. /covers/...) as well as absolute URLs.
         coverUrl: z.string().optional(),
         pdfUrl: z.string().optional(),
+        videoUrl: z.string().optional(),
+        resourceHighlights: z.array(z.string()).optional(),
         appleMusicUrl: z.string().url().optional(),
         featured: featuredSchema,
         readingTime: readingTimeSchema,

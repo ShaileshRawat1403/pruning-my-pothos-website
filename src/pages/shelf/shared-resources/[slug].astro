@@ -34,6 +34,19 @@ const { Content } = await entry.render();
         highlights={entry.data.resourceHighlights}
       />
     ) : null}
+    {entry.data.videoUrl ? (
+      <section class="resource-video" aria-label={`${entry.data.title} video resource`}>
+        <h2 class="resource-video-title">Video</h2>
+        <video controls preload="metadata" class="resource-video-player">
+          <source src={entry.data.videoUrl} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div class="resource-video-actions">
+          <a class="resource-video-btn" href={entry.data.videoUrl} target="_blank" rel="noopener noreferrer">Open video</a>
+          <a class="resource-video-btn resource-video-btn-secondary" href={entry.data.videoUrl} download>Download</a>
+        </div>
+      </section>
+    ) : null}
     <Content />
   </article>
 </Layout>
@@ -49,5 +62,66 @@ const { Content } = await entry.render();
     border-left: 2px solid var(--color-border);
     padding-left: 1rem;
     margin-bottom: 2rem;
+  }
+  .resource-video {
+    margin: 1.75rem 0 2rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-blockquote-bg);
+  }
+  .resource-video-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1rem;
+  }
+  .resource-video-player {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    background: #000;
+  }
+  .resource-video-actions {
+    margin-top: 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .resource-video-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid var(--color-text);
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--color-text);
+    background: transparent;
+  }
+  .resource-video-btn:hover {
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+  .resource-video-btn-secondary {
+    border-style: dashed;
+  }
+  @media (max-width: 640px) {
+    .lead {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .resource-video {
+      padding: 0.8rem;
+      margin: 1.25rem 0 1.5rem;
+    }
+    .resource-video-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .resource-video-btn {
+      width: 100%;
+      padding: 0.52rem 0.8rem;
+    }
   }
 </style>

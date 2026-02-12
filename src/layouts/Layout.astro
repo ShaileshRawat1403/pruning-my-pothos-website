@@ -11,22 +11,73 @@ import Footer from '@/components/Footer.astro';
 
 interface Props {
 	title: string;
+	description?: string;
+	image?: string;
+	noindex?: boolean;
+	ogType?: 'website' | 'article';
 }
 
 const pathname = Astro.url.pathname;
 const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
+const {
+	title,
+	description = 'A personal workspace for exploring ideas in artificial intelligence, language, and systems.',
+	image = '/my-self-portrait.png',
+	noindex = false,
+	ogType = 'website',
+} = Astro.props;
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const canonical = new URL(pathname, siteUrl).toString();
+const socialImage = new URL(image, siteUrl).toString();
+const pageRobots = noindex ? 'noindex, nofollow' : 'index, follow';
+const jsonLdWebPage = {
+	'@context': 'https://schema.org',
+	'@type': 'WebPage',
+	name: title,
+	description,
+	url: canonical,
+	isPartOf: {
+		'@type': 'WebSite',
+		name: 'A Thinking Workspace',
+		url: siteUrl.toString(),
+	},
+};
+const jsonLdPerson = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: 'Shailesh Rawat',
+	url: siteUrl.toString(),
+	sameAs: [
+		'https://www.linkedin.com/in/shailesh-rawat',
+		'https://github.com/ShaileshRawat1403',
+	],
+};
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="A thinking workspace." />
+		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
+		<meta name="robots" content={pageRobots} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
+		<link rel="canonical" href={canonical} />
 		<meta name="generator" content={Astro.generator} />
-		<title>{Astro.props.title}</title>
+		<meta property="og:site_name" content="A Thinking Workspace" />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={socialImage} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImage} />
+		<title>{title}</title>
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLdWebPage)}></script>
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLdPerson)}></script>
 
         <ViewTransitions />
         <script is:inline>

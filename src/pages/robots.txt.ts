@@ -5,6 +5,8 @@ export async function GET({ site }: { site?: URL }) {
 
   const body = `User-agent: *
 Allow: /
+Disallow: /blog/
+Disallow: /blogs/
 
 Sitemap: ${sitemapUrl}
 LLM-Guide: ${llmsUrl}

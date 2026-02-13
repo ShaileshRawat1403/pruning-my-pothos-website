@@ -1,0 +1,2000 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { BUILD_MAPPINGS } from '@/data/buildMappings';
+---
+
+<Layout
+  title="Dual NLP Framework | A Thinking Workspace"
+  description="Interactive Builder Lab for AI-assisted SDLC using NLP and NLPg constraints."
+  image="/my-self-portrait.png"
+>
+  <section class="builder-page" id="builder-shell">
+    <div class="builder-shell-inner">
+      <header class="section-head section-head--centered builder-head">
+        <h1>Dual NLP for AI-assisted SDLC</h1>
+        <p class="subtitle">First understand language, then compile language into governed execution.</p>
+      </header>
+
+      <section class="lens-intro" aria-labelledby="lens-intro-title">
+        <h2 id="lens-intro-title">Choose Your Lens</h2>
+        <p class="lens-copy">NLP helps you understand intent and context. NLPg turns that intent into constraints, architecture, and delivery decisions.</p>
+
+        <div class="lens-grid">
+          <article class="lens-card">
+            <h3>NLP: Understand the ask</h3>
+            <div class="lens-node-map" aria-hidden="true" data-lens-map="nlp">
+              <svg class="lens-links-static" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line x1="50" y1="48" x2="20" y2="20"></line>
+                <line x1="50" y1="48" x2="80" y2="22"></line>
+                <line x1="50" y1="48" x2="14" y2="60"></line>
+                <line x1="50" y1="48" x2="86" y2="58"></line>
+                <line x1="50" y1="48" x2="30" y2="84"></line>
+                <line x1="50" y1="48" x2="70" y2="84"></line>
+              </svg>
+              <span class="lens-node lens-core" style="left:50%;top:48%;">Intent</span>
+              <span class="lens-node" style="left:20%;top:20%;">Tokens</span>
+              <span class="lens-node" style="left:80%;top:22%;">Embeddings</span>
+              <span class="lens-node" style="left:14%;top:60%;">Context</span>
+              <span class="lens-node" style="left:86%;top:58%;">Meaning</span>
+              <span class="lens-node" style="left:30%;top:84%;">Retrieval</span>
+              <span class="lens-node" style="left:70%;top:84%;">Grounding</span>
+            </div>
+            <div class="lens-node-insight" aria-live="polite">
+              <p class="lens-info-title">Intent</p>
+              <p class="lens-info-line"><strong>Definition:</strong> The exact outcome the user is trying to achieve.</p>
+              <p class="lens-info-line"><strong>ELI12:</strong> Figure out what you really want before doing the homework.</p>
+              <p class="lens-info-line"><strong>Analogy:</strong> Like choosing the destination before opening a map.</p>
+              <p class="lens-info-line"><strong>Practical use:</strong> Scope features and acceptance criteria before implementation.</p>
+            </div>
+            <button type="button" class="lens-btn" data-lens="nlp">Start with NLP</button>
+          </article>
+
+          <article class="lens-card">
+            <h3>NLPg: Execute with constraints</h3>
+            <div class="lens-node-map" aria-hidden="true" data-lens-map="nlpg">
+              <svg class="lens-links-static" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line x1="50" y1="48" x2="20" y2="20"></line>
+                <line x1="50" y1="48" x2="80" y2="22"></line>
+                <line x1="50" y1="48" x2="14" y2="60"></line>
+                <line x1="50" y1="48" x2="86" y2="58"></line>
+                <line x1="50" y1="48" x2="30" y2="84"></line>
+                <line x1="50" y1="48" x2="70" y2="84"></line>
+              </svg>
+              <span class="lens-node lens-core" style="left:50%;top:48%;">Spec</span>
+              <span class="lens-node" style="left:20%;top:20%;">Goal</span>
+              <span class="lens-node" style="left:80%;top:22%;">Constraints</span>
+              <span class="lens-node" style="left:14%;top:60%;">Risk</span>
+              <span class="lens-node" style="left:86%;top:58%;">Plan</span>
+              <span class="lens-node" style="left:30%;top:84%;">Validation</span>
+              <span class="lens-node" style="left:70%;top:84%;">Gate</span>
+            </div>
+            <div class="lens-node-insight" aria-live="polite">
+              <p class="lens-info-title">Spec</p>
+              <p class="lens-info-line"><strong>Definition:</strong> A structured instruction set with constraints and success conditions.</p>
+              <p class="lens-info-line"><strong>ELI12:</strong> Turn “build something cool” into a checklist the system can follow.</p>
+              <p class="lens-info-line"><strong>Analogy:</strong> Like an architect blueprint before a building crew starts work.</p>
+              <p class="lens-info-line"><strong>Practical use:</strong> Generate safer implementation plans with clear approval gates.</p>
+            </div>
+            <button type="button" class="lens-btn" data-lens="nlpg">Start with NLPg</button>
+          </article>
+        </div>
+      </section>
+
+      <div class="lab-status" aria-live="polite">
+        <div class="lab-progress-line">
+          <span>Constraint coverage</span>
+          <strong id="coverage-value">0%</strong>
+        </div>
+        <div class="lab-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="coverage-track">
+          <div class="lab-progress-fill" id="coverage-fill"></div>
+        </div>
+        <div class="lab-badges" id="lab-badges"></div>
+        <p class="lab-note" id="lab-note">System initialized: choose a lens, then pick a domain.</p>
+      </div>
+
+      <div class="builder-grid">
+        <aside class="lab-panel constraint-panel" aria-labelledby="constraint-console-title">
+          <div class="panel-head">
+            <h2 id="constraint-console-title">Constraint Console</h2>
+            <button type="button" class="panel-reset" id="reset-builder">Reset</button>
+          </div>
+          <p class="panel-copy">One choice per step. Each input changes graph, stack, and execution plan.</p>
+
+          <form class="step-list" id="step-list">
+            {BUILD_MAPPINGS.steps.map((step, index) => (
+              <fieldset class="step-block" data-step-block data-step-id={step.id}>
+                <legend>
+                  <span class="step-index">{index + 1}</span>
+                  <span class="step-title">{step.title}</span>
+                </legend>
+                <p class="step-prompt">{step.prompt}</p>
+                <div class="step-options" role="radiogroup" aria-label={step.title}>
+                  {step.options.map((option) => (
+                    <button
+                      type="button"
+                      class="step-option"
+                      data-step={step.id}
+                      data-value={option.value}
+                      aria-pressed="false"
+                      title={option.description}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+            ))}
+          </form>
+        </aside>
+
+        <section class="lab-panel graph-panel" aria-labelledby="architecture-graph-title">
+          <div class="panel-head">
+            <h2 id="architecture-graph-title">Architecture Graph</h2>
+            <p class="panel-meta" id="graph-count">1 node</p>
+          </div>
+          <p class="panel-copy">Intent at center. Constraint groups branch outward.</p>
+
+          <div class="graph-wrap" id="graph-wrap">
+            <svg class="graph-edges" id="graph-edges" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <div class="graph-nodes" id="graph-nodes"></div>
+          </div>
+
+          <p class="graph-footnote" id="graph-footnote">Awaiting first constraint...</p>
+        </section>
+
+        <aside class="lab-panel output-panel" aria-labelledby="stack-skills-title">
+          <h2 id="stack-skills-title">Stack + Skills</h2>
+
+          <div class="output-block">
+            <h3>Recommended Stack</h3>
+            <div class="stack-group">
+              <h4>Build interface</h4>
+              <ul id="stack-build-interface"></ul>
+            </div>
+            <div class="stack-group">
+              <h4>App stack</h4>
+              <ul id="stack-app-stack"></ul>
+            </div>
+            <div class="stack-group">
+              <h4>AI stack</h4>
+              <ul id="stack-ai-stack"></ul>
+            </div>
+            <div class="stack-group">
+              <h4>Ops stack</h4>
+              <ul id="stack-ops-stack"></ul>
+            </div>
+          </div>
+
+          <div class="output-block">
+            <h3>Skills Required</h3>
+            <ul class="skills-list" id="skills-list"></ul>
+          </div>
+
+          <div class="output-block">
+            <h3>Execution Plan</h3>
+            <ol class="plan-list" id="execution-plan"></ol>
+          </div>
+
+          <div class="output-block">
+            <h3>Suggested Links</h3>
+            <ul class="links-list" id="suggested-links"></ul>
+          </div>
+
+          <button type="button" class="export-button" id="export-blueprint" disabled>Export Blueprint</button>
+        </aside>
+      </div>
+
+      <div class="blueprint-card" id="blueprint-card" hidden>
+        <p class="blueprint-kicker">Completion unlocked</p>
+        <h2>Your Build Blueprint</h2>
+        <p id="blueprint-summary">All constraints captured. Export your deterministic implementation blueprint.</p>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline define:vars={{ buildMappings: BUILD_MAPPINGS }}>
+    (() => {
+      const LENS_NODE_KNOWLEDGE = {
+        nlp: {
+          Intent: {
+            definition: 'The exact outcome the user is trying to achieve.',
+            eli12: 'Figure out what you really want before doing the homework.',
+            analogy: 'Like choosing the destination before opening a map.',
+            useCase: 'Scope features and acceptance criteria before implementation.',
+          },
+          Tokens: {
+            definition: 'Small text units the model reads and prices.',
+            eli12: 'AI reads chunks, not whole paragraphs at once.',
+            analogy: 'Like counting Lego pieces before you build.',
+            useCase: 'Trim prompts to reduce cost and avoid context overflow.',
+          },
+          Embeddings: {
+            definition: 'Vector representations that capture semantic similarity.',
+            eli12: 'Words with similar meaning sit near each other.',
+            analogy: 'Like placing related books on the same shelf.',
+            useCase: 'Power semantic search and retrieval in knowledge bases.',
+          },
+          Context: {
+            definition: 'Relevant background information available for this step.',
+            eli12: 'Extra clues that help the model answer correctly.',
+            analogy: 'Like giving a detective the case file first.',
+            useCase: 'Inject project constraints before code generation.',
+          },
+          Meaning: {
+            definition: 'The intended interpretation of language in context.',
+            eli12: 'Not just words, what they actually imply.',
+            analogy: 'Like reading tone, not only text.',
+            useCase: 'Prevent wrong assumptions in requirement translation.',
+          },
+          Retrieval: {
+            definition: 'Fetching grounded sources before generating output.',
+            eli12: 'Look things up before guessing.',
+            analogy: 'Like checking notes before an exam answer.',
+            useCase: 'Use docs/PRD links to reduce hallucinations.',
+          },
+          Grounding: {
+            definition: 'Binding outputs to verifiable evidence.',
+            eli12: 'Show where each answer came from.',
+            analogy: 'Like citing references in a report.',
+            useCase: 'Improve auditability and reviewer trust in outputs.',
+          },
+        },
+        nlpg: {
+          Spec: {
+            definition: 'A structured instruction set with constraints and success conditions.',
+            eli12: 'Turn “build something cool” into a checklist the system can follow.',
+            analogy: 'Like an architect blueprint before a building crew starts work.',
+            useCase: 'Generate safer implementation plans with clear approval gates.',
+          },
+          Goal: {
+            definition: 'The measurable business outcome to achieve.',
+            eli12: 'What “done” should look like.',
+            analogy: 'Like the final score you are trying to hit.',
+            useCase: 'Keep the team aligned on delivery outcome.',
+          },
+          Constraints: {
+            definition: 'Boundaries for policy, security, cost, and architecture.',
+            eli12: 'Rules you cannot break while building.',
+            analogy: 'Like lane markers while driving fast.',
+            useCase: 'Prevent rework from non-compliant designs.',
+          },
+          Risk: {
+            definition: 'Potential failure areas requiring additional controls.',
+            eli12: 'Places where things can go wrong badly.',
+            analogy: 'Like marking slippery steps before people walk.',
+            useCase: 'Escalate auth, billing, and data privacy changes.',
+          },
+          Plan: {
+            definition: 'Ordered sequence of implementation tasks.',
+            eli12: 'Do step 1, then step 2, then step 3.',
+            analogy: 'Like a recipe with exact order.',
+            useCase: 'Produce deterministic implementation workflow for teams.',
+          },
+          Validation: {
+            definition: 'Checks that prove the output meets requirements.',
+            eli12: 'Test if the thing actually works right.',
+            analogy: 'Like quality check before shipping.',
+            useCase: 'Run tests, schema checks, and policy assertions.',
+          },
+          Gate: {
+            definition: 'Approval checkpoint before sensitive execution.',
+            eli12: 'Pause and ask permission before risky actions.',
+            analogy: 'Like security gate before entering production.',
+            useCase: 'Require human approval for migrations/deployments.',
+          },
+        },
+      };
+
+      const LENS_RELATIONS = {
+        nlp: [
+          ['Intent', 'Tokens'],
+          ['Intent', 'Embeddings'],
+          ['Intent', 'Context'],
+          ['Intent', 'Meaning'],
+          ['Intent', 'Retrieval'],
+          ['Intent', 'Grounding'],
+          ['Tokens', 'Embeddings'],
+          ['Context', 'Meaning'],
+          ['Retrieval', 'Grounding'],
+        ],
+        nlpg: [
+          ['Spec', 'Goal'],
+          ['Spec', 'Constraints'],
+          ['Spec', 'Risk'],
+          ['Spec', 'Plan'],
+          ['Spec', 'Validation'],
+          ['Spec', 'Gate'],
+          ['Goal', 'Constraints'],
+          ['Risk', 'Validation'],
+          ['Plan', 'Gate'],
+        ],
+      };
+
+      const initFlowingLensMaps = (root, reducedMotion) => {
+        const maps = Array.from(root.querySelectorAll('.lens-node-map'));
+        maps.forEach((map) => {
+          if (!(map instanceof HTMLElement) || map.dataset.bound === 'true') return;
+          const svg = map.querySelector('.lens-links-static');
+          if (!(svg instanceof SVGSVGElement)) return;
+          const nodes = Array.from(map.querySelectorAll('.lens-node')).filter((n) => n instanceof HTMLElement);
+          if (!nodes.length) return;
+
+          const coreNode = nodes.find((node) => node.classList.contains('lens-core')) || nodes[0];
+          const lensKind = map.dataset.lensMap === 'nlpg' ? 'nlpg' : 'nlp';
+          const card = map.closest('.lens-card');
+          const infoTitle = card?.querySelector('.lens-info-title');
+          const infoLines = card ? Array.from(card.querySelectorAll('.lens-info-line')) : [];
+          const nodeByLabel = new Map(
+            nodes.map((node) => [(node.textContent || '').trim(), node]),
+          );
+          const fallbackRelations = nodes
+            .filter((node) => node !== coreNode)
+            .map((node) => [(coreNode.textContent || '').trim(), (node.textContent || '').trim()]);
+          const relations = (LENS_RELATIONS[lensKind] || fallbackRelations).filter(([sourceLabel, targetLabel]) => (
+            Boolean(sourceLabel)
+            && Boolean(targetLabel)
+            && sourceLabel !== targetLabel
+            && nodeByLabel.has(sourceLabel)
+            && nodeByLabel.has(targetLabel)
+          ));
+          const adjacency = new Map();
+          const lineEntries = [];
+          svg.innerHTML = '';
+          relations.forEach(([sourceLabel, targetLabel]) => {
+            const baseLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            const flowLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            baseLine.setAttribute('class', 'lens-link-base');
+            flowLine.setAttribute('class', 'lens-link-flow');
+            svg.appendChild(baseLine);
+            svg.appendChild(flowLine);
+            lineEntries.push({
+              sourceLabel,
+              targetLabel,
+              sourceNode: nodeByLabel.get(sourceLabel),
+              targetNode: nodeByLabel.get(targetLabel),
+              baseLine,
+              flowLine,
+            });
+            if (!adjacency.has(sourceLabel)) adjacency.set(sourceLabel, new Set());
+            if (!adjacency.has(targetLabel)) adjacency.set(targetLabel, new Set());
+            adjacency.get(sourceLabel).add(targetLabel);
+            adjacency.get(targetLabel).add(sourceLabel);
+          });
+
+          const safePct = (value, fallback) => {
+            const parsed = Number.parseFloat(value || '');
+            return Number.isFinite(parsed) ? parsed : fallback;
+          };
+          const getNodeLabel = (node) => (node.textContent || '').trim();
+          const getDirectRelatedLabels = (seedLabel) => {
+            const related = new Set([seedLabel]);
+            const neighbors = adjacency.get(seedLabel);
+            if (!neighbors) return related;
+            neighbors.forEach((neighbor) => related.add(neighbor));
+            return related;
+          };
+
+          const state = nodes.map((node, index) => ({
+            node,
+            homeX: safePct(node.style.left, 50) / 100,
+            homeY: safePct(node.style.top, 50) / 100,
+            x: 0,
+            y: 0,
+            vx: 0,
+            vy: 0,
+            radius: node.classList.contains('lens-core') ? 28 : 18,
+            phase: index * 1.13,
+          }));
+          const stateByNode = new Map(state.map((item) => [item.node, item]));
+
+          let drag = null;
+          let panDrag = null;
+          let width = 0;
+          let height = 0;
+          let initialized = false;
+
+          const applyRelationFocus = (label) => {
+            const related = adjacency.get(label) || new Set();
+            nodes.forEach((item) => {
+              const itemLabel = (item.textContent || '').trim();
+              const isActive = itemLabel === label;
+              const isRelated = !isActive && related.has(itemLabel);
+              item.classList.toggle('is-active', isActive);
+              item.classList.toggle('is-related', isRelated);
+              item.classList.toggle('is-faded', !isActive && !isRelated);
+            });
+            lineEntries.forEach((entry) => {
+              const touches = entry.sourceLabel === label || entry.targetLabel === label;
+              entry.baseLine.classList.toggle('is-related', touches);
+              entry.flowLine.classList.toggle('is-related', touches);
+              entry.baseLine.classList.toggle('is-faded', !touches);
+              entry.flowLine.classList.toggle('is-faded', !touches);
+            });
+          };
+
+          const clearRelationFocus = () => {
+            nodes.forEach((item) => {
+              item.classList.remove('is-related', 'is-faded');
+            });
+            lineEntries.forEach((entry) => {
+              entry.baseLine.classList.remove('is-related', 'is-faded');
+              entry.flowLine.classList.remove('is-related', 'is-faded');
+            });
+          };
+
+          const resize = () => {
+            const rect = map.getBoundingClientRect();
+            width = Math.max(1, rect.width);
+            height = Math.max(1, rect.height);
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            if (!initialized) {
+              state.forEach((item) => {
+                item.x = item.homeX * width;
+                item.y = item.homeY * height;
+              });
+              initialized = true;
+            }
+          };
+          resize();
+          if (typeof ResizeObserver === 'function') {
+            new ResizeObserver(resize).observe(map);
+          } else {
+            window.addEventListener('resize', resize);
+          }
+
+          nodes.forEach((node) => {
+            node.style.touchAction = 'none';
+            node.setAttribute('tabindex', '0');
+            node.setAttribute('role', 'button');
+
+            const setNodeInfo = () => {
+              const label = node.textContent?.trim() || '';
+              applyRelationFocus(label);
+              if (!(infoTitle instanceof HTMLElement) || infoLines.length < 4) return;
+              const insight = LENS_NODE_KNOWLEDGE[lensKind]?.[label];
+              if (!insight) return;
+              infoTitle.textContent = label;
+              infoLines[0].innerHTML = `<strong>Definition:</strong> ${insight.definition}`;
+              infoLines[1].innerHTML = `<strong>ELI12:</strong> ${insight.eli12}`;
+              infoLines[2].innerHTML = `<strong>Analogy:</strong> ${insight.analogy}`;
+              infoLines[3].innerHTML = `<strong>Practical use:</strong> ${insight.useCase}`;
+            };
+
+            node.addEventListener('pointerenter', setNodeInfo);
+            node.addEventListener('focus', setNodeInfo);
+            node.addEventListener('click', setNodeInfo);
+            node.addEventListener('pointerdown', (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              const item = state.find((entry) => entry.node === node);
+              if (!item) return;
+              const relatedLabels = getDirectRelatedLabels(getNodeLabel(node));
+              const followers = state.filter((candidate) => (
+                candidate !== item && relatedLabels.has(getNodeLabel(candidate.node))
+              ));
+              drag = {
+                item,
+                pointerId: event.pointerId,
+                offsetX: event.clientX - node.getBoundingClientRect().left,
+                offsetY: event.clientY - node.getBoundingClientRect().top,
+                startX: item.x,
+                startY: item.y,
+                followers,
+                followerSnapshot: followers.map((entry) => ({ item: entry, x: entry.x, y: entry.y })),
+              };
+              node.setPointerCapture(event.pointerId);
+              node.classList.add('is-dragging');
+            });
+
+            node.addEventListener('pointerup', (event) => {
+              if (!drag || drag.pointerId !== event.pointerId) return;
+              node.classList.remove('is-dragging');
+              drag = null;
+            });
+
+            node.addEventListener('pointercancel', () => {
+              node.classList.remove('is-dragging');
+              drag = null;
+            });
+
+            node.addEventListener('keydown', (event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                setNodeInfo();
+              }
+            });
+          });
+
+          map.addEventListener('pointermove', (event) => {
+            if (panDrag) {
+              const dx = event.clientX - panDrag.startX;
+              const dy = event.clientY - panDrag.startY;
+              state.forEach((item, index) => {
+                const origin = panDrag.snapshot[index];
+                if (!origin) return;
+                item.x = Math.max(item.radius, Math.min(width - item.radius, origin.x + dx));
+                item.y = Math.max(item.radius, Math.min(height - item.radius, origin.y + dy));
+                item.vx = 0;
+                item.vy = 0;
+              });
+              return;
+            }
+            if (!drag) return;
+            const rect = map.getBoundingClientRect();
+            const r = drag.item.radius;
+            const x = event.clientX - rect.left - drag.offsetX + drag.item.node.offsetWidth / 2;
+            const y = event.clientY - rect.top - drag.offsetY + drag.item.node.offsetHeight / 2;
+            const nextX = Math.max(r, Math.min(width - r, x));
+            const nextY = Math.max(r, Math.min(height - r, y));
+            drag.item.x = nextX;
+            drag.item.y = nextY;
+            drag.item.vx = 0;
+            drag.item.vy = 0;
+          });
+
+          map.addEventListener('pointerdown', (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) return;
+            if (target.closest('.lens-node')) return;
+            panDrag = {
+              pointerId: event.pointerId,
+              startX: event.clientX,
+              startY: event.clientY,
+              snapshot: state.map((item) => ({ x: item.x, y: item.y })),
+            };
+            map.classList.add('is-panning');
+            map.setPointerCapture(event.pointerId);
+          });
+
+          map.addEventListener('pointerup', (event) => {
+            if (panDrag && panDrag.pointerId === event.pointerId) {
+              panDrag = null;
+              map.classList.remove('is-panning');
+            }
+          });
+
+          map.addEventListener('pointercancel', () => {
+            panDrag = null;
+            map.classList.remove('is-panning');
+          });
+
+          map.addEventListener('pointerleave', () => {
+            clearRelationFocus();
+          });
+
+          window.addEventListener('pointerup', () => {
+            if (drag) {
+              drag.item.node.classList.remove('is-dragging');
+              drag = null;
+            }
+            if (panDrag) {
+              panDrag = null;
+              map.classList.remove('is-panning');
+            }
+          });
+
+          const syncScene = () => {
+            state.forEach((item) => {
+              item.node.style.left = `${item.x}px`;
+              item.node.style.top = `${item.y}px`;
+            });
+
+            lineEntries.forEach((entry) => {
+              const source = stateByNode.get(entry.sourceNode);
+              const target = stateByNode.get(entry.targetNode);
+              if (!source || !target) return;
+              const { baseLine, flowLine } = entry;
+              [baseLine, flowLine].forEach((line) => {
+                line.setAttribute('x1', `${source.x}`);
+                line.setAttribute('y1', `${source.y}`);
+                line.setAttribute('x2', `${target.x}`);
+                line.setAttribute('y2', `${target.y}`);
+              });
+            });
+          };
+
+          const tick = (time) => {
+            if (!reducedMotion) {
+              const isDragged = (item) => Boolean(drag) && drag.item === item;
+
+              // Edge springs: connected nodes oscillate naturally like a graph.
+              lineEntries.forEach((entry) => {
+                const a = stateByNode.get(entry.sourceNode);
+                const b = stateByNode.get(entry.targetNode);
+                if (!a || !b) return;
+                if (panDrag) return;
+                const dx = b.x - a.x;
+                const dy = b.y - a.y;
+                const dist = Math.max(0.001, Math.hypot(dx, dy));
+                const rest = Math.max(14, Math.hypot((b.homeX - a.homeX) * width, (b.homeY - a.homeY) * height));
+                const force = (dist - rest) * 0.0062;
+                const ux = dx / dist;
+                const uy = dy / dist;
+                const fx = ux * force;
+                const fy = uy * force;
+                if (!isDragged(a)) {
+                  a.vx += fx;
+                  a.vy += fy;
+                }
+                if (!isDragged(b)) {
+                  b.vx -= fx;
+                  b.vy -= fy;
+                }
+              });
+
+              // Pairwise repulsion to avoid clumping.
+              for (let i = 0; i < state.length; i += 1) {
+                for (let j = i + 1; j < state.length; j += 1) {
+                  const a = state[i];
+                  const b = state[j];
+                  if (panDrag) continue;
+                  const dx = b.x - a.x;
+                  const dy = b.y - a.y;
+                  const dist = Math.max(0.001, Math.hypot(dx, dy));
+                  const minGap = a.radius + b.radius + 4;
+                  const repel = dist < minGap
+                    ? (minGap - dist) * 0.013
+                    : Math.min(0.12, 44 / (dist * dist));
+                  const ux = dx / dist;
+                  const uy = dy / dist;
+                  if (!isDragged(a)) {
+                    a.vx -= ux * repel;
+                    a.vy -= uy * repel;
+                  }
+                  if (!isDragged(b)) {
+                    b.vx += ux * repel;
+                    b.vy += uy * repel;
+                  }
+                }
+              }
+
+              // While dragging, neighbors follow with elastic lag instead of rigid block motion.
+              if (drag && !panDrag) {
+                const dx = drag.item.x - drag.startX;
+                const dy = drag.item.y - drag.startY;
+                drag.followerSnapshot.forEach(({ item: follower, x: sx, y: sy }) => {
+                  const targetX = sx + dx;
+                  const targetY = sy + dy;
+                  follower.vx += (targetX - follower.x) * 0.011;
+                  follower.vy += (targetY - follower.y) * 0.011;
+                });
+              }
+
+              state.forEach((item) => {
+                if (panDrag || isDragged(item)) return;
+                const homeX = item.homeX * width;
+                const homeY = item.homeY * height;
+                item.vx += (homeX - item.x) * 0.00145;
+                item.vy += (homeY - item.y) * 0.00145;
+                item.vx += Math.sin(time * 0.001 + item.phase) * 0.022;
+                item.vy += Math.cos(time * 0.0009 + item.phase * 1.21) * 0.022;
+                item.vx *= 0.945;
+                item.vy *= 0.945;
+                item.x += item.vx;
+                item.y += item.vy;
+                item.x = Math.max(item.radius, Math.min(width - item.radius, item.x));
+                item.y = Math.max(item.radius, Math.min(height - item.radius, item.y));
+              });
+            }
+
+            syncScene();
+            requestAnimationFrame(tick);
+          };
+
+          syncScene();
+          requestAnimationFrame(tick);
+          map.dataset.bound = 'true';
+        });
+      };
+
+      const initBuilderLab = () => {
+        try {
+          const shell = document.getElementById('builder-shell');
+          if (!(shell instanceof HTMLElement) || shell.dataset.bound === 'true') return;
+
+          const config = buildMappings;
+          if (!config?.steps?.length || !config?.base) return;
+
+          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          initFlowingLensMaps(shell, reducedMotion);
+
+          const byId = (id) => document.getElementById(id);
+          const stepList = byId('step-list');
+          const coverageValue = byId('coverage-value');
+          const coverageTrack = byId('coverage-track');
+          const coverageFill = byId('coverage-fill');
+          const badgesEl = byId('lab-badges');
+          const noteEl = byId('lab-note');
+          const graphCountEl = byId('graph-count');
+          const graphFootnote = byId('graph-footnote');
+          const graphWrap = byId('graph-wrap');
+          const graphNodesEl = byId('graph-nodes');
+          const graphEdgesEl = byId('graph-edges');
+          const stackBuild = byId('stack-build-interface');
+          const stackApp = byId('stack-app-stack');
+          const stackAi = byId('stack-ai-stack');
+          const stackOps = byId('stack-ops-stack');
+          const skillsListEl = byId('skills-list');
+          const planListEl = byId('execution-plan');
+          const linksListEl = byId('suggested-links');
+          const blueprintCard = byId('blueprint-card');
+          const blueprintSummary = byId('blueprint-summary');
+          const exportButton = byId('export-blueprint');
+          const resetButton = byId('reset-builder');
+
+          if (
+            !stepList || !coverageValue || !coverageTrack || !coverageFill || !badgesEl || !noteEl || !graphCountEl || !graphFootnote
+            || !graphWrap
+            || !graphNodesEl || !graphEdgesEl || !stackBuild || !stackApp || !stackAi || !stackOps || !skillsListEl || !planListEl
+            || !linksListEl || !blueprintCard || !blueprintSummary || !exportButton || !resetButton
+          ) return;
+
+          const stepOrder = config.steps.map((step) => step.id);
+          const stepMap = new Map(config.steps.map((step) => [step.id, step]));
+          const selections = Object.fromEntries(stepOrder.map((stepId) => [stepId, '']));
+          let selectedLens = '';
+          let previousNodeIds = new Set();
+
+          const STACK_LINK_HINTS = [
+            { match: 'git', label: 'Git', href: '/shelf/tools/git' },
+            { match: 'ci', label: 'CI Foundations', href: '/systems/tech-stack-for-nlpg-driven-ai-assisted-sdlc' },
+            { match: 'typed', label: 'Structured Output', href: '/systems/structured-output-and-why-it-matters' },
+            { match: 'prompt', label: 'Prompting Framework', href: '/systems/prompting-is-not-the-skill-you-think-it-is' },
+            { match: 'retrieval', label: 'RAG Basics', href: '/systems/retrieval-augmented-generation-in-plain-terms' },
+            { match: 'evaluation', label: 'Evaluation System', href: '/systems/evaluation-is-a-human-problem' },
+            { match: 'observability', label: 'LLM Ops Guide', href: '/systems/llm-ops-without-the-buzzwords' },
+            { match: 'telemetry', label: 'Drift + Monitoring', href: '/systems/drift-decay-and-silent-failure' },
+            { match: 'policy', label: 'Human-in-the-loop', href: '/systems/human-in-the-loop-is-a-system-design-choice' },
+          ];
+
+          const stepBlocks = Array.from(shell.querySelectorAll('[data-step-block]')).filter((node) => node instanceof HTMLElement);
+          const lensButtons = Array.from(shell.querySelectorAll('.lens-btn')).filter((btn) => btn instanceof HTMLButtonElement);
+
+          const toUnique = (arr) => {
+            const seen = new Set();
+            return arr.filter((item) => {
+              if (!item || seen.has(item)) return false;
+              seen.add(item);
+              return true;
+            });
+          };
+
+          const mergeStack = (target, source) => {
+            Object.keys(target).forEach((key) => {
+              target[key] = toUnique([...(target[key] || []), ...((source?.[key]) || [])]);
+            });
+          };
+
+          const getExecutionPlan = () => {
+            const plan = [...config.base.executionPlan];
+            if (selections.aiMode === 'autonomous-ai') plan[4] = 'Phase 5: Evaluate autonomy boundaries, safety checks, and rollback reliability.';
+            if (selections.scale === 'internet-scale') plan[5] = 'Phase 6: Ship with autoscaling, cost controls, and live reliability dashboards.';
+            if (selections.delivery === 'agent-workflow') plan[3] = 'Phase 4: Implement tool contracts and human-gated action execution.';
+            return plan;
+          };
+
+          const computeModel = () => {
+            let nodes = [...config.base.nodes];
+            let edges = [...config.base.edges];
+            const stack = {
+              buildInterface: [...config.base.stack.buildInterface],
+              appStack: [...config.base.stack.appStack],
+              aiStack: [...config.base.stack.aiStack],
+              opsStack: [...config.base.stack.opsStack],
+            };
+            let skills = [...config.base.skills];
+            let notes = [...config.base.notes];
+
+            stepOrder.forEach((stepId) => {
+              const selectedValue = selections[stepId];
+              if (!selectedValue) return;
+              const step = stepMap.get(stepId);
+              const option = step?.options?.find((item) => item.value === selectedValue);
+              if (!option) return;
+              const contribution = option.contribution || {};
+              nodes = [...nodes, ...(contribution.nodes || [])];
+              edges = [...edges, ...(contribution.edges || [])];
+              mergeStack(stack, contribution.stack || {});
+              skills = [...skills, ...(contribution.skills || [])];
+              notes = [...notes, ...(contribution.notes || [])];
+            });
+
+            const uniqueNodes = [];
+            const seenNodeIds = new Set();
+            nodes.forEach((node) => {
+              if (!node?.id || seenNodeIds.has(node.id)) return;
+              seenNodeIds.add(node.id);
+              uniqueNodes.push(node);
+            });
+            const cappedNodes = uniqueNodes.slice(0, config.limits?.maxNodes || 18);
+            const allowedIds = new Set(cappedNodes.map((node) => node.id));
+
+            const uniqueEdges = [];
+            const seenEdges = new Set();
+            edges.forEach((edge) => {
+              if (!edge?.source || !edge?.target) return;
+              if (!allowedIds.has(edge.source) || !allowedIds.has(edge.target)) return;
+              const edgeId = `${edge.source}->${edge.target}:${edge.label || ''}`;
+              if (seenEdges.has(edgeId)) return;
+              seenEdges.add(edgeId);
+              uniqueEdges.push(edge);
+            });
+
+            return {
+              nodes: cappedNodes,
+              edges: uniqueEdges,
+              stack: {
+                buildInterface: toUnique(stack.buildInterface),
+                appStack: toUnique(stack.appStack),
+                aiStack: toUnique(stack.aiStack),
+                opsStack: toUnique(stack.opsStack),
+              },
+              skills: toUnique(skills),
+              notes: toUnique(notes),
+              executionPlan: getExecutionPlan(),
+            };
+          };
+
+          const GRAPH_GROUP_ANCHORS = {
+            core: { x: 0.5, y: 0.5 },
+            domain: { x: 0.27, y: 0.52 },
+            ai: { x: 0.46, y: 0.24 },
+            risk: { x: 0.73, y: 0.34 },
+            infra: { x: 0.65, y: 0.71 },
+            delivery: { x: 0.37, y: 0.76 },
+          };
+          const graphState = {
+            width: 1,
+            height: 1,
+            nodes: [],
+            nodeById: new Map(),
+            edges: [],
+            dragging: null,
+            running: false,
+          };
+
+          const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+          const resizeGraphBounds = () => {
+            const rect = graphWrap.getBoundingClientRect();
+            graphState.width = Math.max(1, rect.width);
+            graphState.height = Math.max(1, rect.height);
+            graphEdgesEl.setAttribute('viewBox', `0 0 ${graphState.width} ${graphState.height}`);
+          };
+          resizeGraphBounds();
+          if (typeof ResizeObserver === 'function') {
+            new ResizeObserver(resizeGraphBounds).observe(graphWrap);
+          } else {
+            window.addEventListener('resize', resizeGraphBounds);
+          }
+
+          graphWrap.addEventListener('pointermove', (event) => {
+            if (!graphState.dragging) return;
+            const rect = graphWrap.getBoundingClientRect();
+            const dragged = graphState.dragging.item;
+            dragged.x = clamp(event.clientX - rect.left, dragged.radius, graphState.width - dragged.radius);
+            dragged.y = clamp(event.clientY - rect.top, dragged.radius, graphState.height - dragged.radius);
+            dragged.vx = 0;
+            dragged.vy = 0;
+          });
+
+          graphWrap.addEventListener('pointerup', (event) => {
+            if (!graphState.dragging || graphState.dragging.pointerId !== event.pointerId) return;
+            graphState.dragging.item.el.classList.remove('is-dragging');
+            graphState.dragging = null;
+          });
+
+          graphWrap.addEventListener('pointercancel', () => {
+            if (!graphState.dragging) return;
+            graphState.dragging.item.el.classList.remove('is-dragging');
+            graphState.dragging = null;
+          });
+
+          const syncGraphScene = () => {
+            graphState.edges.forEach((edge) => {
+              edge.el.setAttribute('x1', `${edge.source.x}`);
+              edge.el.setAttribute('y1', `${edge.source.y}`);
+              edge.el.setAttribute('x2', `${edge.target.x}`);
+              edge.el.setAttribute('y2', `${edge.target.y}`);
+            });
+
+            graphState.nodes.forEach((item) => {
+              item.el.style.left = `${item.x}px`;
+              item.el.style.top = `${item.y}px`;
+            });
+          };
+
+          const tickGraph = () => {
+            if (!reducedMotion) {
+              const dragged = graphState.dragging?.item || null;
+              const nodeCount = Math.max(1, graphState.nodes.length);
+
+              graphState.edges.forEach((edge) => {
+                const dx = edge.target.x - edge.source.x;
+                const dy = edge.target.y - edge.source.y;
+                const dist = Math.max(0.001, Math.hypot(dx, dy));
+                const rest = edge.rest;
+                const stretch = dist - rest;
+                const strength = 0.0048 * stretch;
+                const ux = dx / dist;
+                const uy = dy / dist;
+                if (edge.source !== dragged) {
+                  edge.source.vx += ux * strength;
+                  edge.source.vy += uy * strength;
+                }
+                if (edge.target !== dragged) {
+                  edge.target.vx -= ux * strength;
+                  edge.target.vy -= uy * strength;
+                }
+              });
+
+              for (let i = 0; i < graphState.nodes.length; i += 1) {
+                for (let j = i + 1; j < graphState.nodes.length; j += 1) {
+                  const a = graphState.nodes[i];
+                  const b = graphState.nodes[j];
+                  const dx = b.x - a.x;
+                  const dy = b.y - a.y;
+                  const distSq = Math.max(1, (dx * dx) + (dy * dy));
+                  const dist = Math.sqrt(distSq);
+                  const ux = dx / dist;
+                  const uy = dy / dist;
+                  const repel = Math.min(2.1, (2500 / distSq) + 0.06);
+                  if (a !== dragged) {
+                    a.vx -= ux * repel;
+                    a.vy -= uy * repel;
+                  }
+                  if (b !== dragged) {
+                    b.vx += ux * repel;
+                    b.vy += uy * repel;
+                  }
+                }
+              }
+
+              graphState.nodes.forEach((item) => {
+                if (item === dragged) return;
+                item.vx += (item.anchorX - item.x) * 0.0018;
+                item.vy += (item.anchorY - item.y) * 0.0018;
+                item.vx += (graphState.width * 0.5 - item.x) * (0.00035 / nodeCount);
+                item.vy += (graphState.height * 0.5 - item.y) * (0.00035 / nodeCount);
+                item.vx *= 0.88;
+                item.vy *= 0.88;
+                item.x = clamp(item.x + item.vx, item.radius, graphState.width - item.radius);
+                item.y = clamp(item.y + item.vy, item.radius, graphState.height - item.radius);
+              });
+            }
+
+            syncGraphScene();
+            requestAnimationFrame(tickGraph);
+          };
+
+          const renderGraph = (nodes, edges) => {
+            const prevNodeById = new Map(graphState.nodes.map((item) => [item.id, item]));
+            graphNodesEl.innerHTML = '';
+            graphEdgesEl.innerHTML = '';
+            graphState.nodeById = new Map();
+            graphState.nodes = [];
+            graphState.edges = [];
+
+            nodes.forEach((node, index) => {
+              const safeGroup = GRAPH_GROUP_ANCHORS[node.group] ? node.group : 'delivery';
+              const anchor = GRAPH_GROUP_ANCHORS[safeGroup];
+              const prev = prevNodeById.get(node.id);
+              const radius = node.group === 'core' ? 44 : 34;
+              const jitterX = ((index % 3) - 1) * 22;
+              const jitterY = ((index % 5) - 2) * 16;
+              const startX = prev?.x ?? ((anchor.x * graphState.width) + jitterX);
+              const startY = prev?.y ?? ((anchor.y * graphState.height) + jitterY);
+              const item = {
+                id: node.id,
+                group: safeGroup,
+                x: clamp(startX, radius, graphState.width - radius),
+                y: clamp(startY, radius, graphState.height - radius),
+                vx: prev?.vx || 0,
+                vy: prev?.vy || 0,
+                radius,
+                anchorX: anchor.x * graphState.width,
+                anchorY: anchor.y * graphState.height,
+                el: null,
+              };
+
+              const nodeEl = document.createElement('button');
+              nodeEl.type = 'button';
+              nodeEl.className = `graph-node group-${safeGroup}`;
+              nodeEl.textContent = node.label;
+              nodeEl.setAttribute('aria-label', node.label);
+              nodeEl.style.left = `${item.x}px`;
+              nodeEl.style.top = `${item.y}px`;
+              if (!reducedMotion && !previousNodeIds.has(node.id)) nodeEl.classList.add('is-new');
+
+              nodeEl.addEventListener('pointerdown', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                graphState.dragging = { item, pointerId: event.pointerId };
+                nodeEl.classList.add('is-dragging');
+                nodeEl.setPointerCapture(event.pointerId);
+              });
+              nodeEl.addEventListener('pointerup', (event) => {
+                if (!graphState.dragging || graphState.dragging.pointerId !== event.pointerId) return;
+                nodeEl.classList.remove('is-dragging');
+                graphState.dragging = null;
+              });
+              nodeEl.addEventListener('pointercancel', () => {
+                nodeEl.classList.remove('is-dragging');
+                graphState.dragging = null;
+              });
+
+              item.el = nodeEl;
+              graphState.nodes.push(item);
+              graphState.nodeById.set(node.id, item);
+              graphNodesEl.appendChild(nodeEl);
+            });
+
+            edges.forEach((edge) => {
+              const source = graphState.nodeById.get(edge.source);
+              const target = graphState.nodeById.get(edge.target);
+              if (!source || !target) return;
+              const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+              line.setAttribute('class', 'graph-link');
+              graphEdgesEl.appendChild(line);
+              graphState.edges.push({
+                source,
+                target,
+                rest: Math.max(120, source.radius + target.radius + 40),
+                el: line,
+              });
+            });
+
+            previousNodeIds = new Set(nodes.map((node) => node.id));
+            if (!graphState.running) {
+              graphState.running = true;
+              requestAnimationFrame(tickGraph);
+            }
+            syncGraphScene();
+          };
+
+          const renderList = (target, items) => {
+            target.innerHTML = '';
+            items.forEach((item) => {
+              const li = document.createElement('li');
+              li.textContent = item;
+              target.appendChild(li);
+            });
+          };
+
+          const renderLinks = (stack) => {
+            const allStackItems = [...stack.buildInterface, ...stack.appStack, ...stack.aiStack, ...stack.opsStack];
+            const hits = STACK_LINK_HINTS.filter((hint) => allStackItems.some((item) => item.toLowerCase().includes(hint.match)));
+            linksListEl.innerHTML = '';
+            toUnique(hits.map((item) => item.href)).forEach((href) => {
+              const item = hits.find((link) => link.href === href);
+              if (!item) return;
+              const li = document.createElement('li');
+              const a = document.createElement('a');
+              a.href = item.href;
+              a.textContent = item.label;
+              li.appendChild(a);
+              linksListEl.appendChild(li);
+            });
+            if (!linksListEl.children.length) {
+              const li = document.createElement('li');
+              li.textContent = 'Choose constraints to unlock targeted references.';
+              linksListEl.appendChild(li);
+            }
+          };
+
+          const getCoverage = () => {
+            const answered = stepOrder.filter((stepId) => selections[stepId]).length;
+            return { answered, percent: Math.round((answered / stepOrder.length) * 100) };
+          };
+
+          const buildMarkdown = (model) => {
+            const selectionLines = stepOrder.map((stepId) => {
+              const step = stepMap.get(stepId);
+              const selected = step?.options?.find((opt) => opt.value === selections[stepId]);
+              return `- **${step?.title || stepId}**: ${selected?.label || 'Not selected'}`;
+            });
+            const stackToSection = (title, items) => `### ${title}\n${items.map((item) => `- ${item}`).join('\n')}`;
+            const glossarySection = (config.base.glossary || []).map((item) => `- **${item.term}**: ${item.definition}`).join('\n');
+            return [
+              '# Build Blueprint',
+              '',
+              `- **Lens**: ${selectedLens || 'Not selected'}`,
+              '',
+              '## Selections',
+              ...selectionLines,
+              '',
+              '## Recommended Stack',
+              stackToSection('Build interface', model.stack.buildInterface),
+              '',
+              stackToSection('App stack', model.stack.appStack),
+              '',
+              stackToSection('AI stack', model.stack.aiStack),
+              '',
+              stackToSection('Ops stack', model.stack.opsStack),
+              '',
+              '## Skills Checklist',
+              ...model.skills.map((item) => `- [ ] ${item}`),
+              '',
+              '## Execution Plan',
+              ...model.executionPlan.map((item) => `- ${item}`),
+              '',
+              '## Glossary',
+              glossarySection,
+            ].join('\n');
+          };
+
+          const renderBadges = (model) => {
+            const badges = [];
+            if (selectedLens === 'nlp') badges.push('Meaning-first');
+            if (selectedLens === 'nlpg') badges.push('Execution-first');
+            if (selections.regulation === 'strict' || selections.regulation === 'moderate') badges.push('Risk-aware');
+            if (model.stack.aiStack.some((item) => item.toLowerCase().includes('evaluation') || item.toLowerCase().includes('eval'))) badges.push('Eval-ready');
+            if (selections.scale === 'internet-scale') badges.push('Scale-ready');
+            if (stepOrder.every((stepId) => selections[stepId])) badges.push('Ship-ready');
+
+            badgesEl.innerHTML = '';
+            const labels = badges.length ? badges : ['Starter'];
+            labels.forEach((label) => {
+              const el = document.createElement('span');
+              el.className = `badge${label === 'Starter' ? ' badge-muted' : ''}`;
+              el.textContent = label;
+              badgesEl.appendChild(el);
+            });
+          };
+
+          const update = () => {
+            const model = computeModel();
+            renderGraph(model.nodes, model.edges);
+            graphCountEl.textContent = `${model.nodes.length} ${model.nodes.length === 1 ? 'node' : 'nodes'}`;
+            graphFootnote.textContent = model.notes[model.notes.length - 1] || 'Awaiting first constraint...';
+            if (!selectedLens) {
+              noteEl.textContent = 'System initialized: choose a lens, then pick a domain.';
+            } else {
+              noteEl.textContent = model.notes[model.notes.length - 1] || 'Start adding constraints from the console.';
+            }
+
+            renderList(stackBuild, model.stack.buildInterface);
+            renderList(stackApp, model.stack.appStack);
+            renderList(stackAi, model.stack.aiStack);
+            renderList(stackOps, model.stack.opsStack);
+
+            skillsListEl.innerHTML = '';
+            model.skills.forEach((item) => {
+              const li = document.createElement('li');
+              li.innerHTML = `<span class="skill-check" aria-hidden="true"></span>${item}`;
+              skillsListEl.appendChild(li);
+            });
+
+            planListEl.innerHTML = '';
+            model.executionPlan.forEach((item) => {
+              const li = document.createElement('li');
+              li.textContent = item;
+              planListEl.appendChild(li);
+            });
+
+            renderLinks(model.stack);
+            renderBadges(model);
+
+            const { answered, percent } = getCoverage();
+            coverageValue.textContent = `${percent}%`;
+            coverageTrack.setAttribute('aria-valuenow', String(percent));
+            coverageFill.style.width = `${percent}%`;
+            stepBlocks.forEach((block) => block.classList.toggle('is-complete', Boolean(selections[block.dataset.stepId || ''])));
+
+            const complete = answered === stepOrder.length;
+            blueprintCard.hidden = !complete;
+            exportButton.disabled = !complete;
+            if (complete) {
+              blueprintSummary.textContent = `All constraints captured. ${model.nodes.length} nodes generated with deterministic stack and phased plan.`;
+            }
+          };
+
+          const selectOption = (button) => {
+            const stepId = button.dataset.step;
+            const value = button.dataset.value;
+            if (!stepId || !value) return;
+            selections[stepId] = value;
+            stepList.querySelectorAll(`.step-option[data-step="${stepId}"]`).forEach((peer) => {
+              const isSelected = peer === button;
+              peer.classList.toggle('is-selected', isSelected);
+              peer.setAttribute('aria-pressed', String(isSelected));
+            });
+            update();
+          };
+
+          lensButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+              selectedLens = button.dataset.lens || '';
+              lensButtons.forEach((btn) => btn.classList.toggle('is-selected', btn === button));
+              update();
+              const firstStepButton = stepList.querySelector('.step-option[data-step="domain"]');
+              if (firstStepButton instanceof HTMLButtonElement) firstStepButton.focus();
+            });
+          });
+
+          stepList.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) return;
+            const button = target.closest('.step-option');
+            if (button instanceof HTMLButtonElement) selectOption(button);
+          });
+
+          stepList.addEventListener('keydown', (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) return;
+            const button = target.closest('.step-option');
+            if (!(button instanceof HTMLButtonElement)) return;
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              selectOption(button);
+            }
+          });
+
+          resetButton.addEventListener('click', () => {
+            stepOrder.forEach((stepId) => { selections[stepId] = ''; });
+            selectedLens = '';
+            shell.querySelectorAll('.step-option').forEach((btn) => {
+              btn.classList.remove('is-selected');
+              btn.setAttribute('aria-pressed', 'false');
+            });
+            lensButtons.forEach((btn) => btn.classList.remove('is-selected'));
+            previousNodeIds = new Set();
+            update();
+          });
+
+          exportButton.addEventListener('click', () => {
+            const model = computeModel();
+            const markdown = buildMarkdown(model);
+            const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const anchor = document.createElement('a');
+            anchor.href = url;
+            anchor.download = 'build-blueprint.md';
+            document.body.appendChild(anchor);
+            anchor.click();
+            anchor.remove();
+            URL.revokeObjectURL(url);
+          });
+
+          update();
+          shell.dataset.bound = 'true';
+        } catch (error) {
+          console.error('Builder Lab init failed:', error);
+        }
+      };
+
+      const bootBuilderLab = () => {
+        requestAnimationFrame(() => {
+          initBuilderLab();
+        });
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootBuilderLab, { once: true });
+      } else {
+        bootBuilderLab();
+      }
+      window.addEventListener('load', bootBuilderLab, { once: true });
+      document.addEventListener('astro:page-load', bootBuilderLab);
+      document.addEventListener('astro:after-swap', bootBuilderLab);
+    })();
+  </script>
+</Layout>
+
+<style>
+  .builder-page {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    padding: 1.2rem 0 3.2rem;
+    background:
+      linear-gradient(to right, color-mix(in srgb, var(--color-border) 34%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-border) 34%, transparent) 1px, transparent 1px),
+      var(--color-bg);
+    background-size: 28px 28px, 28px 28px, auto;
+  }
+
+  .builder-shell-inner {
+    width: min(1220px, calc(100vw - 2.25rem));
+    margin: 0 auto;
+  }
+
+  .builder-head {
+    margin-bottom: 1.4rem;
+  }
+
+  .builder-head .subtitle {
+    max-width: 48ch;
+  }
+
+  .lens-intro {
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--color-blockquote-bg) 88%, var(--color-bg));
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .lens-intro h2 {
+    margin: 0 0 0.25rem;
+    font-size: 1.18rem;
+    font-family: var(--font-mono);
+  }
+
+  .lens-copy {
+    margin: 0 0 0.8rem;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .lens-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .lens-card {
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-bg);
+    padding: 0.72rem;
+  }
+
+  .lens-card h3 {
+    margin: 0 0 0.45rem;
+    font-size: 0.9rem;
+    font-family: var(--font-mono);
+    color: var(--color-text-heading);
+  }
+
+  .lens-node-map {
+    position: relative;
+    height: 156px;
+    border: 1px dashed color-mix(in srgb, var(--color-border) 80%, transparent);
+    border-radius: 10px;
+    background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-accent) 9%, transparent), transparent 68%);
+    margin-bottom: 0.45rem;
+    overflow: hidden;
+    cursor: grab;
+  }
+
+  .lens-links-static {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  :global(.lens-link-base) {
+    stroke: color-mix(in srgb, var(--color-border) 90%, var(--color-accent));
+    stroke-width: 1;
+    stroke-dasharray: 2 5;
+    opacity: 0.38;
+    transition: opacity 0.18s ease, stroke-width 0.18s ease;
+  }
+
+  :global(.lens-link-flow) {
+    stroke: color-mix(in srgb, var(--color-accent) 72%, #ffffff);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-dasharray: 2 20;
+    opacity: 0.92;
+    filter: drop-shadow(0 0 2px color-mix(in srgb, var(--color-accent) 44%, transparent));
+    animation: lens-link-travel 1.7s linear infinite;
+    transition: opacity 0.18s ease, stroke-width 0.18s ease, filter 0.18s ease;
+  }
+
+  :global(.lens-link-base.is-related) {
+    opacity: 0.86;
+    stroke-width: 1.2;
+  }
+
+  :global(.lens-link-flow.is-related) {
+    opacity: 1;
+    stroke-width: 1.7;
+    animation-duration: 1.1s;
+    filter: drop-shadow(0 0 3px color-mix(in srgb, var(--color-accent) 58%, transparent));
+  }
+
+  :global(.lens-link-base.is-faded),
+  :global(.lens-link-flow.is-faded) {
+    opacity: 0.12;
+  }
+
+  .lens-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: 1px solid color-mix(in srgb, var(--color-border) 82%, var(--color-accent));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    color: var(--color-text-body);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    padding: 0.16rem 0.42rem;
+    white-space: nowrap;
+    z-index: 2;
+    pointer-events: auto;
+    user-select: none;
+    cursor: grab;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  }
+
+  .lens-core {
+    border-color: color-mix(in srgb, var(--color-accent) 70%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 15%, var(--color-bg));
+    font-weight: 700;
+  }
+
+  .lens-node.is-dragging {
+    cursor: grabbing;
+  }
+
+  .lens-node.is-active {
+    border-color: color-mix(in srgb, var(--color-accent) 78%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 20%, var(--color-bg));
+    color: var(--color-text-heading);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 14%, transparent);
+  }
+
+  .lens-node.is-related {
+    border-color: color-mix(in srgb, var(--color-accent) 62%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 14%, var(--color-bg));
+    color: var(--color-text-heading);
+  }
+
+  .lens-node.is-faded {
+    opacity: 0.55;
+  }
+
+  .lens-node-map.is-panning,
+  .lens-node-map.is-panning .lens-node {
+    cursor: grabbing;
+  }
+
+  .lens-node:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--color-accent) 75%, var(--color-border));
+    outline-offset: 2px;
+  }
+
+  .lens-node-insight {
+    min-height: 6.9rem;
+    margin: 0 0 0.5rem;
+    padding-top: 0.25rem;
+    border-top: 1px dashed color-mix(in srgb, var(--color-border) 80%, transparent);
+  }
+
+  .lens-info-title {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.73rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-heading);
+  }
+
+  .lens-info-line {
+    margin: 0.16rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.74rem;
+    line-height: 1.4;
+  }
+
+  .lens-info-line strong {
+    color: var(--color-text-body);
+    font-weight: 600;
+  }
+
+  .lens-btn {
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-bg);
+    color: var(--color-text-body);
+    font-family: var(--font-mono);
+    font-size: 0.67rem;
+    padding: 0.32rem 0.6rem;
+    cursor: pointer;
+  }
+
+  .lens-btn.is-selected {
+    border-color: color-mix(in srgb, var(--color-accent) 65%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  }
+
+  .lab-status {
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--color-blockquote-bg) 92%, transparent);
+    padding: 0.85rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .lab-progress-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .lab-progress-track {
+    margin-top: 0.45rem;
+    height: 7px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-border) 80%, transparent);
+    overflow: hidden;
+  }
+
+  .lab-progress-fill {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--color-accent) 70%, #7aa4f7);
+    transition: width 0.2s ease;
+  }
+
+  .lab-badges {
+    margin-top: 0.72rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .badge {
+    border: 1px solid color-mix(in srgb, var(--color-accent) 50%, var(--color-border));
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.48rem;
+    color: var(--color-text-heading);
+    background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  }
+
+  .badge-muted {
+    border-color: var(--color-border);
+    color: var(--color-text-muted);
+    background: transparent;
+  }
+
+  .lab-note {
+    margin: 0.62rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.86rem;
+  }
+
+  .builder-grid {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr) 340px;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .lab-panel {
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--color-bg) 90%, var(--color-blockquote-bg));
+    padding: 0.9rem;
+    min-height: 100%;
+  }
+
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .lab-panel h2 {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    color: var(--color-text-heading);
+  }
+
+  .panel-copy {
+    margin: 0 0 0.8rem;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    line-height: 1.45;
+  }
+
+  .panel-meta {
+    margin: 0;
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .panel-reset {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text-body);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.02em;
+    padding: 0.24rem 0.56rem;
+    cursor: pointer;
+  }
+
+  .step-list {
+    display: grid;
+    gap: 0.58rem;
+  }
+
+  .step-block {
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 0.54rem;
+    min-inline-size: 0;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .step-block.is-complete {
+    border-color: color-mix(in srgb, var(--color-accent) 52%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 7%, transparent);
+  }
+
+  .step-block legend {
+    display: flex;
+    align-items: center;
+    gap: 0.38rem;
+    padding: 0 0.1rem;
+  }
+
+  .step-index {
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.66rem;
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+  }
+
+  .step-title {
+    font-size: 0.79rem;
+    font-family: var(--font-mono);
+    color: var(--color-text-heading);
+  }
+
+  .step-prompt {
+    margin: 0.2rem 0 0.42rem;
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    line-height: 1.45;
+  }
+
+  .step-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.34rem;
+  }
+
+  .step-option {
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-bg);
+    color: var(--color-text-body);
+    font-size: 0.68rem;
+    font-family: var(--font-mono);
+    padding: 0.28rem 0.52rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .step-option.is-selected {
+    border-color: color-mix(in srgb, var(--color-accent) 65%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  }
+
+  .graph-wrap {
+    position: relative;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    height: 460px;
+    background:
+      radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 70%),
+      linear-gradient(to right, color-mix(in srgb, var(--color-border) 45%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-border) 45%, transparent) 1px, transparent 1px),
+      var(--color-bg);
+    background-size: auto, 26px 26px, 26px 26px, auto;
+    overflow: hidden;
+  }
+
+  .graph-edges,
+  .graph-nodes {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  :global(.graph-link) {
+    stroke: color-mix(in srgb, var(--color-border) 72%, var(--color-text-muted));
+    stroke-width: 1.05;
+    stroke-linecap: round;
+    opacity: 0.78;
+  }
+
+  :global(.graph-node) {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 68px;
+    height: 68px;
+    border: 1px solid color-mix(in srgb, var(--color-border) 60%, #ffffff);
+    background: color-mix(in srgb, var(--color-bg) 38%, #0f172a);
+    color: #f8fafc;
+    border-radius: 999px;
+    font-size: 0.54rem;
+    font-family: var(--font-mono);
+    line-height: 1.15;
+    text-align: center;
+    padding: 0.45rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #ffffff 12%, transparent),
+      0 6px 14px color-mix(in srgb, #0f172a 38%, transparent);
+  }
+
+  :global(.graph-node.group-core) {
+    width: 86px;
+    height: 86px;
+    border-color: color-mix(in srgb, var(--color-accent) 75%, #dbeafe);
+    background: radial-gradient(circle at 32% 30%, #a7f3d0 0%, #14b8a6 58%, #0f766e 100%);
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #052e2b;
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #ffffff 35%, transparent),
+      0 8px 16px color-mix(in srgb, #0f766e 45%, transparent);
+  }
+
+  :global(.graph-node.group-domain) {
+    border-color: color-mix(in srgb, #fbbf24 76%, #fef3c7);
+    background: radial-gradient(circle at 34% 30%, #fde68a 0%, #f59e0b 60%, #b45309 100%);
+    color: #451a03;
+  }
+
+  :global(.graph-node.group-ai) {
+    border-color: color-mix(in srgb, #7dd3fc 72%, #dbeafe);
+    background: radial-gradient(circle at 34% 30%, #bae6fd 0%, #38bdf8 58%, #0369a1 100%);
+    color: #082f49;
+  }
+
+  :global(.graph-node.group-risk) {
+    border-color: color-mix(in srgb, #fca5a5 72%, #fee2e2);
+    background: radial-gradient(circle at 34% 30%, #fecaca 0%, #ef4444 58%, #991b1b 100%);
+    color: #450a0a;
+  }
+
+  :global(.graph-node.group-infra) {
+    border-color: color-mix(in srgb, #c4b5fd 76%, #ede9fe);
+    background: radial-gradient(circle at 34% 30%, #ddd6fe 0%, #8b5cf6 58%, #5b21b6 100%);
+    color: #2e1065;
+  }
+
+  :global(.graph-node.group-delivery) {
+    border-color: color-mix(in srgb, #86efac 72%, #dcfce7);
+    background: radial-gradient(circle at 34% 30%, #bbf7d0 0%, #22c55e 58%, #166534 100%);
+    color: #052e16;
+  }
+
+  :global(.graph-node.is-dragging) {
+    cursor: grabbing;
+  }
+
+  :global(.graph-node.is-new) {
+    animation: node-enter 250ms ease;
+  }
+
+  .graph-footnote {
+    margin: 0.68rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.79rem;
+    min-height: 1.5em;
+  }
+
+  .output-block + .output-block {
+    margin-top: 0.88rem;
+  }
+
+  .output-block h3 {
+    margin: 0 0 0.36rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-heading);
+  }
+
+  .stack-group + .stack-group {
+    margin-top: 0.42rem;
+  }
+
+  .stack-group h4 {
+    margin: 0 0 0.14rem;
+    font-family: var(--font-mono);
+    font-size: 0.67rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .output-panel ul,
+  .output-panel ol {
+    margin: 0;
+    padding-left: 1rem;
+    color: var(--color-text-body);
+    font-size: 0.79rem;
+    line-height: 1.45;
+  }
+
+  .output-panel li {
+    margin: 0.1rem 0;
+  }
+
+  .links-list a {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+  }
+
+  .skills-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .skills-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.42rem;
+  }
+
+  .skill-check {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 70%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+    flex-shrink: 0;
+  }
+
+  .export-button {
+    margin-top: 0.9rem;
+    width: 100%;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 55%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 14%, var(--color-bg));
+    color: var(--color-text-heading);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 0.54rem 0.85rem;
+    cursor: pointer;
+  }
+
+  .export-button:disabled {
+    opacity: 0.46;
+    cursor: not-allowed;
+  }
+
+  .blueprint-card {
+    margin-top: 1rem;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 7%, var(--color-bg));
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+  }
+
+  .blueprint-kicker {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.69rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+  }
+
+  .blueprint-card h2 {
+    margin: 0.2rem 0 0.28rem;
+    font-size: 1.2rem;
+  }
+
+  .blueprint-card p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+  }
+
+  @keyframes node-enter {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.84);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  @keyframes lens-link-travel {
+    from {
+      stroke-dashoffset: 0;
+    }
+
+    to {
+      stroke-dashoffset: -44;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lab-progress-fill,
+    .step-block,
+    .step-option,
+    :global(.graph-node),
+    :global(.graph-link),
+    .lens-node,
+    :global(.lens-link-flow) {
+      transition: none;
+      animation: none;
+    }
+  }
+
+  @media (max-width: 1120px) {
+    .builder-grid {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+
+    .lens-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .graph-wrap {
+      height: 380px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .builder-shell-inner {
+      width: calc(100vw - 1.25rem);
+    }
+
+    .graph-wrap {
+      height: 330px;
+    }
+
+    :global(.graph-node) {
+      font-size: 0.58rem;
+      width: 58px;
+      height: 58px;
+      padding: 0.3rem;
+    }
+
+    :global(.graph-node.group-core) {
+      width: 72px;
+      height: 72px;
+    }
+  }
+</style>

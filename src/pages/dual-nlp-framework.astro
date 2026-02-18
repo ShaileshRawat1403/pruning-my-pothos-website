@@ -80,7 +80,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
         </div>
       </section>
 
-      <div class="lab-status" aria-live="polite">
+      <div class="lab-status">
         <div class="lab-progress-line">
           <span>Constraint coverage</span>
           <strong id="coverage-value">0%</strong>
@@ -89,7 +89,8 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
           <div class="lab-progress-fill" id="coverage-fill"></div>
         </div>
         <div class="lab-badges" id="lab-badges"></div>
-        <p class="lab-note" id="lab-note">System initialized: choose a lens, then pick a domain.</p>
+        <p class="lab-note" id="lab-note">Sandbox ready: choose a lens, pick a domain, and probe graph nodes.</p>
+        <p class="visually-hidden" id="lab-live" aria-live="polite" aria-atomic="true"></p>
       </div>
 
       <div class="builder-grid">
@@ -132,14 +133,22 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
             <h2 id="architecture-graph-title">Architecture Graph</h2>
             <p class="panel-meta" id="graph-count">1 node</p>
           </div>
-          <p class="panel-copy">Intent at center. Constraint groups branch outward.</p>
+          <p class="panel-copy">Interactive sandbox: drag nodes, test structure, and inspect meaning on hover.</p>
 
           <div class="graph-wrap" id="graph-wrap">
             <svg class="graph-edges" id="graph-edges" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
             <div class="graph-nodes" id="graph-nodes"></div>
           </div>
 
-          <p class="graph-footnote" id="graph-footnote">Awaiting first constraint...</p>
+          <p class="graph-footnote" id="graph-footnote">Hover a node to inspect why it exists in this blueprint.</p>
+          <p class="graph-footnote graph-footnote-muted" id="graph-note">Awaiting first constraint...</p>
+          <div class="graph-learning" id="graph-learning">
+            <p class="graph-learning-kicker">Node Learning Console</p>
+            <h3 class="graph-learning-title" id="graph-learning-title">Intent</h3>
+            <p class="graph-learning-line" id="graph-learning-definition"><strong>What it is:</strong> The primary user outcome this system is built to achieve.</p>
+            <p class="graph-learning-line" id="graph-learning-why"><strong>Why it matters:</strong> Every architecture and stack choice should preserve this outcome.</p>
+            <p class="graph-learning-line" id="graph-learning-action"><strong>What to do:</strong> Use each node as a concrete constraint to validate implementation decisions.</p>
+          </div>
         </section>
 
         <aside class="lab-panel output-panel" aria-labelledby="stack-skills-title">
@@ -147,22 +156,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
 
           <div class="output-block">
             <h3>Recommended Stack</h3>
-            <div class="stack-group">
-              <h4>Build interface</h4>
-              <ul id="stack-build-interface"></ul>
-            </div>
-            <div class="stack-group">
-              <h4>App stack</h4>
-              <ul id="stack-app-stack"></ul>
-            </div>
-            <div class="stack-group">
-              <h4>AI stack</h4>
-              <ul id="stack-ai-stack"></ul>
-            </div>
-            <div class="stack-group">
-              <h4>Ops stack</h4>
-              <ul id="stack-ops-stack"></ul>
-            </div>
+            <div id="stack-output-container"></div>
           </div>
 
           <div class="output-block">
@@ -690,6 +684,14 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
       const initBuilderLab = () => {
         try {
           const shell = document.getElementById('builder-shell');
+          const STACK_CATEGORY_MATCHERS = [
+            { label: 'Security & Governance', keywords: ['auth', 'iam', 'policy', 'guard', 'audit', 'compliance', 'key', 'secret', 'mask', 'pii', 'gate'] },
+            { label: 'Data & State', keywords: ['database', 'db', 'sql', 'redis', 'vector', 'pinecone', 'weaviate', 'chroma', 'postgres', 's3', 'storage', 'cache', 'memory', 'store'] },
+            { label: 'AI & Orchestration', keywords: ['openai', 'anthropic', 'llm', 'model', 'langchain', 'llama', 'hugging', 'rag', 'agent', 'prompt', 'embedding', 'retrieval', 'inference'] },
+            { label: 'Ops & Observability', keywords: ['ci/cd', 'git', 'terraform', 'docker', 'kube', 'monitor', 'log', 'telemetry', 'grafana', 'prometheus', 'otel', 'pipeline', 'deploy'] },
+            { label: 'Compute & Interface', keywords: ['react', 'vue', 'next', 'node', 'python', 'go', 'rust', 'lambda', 'serverless', 'vercel', 'api', 'frontend', 'backend', 'web', 'service'] },
+          ];
+
           if (!(shell instanceof HTMLElement) || shell.dataset.bound === 'true') return;
 
           const config = buildMappings;
@@ -705,15 +707,18 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
           const coverageFill = byId('coverage-fill');
           const badgesEl = byId('lab-badges');
           const noteEl = byId('lab-note');
+          const labLiveEl = byId('lab-live');
           const graphCountEl = byId('graph-count');
           const graphFootnote = byId('graph-footnote');
+          const graphNote = byId('graph-note');
+          const graphLearningTitle = byId('graph-learning-title');
+          const graphLearningDefinition = byId('graph-learning-definition');
+          const graphLearningWhy = byId('graph-learning-why');
+          const graphLearningAction = byId('graph-learning-action');
           const graphWrap = byId('graph-wrap');
           const graphNodesEl = byId('graph-nodes');
           const graphEdgesEl = byId('graph-edges');
-          const stackBuild = byId('stack-build-interface');
-          const stackApp = byId('stack-app-stack');
-          const stackAi = byId('stack-ai-stack');
-          const stackOps = byId('stack-ops-stack');
+          const stackContainer = byId('stack-output-container');
           const skillsListEl = byId('skills-list');
           const planListEl = byId('execution-plan');
           const linksListEl = byId('suggested-links');
@@ -723,29 +728,218 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
           const resetButton = byId('reset-builder');
 
           if (
-            !stepList || !coverageValue || !coverageTrack || !coverageFill || !badgesEl || !noteEl || !graphCountEl || !graphFootnote
+            !stepList || !coverageValue || !coverageTrack || !coverageFill || !badgesEl || !noteEl || !labLiveEl || !graphCountEl || !graphFootnote || !graphNote
+            || !graphLearningTitle || !graphLearningDefinition || !graphLearningWhy || !graphLearningAction
             || !graphWrap
-            || !graphNodesEl || !graphEdgesEl || !stackBuild || !stackApp || !stackAi || !stackOps || !skillsListEl || !planListEl
+            || !graphNodesEl || !graphEdgesEl || !stackContainer || !skillsListEl || !planListEl
             || !linksListEl || !blueprintCard || !blueprintSummary || !exportButton || !resetButton
           ) return;
 
           const stepOrder = config.steps.map((step) => step.id);
           const stepMap = new Map(config.steps.map((step) => [step.id, step]));
           const selections = Object.fromEntries(stepOrder.map((stepId) => [stepId, '']));
+          let currentCoveragePercent = 0;
           let selectedLens = '';
           let previousNodeIds = new Set();
+          let hoveredGraphNodeId = '';
+          let hoveredStepId = null;
+          let currentStackNodeMap = new Map();
+          let coverageAnimationFrame = 0;
+          let coverageAnimationToken = 0;
+          let wasComplete = false;
+          let liveAnnounceTimer = 0;
+          const announcedCoverageMilestones = new Set();
 
           const STACK_LINK_HINTS = [
             { match: 'git', label: 'Git', href: '/shelf/tools/git' },
+            { match: 'issue', label: 'GitHub + Issue Workflow', href: '/shelf/tools/git' },
             { match: 'ci', label: 'CI Foundations', href: '/systems/tech-stack-for-nlpg-driven-ai-assisted-sdlc' },
+            { match: 'testing', label: 'CI/CD Pipelines', href: '/systems/tech-stack-for-nlpg-driven-ai-assisted-sdlc' },
+            { match: 'typed api', label: 'Natural Language as API', href: '/systems/natural-language-is-the-new-api' },
             { match: 'typed', label: 'Structured Output', href: '/systems/structured-output-and-why-it-matters' },
+            { match: 'schema', label: 'Schema Validation', href: '/systems/structured-output-and-why-it-matters' },
+            { match: 'zod', label: 'Schema Validation', href: '/systems/structured-output-and-why-it-matters' },
+            { match: 'pydantic', label: 'Schema Validation', href: '/systems/structured-output-and-why-it-matters' },
             { match: 'prompt', label: 'Prompting Framework', href: '/systems/prompting-is-not-the-skill-you-think-it-is' },
             { match: 'retrieval', label: 'RAG Basics', href: '/systems/retrieval-augmented-generation-in-plain-terms' },
+            { match: 'rag', label: 'RAG Basics', href: '/systems/retrieval-augmented-generation-in-plain-terms' },
+            { match: 'vector', label: 'Vector Database Concepts', href: '/systems/retrieval-augmented-generation-in-plain-terms' },
+            { match: 'embedding', label: 'Embeddings Guide', href: '/systems/retrieval-augmented-generation-in-plain-terms' },
+            { match: 'tool orchestration', label: 'Tool-use Patterns', href: '/systems/tool-use-when-language-triggers-actions' },
+            { match: 'tool router', label: 'Tool-use Patterns', href: '/systems/tool-use-when-language-triggers-actions' },
             { match: 'evaluation', label: 'Evaluation System', href: '/systems/evaluation-is-a-human-problem' },
+            { match: 'eval', label: 'Evaluation System', href: '/systems/evaluation-is-a-human-problem' },
             { match: 'observability', label: 'LLM Ops Guide', href: '/systems/llm-ops-without-the-buzzwords' },
             { match: 'telemetry', label: 'Drift + Monitoring', href: '/systems/drift-decay-and-silent-failure' },
+            { match: 'logging', label: 'LLM Ops Guide', href: '/systems/llm-ops-without-the-buzzwords' },
+            { match: 'cache', label: 'Caching Strategies', href: '/systems/llm-ops-without-the-buzzwords' },
+            { match: 'audit', label: 'Human-in-the-loop', href: '/systems/human-in-the-loop-is-a-system-design-choice' },
+            { match: 'key management', label: 'Cloud Architecture Guardrails', href: '/systems/cloud-architecture-comparison-2026' },
+            { match: 'docker', label: 'Container Strategy', href: '/systems/cloud-architecture-comparison-2026' },
+            { match: 'container', label: 'Container Strategy', href: '/systems/cloud-architecture-comparison-2026' },
+            { match: 'queue', label: 'Async Architecture', href: '/systems/cloud-architecture-comparison-2026' },
+            { match: 'usage analytics', label: 'Drift + Monitoring', href: '/systems/drift-decay-and-silent-failure' },
+            { match: 'monorepo', label: 'VS Code Workflows', href: '/shelf/tools/vscode' },
+            { match: 'workflow', label: 'From Prompt to Production', href: '/systems/from-prompt-to-production' },
+            { match: 'contract', label: 'Structured Output', href: '/systems/structured-output-and-why-it-matters' },
+            { match: 'context', label: 'Context Windows Guide', href: '/systems/context-windows-as-working-memory' },
             { match: 'policy', label: 'Human-in-the-loop', href: '/systems/human-in-the-loop-is-a-system-design-choice' },
           ];
+          const DEFAULT_SUGGESTED_LINKS = [
+            { label: 'NLPg Tech Stack', href: '/systems/tech-stack-for-nlpg-driven-ai-assisted-sdlc' },
+            { label: 'From Prompt to Production', href: '/systems/from-prompt-to-production' },
+            { label: 'Tool-use Patterns', href: '/systems/tool-use-when-language-triggers-actions' },
+          ];
+          const GRAPH_NODE_KNOWLEDGE = {
+            intent: {
+              definition: 'The non-negotiable user outcome the full system must deliver.',
+              why: 'Without a clear intent node, teams optimize components instead of outcomes.',
+              action: 'Use it as the acceptance filter for every new feature, integration, and metric.',
+            },
+            'domain-finance': {
+              definition: 'Financial context with auditable, policy-sensitive decisions.',
+              why: 'Finance systems fail when decision traces are unclear or unverifiable.',
+              action: 'Attach approval records, policy versioning, and replayable decision logs.',
+            },
+            'domain-healthcare': {
+              definition: 'Healthcare context where safety and privacy constraints are first-class.',
+              why: 'Errors can cause clinical harm and legal exposure.',
+              action: 'Require strict data boundaries and manual review for high-risk outputs.',
+            },
+            'domain-education': {
+              definition: 'Learning-focused context optimized for clarity and progression.',
+              why: 'Content generation volume is useless without measurable learner outcomes.',
+              action: 'Track feedback loops, mastery signals, and remediation paths.',
+            },
+            'domain-internal': {
+              definition: 'Internal tooling context focused on adoption and workflow speed.',
+              why: 'Internal platforms fail when friction is higher than current manual process.',
+              action: 'Optimize defaults, onboarding clarity, and low-friction team integrations.',
+            },
+            'domain-saas': {
+              definition: 'Multi-tenant product context with billing and isolation concerns.',
+              why: 'Tenant bleed-through and billing drift are high-severity production failures.',
+              action: 'Enforce tenant boundary checks and usage metering from day one.',
+            },
+            'domain-custom': {
+              definition: 'Custom domain where assumptions must be captured explicitly.',
+              why: 'Custom builds derail when implicit constraints surface late.',
+              action: 'Write assumption logs and convert them into testable constraints.',
+            },
+            'mode-deterministic': {
+              definition: 'No-AI execution mode using explicit rules and deterministic behavior.',
+              why: 'This mode maximizes predictability and simplifies compliance in strict environments.',
+              action: 'Prioritize formal specs, rule coverage tests, and regression snapshots.',
+            },
+            'mode-assisted': {
+              definition: 'Human-supervised AI mode where models propose and humans decide.',
+              why: 'Balances speed gains with oversight, reducing silent automation risk.',
+              action: 'Design review checkpoints where humans approve high-impact model outputs.',
+            },
+            'mode-autonomous': {
+              definition: 'AI mode where systems can execute bounded actions automatically.',
+              why: 'Autonomy increases throughput but multiplies blast radius when controls are weak.',
+              action: 'Add strict action gates, rollback policies, and anomaly kill switches.',
+            },
+            'prompt-contract': {
+              definition: 'Stable prompt interface specifying required inputs and output shape.',
+              why: 'Prompt drift causes unstable downstream behavior and brittle integrations.',
+              action: 'Version prompt contracts and test them like API contracts.',
+            },
+            'eval-loop': {
+              definition: 'Recurring evaluation cycle for quality, drift, and policy compliance.',
+              why: 'Static one-time checks miss degradations in real traffic.',
+              action: 'Run scheduled eval suites and compare results against baselines.',
+            },
+            'tool-router': {
+              definition: 'Routing layer that chooses the correct tool/action per task.',
+              why: 'Incorrect routing creates hidden failure chains across workflows.',
+              action: 'Define explicit routing criteria and fallback behavior for ambiguity.',
+            },
+            'action-gate': {
+              definition: 'A hard checkpoint before executing sensitive operations.',
+              why: 'Unchecked automation can cause irreversible system and data changes.',
+              action: 'Require confirmation policies for deploy, billing, and data write actions.',
+            },
+            'policy-lite': {
+              definition: 'Baseline compliance posture for low-regulation contexts.',
+              why: 'Even low-risk systems need minimum guardrails to avoid chaotic drift.',
+              action: 'Set lightweight controls, logs, and accountable owners per flow.',
+            },
+            'policy-mid': {
+              definition: 'Moderate compliance posture balancing speed and control.',
+              why: 'Most teams operate here and need guardrails without heavy bureaucracy.',
+              action: 'Use policy checks in CI and periodic governance reviews.',
+            },
+            'policy-strict': {
+              definition: 'High-assurance posture with explicit controls and formal evidence.',
+              why: 'Strict environments require proof, not intention.',
+              action: 'Automate evidence collection and enforce mandatory approval gates.',
+            },
+            'audit-log': {
+              definition: 'Immutable record of key actions, decisions, and policy checks.',
+              why: 'Auditability is foundational for incident response and trust.',
+              action: 'Store actor, context, decision, and policy version for each critical event.',
+            },
+            hitl: {
+              definition: 'Human-in-the-loop checkpoint for uncertainty or high-impact cases.',
+              why: 'Human judgment prevents runaway automation in ambiguous scenarios.',
+              action: 'Escalate edge cases to reviewers with enough context for fast decisions.',
+            },
+            'scale-proto': {
+              definition: 'Prototype stage optimized for learning velocity.',
+              why: 'Premature hardening slows discovery and increases sunk cost.',
+              action: 'Instrument key assumptions and iterate quickly on feedback.',
+            },
+            'scale-team': {
+              definition: 'Team-scale stage optimized for reliability across multiple users.',
+              why: 'Growing usage exposes consistency and operability weaknesses.',
+              action: 'Stabilize interfaces, enforce conventions, and track team-level metrics.',
+            },
+            'scale-global': {
+              definition: 'Internet-scale stage for high traffic, resilience, and cost control.',
+              why: 'Global scale amplifies latency, failure, and spend issues.',
+              action: 'Use autoscaling, queueing, caching, and budget guardrails.',
+            },
+            'cache-layer': {
+              definition: 'Caching tier reducing repeated compute and latency.',
+              why: 'Hot-path recomputation is expensive and slows user-facing interactions.',
+              action: 'Cache stable responses and define clear cache invalidation strategy.',
+            },
+            'queue-fabric': {
+              definition: 'Asynchronous queueing layer that smooths bursts and retries.',
+              why: 'Direct synchronous chains break under load and transient faults.',
+              action: 'Design idempotent consumers with retry and dead-letter handling.',
+            },
+            'delivery-web': {
+              definition: 'User-facing web delivery model.',
+              why: 'Interface clarity directly affects trust and adoption.',
+              action: 'Expose state, confidence, and fallback paths clearly in UI.',
+            },
+            'delivery-api': {
+              definition: 'Service/API delivery model for system-to-system integration.',
+              why: 'Upstream consumers depend on schema stability and predictable behavior.',
+              action: 'Version contracts and ship compatibility tests with each release.',
+            },
+            'delivery-pipeline': {
+              definition: 'Batch or streaming pipeline delivery model.',
+              why: 'Pipelines fail silently without observability and checkpointing.',
+              action: 'Track lineage, backfills, and alerting for data quality regressions.',
+            },
+            'delivery-agent': {
+              definition: 'Agentic workflow delivery model across multiple tools and steps.',
+              why: 'Multi-step automation increases coordination complexity and risk.',
+              action: 'Define tool contracts, state transitions, and recovery paths explicitly.',
+            },
+          };
+          const GROUP_EXPLANATIONS = {
+            core: 'Core node: represents the primary mission of the build.',
+            domain: 'Domain node: business context that changes architecture decisions.',
+            ai: 'AI node: model behavior, prompting, and evaluation constraints.',
+            risk: 'Risk node: controls, policy, and safety boundaries.',
+            infra: 'Infrastructure node: scale, latency, and deployment backbone.',
+            delivery: 'Delivery node: execution shape for interfaces and operations.',
+          };
 
           const stepBlocks = Array.from(shell.querySelectorAll('[data-step-block]')).filter((node) => node instanceof HTMLElement);
           const lensButtons = Array.from(shell.querySelectorAll('.lens-btn')).filter((btn) => btn instanceof HTMLButtonElement);
@@ -784,6 +978,17 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
             };
             let skills = [...config.base.skills];
             let notes = [...config.base.notes];
+            const stackNodeMap = new Map();
+
+            const mapStackToNodes = (stackObj, nodeList) => {
+              if (!stackObj || !nodeList?.length) return;
+              const ids = nodeList.map((n) => n.id);
+              Object.values(stackObj).flat().forEach((item) => {
+                if (!stackNodeMap.has(item)) stackNodeMap.set(item, new Set());
+                ids.forEach((id) => stackNodeMap.get(item).add(id));
+              });
+            };
+            mapStackToNodes(config.base.stack, config.base.nodes);
 
             stepOrder.forEach((stepId) => {
               const selectedValue = selections[stepId];
@@ -797,6 +1002,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
               mergeStack(stack, contribution.stack || {});
               skills = [...skills, ...(contribution.skills || [])];
               notes = [...notes, ...(contribution.notes || [])];
+              mapStackToNodes(contribution.stack, contribution.nodes);
             });
 
             const uniqueNodes = [];
@@ -832,16 +1038,35 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
               skills: toUnique(skills),
               notes: toUnique(notes),
               executionPlan: getExecutionPlan(),
+              stackNodeMap,
             };
           };
 
-          const GRAPH_GROUP_ANCHORS = {
+        const LENS_LAYOUTS = {
+          default: {
             core: { x: 0.5, y: 0.5 },
             domain: { x: 0.27, y: 0.52 },
             ai: { x: 0.46, y: 0.24 },
             risk: { x: 0.73, y: 0.34 },
             infra: { x: 0.65, y: 0.71 },
             delivery: { x: 0.37, y: 0.76 },
+          },
+          nlp: {
+            core: { x: 0.5, y: 0.5 },
+            domain: { x: 0.25, y: 0.45 },
+            ai: { x: 0.75, y: 0.45 },
+            risk: { x: 0.5, y: 0.2 },
+            infra: { x: 0.4, y: 0.75 },
+            delivery: { x: 0.6, y: 0.75 },
+          },
+          nlpg: {
+            core: { x: 0.5, y: 0.5 },
+            domain: { x: 0.15, y: 0.5 },
+            ai: { x: 0.85, y: 0.5 },
+            risk: { x: 0.5, y: 0.15 },
+            infra: { x: 0.3, y: 0.85 },
+            delivery: { x: 0.7, y: 0.85 },
+          },
           };
           const graphState = {
             width: 1,
@@ -888,6 +1113,9 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
             graphState.dragging.item.el.classList.remove('is-dragging');
             graphState.dragging = null;
           });
+          graphWrap.addEventListener('pointerleave', () => {
+            if (!graphState.dragging) clearGraphHoverInsight();
+          });
 
           const syncGraphScene = () => {
             graphState.edges.forEach((edge) => {
@@ -902,64 +1130,103 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
               item.el.style.top = `${item.y}px`;
             });
           };
+          const getGraphNodeInsight = (nodeId, nodeLabel, group) => {
+            const known = GRAPH_NODE_KNOWLEDGE[nodeId];
+            if (known) return known;
+            return {
+              definition: `${nodeLabel}: ${(GROUP_EXPLANATIONS[group] || GROUP_EXPLANATIONS.delivery)}`,
+              why: 'This node shapes how architecture decisions should be constrained and validated.',
+              action: 'Trace its connected edges and confirm stack choices respect this constraint.',
+            };
+          };
+          const renderLearningConsole = (title, insight) => {
+            graphLearningTitle.textContent = title;
+            graphLearningDefinition.innerHTML = `<strong>What it is:</strong> ${insight.definition}`;
+            graphLearningWhy.innerHTML = `<strong>Why it matters:</strong> ${insight.why}`;
+            graphLearningAction.innerHTML = `<strong>What to do:</strong> ${insight.action}`;
+          };
+          const setGraphHoverInsight = (nodeId, nodeLabel, group) => {
+            hoveredGraphNodeId = nodeId;
+            const insight = getGraphNodeInsight(nodeId, nodeLabel, group);
+            graphFootnote.textContent = `${nodeLabel} -> ${insight.definition}`;
+            renderLearningConsole(nodeLabel, insight);
+          };
+          const clearGraphHoverInsight = () => {
+            hoveredGraphNodeId = '';
+            graphFootnote.textContent = 'Hover a node to inspect why it exists in this blueprint.';
+            renderLearningConsole('Intent', {
+              definition: 'The primary user outcome this system is built to achieve.',
+              why: 'Intent anchors architecture decisions and prevents random feature sprawl.',
+              action: 'Hover any node to learn how each constraint changes build decisions.',
+            });
+          };
 
           const tickGraph = () => {
             if (!reducedMotion) {
-              const dragged = graphState.dragging?.item || null;
-              const nodeCount = Math.max(1, graphState.nodes.length);
+              if (graphState.imploding) {
+                const cx = graphState.width * 0.5;
+                const cy = graphState.height * 0.5;
+                graphState.nodes.forEach((item) => {
+                  item.x += (cx - item.x) * 0.2;
+                  item.y += (cy - item.y) * 0.2;
+                });
+              } else {
+                const dragged = graphState.dragging?.item || null;
+                const nodeCount = Math.max(1, graphState.nodes.length);
 
-              graphState.edges.forEach((edge) => {
-                const dx = edge.target.x - edge.source.x;
-                const dy = edge.target.y - edge.source.y;
-                const dist = Math.max(0.001, Math.hypot(dx, dy));
-                const rest = edge.rest;
-                const stretch = dist - rest;
-                const strength = 0.0048 * stretch;
-                const ux = dx / dist;
-                const uy = dy / dist;
-                if (edge.source !== dragged) {
-                  edge.source.vx += ux * strength;
-                  edge.source.vy += uy * strength;
-                }
-                if (edge.target !== dragged) {
-                  edge.target.vx -= ux * strength;
-                  edge.target.vy -= uy * strength;
-                }
-              });
-
-              for (let i = 0; i < graphState.nodes.length; i += 1) {
-                for (let j = i + 1; j < graphState.nodes.length; j += 1) {
-                  const a = graphState.nodes[i];
-                  const b = graphState.nodes[j];
-                  const dx = b.x - a.x;
-                  const dy = b.y - a.y;
-                  const distSq = Math.max(1, (dx * dx) + (dy * dy));
-                  const dist = Math.sqrt(distSq);
+                graphState.edges.forEach((edge) => {
+                  const dx = edge.target.x - edge.source.x;
+                  const dy = edge.target.y - edge.source.y;
+                  const dist = Math.max(0.001, Math.hypot(dx, dy));
+                  const rest = edge.rest;
+                  const stretch = dist - rest;
+                  const strength = 0.0048 * stretch;
                   const ux = dx / dist;
                   const uy = dy / dist;
-                  const repel = Math.min(2.1, (2500 / distSq) + 0.06);
-                  if (a !== dragged) {
-                    a.vx -= ux * repel;
-                    a.vy -= uy * repel;
+                  if (edge.source !== dragged) {
+                    edge.source.vx += ux * strength;
+                    edge.source.vy += uy * strength;
                   }
-                  if (b !== dragged) {
-                    b.vx += ux * repel;
-                    b.vy += uy * repel;
+                  if (edge.target !== dragged) {
+                    edge.target.vx -= ux * strength;
+                    edge.target.vy -= uy * strength;
+                  }
+                });
+
+                for (let i = 0; i < graphState.nodes.length; i += 1) {
+                  for (let j = i + 1; j < graphState.nodes.length; j += 1) {
+                    const a = graphState.nodes[i];
+                    const b = graphState.nodes[j];
+                    const dx = b.x - a.x;
+                    const dy = b.y - a.y;
+                    const distSq = Math.max(1, (dx * dx) + (dy * dy));
+                    const dist = Math.sqrt(distSq);
+                    const ux = dx / dist;
+                    const uy = dy / dist;
+                    const repel = Math.min(2.1, (2500 / distSq) + 0.06);
+                    if (a !== dragged) {
+                      a.vx -= ux * repel;
+                      a.vy -= uy * repel;
+                    }
+                    if (b !== dragged) {
+                      b.vx += ux * repel;
+                      b.vy += uy * repel;
+                    }
                   }
                 }
-              }
 
-              graphState.nodes.forEach((item) => {
-                if (item === dragged) return;
-                item.vx += (item.anchorX - item.x) * 0.0018;
-                item.vy += (item.anchorY - item.y) * 0.0018;
-                item.vx += (graphState.width * 0.5 - item.x) * (0.00035 / nodeCount);
-                item.vy += (graphState.height * 0.5 - item.y) * (0.00035 / nodeCount);
-                item.vx *= 0.88;
-                item.vy *= 0.88;
-                item.x = clamp(item.x + item.vx, item.radius, graphState.width - item.radius);
-                item.y = clamp(item.y + item.vy, item.radius, graphState.height - item.radius);
-              });
+                graphState.nodes.forEach((item) => {
+                  if (item === dragged) return;
+                  item.vx += (item.anchorX - item.x) * 0.0018;
+                  item.vy += (item.anchorY - item.y) * 0.0018;
+                  item.vx += (graphState.width * 0.5 - item.x) * (0.00035 / nodeCount);
+                  item.vy += (graphState.height * 0.5 - item.y) * (0.00035 / nodeCount);
+                  item.vx *= 0.88;
+                  item.vy *= 0.88;
+                  item.x = clamp(item.x + item.vx, item.radius, graphState.width - item.radius);
+                  item.y = clamp(item.y + item.vy, item.radius, graphState.height - item.radius);
+                });
+              }
             }
 
             syncGraphScene();
@@ -974,9 +1241,11 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
             graphState.nodes = [];
             graphState.edges = [];
 
+            const layout = LENS_LAYOUTS[selectedLens] || LENS_LAYOUTS.default;
+
             nodes.forEach((node, index) => {
-              const safeGroup = GRAPH_GROUP_ANCHORS[node.group] ? node.group : 'delivery';
-              const anchor = GRAPH_GROUP_ANCHORS[safeGroup];
+              const safeGroup = layout[node.group] ? node.group : 'delivery';
+              const anchor = layout[safeGroup];
               const prev = prevNodeById.get(node.id);
               const radius = node.group === 'core' ? 44 : 34;
               const jitterX = ((index % 3) - 1) * 22;
@@ -1001,9 +1270,14 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
               nodeEl.className = `graph-node group-${safeGroup}`;
               nodeEl.textContent = node.label;
               nodeEl.setAttribute('aria-label', node.label);
+              nodeEl.title = getGraphNodeInsight(node.id, node.label, safeGroup).definition;
               nodeEl.style.left = `${item.x}px`;
               nodeEl.style.top = `${item.y}px`;
               if (!reducedMotion && !previousNodeIds.has(node.id)) nodeEl.classList.add('is-new');
+              nodeEl.addEventListener('pointerenter', () => setGraphHoverInsight(node.id, node.label, safeGroup));
+              nodeEl.addEventListener('focus', () => setGraphHoverInsight(node.id, node.label, safeGroup));
+              nodeEl.addEventListener('pointerleave', () => clearGraphHoverInsight());
+              nodeEl.addEventListener('blur', () => clearGraphHoverInsight());
 
               nodeEl.addEventListener('pointerdown', (event) => {
                 event.preventDefault();
@@ -1051,11 +1325,88 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
             syncGraphScene();
           };
 
+          const highlightStackNodes = (stackLabel, active) => {
+            if (!active) {
+              graphState.nodes.forEach((n) => {
+                n.el.classList.remove('is-dimmed', 'is-spotlight');
+              });
+              return;
+            }
+            const ids = currentStackNodeMap.get(stackLabel);
+            if (!ids) return;
+            graphState.nodes.forEach((n) => {
+              if (ids.has(n.id)) {
+                n.el.classList.add('is-spotlight');
+                n.el.classList.remove('is-dimmed');
+              } else {
+                n.el.classList.add('is-dimmed');
+                n.el.classList.remove('is-spotlight');
+              }
+            });
+          };
+
+          const renderStackGroups = (container, stackModel) => {
+            container.innerHTML = '';
+            const groups = {};
+            STACK_CATEGORY_MATCHERS.forEach(m => { groups[m.label] = []; });
+
+            const fallbackMap = {
+              buildInterface: 'Compute & Interface',
+              appStack: 'Compute & Interface',
+              aiStack: 'AI & Orchestration',
+              opsStack: 'Ops & Observability',
+            };
+
+            Object.entries(stackModel).forEach(([bucket, items]) => {
+              items.forEach(item => {
+                let assigned = false;
+                const lower = item.toLowerCase();
+                for (const def of STACK_CATEGORY_MATCHERS) {
+                  if (def.keywords.some(k => lower.includes(k))) {
+                    groups[def.label].push(item);
+                    assigned = true;
+                    break;
+                  }
+                }
+                if (!assigned) {
+                  const cat = fallbackMap[bucket] || 'Compute & Interface';
+                  if (!groups[cat]) groups[cat] = [];
+                  groups[cat].push(item);
+                }
+              });
+            });
+
+            Object.entries(groups).forEach(([label, items]) => {
+              const uniqueItems = toUnique(items);
+              if (!uniqueItems.length) return;
+
+              const groupDiv = document.createElement('div');
+              groupDiv.className = 'stack-group';
+
+              const h4 = document.createElement('h4');
+              h4.textContent = label;
+              groupDiv.appendChild(h4);
+
+              const ul = document.createElement('ul');
+              uniqueItems.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                li.addEventListener('mouseenter', () => highlightStackNodes(item, true));
+                li.addEventListener('mouseleave', () => highlightStackNodes(item, false));
+                ul.appendChild(li);
+              });
+              groupDiv.appendChild(ul);
+              container.appendChild(groupDiv);
+            });
+          };
+
           const renderList = (target, items) => {
             target.innerHTML = '';
             items.forEach((item) => {
               const li = document.createElement('li');
               li.textContent = item;
+              li.addEventListener('mouseenter', () => highlightStackNodes(item, true));
+              li.addEventListener('mouseleave', () => highlightStackNodes(item, false));
               target.appendChild(li);
             });
           };
@@ -1063,9 +1414,13 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
           const renderLinks = (stack) => {
             const allStackItems = [...stack.buildInterface, ...stack.appStack, ...stack.aiStack, ...stack.opsStack];
             const hits = STACK_LINK_HINTS.filter((hint) => allStackItems.some((item) => item.toLowerCase().includes(hint.match)));
+            const combined = toUnique([
+              ...hits.map((item) => item.href),
+              ...DEFAULT_SUGGESTED_LINKS.map((item) => item.href),
+            ]);
             linksListEl.innerHTML = '';
-            toUnique(hits.map((item) => item.href)).forEach((href) => {
-              const item = hits.find((link) => link.href === href);
+            combined.forEach((href) => {
+              const item = hits.find((link) => link.href === href) || DEFAULT_SUGGESTED_LINKS.find((link) => link.href === href);
               if (!item) return;
               const li = document.createElement('li');
               const a = document.createElement('a');
@@ -1079,6 +1434,46 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
               li.textContent = 'Choose constraints to unlock targeted references.';
               linksListEl.appendChild(li);
             }
+          };
+
+          const announceLive = (message) => {
+            if (!message) return;
+            window.clearTimeout(liveAnnounceTimer);
+            labLiveEl.textContent = '';
+            liveAnnounceTimer = window.setTimeout(() => {
+              labLiveEl.textContent = message;
+            }, 30);
+          };
+
+          const stopCoverageAnimation = () => {
+            if (coverageAnimationFrame) {
+              window.cancelAnimationFrame(coverageAnimationFrame);
+              coverageAnimationFrame = 0;
+            }
+          };
+
+          const animateValue = (obj, start, end, duration) => {
+            stopCoverageAnimation();
+            coverageAnimationToken += 1;
+            const token = coverageAnimationToken;
+            if (start === end) {
+              obj.textContent = `${end}%`;
+              return;
+            }
+            let startTimestamp = null;
+            const step = (timestamp) => {
+              if (token !== coverageAnimationToken) return;
+              if (!startTimestamp) startTimestamp = timestamp;
+              const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+              obj.textContent = `${Math.floor(progress * (end - start) + start)}%`;
+              if (progress < 1) {
+                coverageAnimationFrame = window.requestAnimationFrame(step);
+              } else {
+                obj.textContent = `${end}%`;
+                coverageAnimationFrame = 0;
+              }
+            };
+            coverageAnimationFrame = window.requestAnimationFrame(step);
           };
 
           const getCoverage = () => {
@@ -1131,31 +1526,65 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
             if (selections.scale === 'internet-scale') badges.push('Scale-ready');
             if (stepOrder.every((stepId) => selections[stepId])) badges.push('Ship-ready');
 
-            badgesEl.innerHTML = '';
-            const labels = badges.length ? badges : ['Starter'];
-            labels.forEach((label) => {
-              const el = document.createElement('span');
-              el.className = `badge${label === 'Starter' ? ' badge-muted' : ''}`;
-              el.textContent = label;
-              badgesEl.appendChild(el);
+            const labels = badges.length ? badges : ['Sandbox-ready'];
+            const existing = Array.from(badgesEl.children);
+            const existingLabels = existing.map(el => el.textContent);
+
+            existing.forEach(el => {
+              if (!labels.includes(el.textContent)) el.remove();
+            });
+
+            labels.forEach(label => {
+              if (!existingLabels.includes(label)) {
+                const el = document.createElement('span');
+                el.className = `badge${label === 'Sandbox-ready' ? ' badge-muted' : ''}${label === 'Ship-ready' ? ' tier-gold' : ''}`;
+                el.textContent = label;
+                badgesEl.appendChild(el);
+              }
+            });
+          };
+
+          const highlightStepNodes = (stepId, shouldHighlight) => {
+            if (!stepId) return;
+            const selectedValue = selections[stepId];
+            if (!selectedValue) return;
+
+            const step = stepMap.get(stepId);
+            const option = step?.options?.find((item) => item.value === selectedValue);
+            if (!option?.contribution?.nodes) return;
+
+            const nodeIds = new Set(option.contribution.nodes.map((n) => n.id));
+
+            graphState.nodes.forEach((node) => {
+              if (nodeIds.has(node.id)) {
+                node.el.classList.toggle('is-pulsing', shouldHighlight);
+              }
             });
           };
 
           const update = () => {
             const model = computeModel();
+            currentStackNodeMap = model.stackNodeMap;
             renderGraph(model.nodes, model.edges);
             graphCountEl.textContent = `${model.nodes.length} ${model.nodes.length === 1 ? 'node' : 'nodes'}`;
-            graphFootnote.textContent = model.notes[model.notes.length - 1] || 'Awaiting first constraint...';
+            if (!hoveredGraphNodeId) clearGraphHoverInsight();
+
+            graphNote.textContent = model.notes[model.notes.length - 1] || 'Awaiting first constraint...';
+
+            let nextNote = '';
             if (!selectedLens) {
-              noteEl.textContent = 'System initialized: choose a lens, then pick a domain.';
+              nextNote = 'Sandbox ready: choose a lens, pick a domain, and probe graph nodes.';
             } else {
-              noteEl.textContent = model.notes[model.notes.length - 1] || 'Start adding constraints from the console.';
+              nextNote = model.notes[model.notes.length - 1] || 'Interactive sandbox active: drag and inspect graph nodes.';
+            }
+            if (noteEl.textContent !== nextNote) {
+              noteEl.textContent = nextNote;
+              noteEl.classList.remove('is-updating');
+              void noteEl.offsetWidth;
+              noteEl.classList.add('is-updating');
             }
 
-            renderList(stackBuild, model.stack.buildInterface);
-            renderList(stackApp, model.stack.appStack);
-            renderList(stackAi, model.stack.aiStack);
-            renderList(stackOps, model.stack.opsStack);
+            renderStackGroups(stackContainer, model.stack);
 
             skillsListEl.innerHTML = '';
             model.skills.forEach((item) => {
@@ -1174,18 +1603,34 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
             renderLinks(model.stack);
             renderBadges(model);
 
+            if (hoveredStepId) highlightStepNodes(hoveredStepId, true);
+
             const { answered, percent } = getCoverage();
-            coverageValue.textContent = `${percent}%`;
+            animateValue(coverageValue, currentCoveragePercent, percent, 600);
+            currentCoveragePercent = percent;
             coverageTrack.setAttribute('aria-valuenow', String(percent));
             coverageFill.style.width = `${percent}%`;
             stepBlocks.forEach((block) => block.classList.toggle('is-complete', Boolean(selections[block.dataset.stepId || ''])));
 
             const complete = answered === stepOrder.length;
+            if (percent === 0) {
+              announcedCoverageMilestones.clear();
+            } else {
+              [25, 50, 75, 100].forEach((mark) => {
+                if (percent >= mark && !announcedCoverageMilestones.has(mark)) {
+                  announcedCoverageMilestones.add(mark);
+                  announceLive(`Constraint coverage reached ${mark} percent.`);
+                }
+              });
+            }
+
             blueprintCard.hidden = !complete;
             exportButton.disabled = !complete;
             if (complete) {
               blueprintSummary.textContent = `All constraints captured. ${model.nodes.length} nodes generated with deterministic stack and phased plan.`;
             }
+            if (complete && !wasComplete) announceLive('Blueprint complete. Constraint coverage reached 100 percent.');
+            wasComplete = complete;
           };
 
           const selectOption = (button) => {
@@ -1218,6 +1663,22 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
             if (button instanceof HTMLButtonElement) selectOption(button);
           });
 
+          stepBlocks.forEach((block) => {
+            const stepId = block.dataset.stepId;
+            if (!stepId) return;
+            const onInteract = (active) => {
+              if (active) hoveredStepId = stepId;
+              else if (hoveredStepId === stepId) hoveredStepId = null;
+              highlightStepNodes(stepId, active);
+            };
+            block.addEventListener('mouseenter', () => onInteract(true));
+            block.addEventListener('mouseleave', () => onInteract(false));
+            block.addEventListener('focusin', () => onInteract(true));
+            block.addEventListener('focusout', (e) => {
+              if (!block.contains(e.relatedTarget)) onInteract(false);
+            });
+          });
+
           stepList.addEventListener('keydown', (event) => {
             const target = event.target;
             if (!(target instanceof Element)) return;
@@ -1230,15 +1691,33 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
           });
 
           resetButton.addEventListener('click', () => {
-            stepOrder.forEach((stepId) => { selections[stepId] = ''; });
-            selectedLens = '';
-            shell.querySelectorAll('.step-option').forEach((btn) => {
-              btn.classList.remove('is-selected');
-              btn.setAttribute('aria-pressed', 'false');
-            });
-            lensButtons.forEach((btn) => btn.classList.remove('is-selected'));
-            previousNodeIds = new Set();
-            update();
+            const reset = () => {
+              stopCoverageAnimation();
+              stepOrder.forEach((stepId) => { selections[stepId] = ''; });
+              selectedLens = '';
+              wasComplete = false;
+              announcedCoverageMilestones.clear();
+              shell.querySelectorAll('.step-option').forEach((btn) => {
+                btn.classList.remove('is-selected');
+                btn.setAttribute('aria-pressed', 'false');
+              });
+              lensButtons.forEach((btn) => btn.classList.remove('is-selected'));
+              previousNodeIds = new Set();
+              update();
+            };
+
+            if (reducedMotion || !graphState.nodes.length) {
+              reset();
+              return;
+            }
+
+            graphState.imploding = true;
+            graphNodesEl.classList.add('is-imploding');
+            setTimeout(() => {
+              reset();
+              graphState.imploding = false;
+              graphNodesEl.classList.remove('is-imploding');
+            }, 500);
           });
 
           exportButton.addEventListener('click', () => {
@@ -1290,10 +1769,12 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     width: 100vw;
     padding: 1.2rem 0 3.2rem;
     background:
-      linear-gradient(to right, color-mix(in srgb, var(--color-border) 34%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in srgb, var(--color-border) 34%, transparent) 1px, transparent 1px),
+      radial-gradient(circle at 8% 9%, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 28%),
+      radial-gradient(circle at 91% 14%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 30%),
+      linear-gradient(to right, color-mix(in srgb, var(--color-border) 26%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-border) 26%, transparent) 1px, transparent 1px),
       var(--color-bg);
-    background-size: 28px 28px, 28px 28px, auto;
+    background-size: auto, auto, 30px 30px, 30px 30px, auto;
   }
 
   .builder-shell-inner {
@@ -1312,7 +1793,11 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   .lens-intro {
     border: 1px solid var(--color-border);
     border-radius: 14px;
-    background: color-mix(in srgb, var(--color-blockquote-bg) 88%, var(--color-bg));
+    background:
+      linear-gradient(165deg, color-mix(in srgb, var(--color-bg) 88%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 93%, transparent));
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
+      0 10px 24px color-mix(in srgb, #020617 7%, transparent);
     padding: 1rem;
     margin-bottom: 1rem;
   }
@@ -1339,7 +1824,11 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   .lens-card {
     border: 1px solid var(--color-border);
     border-radius: 10px;
-    background: var(--color-bg);
+    background:
+      linear-gradient(175deg, color-mix(in srgb, var(--color-bg) 95%, #ffffff), color-mix(in srgb, var(--color-bg) 88%, var(--color-blockquote-bg)));
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
+      0 6px 18px color-mix(in srgb, #020617 6%, transparent);
     padding: 0.72rem;
   }
 
@@ -1508,9 +1997,15 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   .lab-status {
     border: 1px solid var(--color-border);
     border-radius: 12px;
-    background: color-mix(in srgb, var(--color-blockquote-bg) 92%, transparent);
+    background:
+      linear-gradient(170deg, color-mix(in srgb, var(--color-bg) 82%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 93%, transparent)),
+      linear-gradient(90deg, color-mix(in srgb, var(--color-border) 20%, transparent) 1px, transparent 1px);
+    background-size: auto, 22px 22px;
     padding: 0.85rem 1rem;
     margin-bottom: 1rem;
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
+      0 8px 20px color-mix(in srgb, #020617 6%, transparent);
   }
 
   .lab-progress-line {
@@ -1518,7 +2013,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     justify-content: space-between;
     align-items: center;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--color-text-muted);
@@ -1526,18 +2021,63 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
 
   .lab-progress-track {
     margin-top: 0.45rem;
-    height: 7px;
+    height: 6px;
     border-radius: 999px;
-    background: color-mix(in srgb, var(--color-border) 80%, transparent);
-    overflow: hidden;
+    background:
+      linear-gradient(to right,
+        transparent 24.5%,
+        color-mix(in srgb, var(--color-border) 65%, transparent) 25%,
+        transparent 25.5%,
+        transparent 49.5%,
+        color-mix(in srgb, var(--color-border) 65%, transparent) 50%,
+        transparent 50.5%,
+        transparent 74.5%,
+        color-mix(in srgb, var(--color-border) 65%, transparent) 75%,
+        transparent 75.5%
+      ),
+      color-mix(in srgb, var(--color-border) 38%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+    overflow: visible;
+  }
+
+  .lab-progress-track[aria-valuenow="0"] {
+    opacity: 0.88;
   }
 
   .lab-progress-fill {
+    position: relative;
     width: 0;
     height: 100%;
     border-radius: inherit;
-    background: color-mix(in srgb, var(--color-accent) 70%, #7aa4f7);
-    transition: width 0.2s ease;
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--color-accent) 66%, #6ee7b7), color-mix(in srgb, var(--color-accent) 76%, #60a5fa));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-accent) 22%, transparent),
+      0 0 10px color-mix(in srgb, var(--color-accent) 24%, transparent);
+    transition: width 0.24s ease;
+    overflow: visible;
+  }
+
+  .lab-progress-fill::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    transform: translateY(-50%);
+    background: color-mix(in srgb, var(--color-accent) 74%, #ffffff);
+    border: 1px solid color-mix(in srgb, #ffffff 65%, var(--color-accent));
+    box-shadow:
+      0 0 0 2px color-mix(in srgb, var(--color-bg) 74%, transparent),
+      0 0 9px color-mix(in srgb, var(--color-accent) 38%, transparent);
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .lab-progress-fill[style*="width: 0%"]::after {
+    opacity: 0;
   }
 
   .lab-badges {
@@ -1557,6 +2097,14 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     padding: 0.2rem 0.48rem;
     color: var(--color-text-heading);
     background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    animation: badge-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  .badge.tier-gold {
+    border-color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.2);
   }
 
   .badge-muted {
@@ -1568,7 +2116,24 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   .lab-note {
     margin: 0.62rem 0 0;
     color: var(--color-text-muted);
-    font-size: 0.86rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .lab-note.is-updating {
+    animation: text-flash 0.6s ease-out;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .builder-grid {
@@ -1581,7 +2146,11 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   .lab-panel {
     border: 1px solid var(--color-border);
     border-radius: 12px;
-    background: color-mix(in srgb, var(--color-bg) 90%, var(--color-blockquote-bg));
+    background:
+      linear-gradient(170deg, color-mix(in srgb, var(--color-bg) 94%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 88%, transparent));
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
+      0 10px 22px color-mix(in srgb, #020617 6%, transparent);
     padding: 0.9rem;
     min-height: 100%;
   }
@@ -1638,12 +2207,13 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     border-radius: 10px;
     padding: 0.54rem;
     min-inline-size: 0;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   .step-block.is-complete {
     border-color: color-mix(in srgb, var(--color-accent) 52%, var(--color-border));
     background: color-mix(in srgb, var(--color-accent) 7%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 8%, transparent);
   }
 
   .step-block legend {
@@ -1694,7 +2264,12 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     font-family: var(--font-mono);
     padding: 0.28rem 0.52rem;
     cursor: pointer;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.16s ease;
+  }
+
+  .step-option:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 44%, var(--color-border));
+    transform: translateY(-1px);
   }
 
   .step-option.is-selected {
@@ -1708,11 +2283,14 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     border-radius: 10px;
     height: 460px;
     background:
-      radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 70%),
+      radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--color-accent) 7%, transparent), transparent 70%),
       linear-gradient(to right, color-mix(in srgb, var(--color-border) 45%, transparent) 1px, transparent 1px),
       linear-gradient(to bottom, color-mix(in srgb, var(--color-border) 45%, transparent) 1px, transparent 1px),
       var(--color-bg);
     background-size: auto, 26px 26px, 26px 26px, auto;
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #ffffff 8%, transparent),
+      inset 0 0 24px color-mix(in srgb, var(--color-accent) 5%, transparent);
     overflow: hidden;
   }
 
@@ -1751,6 +2329,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     align-items: center;
     justify-content: center;
     cursor: grab;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
     box-shadow:
       inset 0 1px 0 color-mix(in srgb, #ffffff 12%, transparent),
       0 6px 14px color-mix(in srgb, #0f172a 38%, transparent);
@@ -1807,11 +2386,71 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     animation: node-enter 250ms ease;
   }
 
+  :global(.graph-node.is-dimmed) {
+    opacity: 0.15;
+    filter: grayscale(100%);
+  }
+
+  :global(.graph-node.is-spotlight) {
+    opacity: 1;
+    z-index: 20;
+    box-shadow: 0 0 0 4px var(--color-accent), 0 8px 20px rgba(0,0,0,0.5);
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+
+  .graph-nodes.is-imploding :global(.graph-node) {
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045), opacity 0.4s ease;
+  }
+
   .graph-footnote {
     margin: 0.68rem 0 0;
     color: var(--color-text-muted);
     font-size: 0.79rem;
     min-height: 1.5em;
+  }
+
+  .graph-footnote-muted {
+    margin-top: 0.28rem;
+    opacity: 0.92;
+  }
+
+  .graph-learning {
+    margin-top: 0.62rem;
+    border: 1px solid color-mix(in srgb, var(--color-border) 84%, transparent);
+    border-radius: 10px;
+    background:
+      linear-gradient(165deg, color-mix(in srgb, var(--color-bg) 92%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 88%, transparent));
+    padding: 0.62rem 0.72rem;
+  }
+
+  .graph-learning-kicker {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+
+  .graph-learning-title {
+    margin: 0.2rem 0 0.32rem;
+    font-size: 0.86rem;
+    font-family: var(--font-mono);
+    color: var(--color-text-heading);
+  }
+
+  .graph-learning-line {
+    margin: 0.22rem 0 0;
+    font-size: 0.76rem;
+    color: var(--color-text-muted);
+    line-height: 1.45;
+  }
+
+  .graph-learning-line strong {
+    color: var(--color-text-body);
+    font-weight: 600;
   }
 
   .output-block + .output-block {
@@ -1821,7 +2460,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   .output-block h3 {
     margin: 0 0 0.36rem;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.77rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--color-text-heading);
@@ -1847,6 +2486,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     color: var(--color-text-body);
     font-size: 0.79rem;
     line-height: 1.45;
+    cursor: default;
   }
 
   .output-panel li {
@@ -1882,7 +2522,8 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     margin-top: 0.9rem;
     width: 100%;
     border: 1px solid color-mix(in srgb, var(--color-accent) 55%, var(--color-border));
-    background: color-mix(in srgb, var(--color-accent) 14%, var(--color-bg));
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--color-accent) 16%, var(--color-bg)), color-mix(in srgb, var(--color-accent) 9%, var(--color-bg)));
     color: var(--color-text-heading);
     border-radius: 999px;
     font-family: var(--font-mono);
@@ -1891,6 +2532,12 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     text-transform: uppercase;
     padding: 0.54rem 0.85rem;
     cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .export-button:not(:disabled):hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--color-accent) 74%, var(--color-border));
   }
 
   .export-button:disabled {
@@ -1948,6 +2595,43 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     }
   }
 
+  @keyframes badge-pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes text-flash {
+    0% { color: var(--color-text-heading); text-shadow: 0 0 8px var(--color-accent); }
+    100% { color: var(--color-text-muted); text-shadow: none; }
+  }
+
+  @keyframes pulse-opacity {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  :global(.graph-node.is-pulsing) {
+    z-index: 10;
+  }
+
+  :global(.graph-node.is-pulsing::after) {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    border: 2px solid var(--color-accent);
+    opacity: 0;
+    animation: node-pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  @keyframes node-pulse-ring {
+    0% { transform: scale(0.95); opacity: 0.6; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .lab-progress-fill,
     .step-block,
@@ -1955,9 +2639,18 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     :global(.graph-node),
     :global(.graph-link),
     .lens-node,
-    :global(.lens-link-flow) {
+    :global(.lens-link-flow),
+    .lab-progress-track[aria-valuenow="0"],
+    .badge,
+    .lab-note.is-updating,
+    :global(.graph-node.is-pulsing::after) {
       transition: none;
-      animation: none;
+      animation: none !important;
+    }
+
+    .step-option:hover,
+    .export-button:not(:disabled):hover {
+      transform: none;
     }
   }
 

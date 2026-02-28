@@ -80,103 +80,105 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
         </div>
       </section>
 
-      <div class="lab-status">
-        <div class="lab-progress-line">
-          <span>Constraint coverage</span>
-          <strong id="coverage-value">0%</strong>
+      <section class="sandbox-lab" aria-label="Sandbox-ready workbench">
+        <div class="lab-status">
+          <div class="lab-progress-line">
+            <span>Constraint coverage</span>
+            <strong id="coverage-value">0%</strong>
+          </div>
+          <div class="lab-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="coverage-track">
+            <div class="lab-progress-fill" id="coverage-fill"></div>
+          </div>
+          <div class="lab-badges" id="lab-badges"></div>
+          <p class="lab-note" id="lab-note">Sandbox ready: choose a lens, pick a domain, and probe graph nodes.</p>
+          <p class="visually-hidden" id="lab-live" aria-live="polite" aria-atomic="true"></p>
         </div>
-        <div class="lab-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="coverage-track">
-          <div class="lab-progress-fill" id="coverage-fill"></div>
+
+        <div class="builder-grid">
+          <aside class="lab-panel constraint-panel" aria-labelledby="constraint-console-title">
+            <div class="panel-head">
+              <h2 id="constraint-console-title">Constraint Console</h2>
+              <button type="button" class="panel-reset" id="reset-builder">Reset</button>
+            </div>
+            <p class="panel-copy">One choice per step. Each input changes graph, stack, and execution plan.</p>
+
+            <form class="step-list" id="step-list">
+              {BUILD_MAPPINGS.steps.map((step, index) => (
+                <fieldset class="step-block" data-step-block data-step-id={step.id}>
+                  <legend>
+                    <span class="step-index">{index + 1}</span>
+                    <span class="step-title">{step.title}</span>
+                  </legend>
+                  <p class="step-prompt">{step.prompt}</p>
+                  <div class="step-options" role="radiogroup" aria-label={step.title}>
+                    {step.options.map((option) => (
+                      <button
+                        type="button"
+                        class="step-option"
+                        data-step={step.id}
+                        data-value={option.value}
+                        aria-pressed="false"
+                        title={option.description}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                </fieldset>
+              ))}
+            </form>
+          </aside>
+
+          <section class="lab-panel graph-panel" aria-labelledby="architecture-graph-title">
+            <div class="panel-head">
+              <h2 id="architecture-graph-title">Architecture Graph</h2>
+              <p class="panel-meta" id="graph-count">1 node</p>
+            </div>
+            <p class="panel-copy">Interactive sandbox: drag nodes, test structure, and inspect meaning on hover.</p>
+
+            <div class="graph-wrap" id="graph-wrap">
+              <svg class="graph-edges" id="graph-edges" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+              <div class="graph-nodes" id="graph-nodes"></div>
+            </div>
+
+            <p class="graph-footnote" id="graph-footnote">Hover a node to inspect why it exists in this blueprint.</p>
+            <p class="graph-footnote graph-footnote-muted" id="graph-note">Awaiting first constraint...</p>
+            <div class="graph-learning" id="graph-learning">
+              <p class="graph-learning-kicker">Node Learning Console</p>
+              <h3 class="graph-learning-title" id="graph-learning-title">Intent</h3>
+              <p class="graph-learning-line" id="graph-learning-definition"><strong>What it is:</strong> The primary user outcome this system is built to achieve.</p>
+              <p class="graph-learning-line" id="graph-learning-why"><strong>Why it matters:</strong> Every architecture and stack choice should preserve this outcome.</p>
+              <p class="graph-learning-line" id="graph-learning-action"><strong>What to do:</strong> Use each node as a concrete constraint to validate implementation decisions.</p>
+            </div>
+          </section>
+
+          <aside class="lab-panel output-panel" aria-labelledby="stack-skills-title">
+            <h2 id="stack-skills-title">Stack + Skills</h2>
+            <div class="output-scroll">
+              <div class="output-block">
+                <h3>Recommended Stack</h3>
+                <div id="stack-output-container"></div>
+              </div>
+
+              <div class="output-block">
+                <h3>Skills Required</h3>
+                <ul class="skills-list" id="skills-list"></ul>
+              </div>
+
+              <div class="output-block">
+                <h3>Execution Plan</h3>
+                <ol class="plan-list" id="execution-plan"></ol>
+              </div>
+
+              <div class="output-block">
+                <h3>Suggested Links</h3>
+                <ul class="links-list" id="suggested-links"></ul>
+              </div>
+            </div>
+            <button type="button" class="export-button" id="export-blueprint" disabled>Export Blueprint</button>
+          </aside>
         </div>
-        <div class="lab-badges" id="lab-badges"></div>
-        <p class="lab-note" id="lab-note">Sandbox ready: choose a lens, pick a domain, and probe graph nodes.</p>
-        <p class="visually-hidden" id="lab-live" aria-live="polite" aria-atomic="true"></p>
-      </div>
-
-      <div class="builder-grid">
-        <aside class="lab-panel constraint-panel" aria-labelledby="constraint-console-title">
-          <div class="panel-head">
-            <h2 id="constraint-console-title">Constraint Console</h2>
-            <button type="button" class="panel-reset" id="reset-builder">Reset</button>
-          </div>
-          <p class="panel-copy">One choice per step. Each input changes graph, stack, and execution plan.</p>
-
-          <form class="step-list" id="step-list">
-            {BUILD_MAPPINGS.steps.map((step, index) => (
-              <fieldset class="step-block" data-step-block data-step-id={step.id}>
-                <legend>
-                  <span class="step-index">{index + 1}</span>
-                  <span class="step-title">{step.title}</span>
-                </legend>
-                <p class="step-prompt">{step.prompt}</p>
-                <div class="step-options" role="radiogroup" aria-label={step.title}>
-                  {step.options.map((option) => (
-                    <button
-                      type="button"
-                      class="step-option"
-                      data-step={step.id}
-                      data-value={option.value}
-                      aria-pressed="false"
-                      title={option.description}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
-            ))}
-          </form>
-        </aside>
-
-        <section class="lab-panel graph-panel" aria-labelledby="architecture-graph-title">
-          <div class="panel-head">
-            <h2 id="architecture-graph-title">Architecture Graph</h2>
-            <p class="panel-meta" id="graph-count">1 node</p>
-          </div>
-          <p class="panel-copy">Interactive sandbox: drag nodes, test structure, and inspect meaning on hover.</p>
-
-          <div class="graph-wrap" id="graph-wrap">
-            <svg class="graph-edges" id="graph-edges" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
-            <div class="graph-nodes" id="graph-nodes"></div>
-          </div>
-
-          <p class="graph-footnote" id="graph-footnote">Hover a node to inspect why it exists in this blueprint.</p>
-          <p class="graph-footnote graph-footnote-muted" id="graph-note">Awaiting first constraint...</p>
-          <div class="graph-learning" id="graph-learning">
-            <p class="graph-learning-kicker">Node Learning Console</p>
-            <h3 class="graph-learning-title" id="graph-learning-title">Intent</h3>
-            <p class="graph-learning-line" id="graph-learning-definition"><strong>What it is:</strong> The primary user outcome this system is built to achieve.</p>
-            <p class="graph-learning-line" id="graph-learning-why"><strong>Why it matters:</strong> Every architecture and stack choice should preserve this outcome.</p>
-            <p class="graph-learning-line" id="graph-learning-action"><strong>What to do:</strong> Use each node as a concrete constraint to validate implementation decisions.</p>
-          </div>
-        </section>
-
-        <aside class="lab-panel output-panel" aria-labelledby="stack-skills-title">
-          <h2 id="stack-skills-title">Stack + Skills</h2>
-
-          <div class="output-block">
-            <h3>Recommended Stack</h3>
-            <div id="stack-output-container"></div>
-          </div>
-
-          <div class="output-block">
-            <h3>Skills Required</h3>
-            <ul class="skills-list" id="skills-list"></ul>
-          </div>
-
-          <div class="output-block">
-            <h3>Execution Plan</h3>
-            <ol class="plan-list" id="execution-plan"></ol>
-          </div>
-
-          <div class="output-block">
-            <h3>Suggested Links</h3>
-            <ul class="links-list" id="suggested-links"></ul>
-          </div>
-
-          <button type="button" class="export-button" id="export-blueprint" disabled>Export Blueprint</button>
-        </aside>
-      </div>
+      </section>
 
       <div class="blueprint-card" id="blueprint-card" hidden>
         <p class="blueprint-kicker">Completion unlocked</p>
@@ -1994,6 +1996,11 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     background: color-mix(in srgb, var(--color-accent) 12%, transparent);
   }
 
+  .sandbox-lab {
+    display: grid;
+    gap: 0.9rem;
+  }
+
   .lab-status {
     border: 1px solid var(--color-border);
     border-radius: 12px;
@@ -2001,8 +2008,8 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
       linear-gradient(170deg, color-mix(in srgb, var(--color-bg) 82%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 93%, transparent)),
       linear-gradient(90deg, color-mix(in srgb, var(--color-border) 20%, transparent) 1px, transparent 1px);
     background-size: auto, 22px 22px;
-    padding: 0.85rem 1rem;
-    margin-bottom: 1rem;
+    padding: 0.92rem 1rem;
+    margin-bottom: 0;
     box-shadow:
       inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
       0 8px 20px color-mix(in srgb, #020617 6%, transparent);
@@ -2114,10 +2121,11 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   }
 
   .lab-note {
-    margin: 0.62rem 0 0;
+    margin: 0.54rem 0 0;
     color: var(--color-text-muted);
     font-size: 0.82rem;
     line-height: 1.45;
+    max-width: 72ch;
   }
 
   .lab-note.is-updating {
@@ -2138,7 +2146,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
 
   .builder-grid {
     display: grid;
-    grid-template-columns: 320px minmax(0, 1fr) 340px;
+    grid-template-columns: minmax(280px, 320px) minmax(0, 1fr) minmax(300px, 340px);
     gap: 1rem;
     align-items: start;
   }
@@ -2152,7 +2160,23 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
       inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
       0 10px 22px color-mix(in srgb, #020617 6%, transparent);
     padding: 0.9rem;
-    min-height: 100%;
+    min-height: 0;
+    height: auto;
+  }
+
+  .constraint-panel,
+  .output-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.56rem;
+    height: min(78vh, 920px);
+  }
+
+  .graph-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.56rem;
+    height: auto;
   }
 
   .panel-head {
@@ -2172,7 +2196,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   }
 
   .panel-copy {
-    margin: 0 0 0.8rem;
+    margin: 0;
     font-size: 0.82rem;
     color: var(--color-text-muted);
     line-height: 1.45;
@@ -2200,6 +2224,10 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   .step-list {
     display: grid;
     gap: 0.58rem;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    padding-right: 0.2rem;
   }
 
   .step-block {
@@ -2281,7 +2309,8 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     position: relative;
     border: 1px solid var(--color-border);
     border-radius: 10px;
-    height: 460px;
+    flex: 1 1 auto;
+    min-height: 320px;
     background:
       radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--color-accent) 7%, transparent), transparent 70%),
       linear-gradient(to right, color-mix(in srgb, var(--color-border) 45%, transparent) 1px, transparent 1px),
@@ -2405,7 +2434,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   }
 
   .graph-footnote {
-    margin: 0.68rem 0 0;
+    margin: 0;
     color: var(--color-text-muted);
     font-size: 0.79rem;
     min-height: 1.5em;
@@ -2417,7 +2446,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   }
 
   .graph-learning {
-    margin-top: 0.62rem;
+    margin-top: 0.26rem;
     border: 1px solid color-mix(in srgb, var(--color-border) 84%, transparent);
     border-radius: 10px;
     background:
@@ -2454,7 +2483,14 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   }
 
   .output-block + .output-block {
-    margin-top: 0.88rem;
+    margin-top: 0.72rem;
+  }
+
+  .output-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    padding-right: 0.2rem;
   }
 
   .output-block h3 {
@@ -2519,7 +2555,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   }
 
   .export-button {
-    margin-top: 0.9rem;
+    margin-top: 0.72rem;
     width: 100%;
     border: 1px solid color-mix(in srgb, var(--color-accent) 55%, var(--color-border));
     background:
@@ -2660,12 +2696,22 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
       gap: 0.8rem;
     }
 
+    .lab-panel {
+      height: auto;
+    }
+
+    .step-list,
+    .output-scroll {
+      overflow: visible;
+      padding-right: 0;
+    }
+
     .lens-grid {
       grid-template-columns: 1fr;
     }
 
     .graph-wrap {
-      height: 380px;
+      min-height: 380px;
     }
   }
 
@@ -2675,7 +2721,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     }
 
     .graph-wrap {
-      height: 330px;
+      min-height: 330px;
     }
 
     :global(.graph-node) {

@@ -43,7 +43,6 @@ const discoveryPosts = allContent.sort((a, b) => {
   image="/my-self-portrait.png"
 >
   <section class="homepage-hero">
-    <div id="canvas-container" aria-hidden="true"></div>
     <div class="noise-overlay" aria-hidden="true"></div>
 
     <p class="hero-animated-line">
@@ -63,8 +62,11 @@ const discoveryPosts = allContent.sort((a, b) => {
     ></iframe>
 
     <a href="/dual-nlp-framework" class="hero-build-cta">
-      <span class="hero-build-icon" aria-hidden="true">&lt;/&gt;</span>
-      <span class="hero-build-text">build an app?</span>
+      <span class="hero-build-dot" aria-hidden="true"></span>
+      <span class="hero-build-text">
+        start building
+        <span class="hero-build-cursor" aria-hidden="true"></span>
+      </span>
     </a>
 
     <h1 class="tagline">Thinker. Tinkerer. Translator.</h1>
@@ -74,435 +76,9 @@ const discoveryPosts = allContent.sort((a, b) => {
   </section>
 
   <ContentDiscovery posts={discoveryPosts} />
-
-  <script is:inline>
-    (() => {
-      const THREE_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-
-      const loadThree = () => new Promise((resolve, reject) => {
-        if (window.THREE) {
-          resolve(window.THREE);
-          return;
-        }
-        const existing = document.querySelector('script[data-three-cdn="true"]');
-        if (existing) {
-          existing.addEventListener('load', () => resolve(window.THREE), { once: true });
-          existing.addEventListener('error', reject, { once: true });
-          return;
-        }
-        const script = document.createElement('script');
-        script.src = THREE_CDN;
-        script.dataset.threeCdn = 'true';
-        script.onload = () => resolve(window.THREE);
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-
-      const initNeuralMesh = async () => {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          if (typeof window.__homeNeuralMeshCleanup === 'function') window.__homeNeuralMeshCleanup();
-          return;
-        }
-        const hero = document.querySelector('.homepage-hero');
-        const container = document.getElementById('canvas-container');
-        if (!(hero instanceof HTMLElement) || !(container instanceof HTMLElement)) return;
-
-        if (typeof window.__homeNeuralMeshCleanup === 'function') {
-          window.__homeNeuralMeshCleanup();
-        }
-
-        try {
-          const THREE = await loadThree();
-          if (!THREE) return;
-
-          let scene;
-          let camera;
-          let renderer;
-          let particles;
-          let lines;
-          let signals;
-          let meshGroup;
-          let frameId = 0;
-          let isDisposed = false;
-          let targetX = 0;
-          let targetY = 0;
-          let currentX = 0;
-          let currentY = 0;
-          let mouseX = 0;
-          let mouseY = 0;
-          let isHeroVisible = true;
-          let observer = null;
-          let isDragging = false;
-          let dragPointerId = null;
-          let lastDragX = 0;
-          let lastDragY = 0;
-          let meshOffsetX = 0;
-          let meshOffsetY = 0;
-          let meshVelX = 0;
-          let meshVelY = 0;
-
-          const nodeCount = 115;
-          const clusterCount = 5;
-          const maxDist = 165;
-          const signalCount = 15;
-          const maxSegments = (nodeCount * (nodeCount - 1)) / 2;
-          const nodes = [];
-          const activeSignals = [];
-
-          const styles = getComputedStyle(document.body);
-          const bgColorHex = styles.getPropertyValue('--color-bg').trim() || '#ffffff';
-          const nodeColor = '#1a1a1a';
-          const accentColor = 0xf97316;
-          const baseLineColor = new THREE.Color('#000000');
-          const hoverLineColor = new THREE.Color(accentColor);
-
-          const linePositionArray = new Float32Array(maxSegments * 6);
-          const lineColorArray = new Float32Array(maxSegments * 6);
-          const signalPositionArray = new Float32Array(signalCount * 3);
-
-          const getHeroBounds = () => {
-            const rect = hero.getBoundingClientRect();
-            return {
-              width: Math.max(1, Math.floor(rect.width)),
-              height: Math.max(1, Math.floor(rect.height)),
-              left: rect.left,
-              top: rect.top,
-            };
-          };
-
-          const onWindowResize = () => {
-            if (!camera || !renderer) return;
-            const { width, height } = getHeroBounds();
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-            renderer.setSize(width, height);
-          };
-
-          const onPointerMove = (event) => {
-            if (!camera) return;
-            const bounds = getHeroBounds();
-            const localX = event.clientX - bounds.left;
-            const localY = event.clientY - bounds.top;
-            if (localX < 0 || localY < 0 || localX > bounds.width || localY > bounds.height) return;
-            targetX = (localX - (bounds.width / 2)) * 0.08;
-            targetY = -((localY - (bounds.height / 2)) * 0.08);
-
-            const vector = new THREE.Vector3();
-            vector.set(
-              (localX / bounds.width) * 2 - 1,
-              -((localY / bounds.height) * 2) + 1,
-              0.5,
-            );
-            vector.unproject(camera);
-            const dir = vector.sub(camera.position).normalize();
-            const distance = -camera.position.z / dir.z;
-            const pos = camera.position.clone().add(dir.multiplyScalar(distance));
-            mouseX = pos.x;
-            mouseY = pos.y;
-
-            if (!isDragging) return;
-            const dx = event.clientX - lastDragX;
-            const dy = event.clientY - lastDragY;
-            lastDragX = event.clientX;
-            lastDragY = event.clientY;
-            meshOffsetX += dx * 0.7;
-            meshOffsetY -= dy * 0.7;
-            meshVelX = dx * 0.4;
-            meshVelY = -dy * 0.4;
-          };
-
-          const onPointerDown = (event) => {
-            const target = event.target;
-            if (
-              target instanceof Element
-              && target.closest('a, button, iframe, input, textarea, select, label')
-            ) {
-              return;
-            }
-            isDragging = true;
-            dragPointerId = event.pointerId;
-            lastDragX = event.clientX;
-            lastDragY = event.clientY;
-            hero.classList.add('is-dragging-mesh');
-          };
-
-          const onPointerUp = (event) => {
-            if (!isDragging) return;
-            if (dragPointerId !== null && event.pointerId !== dragPointerId) return;
-            isDragging = false;
-            dragPointerId = null;
-            hero.classList.remove('is-dragging-mesh');
-          };
-
-          const animate = (time) => {
-            if (isDisposed) return;
-            frameId = window.requestAnimationFrame(animate);
-            if (!scene || !camera || !renderer || !particles || !lines || !signals || !meshGroup) return;
-            if (!isHeroVisible) return;
-
-            currentX += (targetX - currentX) * 0.05;
-            currentY += (targetY - currentY) * 0.05;
-            camera.position.x = currentX;
-            camera.position.y = currentY;
-            camera.lookAt(0, 0, 0);
-
-            if (!isDragging) {
-              meshVelX *= 0.94;
-              meshVelY *= 0.94;
-              meshOffsetX += meshVelX;
-              meshOffsetY += meshVelY;
-            }
-            meshOffsetX *= 0.985;
-            meshOffsetY *= 0.985;
-            const floatX = Math.sin(time * 0.00026) * 14;
-            const floatY = Math.cos(time * 0.00021) * 10;
-            meshGroup.position.x = floatX + meshOffsetX;
-            meshGroup.position.y = 56 + floatY + meshOffsetY;
-
-            const posAttr = particles.geometry.attributes.position;
-            const linePosAttr = lines.geometry.attributes.position;
-            const lineColorAttr = lines.geometry.attributes.color;
-            const signalPosAttr = signals.geometry.attributes.position;
-            let segmentCount = 0;
-            let signalCountInFrame = 0;
-
-            for (let i = 0; i < nodeCount; i += 1) {
-              const n = nodes[i];
-              n.phase += 0.002;
-              n.x += Math.sin(n.phase) * 0.05;
-              n.y += Math.cos(n.phase) * 0.05;
-
-              posAttr.array[i * 3] = n.x;
-              posAttr.array[(i * 3) + 1] = n.y;
-              posAttr.array[(i * 3) + 2] = n.z;
-
-              const dxMouse = n.x - mouseX;
-              const dyMouse = n.y - mouseY;
-              const distToMouse = Math.sqrt((dxMouse * dxMouse) + (dyMouse * dyMouse));
-              const isHovered = distToMouse < 220;
-
-              for (let j = i + 1; j < nodeCount; j += 1) {
-                const o = nodes[j];
-                const dx = n.x - o.x;
-                const dy = n.y - o.y;
-                const dz = n.z - o.z;
-                const dist = Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
-
-                if (dist >= maxDist) continue;
-                const lineOffset = segmentCount * 6;
-                linePositionArray[lineOffset] = n.x;
-                linePositionArray[lineOffset + 1] = n.y;
-                linePositionArray[lineOffset + 2] = n.z;
-                linePositionArray[lineOffset + 3] = o.x;
-                linePositionArray[lineOffset + 4] = o.y;
-                linePositionArray[lineOffset + 5] = o.z;
-
-                const color = isHovered ? hoverLineColor : baseLineColor;
-                lineColorArray[lineOffset] = color.r;
-                lineColorArray[lineOffset + 1] = color.g;
-                lineColorArray[lineOffset + 2] = color.b;
-                lineColorArray[lineOffset + 3] = color.r;
-                lineColorArray[lineOffset + 4] = color.g;
-                lineColorArray[lineOffset + 5] = color.b;
-                segmentCount += 1;
-
-                const spawnChance = isHovered ? 0.03 : 0.0005;
-                if (activeSignals.length < signalCount && Math.random() < spawnChance) {
-                  activeSignals.push({
-                    start: n,
-                    end: o,
-                    progress: 0,
-                    speed: 0.02 + (Math.random() * 0.02),
-                  });
-                }
-              }
-            }
-
-            for (let i = activeSignals.length - 1; i >= 0; i -= 1) {
-              const signal = activeSignals[i];
-              signal.progress += signal.speed;
-              if (signal.progress >= 1) {
-                activeSignals.splice(i, 1);
-                continue;
-              }
-              const sx = signal.start.x + ((signal.end.x - signal.start.x) * signal.progress);
-              const sy = signal.start.y + ((signal.end.y - signal.start.y) * signal.progress);
-              const sz = signal.start.z + ((signal.end.z - signal.start.z) * signal.progress);
-              const signalOffset = signalCountInFrame * 3;
-              signalPositionArray[signalOffset] = sx;
-              signalPositionArray[signalOffset + 1] = sy;
-              signalPositionArray[signalOffset + 2] = sz;
-              signalCountInFrame += 1;
-            }
-
-            posAttr.needsUpdate = true;
-            linePosAttr.needsUpdate = true;
-            lineColorAttr.needsUpdate = true;
-            signalPosAttr.needsUpdate = true;
-            lines.geometry.setDrawRange(0, segmentCount * 2);
-            signals.geometry.setDrawRange(0, signalCountInFrame);
-
-            renderer.render(scene, camera);
-          };
-
-          scene = new THREE.Scene();
-          scene.fog = new THREE.Fog(bgColorHex, 300, 950);
-
-          const { width, height } = getHeroBounds();
-          camera = new THREE.PerspectiveCamera(55, width / height, 1, 2000);
-          camera.position.z = 600;
-
-          renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-          renderer.setSize(width, height);
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-          container.innerHTML = '';
-          container.appendChild(renderer.domElement);
-
-          const geometry = new THREE.BufferGeometry();
-          const posArray = new Float32Array(nodeCount * 3);
-
-          for (let i = 0; i < nodeCount; i += 1) {
-            const clusterIdx = i % clusterCount;
-            const theta = (clusterIdx / clusterCount) * Math.PI * 2;
-            const radius = 280;
-            const cx = Math.cos(theta) * radius * 0.8;
-            const cy = Math.sin(theta) * radius * 0.5;
-            const x = cx + ((Math.random() - 0.5) * 200);
-            const y = cy + ((Math.random() - 0.5) * 200) + 50;
-            const z = (Math.random() - 0.5) * 350;
-
-            nodes.push({
-              x,
-              y,
-              z,
-              vx: (Math.random() - 0.5) * 0.05,
-              vy: (Math.random() - 0.5) * 0.05,
-              phase: Math.random() * Math.PI * 2,
-            });
-
-            posArray[i * 3] = x;
-            posArray[(i * 3) + 1] = y;
-            posArray[(i * 3) + 2] = z;
-          }
-
-          geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-          const pointsMaterial = new THREE.PointsMaterial({
-            color: new THREE.Color(nodeColor),
-            size: 2.8,
-            transparent: true,
-            opacity: 0.7,
-            sizeAttenuation: true,
-          });
-          particles = new THREE.Points(geometry, pointsMaterial);
-          meshGroup = new THREE.Group();
-          meshGroup.add(particles);
-          scene.add(meshGroup);
-
-          const lineGeometry = new THREE.BufferGeometry();
-          lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositionArray, 3));
-          lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColorArray, 3));
-          lineGeometry.setDrawRange(0, 0);
-          const lineMaterial = new THREE.LineBasicMaterial({
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.1,
-          });
-          lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-          meshGroup.add(lines);
-
-          const signalGeometry = new THREE.BufferGeometry();
-          signalGeometry.setAttribute('position', new THREE.BufferAttribute(signalPositionArray, 3));
-          signalGeometry.setDrawRange(0, 0);
-          const signalMaterial = new THREE.PointsMaterial({
-            color: new THREE.Color(accentColor),
-            size: 5.5,
-            transparent: true,
-            opacity: 0.9,
-            blending: THREE.AdditiveBlending,
-          });
-          signals = new THREE.Points(signalGeometry, signalMaterial);
-          meshGroup.add(signals);
-
-          if ('IntersectionObserver' in window) {
-            observer = new IntersectionObserver((entries) => {
-              const [entry] = entries;
-              isHeroVisible = Boolean(entry?.isIntersecting);
-            }, { threshold: 0.01 });
-            observer.observe(hero);
-          }
-
-          window.addEventListener('resize', onWindowResize);
-          hero.addEventListener('pointermove', onPointerMove, { passive: true });
-          hero.addEventListener('pointerdown', onPointerDown);
-          window.addEventListener('pointerup', onPointerUp);
-          window.addEventListener('pointercancel', onPointerUp);
-          animate();
-
-          window.__homeNeuralMeshCleanup = () => {
-            if (isDisposed) return;
-            isDisposed = true;
-            window.cancelAnimationFrame(frameId);
-            window.removeEventListener('resize', onWindowResize);
-            hero.removeEventListener('pointermove', onPointerMove);
-            hero.removeEventListener('pointerdown', onPointerDown);
-            window.removeEventListener('pointerup', onPointerUp);
-            window.removeEventListener('pointercancel', onPointerUp);
-            hero.classList.remove('is-dragging-mesh');
-            observer?.disconnect();
-            observer = null;
-
-            if (renderer) {
-              renderer.dispose();
-              if (typeof renderer.forceContextLoss === 'function') renderer.forceContextLoss();
-              const canvas = renderer.domElement;
-              if (canvas?.parentNode) canvas.parentNode.removeChild(canvas);
-            }
-
-            [particles, lines, signals].forEach((obj) => {
-              if (!obj) return;
-              obj.geometry?.dispose?.();
-              if (Array.isArray(obj.material)) {
-                obj.material.forEach((m) => m?.dispose?.());
-              } else {
-                obj.material?.dispose?.();
-              }
-            });
-
-            nodes.length = 0;
-            activeSignals.length = 0;
-            meshGroup = null;
-            scene?.clear();
-          };
-        } catch (error) {
-          console.error('Neural mesh init failed:', error);
-        }
-      };
-
-      initNeuralMesh();
-      if (!window.__homeNeuralMeshNavBound) {
-        document.addEventListener('astro:page-load', initNeuralMesh);
-        document.addEventListener('astro:after-swap', initNeuralMesh);
-        window.addEventListener('beforeunload', () => {
-          if (typeof window.__homeNeuralMeshCleanup === 'function') {
-            window.__homeNeuralMeshCleanup();
-          }
-        });
-        window.__homeNeuralMeshNavBound = true;
-      }
-    })();
-  </script>
 </Layout>
 
 <style>
-  #canvas-container {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-  }
-
   .noise-overlay {
     position: absolute;
     inset: 0;
@@ -529,11 +105,7 @@ const discoveryPosts = allContent.sort((a, b) => {
     padding: 4rem 0 3rem;
   }
 
-  .homepage-hero.is-dragging-mesh {
-    cursor: grabbing;
-  }
-
-  .homepage-hero > :not(#canvas-container):not(.noise-overlay) {
+  .homepage-hero > :not(.noise-overlay) {
     position: relative;
     z-index: 1;
   }
@@ -628,62 +200,93 @@ const discoveryPosts = allContent.sort((a, b) => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.45rem;
+    gap: 0.34rem;
     margin-top: -0.08rem;
     margin-bottom: clamp(0.85rem, 1.8vw, 1.2rem);
-    padding: 0.62rem 1.45rem;
+    padding: 0.65rem 1.5rem;
     border-radius: 999px;
-    border: 1px solid color-mix(in srgb, #6ea3ff 70%, #1f2937);
-    background: linear-gradient(160deg, #3b4252 0%, #10141f 85%);
-    color: #f8fafc;
+    border: 1px solid color-mix(in srgb, var(--color-border) 78%, #f97316 22%);
+    background: linear-gradient(
+      150deg,
+      color-mix(in srgb, var(--color-bg) 93%, #dbeafe 7%),
+      color-mix(in srgb, var(--color-bg) 97%, #f97316 3%)
+    );
+    color: var(--color-text-heading);
     text-decoration: none;
     font-family: var(--font-mono);
-    font-size: 0.84rem;
+    font-size: 0.8rem;
     letter-spacing: 0.01em;
-    font-weight: 700;
-    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    font-weight: 600;
+    box-shadow: 0 6px 14px color-mix(in srgb, #0f172a 10%, transparent), 0 0 0 1px color-mix(in srgb, #ffffff 28%, transparent) inset;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     position: relative;
     overflow: hidden;
-    animation: cta-float 3.2s ease-in-out infinite;
+    will-change: transform;
+    animation: fade-in-up 0.8s ease 0.35s forwards;
+    opacity: 0;
   }
 
   .hero-build-cta::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(120deg, transparent 20%, rgba(147, 197, 253, 0.18) 50%, transparent 80%);
-    transform: translateX(-130%);
-    animation: cta-scan 2.8s ease-in-out infinite;
-    pointer-events: none;
+    left: 1rem;
+    right: 1rem;
+    bottom: 0.34rem;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, #f97316 62%, #93c5fd 38%) 50%,
+      transparent 100%
+    );
+    opacity: 0.45;
+    transform: scaleX(0.35);
+    transform-origin: center;
+    transition: transform 0.22s ease, opacity 0.22s ease;
   }
 
-  .hero-build-icon {
-    font-size: 0.76rem;
-    color: #93c5fd;
-    letter-spacing: -0.01em;
-    opacity: 0.9;
+  .hero-build-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #f97316;
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.16);
+    animation: cta-dot-breathe 2.8s ease-in-out infinite;
   }
 
   .hero-build-text {
     position: relative;
-    padding-right: 0.48rem;
+    top: -0.01rem;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.16rem;
   }
 
-  .hero-build-text::after {
-    content: '_';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-53%);
-    color: #93c5fd;
-    animation: cta-caret-blink 1s steps(1, end) infinite;
+  .hero-build-cursor {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 0.48em;
+    height: 1.05em;
+    border-right: 2px solid #f97316;
+    opacity: 0.9;
+    transform: translateY(0.06em);
+    animation: cta-cursor-blink 0.9s steps(1, end) infinite;
   }
 
   .hero-build-cta:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in srgb, #93c5fd 86%, #1f2937);
-    box-shadow: 0 13px 28px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.13) inset;
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, #f97316 34%, #93c5fd 26%);
+    box-shadow: 0 10px 18px color-mix(in srgb, #0f172a 15%, transparent), 0 0 0 1px color-mix(in srgb, #ffffff 34%, transparent) inset;
+  }
+
+  .hero-build-cta:hover::after {
+    opacity: 0.88;
+    transform: scaleX(1);
+  }
+
+  .hero-build-cta:focus-visible {
+    outline: 2px solid rgba(249, 115, 22, 0.55);
+    outline-offset: 3px;
   }
 
   .tagline {
@@ -725,19 +328,25 @@ const discoveryPosts = allContent.sort((a, b) => {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    #canvas-container,
     .noise-overlay,
     .hero-highlight,
     .hero-bounce,
     .hero-build-cta,
-    .hero-build-cta::after,
-    .hero-build-text::after {
+    .hero-build-dot {
       animation: none;
     }
 
-    #canvas-container,
+    .hero-build-cursor {
+      animation: none;
+      opacity: 0.65;
+    }
+
     .noise-overlay {
       display: none;
+    }
+
+    .hero-build-cta {
+      opacity: 1;
     }
   }
 
@@ -783,28 +392,19 @@ const discoveryPosts = allContent.sort((a, b) => {
     }
   }
 
-  @keyframes cta-float {
+  @keyframes cta-dot-breathe {
     0%,
     100% {
-      transform: translateY(0);
+      transform: scale(1);
+      opacity: 0.9;
     }
     50% {
-      transform: translateY(-2px);
+      transform: scale(1.16);
+      opacity: 1;
     }
   }
 
-  @keyframes cta-scan {
-    0%,
-    65%,
-    100% {
-      transform: translateX(-130%);
-    }
-    80% {
-      transform: translateX(130%);
-    }
-  }
-
-  @keyframes cta-caret-blink {
+  @keyframes cta-cursor-blink {
     0%,
     49% {
       opacity: 1;

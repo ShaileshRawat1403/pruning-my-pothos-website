@@ -176,36 +176,26 @@ const itemListJsonLd = {
         <path class="graph-link graph-link-3" d="M 210 82 L 106 132" />
         <path class="graph-link graph-link-4" d="M 210 82 L 314 132" />
 
-        <a href="/systems/systems-001-foundations/">
-          <g class="graph-node graph-node-core graph-drift-core">
-            <circle cx="210" cy="82" r="24" />
-            <text x="210" y="86" text-anchor="middle">core</text>
-          </g>
-        </a>
-        <a href="/systems/entity-glossary-for-ai-discoverability/">
-          <g class="graph-node graph-drift-a">
-            <circle cx="86" cy="42" r="15" />
-            <text x="86" y="46" text-anchor="middle">entity</text>
-          </g>
-        </a>
-        <a href="/systems/seo-aeo-geo-how-things-fit-together/">
-          <g class="graph-node graph-drift-b">
-            <circle cx="334" cy="42" r="17" />
-            <text x="334" y="46" text-anchor="middle">signals</text>
-          </g>
-        </a>
-        <a href="/systems/agent-instructions-and-handoff-as-an-operating-system/">
-          <g class="graph-node graph-drift-c">
-            <circle cx="106" cy="132" r="17" />
-            <text x="106" y="136" text-anchor="middle">handoff</text>
-          </g>
-        </a>
-        <a href="/systems/observability-first-ai-systems/">
-          <g class="graph-node graph-drift-d">
-            <circle cx="314" cy="132" r="15" />
-            <text x="314" y="136" text-anchor="middle">observe</text>
-          </g>
-        </a>
+        <g class="graph-node graph-node-core graph-drift-core" tabindex="0" role="link" data-href="/systems/systems-001-foundations/" aria-label="Open systems foundations">
+          <circle cx="210" cy="82" r="24" />
+          <text x="210" y="86" text-anchor="middle">core</text>
+        </g>
+        <g class="graph-node graph-drift-a" tabindex="0" role="link" data-href="/systems/entity-glossary-for-ai-discoverability/" aria-label="Open entity glossary">
+          <circle cx="86" cy="42" r="15" />
+          <text x="86" y="46" text-anchor="middle">entity</text>
+        </g>
+        <g class="graph-node graph-drift-b" tabindex="0" role="link" data-href="/systems/seo-aeo-geo-how-things-fit-together/" aria-label="Open SEO AEO GEO map">
+          <circle cx="334" cy="42" r="17" />
+          <text x="334" y="46" text-anchor="middle">signals</text>
+        </g>
+        <g class="graph-node graph-drift-c" tabindex="0" role="link" data-href="/systems/agent-instructions-and-handoff-as-an-operating-system/" aria-label="Open handoff model">
+          <circle cx="106" cy="132" r="17" />
+          <text x="106" y="136" text-anchor="middle">handoff</text>
+        </g>
+        <g class="graph-node graph-drift-d" tabindex="0" role="link" data-href="/systems/observability-first-ai-systems/" aria-label="Open observability systems">
+          <circle cx="314" cy="132" r="15" />
+          <text x="314" y="136" text-anchor="middle">observe</text>
+        </g>
       </svg>
     </figure>
     <p>
@@ -283,9 +273,31 @@ const itemListJsonLd = {
       el._typeTimer = window.setTimeout(tick, 400);
     };
 
+    const initSignalGraph = () => {
+      const nodes = document.querySelectorAll('.home-signal-graph .graph-node[data-href]');
+      nodes.forEach((node) => {
+        if (node.dataset.bound === 'true') return;
+        node.dataset.bound = 'true';
+        const href = node.getAttribute('data-href');
+        if (!href) return;
+        node.addEventListener('click', () => {
+          window.location.href = href;
+        });
+        node.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            window.location.href = href;
+          }
+        });
+      });
+    };
+
     initHeroTypewriter();
+    initSignalGraph();
     document.addEventListener('astro:page-load', initHeroTypewriter);
     document.addEventListener('astro:after-swap', initHeroTypewriter);
+    document.addEventListener('astro:page-load', initSignalGraph);
+    document.addEventListener('astro:after-swap', initSignalGraph);
   </script>
 </Layout>
 
@@ -563,10 +575,6 @@ const itemListJsonLd = {
     will-change: transform;
   }
 
-  .home-signal-graph a {
-    cursor: pointer;
-  }
-
   .graph-node circle {
     fill: color-mix(in srgb, var(--color-bg) 97%, #f97316 3%);
     stroke: color-mix(in srgb, var(--color-border) 80%, #f97316 20%);
@@ -623,17 +631,17 @@ const itemListJsonLd = {
     fill: color-mix(in srgb, var(--color-text-heading) 80%, #f97316 20%);
   }
 
-  .home-signal-graph a:focus-visible {
+  .graph-node:focus-visible {
     outline: none;
   }
 
-  .home-signal-graph a:focus-visible .graph-node circle {
+  .graph-node:focus-visible circle {
     fill: color-mix(in srgb, #f97316 12%, var(--color-bg));
     stroke: color-mix(in srgb, #f97316 50%, var(--color-border));
     transform: scale(1.09);
   }
 
-  .home-signal-graph a:focus-visible .graph-node text {
+  .graph-node:focus-visible text {
     fill: color-mix(in srgb, var(--color-text-heading) 80%, #f97316 20%);
   }
 
@@ -781,6 +789,25 @@ const itemListJsonLd = {
   @media (max-width: 420px) {
     .hero-animated-line {
       font-size: clamp(1.35rem, 7.5vw, 2.2rem);
+    }
+
+    .home-direct-answer {
+      padding: 0 0.75rem;
+    }
+
+    .home-direct-answer h2 {
+      font-size: 1.85rem;
+      line-height: 1.15;
+    }
+
+    .home-signal-graph {
+      width: min(360px, 96vw);
+      margin: 0.1rem auto 0.85rem;
+    }
+
+    .home-direct-answer p {
+      max-width: 34ch;
+      margin-inline: auto;
     }
   }
 

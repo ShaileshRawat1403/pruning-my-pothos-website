@@ -4,13 +4,15 @@
     interface Props {
         posts: any[];
         maxDisplay?: number;
+        useProvidedOrder?: boolean;
     }
 
-    const { posts, maxDisplay = 12 } = Astro.props;
+    const { posts, maxDisplay = 12, useProvidedOrder = false } = Astro.props;
 
     // Enhanced content prioritization
-    const featuredPosts = posts
-        .filter(post => post.data.featured === true)
+    const basePosts = useProvidedOrder ? posts : posts.filter(post => post.data.featured === true);
+
+    const featuredPosts = basePosts
         .sort((a, b) => {
             // Multi-factor scoring system
             const getScore = (post) => {

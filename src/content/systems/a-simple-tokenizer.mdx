@@ -65,6 +65,10 @@ Before a Large Language Model (LLM) can "think," it must read. But computers can
 
 This seems like a trivial implementation detail, but it dictates the fundamental capabilities and limitations of the model.
 
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> Read this page as a tradeoff map: make boundaries explicit, track feedback loops, and optimize only after constraints are clear.</p>
+</aside>
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
@@ -149,6 +153,8 @@ When designing systems around LLMs, tokenization creates invisible constraints:
 - **Security:** Some "jailbreaks" work by forcing the tokenizer to split forbidden words in ways that bypass safety filters (e.g., splitting "bomb" into "b-omb").
 
 Understanding the tokenizer means understanding the raw material of the intelligence you are orchestrating.
+
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
 
 ### What this changes in practice
 

@@ -15,7 +15,7 @@ const cleanText = (value: string) => value.replace(/<[^>]*>/g, '');
   <div class="systems-grid" style={`--grid-columns: ${columns}; --card-tone: ${tone}`}>
     {items.map((system) => (
       <a
-        href={`/systems/${system.slug}`}
+        href={`/systems/${system.slug}/`}
         class="system-card"
       >
         <h2>{system.data.title}</h2>

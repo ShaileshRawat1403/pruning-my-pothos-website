@@ -16,7 +16,7 @@ const sortedExperiments = sortedByDate(experimentEntries);
   </div>
   <div class="card-grid">
     {sortedExperiments.map(entry => (
-      <a href={`/shelf/local-experiments/${entry.slug.split('/')[1]}`} class="card">
+      <a href={`/shelf/local-experiments/${entry.slug.split('/')[1]}/`} class="card">
         <div class="card-img">
           {entry.data.coverUrl ? (
             <img src={entry.data.coverUrl} alt={`Cover image for ${entry.data.title}`} loading="lazy" />

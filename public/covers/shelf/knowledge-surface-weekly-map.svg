@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Knowledge Surface Weekly Map</title>
+  <desc id="desc">Editorial cover showing capture, structure, and link flow for knowledge management.</desc>
+  <rect width="1200" height="630" fill="#f4f2ec"/>
+  <rect x="72" y="82" width="1056" height="466" rx="28" fill="#fffcf6" stroke="#d5cec0" stroke-width="4"/>
+
+  <rect x="136" y="206" width="258" height="170" rx="18" fill="none" stroke="#2e2d2a" stroke-width="4"/>
+  <rect x="470" y="206" width="258" height="170" rx="18" fill="none" stroke="#2e2d2a" stroke-width="4"/>
+  <rect x="804" y="206" width="258" height="170" rx="18" fill="#ef7d32" fill-opacity="0.12" stroke="#ef7d32" stroke-width="4"/>
+
+  <text x="196" y="268" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30" fill="#272623">Capture</text>
+  <text x="532" y="268" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30" fill="#272623">Structure</text>
+  <text x="884" y="268" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30" fill="#272623">Link</text>
+
+  <path d="M394 288 H470" stroke="#2e2d2a" stroke-width="4"/>
+  <path d="M728 288 H804" stroke="#2e2d2a" stroke-width="4"/>
+
+  <text x="136" y="126" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#1f1f1c">Knowledge Surface Weekly Map</text>
+  <text x="136" y="164" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" fill="#4c4a45">Keeping notes reusable across writing and retrieval</text>
+</svg>

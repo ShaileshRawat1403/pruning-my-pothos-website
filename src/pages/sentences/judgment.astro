@@ -10,8 +10,11 @@ if (!category) {
 }
 const sentences = await getCollection('sentences', ({ data }) => data.category === category.title);
 ---
-<Layout title={`Sentences | ${category.title}`}>
-  <a class="category-back" href="/sentences">Back to /sentences</a>
+<Layout
+  title={`Sentences | ${category.title} | A Thinking Workspace`}
+  description="Short reflections on judgment, trade-offs, and decision quality in AI-assisted work."
+>
+  <a class="category-back" href="/sentences/">Back to /sentences</a>
   <div class="section-head section-head--centered">
     <h1>{category.title}</h1>
     <p class="mode-line">{category.description}</p>

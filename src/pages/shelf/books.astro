@@ -14,7 +14,7 @@ const sortedBooks = sortedByDate(bookEntries);
   </p>
   <div class="card-grid">
     {sortedBooks.map(entry => (
-      <a href={`/shelf/books/${entry.slug.split('/')[1]}`} class="card">
+      <a href={`/shelf/books/${entry.slug.split('/')[1]}/`} class="card">
         <div class="card-img">Image Placeholder</div>
         <div class="card-content">
           <h2 class="card-title">{entry.data.title}</h2>

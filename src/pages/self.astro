@@ -7,7 +7,10 @@ const selfEntries = await getCollection('self');
 const sortedSelf = sortedByDate(selfEntries);
 ---
 
-<Layout title="Self | A Thinking Workspace">
+<Layout
+  title="Self | A Thinking Workspace"
+  description="Reflective entries on identity, habits, attention, and the personal systems behind deliberate work."
+>
   <section class="self-page">
     <div class="section-head">
       <h1>Self</h1>
@@ -18,7 +21,7 @@ const sortedSelf = sortedByDate(selfEntries);
     <ul class="self-list">
       {sortedSelf.map(entry => (
         <li>
-          <a href={`/self/${entry.slug}`}>{entry.data.title}</a>
+          <a href={`/self/${entry.slug}/`}>{entry.data.title}</a>
         </li>
       ))}
     </ul>

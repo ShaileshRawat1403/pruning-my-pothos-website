@@ -10,8 +10,11 @@ if (!category) {
 }
 const systems = await getCollection('systems', ({ data }) => data.category === category.title);
 ---
-<Layout title={`Systems | ${category.title}`}>
-  <a class="category-back" href="/systems">Back to /systems</a>
+<Layout
+  title={`Systems | ${category.title} | A Thinking Workspace`}
+  description="Clear explanations of AI systems behavior, model limits, and production trade-offs."
+>
+  <a class="category-back" href="/systems/">Back to /systems</a>
   <div class="section-head section-head--centered">
     <h1>{category.title}</h1>
     <p class="mode-line">{category.description}</p>

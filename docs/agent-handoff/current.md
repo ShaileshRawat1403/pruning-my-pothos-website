@@ -1,20 +1,18 @@
 # Agent Handoff: Current State
 
 ## Last updated
-- Date: 2026-02-12
+- Date: 2026-03-04
 - Updated by: Codex agent
 
 ## What changed
-- Added SEO/AEO/GEO foundation:
-  - `sitemap.xml` generation
-  - `robots.txt` generation
-  - `llms.txt` generation
-  - canonical + OG + Twitter metadata defaults
-- Added structured data refinements:
-  - global `WebSite`, `Organization`, `Person`, and `WebPage` schema
-  - article-level schema for systems detail pages
-- Added explicit per-page metadata on top hub pages:
-  - home, about, systems, sentences, shelf
+- SEO remediation pass from SEMrush crawl exports:
+  - standardized trailing-slash canonical behavior in generated links and sitemap URLs
+  - reduced redirect-prone internal URLs by normalizing page/component link builders
+  - added markdown/MDX rehype transform to auto-normalize internal relative links to trailing slash
+  - fixed robots directive format to standards-compliant output and retained sitemap reference
+  - improved meta-description uniqueness with title-based fallback descriptions in `Layout.astro`
+  - added/updated explicit descriptions on key section/category/detail templates where missing
+  - updated stale external references in `systems-001-foundations.mdx` to stable, crawlable sources
 
 ## Key files touched
 - `astro.config.mjs`
@@ -23,25 +21,509 @@
 - `src/pages/robots.txt.ts`
 - `src/pages/llms.txt.ts`
 - `src/pages/index.astro`
-- `src/pages/about.astro`
+- `src/components/ContentDiscovery.astro`
+- `src/components/SystemsList.astro`
+- `src/components/SentencesList.astro`
+- `src/components/SimpleEnhancedPostCard.astro`
+- `src/components/EnhancedPostCard.astro`
+- `src/components/PostCard.astro`
+- `src/components/Search.astro`
+- `src/components/TagList.astro`
 - `src/pages/systems.astro`
 - `src/pages/sentences.astro`
 - `src/pages/shelf.astro`
 - `src/pages/systems/[slug].astro`
-- `AGENTS.md`
+- `src/pages/sentences/[slug].astro`
+- `src/pages/self.astro`
+- `src/pages/self/[slug].astro`
+- `src/pages/sticky-notes.astro`
+- `src/pages/sticky-notes/[slug].astro`
+- `src/pages/tags.astro`
+- `src/pages/tags/[tag].astro`
+- `src/pages/systems/concepts.astro`
+- `src/pages/systems/explanations.astro`
+- `src/pages/systems/how-things-fit-together.astro`
+- `src/pages/sentences/attention.astro`
+- `src/pages/sentences/meaning.astro`
+- `src/pages/sentences/judgment.astro`
+- `src/pages/portfolio.astro`
+- `src/pages/shelf/*.astro` (category index link normalization)
+- `src/content/systems/systems-001-foundations.mdx`
+- `src/utils/rehypeTrailingSlashInternalLinks.mjs`
 
 ## Decisions
 - Default canonical site URL is `https://pruningmypothos.com` with env override via `SITE_URL`.
 - Systems detail pages use article OG type and article JSON-LD.
 - Shared semantic bridge cover is used as the systems social image fallback.
+- Trailing-slash URL style is now the enforced internal convention to match production hosting behavior.
+- Internal markdown/MDX links are normalized at build time instead of manual post editing.
 
 ## Open risks / follow-ups
-- Portfolio pages use a separate layout (`PortfolioLayout.astro`) and are not yet aligned with global metadata/schema defaults.
-- No per-entry social image field exists in systems content schema yet; all systems articles share a fallback image.
-- Search Console / Bing submission must be done outside repo.
+- Production `robots.txt` is currently Cloudflare-managed; repo updates must be mirrored in Cloudflare rules/content or Astro route must be source-of-truth.
+- `No HSTS support` remains infrastructure-level and cannot be solved in Astro source alone.
+- External source uptime can drift over time; periodic outbound link checks are still required.
 
 ## Suggested next actions
-1. Add metadata parity in `PortfolioLayout.astro`.
-2. Add optional `coverUrl` for systems content and wire per-article social images.
-3. Submit sitemap to Google Search Console and Bing Webmaster Tools.
+1. Align Cloudflare `robots.txt` behavior with repo output (or disable CF override).
+2. Re-run SEMrush crawl and compare: `301`, `sitemap incorrect pages`, `duplicate description`, and `broken external links`.
+3. Start Phase 2 SEO/AEO/GEO: entity-first summaries, schema refinement per section, and prompt-answer targeting.
 
+## Update: 2026-03-05 (SEO/AEO/GEO content cluster)
+
+### Summary
+- Added a cross-section SEO/AEO/GEO knowledge cluster to improve both discoverability and topical authority.
+- Published one flagship systems mapping doc and two supporting systems docs (Concepts + Explanations).
+- Added supporting sentences, sticky notes, and a self entry to reinforce internal entity coherence and interlinking.
+
+### New files
+- `src/content/systems/seo-aeo-geo-how-things-fit-together.mdx`
+- `src/content/systems/seo-aeo-geo-in-plain-terms.mdx`
+- `src/content/systems/aeo-and-geo-as-a-retrieval-design-problem.mdx`
+- `src/content/sentences/attention-follows-structure.md`
+- `src/content/sentences/entities-are-memory-anchors.md`
+- `src/content/sentences/citations-are-earned-not-requested.md`
+- `src/content/sticky-notes/note-34.md`
+- `src/content/sticky-notes/note-35.md`
+- `src/content/sticky-notes/note-36.md`
+- `src/content/sticky-notes/note-37.md`
+- `src/content/self/writing-for-two-readers.md`
+
+### Decisions
+- Kept section-specific style constraints intact:
+  - Systems docs: Key takeaways + 3-act TOC pattern + inline SVG diagrams + comparison tables.
+  - Sentences: short reflective style with final "What this changes in practice" line.
+  - Sticky notes: micro-note structure with strict frontmatter.
+  - Self: lead paragraph, sparse highlights, and inline responsive figure.
+- Used trailing-slash internal links in new docs for canonical consistency.
+
+### Validation
+- `npm run build` passed with all new pages generated.
+
+### Open risks / follow-ups
+- `robots.txt` on production may remain cached briefly at Cloudflare edge even after deploy.
+- Next SEMrush/GSC verification should be done after edge cache settles to confirm issue deltas.
+
+### Suggested next actions
+1. Re-run SEMrush site audit and compare deltas in `301`, duplicate metadata, and crawlability categories.
+2. Add FAQ schema blocks to the three new systems pages if snippet/answer-surface capture is a priority.
+3. Add one shared-resources entry curating SEO/AEO/GEO primary references and link from new systems pages.
+
+## Update: 2026-03-05 (Systems consistency automation + normalization)
+
+### Summary
+- Added automated consistency linting for all Systems docs.
+- Enforced baseline gates in code: minimum word count and required Systems structure.
+- Normalized all failing Systems docs so the whole section now passes the baseline.
+
+### Files touched
+- `scripts/lint-systems-consistency.mjs` (new)
+- `package.json` (`lint:systems` script)
+- `src/content/systems/seo-aeo-geo-in-plain-terms.mdx` (rewritten to full Systems format)
+- `src/content/systems/aeo-and-geo-as-a-retrieval-design-problem.mdx` (rewritten to full Systems format)
+- `src/content/systems/context-windows-as-working-memory.mdx`
+- `src/content/systems/embeddings-explained-like-youre-human.mdx`
+- `src/content/systems/runtime-over-model-why-orchestration-is-the-product.mdx`
+- `src/content/systems/structured-output-and-why-it-matters.mdx`
+- `AGENTS.md` (Systems standards now include target and hard minimum word criteria)
+
+### Decisions
+- Systems consistency checks are now executable, not only editorial guidance.
+- Hard gate currently validates:
+  - min word count (`>= 800`, body-only)
+  - Key takeaways presence
+  - TOC anchor and `.toc` nav
+  - Act I/II/III headings
+- Kept checks narrow and deterministic to avoid false positives.
+
+### Validation
+- `npm run lint:systems` passed (`OK: 27 systems docs passed consistency checks.`)
+- `npm run build` passed.
+
+### Open risks / follow-ups
+- The linter does not yet enforce table/callout/link balance quality; it enforces structure and length only.
+- Existing older docs may still vary stylistically while passing baseline checks.
+
+### Suggested next actions
+1. Add a lightweight CI step to run `npm run lint:systems` on pull requests.
+2. Add optional advisory checks (non-blocking) for internal/external link presence and table usage.
+3. Periodically review long docs for verbosity drift despite passing minimum structure.
+
+## Update: 2026-03-05 (CI wiring for Systems consistency)
+
+### Summary
+- Added a dedicated CI workflow for PR/push quality checks.
+- CI now runs systems consistency reporting, systems lint gates, and full site build.
+- Deployment workflow now blocks on `lint:systems` before build/deploy.
+
+### Files touched
+- `.github/workflows/ci.yml` (new)
+- `.github/workflows/deploy-hostinger.yml`
+- `scripts/report-systems-consistency.mjs` (new)
+- `package.json` (new scripts: `report:systems`, `verify:systems`)
+
+### Decisions
+- Keep `report:systems` advisory and non-blocking.
+- Keep `lint:systems` blocking for consistency safety.
+- Require `lint:systems` in deploy workflow to prevent drift from reaching production.
+
+### Validation
+- `npm run report:systems` passed.
+- `npm run lint:systems` passed.
+- `npm run build` passed.
+
+## Update: 2026-03-05 (Advisory noise tuning + automatic cross-link cleanup)
+
+### Summary
+- Tuned advisory checks to reduce false/noisy warnings.
+- Ran an automated cleanup pass that injected internal related-reading links into systems docs missing them.
+- Reduced advisory warning volume from 70 to 5 while preserving strict blocking checks.
+
+### Files touched
+- `scripts/lint-systems-advisory.mjs` (threshold tuning)
+- `src/content/systems/*.mdx` (targeted auto-insert of internal related links where missing)
+- `src/content/systems/systems-001-foundations.mdx` (added internal related links near conclusion)
+
+### Decisions
+- Advisory is now focused on high-signal drift:
+  - words close to floor (`< 850`)
+  - very long docs (`> 3000`)
+  - missing internal links
+  - missing visual aid (table/diagram)
+- Removed low-signal advisory checks for mandatory external links and callouts.
+
+### Validation
+- `npm run lint:systems:advisory` passes (non-blocking) with 5 warnings.
+- `npm run verify:systems` passes.
+- Strict `npm run lint:systems` remains green.
+
+## Update: 2026-03-05 (Systems callout/highlight enforcement)
+
+### Summary
+- Added explicit consistency enforcement for callouts and highlights across all Systems docs.
+- Normalized existing Systems docs so each doc now includes at least one callout and one highlight span.
+- Promoted these checks into the blocking systems linter.
+
+### Files touched
+- `scripts/lint-systems-consistency.mjs` (new required checks)
+- `AGENTS.md` (Systems standards updated)
+- `src/content/systems/*.mdx` (normalization pass for missing callout/highlight blocks)
+
+### Decisions
+- Callout/highlight are now section-level consistency requirements for Systems docs.
+- Advisory checks remain non-blocking; structural consistency checks are blocking.
+
+### Validation
+- `npm run lint:systems:advisory` -> no warnings.
+- `npm run lint:systems` -> passed for all 27 systems docs.
+- `npm run build` -> passed.
+
+## Update: 2026-03-05 (SEO/AEO/GEO agent instruction framework)
+
+### Summary
+- Added a reusable SEO/AEO/GEO instruction framework with a clear separation between transferable core rules and site-specific overlay.
+- Added playbooks for cluster rollout, schema rollout, and measurement/reporting to make execution consistent.
+- Added authoring templates for systems pages, entity-centric pages, and FAQ blocks.
+- Wired framework paths and usage rules into `AGENTS.md` so future agents follow one standard operating model.
+
+### Files touched
+- `docs/agent-instructions/seo-aeo-geo-core.md` (new)
+- `docs/agent-instructions/seo-aeo-geo-site-overlay.md` (new)
+- `docs/agent-instructions/playbooks/content-cluster-rollout.md` (new)
+- `docs/agent-instructions/playbooks/schema-rollout.md` (new)
+- `docs/agent-instructions/playbooks/measurement-and-reporting.md` (new)
+- `docs/agent-instructions/templates/systems-seo-aeo-geo-template.md` (new)
+- `docs/agent-instructions/templates/entity-page-template.md` (new)
+- `docs/agent-instructions/templates/faq-block-template.md` (new)
+- `docs/agent-instructions/implementation/seo-aeo-geo-roadmap.md` (new)
+- `AGENTS.md` (new section with framework references and agent usage rule)
+
+### Decisions
+- Core framework remains generic and portable across projects.
+- Site Overlay contains repo-specific constraints and section-role mapping.
+- Playbooks focus on execution sequence and acceptance criteria, not editorial style duplication.
+- Templates encode consistent page anatomy while preserving section-specific style constraints already defined in `AGENTS.md`.
+
+### Open risks / follow-ups
+- Framework exists, but current pages are not yet fully audited against every new playbook criterion.
+- Measurement playbook requires a repeatable query/prompt set to avoid inconsistent tracking.
+
+### Suggested next actions
+1. Run a first structured gap audit of key pages against the new Core + Site Overlay checks.
+2. Define a stable query/prompt benchmark set for monthly SEO/AEO/GEO reporting.
+3. Implement targeted upgrades in one pilot cluster (`systems` first), then apply to other sections.
+
+## Update: 2026-03-05 (Cross-section topic mapping + automation)
+
+### Summary
+- Added a value-first cross-section topic map to guide safe, systematic topic expansion across `systems`, `sentences`, `self`, `shelf`, and `sticky-notes`.
+- Added an automated topic coverage report script (`report:topics`) so future expansion can be evidence-driven rather than ad-hoc.
+- Wired both into `AGENTS.md` under the SEO/AEO/GEO instruction framework section.
+
+### Files touched
+- `docs/agent-instructions/implementation/cross-section-topic-map-v1.md` (new)
+- `scripts/report-topic-coverage.mjs` (new)
+- `package.json` (new script: `report:topics`)
+- `AGENTS.md` (framework references + topic report usage note)
+
+### Validation
+- `npm run report:topics` passed.
+- Current strategic seed gaps identified by report:
+  - missing: `observability`, `workflows`, `knowledge-management`
+  - thin: `decision-making`
+
+### Decisions
+- Topic expansion should prioritize durable value and section-fit over trend coverage.
+- Keep automated coverage checks advisory (reporting), not blocking, to avoid over-constraining editorial voice.
+
+### Suggested next actions
+1. Start Tier 1 topic expansion from `cross-section-topic-map-v1.md`.
+2. Add one pilot systems doc in each missing/thin seed area.
+3. Re-run `npm run report:topics` after each batch to track coverage deltas.
+
+## Update: 2026-03-05 (First cross-section implementation batch: observability)
+
+### Summary
+- Implemented the first mapped topic cluster (`observability`) across five sections:
+  - Systems
+  - Sentences
+  - Self
+  - Shelf (notes)
+  - Sticky notes
+- Tuned the topic report script to reduce advisory noise from tag variants (`workflow` vs `workflows` and related aliases).
+
+### Files touched
+- `src/content/systems/observability-first-ai-systems.mdx` (new)
+- `src/content/sentences/observability-turns-behavior-into-knowledge.md` (new)
+- `src/content/self/the-weekly-observability-reset.md` (new)
+- `src/content/shelf/notes/observability-logbook-pattern.md` (new)
+- `public/covers/shelf/observability-logbook-pattern.svg` (new)
+- `src/content/sticky-notes/note-38.md` (new)
+- `scripts/report-topic-coverage.mjs` (alias normalization for lower noise)
+
+### Validation
+- `npm run lint:systems` passed (`28 systems docs passed consistency checks`).
+- `npm run report:topics` passed.
+- `npm run build` passed.
+- Topic coverage change after batch:
+  - `observability`: now covered in 5 sections (strong)
+  - action candidates reduced to: `knowledge-management` (missing), `decision-making` (thin)
+
+### Decisions
+- Started with one high-value missing topic to prove the cross-section pattern end-to-end.
+- Kept report script advisory and improved canonicalization rather than adding stricter gating.
+
+### Suggested next actions
+1. Run the second batch on `knowledge-management` across at least three sections.
+2. Add one decision-design systems page plus matching sentence/self support to improve `decision-making` coverage.
+3. Add a compact monthly topic-coverage snapshot (append-only) for trend visibility.
+
+## Update: 2026-03-05 (Second cross-section implementation batch: knowledge-management)
+
+### Summary
+- Implemented the `knowledge-management` cluster across four sections in one batch:
+  - systems
+  - sentences
+  - self
+  - shelf/notes
+- Added a unique editorial cover for the shelf note entry.
+- Kept systems long-form and consistency gates intact while improving cross-section internal linking.
+
+### Files touched
+- `src/content/systems/knowledge-management-as-runtime-memory.mdx` (new)
+- `src/content/sentences/knowledge-needs-shape-to-compound.md` (new)
+- `src/content/self/building-a-knowledge-surface.md` (new)
+- `src/content/shelf/notes/knowledge-surface-weekly-map.md` (new)
+- `public/covers/shelf/knowledge-surface-weekly-map.svg` (new)
+
+### Validation
+- `npm run lint:systems` passed (`29 systems docs passed consistency checks`).
+- `npm run report:topics` passed.
+- `npm run build` passed.
+- Topic coverage delta:
+  - `knowledge-management`: now covered in 4 sections (strong).
+  - `retrieval`: improved to 4 sections (strong).
+  - Remaining strategic thin gap: `decision-making` (1 section).
+
+### Decisions
+- Prioritized durable value and cross-section reuse rather than adding isolated one-off pages.
+- Preserved section-specific writing constraints while improving shared entity coverage.
+
+### Suggested next actions
+1. Execute Batch 3 for `decision-making` (systems flagship + sentence + self support).
+2. Optionally add one shelf/shared-resource entry curating decision frameworks and postmortem references.
+3. Re-run `npm run report:topics` after Batch 3 and snapshot the delta.
+
+## Update: 2026-03-05 (Third cross-section implementation batch: decision-making)
+
+### Summary
+- Implemented the `decision-making` cluster across the planned three sections:
+  - systems flagship
+  - sentence support
+  - self reflection support
+- Added internal cross-links between the new decision pages and existing runtime/observability pages.
+- Completed the original strategic seed-coverage plan: no thin/missing topics remain in the seeded set.
+
+### Files touched
+- `src/content/systems/decision-making-under-uncertainty-in-ai-runtimes.mdx` (new)
+- `src/content/sentences/a-decision-rule-is-a-kindness-to-your-future-self.md` (new)
+- `src/content/self/decision-logs-beat-memory.md` (new)
+
+### Validation
+- `npm run lint:systems` passed (`30 systems docs passed consistency checks`).
+- `npm run report:topics` passed.
+- `npm run build` passed (`413 page(s) built`).
+- Strategic seed status after batch:
+  - `decision-making`: now 3 sections (strong)
+  - report now shows: `Action candidates: No thin/missing seed topics detected.`
+
+### Decisions
+- Kept the third batch scoped to the planned minimum set (systems + sentence + self) to preserve momentum and avoid content sprawl.
+- Maintained section-specific style constraints while expanding cross-section entity coherence.
+
+### Suggested next actions
+1. Run a monthly cadence update for `report:topics` and append trend snapshots.
+2. Consider optional expansion of `citation` and `agents` from developing to strong via one additional section each.
+3. Keep future batches tied to measurable gaps from `report:topics` to avoid ad-hoc growth.
+
+## Update: 2026-03-05 (Main-gap closure pass: entity/schema/evidence/AEO/distribution)
+
+### Summary
+- Implemented a focused gap-closure pass across the five requested categories:
+  - entity layer
+  - schema
+  - evidence/citation (GEO)
+  - AEO extraction
+  - distribution framework
+- Added a canonical systems glossary page with stable `term-*` anchors.
+- Extended systems content schema and systems detail rendering for optional `updatedAt`, `proofPoints`, and `faq`.
+- Enabled `FAQPage` JSON-LD on systems detail pages when FAQ frontmatter is present.
+- Added direct-answer question blocks and proof metadata to key flagship systems pages.
+- Added a distribution + canonical syndication playbook and a deterministic `report:gaps` script.
+
+### Files touched
+- `src/content/config.ts` (systems schema extension)
+- `src/pages/systems/[slug].astro` (FAQ schema, DefinedTerm linking, mentions, proof/update rendering)
+- `src/content/systems/entity-glossary-for-ai-discoverability.mdx` (new)
+- `src/content/systems/seo-aeo-geo-how-things-fit-together.mdx` (updated with faq/proof/updatedAt + direct answer)
+- `src/content/systems/observability-first-ai-systems.mdx` (updated with faq/proof/updatedAt + direct answer)
+- `src/content/systems/knowledge-management-as-runtime-memory.mdx` (updated with faq/proof/updatedAt + direct answer)
+- `src/content/systems/decision-making-under-uncertainty-in-ai-runtimes.mdx` (updated with faq/proof/updatedAt + direct answer)
+- `docs/agent-instructions/playbooks/distribution-and-canonical-syndication.md` (new)
+- `scripts/report-main-gaps.mjs` (new)
+- `package.json` (`report:gaps` script)
+- `AGENTS.md` (framework references + `report:gaps` usage)
+
+### Validation
+- `npm run lint:systems` passed (`31 systems docs passed consistency checks`).
+- `npm run report:topics` passed.
+- `npm run report:gaps` passed with status:
+  - Entity layer: Addressed
+  - Schema: Addressed
+  - Evidence/citation (GEO): Addressed
+  - AEO extraction: Addressed
+  - Distribution: Addressed (framework)
+- `npm run build` passed (`415 page(s) built`).
+
+### Decisions
+- Distribution was implemented as in-repo framework/process (playbook + reporting); actual off-site publication remains operational work outside this repository.
+- Gap closure was done with explicit, testable signals rather than qualitative-only claims.
+
+### Suggested next actions
+1. Execute one live cross-post cycle for a flagship explainer and track in a distribution log.
+2. Add one more `citation`-focused page to raise citation coverage from `developing` to `strong`.
+3. Keep running `npm run report:gaps` and `npm run report:topics` before each deploy batch.
+
+## Update: 2026-03-05 (Practical docs on agent instructions + handoff method)
+
+### Summary
+- Added two high-value Systems documents that explain the agent-instructions + handoff method using in-repo practical examples and measured outcomes.
+- Kept both pages aligned with Systems consistency standards (3-act structure, key takeaways, callout, highlight, tables, FAQs, proof blocks, direct answers).
+
+### Files touched
+- `src/content/systems/agent-instructions-and-handoff-as-an-operating-system.mdx` (new flagship)
+- `src/content/systems/from-ad-hoc-prompts-to-repeatable-agent-workflows.mdx` (new practical case study)
+
+### Validation
+- `npm run lint:systems` passed (`33 systems docs passed consistency checks`).
+- `npm run build` passed (`417 page(s) built`).
+- Topic report remains stable (`npm run report:topics`).
+- Main gap report remains addressed (`npm run report:gaps`).
+
+### Decisions
+- Kept publication in the current website (no separate repo) to maximize practical continuity and avoid maintenance overhead.
+- Used repository-native evidence and workflow outputs to make examples concrete and reproducible.
+
+### Suggested next actions
+1. Add one companion `self` entry and one `shelf/notes` template note linking to the two new systems docs.
+2. Add a short section-level index page in `systems` that groups these process docs as a mini series.
+3. Run one distribution cycle (cross-post with canonical) and capture outcomes in a dated log.
+
+## Update: 2026-03-05 (Reusable agent-ops case study template)
+
+### Summary
+- Added a permanent, usability-focused template for documenting agent-ops case studies with practical proof requirements.
+- Linked the template in `AGENTS.md` under the authoring templates list.
+
+### Files touched
+- `docs/agent-instructions/templates/agent-ops-case-study-template.md` (new)
+- `AGENTS.md` (template reference added)
+
+### Notes
+- Template includes: frontmatter scaffold, systems-standard body structure, required evidence sections, proof block pattern, reuse checklist, and anti-pattern list.
+
+## Update: 2026-03-05 (End-of-day closure)
+
+### Summary
+- Handoff is current for today's SEO/AEO/GEO framework work, gap-closure implementation, process-doc publication, and reusable template creation.
+- No unresolved code/schema blockers are pending in-repo from today's scope.
+
+### Open operational follow-through (outside core code changes)
+- Run one live distribution cycle (cross-post with canonical link back) and record outcomes.
+- Optionally add one supporting `self` note and one `shelf/notes` entry linking the new process docs.
+- Maintain weekly/monthly cadence for `npm run report:topics` and `npm run report:gaps`.
+
+## Update: 2026-03-05 (Disable FTP deploy for manual dist uploads)
+
+### Summary
+- Disabled automatic FTP deployment in GitHub Actions so push status is no longer tied to FTP credentials.
+- Kept a manual workflow entry (`workflow_dispatch`) that still runs install/lint/build checks as a release gate before manual `dist/` upload.
+
+### Files touched
+- `.github/workflows/deploy-hostinger.yml`
+
+### Root cause confirmed
+- Recent red workflow runs (including `b2b4c87`) failed at FTP step with:
+  - `Error: Input required and not supplied: password`
+- Build step itself was successful.
+
+### Current deployment mode
+- Manual upload from local `dist/` to hosting target.
+- Optional manual GitHub workflow run for verification only.
+
+## Update: 2026-03-05 (Homepage CTA typewriter + style-safe SEO rollback/fix)
+
+### Summary
+- Reworked homepage CTA typing animation so only text animates and CTA pill width stays stable.
+- Removed intrusive homepage content blocks that broke established editorial layout rhythm.
+- Retained non-visual structured-data enhancement (`FAQPage` JSON-LD) for homepage AEO support.
+
+### Files touched
+- `src/pages/index.astro`
+
+### Validation
+- `npm run build` passed (`417 page(s) built`).
+
+## Update: 2026-03-05 (Homepage caret blink + AEO/GEO signal pass)
+
+### Summary
+- Refined homepage CTA typing UX by separating the blinking caret from typed text, preventing width jitter and preserving a smooth typewriter loop.
+- Added a compact direct-answer block on homepage for AEO extraction (question-style heading + concise answer).
+- Added a style-consistent "Featured from the Workspace" signal block with intent-mapped internal links.
+- Strengthened homepage structured data with `dateModified` and `mentions` (DefinedTerm links to core entity pages).
+
+### Files touched
+- `src/pages/index.astro`
+
+### Notes
+- Maintained existing editorial layout style; no nav/hero/footer structural redesign.
+- Homepage schema remains aligned with visible content (no hidden FAQ schema).

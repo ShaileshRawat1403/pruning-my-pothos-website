@@ -15,7 +15,7 @@ const cleanedTags = tags.map(tag => tag.trim()).filter(Boolean);
     <ul class="tag-list" aria-label={label}>
       {cleanedTags.map((tag) => (
         <li>
-          <a class="tag-chip" href={`/tags/${slugifyTag(tag)}`}>{tag}</a>
+          <a class="tag-chip" href={`/tags/${slugifyTag(tag)}/`}>{tag}</a>
         </li>
       ))}
     </ul>

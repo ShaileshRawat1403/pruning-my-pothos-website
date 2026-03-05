@@ -8,9 +8,9 @@ const { entry, featured = false } = Astro.props;
 const { collection, slug } = entry;
 
 // Calculate URL
-let url = `/${collection}/${slug}`;
+let url = `/${collection}/${slug}/`;
 if (collection === 'shelf') {
-    url = `/shelf/${slug}`;
+    url = `/shelf/${slug}/`;
 }
 
 // Get content metadata

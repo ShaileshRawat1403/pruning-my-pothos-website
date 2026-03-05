@@ -21,11 +21,15 @@ const pathname = Astro.url.pathname;
 const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
 const {
 	title,
-	description = 'A personal workspace for exploring ideas in artificial intelligence, language, and systems.',
+	description,
 	image = '/my-self-portrait.png',
 	noindex = false,
 	ogType = 'website',
 } = Astro.props;
+const titleStem = title.replace(/\s*\|\s*A Thinking Workspace$/, '');
+const pageDescription =
+	description ??
+	`${titleStem} in A Thinking Workspace: systems, language, and reflective technical writing.`;
 const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
 const canonical = new URL(pathname, siteUrl).toString();
 const socialImage = new URL(image, siteUrl).toString();
@@ -34,7 +38,7 @@ const jsonLdWebPage = {
 	'@context': 'https://schema.org',
 	'@type': 'WebPage',
 	name: title,
-	description,
+	description: pageDescription,
 	url: canonical,
 	isPartOf: {
 		'@type': 'WebSite',
@@ -87,7 +91,7 @@ const jsonLdPerson = {
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
+		<meta name="description" content={pageDescription} />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="robots" content={pageRobots} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -97,12 +101,12 @@ const jsonLdPerson = {
 		<meta property="og:site_name" content="A Thinking Workspace" />
 		<meta property="og:type" content={ogType} />
 		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
+		<meta property="og:description" content={pageDescription} />
 		<meta property="og:url" content={canonical} />
 		<meta property="og:image" content={socialImage} />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
+		<meta name="twitter:description" content={pageDescription} />
 		<meta name="twitter:image" content={socialImage} />
 		<title>{title}</title>
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLdWebSite)}></script>
@@ -139,12 +143,12 @@ const jsonLdPerson = {
         <nav class="global-nav">
             <a href="/" class="nav-logo" aria-label="Home" set:html={logo}></a>
             <div id="primary-navigation" class="nav-links" aria-label="Primary">
-                <a href="/systems" class:list={[{ active: pathname.startsWith('/systems') }]}>/systems</a>
-                <a href="/sentences" class:list={[{ active: pathname.startsWith('/sentences') }]}>/sentences</a>
-                <a href="/sticky-notes" class:list={[{ active: pathname.startsWith('/sticky-notes') }]}>/sticky-notes</a>
-                <a href="/self" class:list={[{ active: pathname.startsWith('/self') }]}>/self</a>
-                <a href="/shelf" class:list={[{ active: pathname.startsWith('/shelf') }]}>/shelf</a>
-                <a href="/about" class:list={[{ active: pathname === '/about' }]}>/about</a>
+                <a href="/systems/" class:list={[{ active: pathname.startsWith('/systems') }]}>/systems</a>
+                <a href="/sentences/" class:list={[{ active: pathname.startsWith('/sentences') }]}>/sentences</a>
+                <a href="/sticky-notes/" class:list={[{ active: pathname.startsWith('/sticky-notes') }]}>/sticky-notes</a>
+                <a href="/self/" class:list={[{ active: pathname.startsWith('/self') }]}>/self</a>
+                <a href="/shelf/" class:list={[{ active: pathname.startsWith('/shelf') }]}>/shelf</a>
+                <a href="/about/" class:list={[{ active: pathname === '/about' || pathname === '/about/' }]}>/about</a>
             </div>
             <div class="nav-actions">
                 <button id="search-toggle" title="Search" aria-label="Open search">

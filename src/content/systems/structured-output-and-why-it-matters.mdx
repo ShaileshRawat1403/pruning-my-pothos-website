@@ -18,6 +18,12 @@ tags:
 
 For a Large Language Model's output to be useful in an automated system, it must be predictable. Structured output, such as JSON or XML, provides this predictability, turning a free-form text generator into a reliable component that can interoperate with other software.
 
+
+In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> Read this page as a tradeoff map: make boundaries explicit, track feedback loops, and optimize only after constraints are clear.</p>
+</aside>
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
@@ -161,6 +167,18 @@ first. This schema becomes part of the contract with the model. Your prompt
 should be designed to produce output that validates against this schema, and
 your code should include a validation step to handle cases where the model
 fails to do so.
+
+It also helps to version schemas explicitly. Once multiple services depend on a
+response format, silent key changes can break downstream jobs. Treat your model
+schema like an API contract: add fields in a backward-compatible way, deprecate
+carefully, and monitor validation failure rates as an operational metric.
+
+A useful system pattern is "generate -> validate -> repair." If validation
+fails, a small repair prompt can ask the model to return only a compliant
+object without changing meaning. This isolates formatting errors from semantic
+errors and improves end-to-end reliability.
+
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
 
 ### What this changes in practice
 

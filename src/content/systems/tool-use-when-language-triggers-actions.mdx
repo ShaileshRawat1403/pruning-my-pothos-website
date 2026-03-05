@@ -18,6 +18,12 @@ tags:
 
 Tool use gives a Large Language Model the ability to interact with the outside world. It transforms the model from a passive text generator into an active agent that can query databases, call APIs, and perform actions. This capability is powerful, but it introduces significant new risks and responsibilities.
 
+
+In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> Read this page as a tradeoff map: make boundaries explicit, track feedback loops, and optimize only after constraints are clear.</p>
+</aside>
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
@@ -96,6 +102,8 @@ The moment an LLM can trigger an action, the stakes become much higher. A bug is
 -   **Implement guardrails.** Use confirmation steps for any destructive or costly actions. A prompt like "Are you sure you want to delete this file?" is a critical safety mechanism.
 -   **Provide precise tool descriptions.** The LLM's decision to use a tool is based entirely on the description you provide. Vague or ambiguous descriptions will lead to incorrect tool usage.
 -   **Plan for failure.** The tool might fail, an API could be down, or the result might be an error. Your system must be able to handle these failures gracefully and report them back to the LLM.
+
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
 
 ### What this changes in practice
 

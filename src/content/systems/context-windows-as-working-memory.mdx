@@ -22,6 +22,12 @@ difficulty: 'intermediate'
 
 The context window of a Large Language Model is best understood as its working memory. It is a finite, temporary space where the model holds the information it needs to process a request. Everything inside this window is accessible; everything outside is forgotten.
 
+
+In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> Read this page as a tradeoff map: make boundaries explicit, track feedback loops, and optimize only after constraints are clear.</p>
+</aside>
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
@@ -83,13 +89,36 @@ Research shows that models often struggle to pay attention to information in the
 
 Furthermore, the cost and latency of processing large contexts remain significant. Just because a large context window is available does not mean it is efficient or practical to use it for every task.
 
+### Position beats volume
+
+Context quality is not only about "how much" but also "where." Systems often fail because teams keep adding documents while ignoring ordering. If a safety rule appears halfway through a long prompt, it competes with many unrelated tokens. If the same rule appears in a short system prefix and is repeated near decision points, compliance improves.
+
+A practical pattern is to split context into tiers:
+
+- **Persistent core:** identity, policy, definitions, and non-negotiable constraints.
+- **Task frame:** current objective, acceptance criteria, and known boundaries.
+- **Evidence pack:** only the documents needed for the current step.
+
+This tiering keeps critical information easy to attend to and reduces token waste.
+
 ## Act III: Principles in practice
 
 ### Operating the window
 
 Effective use of an LLM requires managing its working memory carefully. You cannot assume the model remembers everything you have ever told it. You must ensure that the information it needs to perform a task is present and prominent within the current context window.
 
-This has several practical implications. For long conversations, a summary of past interactions should be included in the prompt. For knowledge-intensive tasks, Retrieval-Augmented Generation (RAG) is used to find the most relevant information from an external database and place it at the top of the acontext window. This technique is more efficient and reliable than simply expanding the context to include an entire library of documents.
+This has several practical implications. For long conversations, a summary of past interactions should be included in the prompt. For knowledge-intensive tasks, Retrieval-Augmented Generation (RAG) is used to find the most relevant information from an external database and place it at the top of the context window. This technique is more efficient and reliable than simply expanding the context to include an entire library of documents.
+
+A reliable operating loop usually looks like this:
+
+1. compress previous turns into a short state snapshot
+2. retrieve only high-relevance evidence for the active task
+3. place constraints and acceptance checks near the decision point
+4. trim stale or duplicate context before the next call
+
+When this loop is explicit, performance is steadier and token budgets are predictable.
+
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
 
 ### What this changes in practice
 

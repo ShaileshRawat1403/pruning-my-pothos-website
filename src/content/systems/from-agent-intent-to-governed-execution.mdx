@@ -1,0 +1,220 @@
+---
+title: "From Agent Intent to Governed Execution"
+description: "How an agent request becomes controlled system behavior through runtime orchestration, policy gates, verification, and traceability."
+category: "How-things-fit-together"
+tags:
+  - mcp
+  - orchestration
+  - runtime
+  - policy
+  - verification
+  - traceability
+---
+
+> **Key takeaways**
+>
+> - Agent reliability is a runtime property, not a prompt property.
+> - The model should propose actions; the runtime should authorize execution.
+> - Deterministic contracts and structured traces make multi-step behavior auditable.
+> - The practical unit is not "a response" but "a governed step".
+
+Most agent failures are not caused by low model capability. They come from weak orchestration boundaries between model output and system execution. A model can be correct in language and still unsafe in behavior.
+
+This document explains the end-to-end path from user intent to runtime-controlled execution, and why each control point exists.
+
+
+In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> Read this page as a tradeoff map: make boundaries explicit, track feedback loops, and optimize only after constraints are clear.</p>
+</aside>
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: Runtime framing</summary>
+      <ol>
+        <li><a href="#why-intent-needs-a-runtime">Why intent needs a runtime</a></li>
+        <li><a href="#the-governed-step-model">The governed-step model</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: Orchestration flow</summary>
+      <ol>
+        <li><a href="#the-seven-control-stages">The seven control stages</a></li>
+        <li><a href="#message-parts-as-runtime-signals">Message parts as runtime signals</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Production discipline</summary>
+      <ol>
+        <li><a href="#where-systems-break">Where systems break</a></li>
+        <li><a href="#operational-patterns-that-hold">Operational patterns that hold</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: Runtime framing
+
+### Why intent needs a runtime
+
+The model can map user intent to likely actions, but likelihood is not governance. Production systems need explicit decision boundaries where policy, risk, and verification can intervene before side effects happen.
+
+Without that boundary, the pipeline becomes:
+
+`intent -> model output -> side effect`
+
+With runtime orchestration, the pipeline becomes:
+
+`intent -> model proposal -> runtime decision -> side effect -> verification -> trace`
+
+<figure class="diagram">
+  <svg viewBox="0 0 960 320" role="img" aria-labelledby="governed-pipeline-title governed-pipeline-desc">
+    <title id="governed-pipeline-title">Governed execution pipeline</title>
+    <desc id="governed-pipeline-desc">Pipeline from user intent to model proposal, runtime decision, tool execution, verification, and trace capture.</desc>
+    <rect width="960" height="320" fill="var(--color-bg)" />
+
+    <rect x="44" y="132" width="114" height="44" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
+    <rect x="190" y="132" width="136" height="44" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
+    <rect x="358" y="122" width="180" height="64" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="2" />
+    <rect x="570" y="132" width="112" height="44" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
+    <rect x="714" y="132" width="96" height="44" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
+    <rect x="842" y="132" width="88" height="44" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
+
+    <text x="72" y="160" font-family="var(--font-mono)" font-size="11">Intent</text>
+    <text x="214" y="160" font-family="var(--font-mono)" font-size="11">Model proposal</text>
+    <text x="389" y="148" font-family="var(--font-mono)" font-size="11" fill="var(--color-accent)">Runtime gate</text>
+    <text x="389" y="164" font-family="var(--font-mono)" font-size="10">policy + scope + risk</text>
+    <text x="594" y="160" font-family="var(--font-mono)" font-size="11">Tool action</text>
+    <text x="730" y="160" font-family="var(--font-mono)" font-size="11">Verify</text>
+    <text x="857" y="160" font-family="var(--font-mono)" font-size="11">Trace</text>
+
+    <path d="M158 154 H190 M326 154 H358 M538 154 H570 M682 154 H714 M810 154 H842" stroke="currentColor" stroke-width="2" />
+  </svg>
+  <figcaption>The runtime gate is where intention becomes governed action.</figcaption>
+</figure>
+
+### The governed-step model
+
+A governed step is one atomic unit of execution with five properties:
+
+1. **Context**: run-scoped identifiers and ownership.
+2. **Proposal**: model-produced next action.
+3. **Decision**: allow, deny, or ask.
+4. **Evidence**: verification signals from execution.
+5. **Trace**: structured record for replay and audit.
+
+This gives agents a controlled rhythm. Instead of an opaque conversation, you get a sequence of accountable transitions.
+
+## Act II: Orchestration flow
+
+### The seven control stages
+
+A practical orchestration loop usually passes through seven stages.
+
+<div class="table-scroll-wrap">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Runtime question</th>
+        <th>Output artifact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Intent capture</strong></td>
+        <td>What is the requested outcome?</td>
+        <td>Intent statement + constraints</td>
+      </tr>
+      <tr>
+        <td><strong>2. Proposal</strong></td>
+        <td>What action does the model suggest?</td>
+        <td>Structured action proposal</td>
+      </tr>
+      <tr>
+        <td><strong>3. Policy gate</strong></td>
+        <td>Is this action permitted here?</td>
+        <td>Decision (`allow|deny|ask`)</td>
+      </tr>
+      <tr>
+        <td><strong>4. Execution</strong></td>
+        <td>What happened in the tool boundary?</td>
+        <td>Tool result payload</td>
+      </tr>
+      <tr>
+        <td><strong>5. Verification</strong></td>
+        <td>Did evidence confirm completion?</td>
+        <td>Verification report</td>
+      </tr>
+      <tr>
+        <td><strong>6. Trace write</strong></td>
+        <td>Can this step be replayed or explained?</td>
+        <td>Audit/trace event</td>
+      </tr>
+      <tr>
+        <td><strong>7. Next-step decision</strong></td>
+        <td>Continue, compact, or stop?</td>
+        <td>Loop transition state</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Message parts as runtime signals
+
+When model output is split into message parts (`reasoning`, `text`, `tool`, `patch`, `step`), orchestration becomes inspectable. This turns raw generation into a timeline the runtime can evaluate and the operator can debug.
+
+<figure class="diagram">
+  <svg viewBox="0 0 960 250" role="img" aria-labelledby="parts-timeline-title parts-timeline-desc">
+    <title id="parts-timeline-title">Message parts timeline</title>
+    <desc id="parts-timeline-desc">Timeline of reasoning, text, tool call, patch artifact, and step marker.</desc>
+    <rect width="960" height="250" fill="var(--color-bg)" />
+    <line x1="80" y1="124" x2="880" y2="124" stroke="currentColor" stroke-width="2" />
+
+    <circle cx="150" cy="124" r="8" fill="var(--color-accent)" />
+    <circle cx="300" cy="124" r="8" fill="currentColor" opacity="0.55" />
+    <circle cx="450" cy="124" r="8" fill="var(--color-accent)" />
+    <circle cx="600" cy="124" r="8" fill="currentColor" opacity="0.55" />
+    <circle cx="750" cy="124" r="8" fill="var(--color-accent)" />
+
+    <text x="114" y="90" font-family="var(--font-mono)" font-size="11">reasoning</text>
+    <text x="283" y="168" font-family="var(--font-mono)" font-size="11">text</text>
+    <text x="437" y="90" font-family="var(--font-mono)" font-size="11">tool</text>
+    <text x="584" y="168" font-family="var(--font-mono)" font-size="11">patch</text>
+    <text x="742" y="90" font-family="var(--font-mono)" font-size="11">step</text>
+
+    <path d="M150 116 V96 M300 132 V152 M450 116 V96 M600 132 V152 M750 116 V96" stroke="currentColor" stroke-width="1.5" />
+  </svg>
+  <figcaption>Structured message parts let the runtime inspect progression, not just final text.</figcaption>
+</figure>
+
+For an implementation case, see [Soothsayer MCP kernel: from prompts to controlled orchestration](/shelf/local-experiments/soothsayer-mcp-kernel).
+For the framing lens behind this flow, see [Runtime Over Model: Why Orchestration Is the Product](/systems/runtime-over-model-why-orchestration-is-the-product).
+
+## Act III: Production discipline
+
+### Where systems break
+
+Most breakdowns happen at boundaries, not at generation:
+
+- proposals executed without policy validation
+- tool success accepted without verification
+- unstructured logs that hide step-level causality
+- implicit session state that cannot be reconstructed
+
+### Operational patterns that hold
+
+Reliable teams treat orchestration as a first-class system:
+
+- They require explicit run context for every stateful action.
+- They enforce deterministic response contracts where clients depend on stable fields.
+- They keep traces structured so incidents can be replayed and corrected.
+- They preserve a clean human intervention path for ambiguous or risky branches.
+
+### What this changes in practice
+
+Stop designing around “better prompts” as the primary reliability strategy. Design around governed steps, explicit decision gates, and verifiable artifacts. That is how intent becomes accountable execution.

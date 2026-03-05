@@ -1,12 +1,10 @@
 name: Deploy to Hostinger
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
-  deploy:
+  verify-manual-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,15 +15,7 @@ jobs:
           cache: npm
 
       - run: npm ci
+      - run: npm run lint:systems
       - run: npm run build
-
-      - uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: 82.112.239.210
-          username: u877214290.githubdeploy
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          local-dir: dist/
-          server-dir: /
-          protocol: ftp
-          dangerous-clean-slate: true
+      - name: Manual upload reminder
+        run: echo "FTP deploy disabled. Upload dist/ manually."

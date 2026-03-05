@@ -14,7 +14,7 @@ const { items, tone = 'var(--color-sentence-1)', columns = 2 } = Astro.props;
   <div class="sentences-grid" style={`--grid-columns: ${columns}; --card-tone: ${tone}`}>
     {items.map((sentence) => (
       <a
-        href={`/sentences/${sentence.slug}`}
+        href={`/sentences/${sentence.slug}/`}
         class="sentence-card"
       >
         <h2>{sentence.data.title}</h2>

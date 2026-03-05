@@ -6,19 +6,19 @@ export async function GET({ site }: { site?: URL }) {
 
 This is a personal thinking workspace focused on AI systems, language, and practical reliability.
 Primary sections:
-- Systems: ${toAbs('/systems')}
-- Sentences: ${toAbs('/sentences')}
-- Shelf: ${toAbs('/shelf')}
+- Systems: ${toAbs('/systems/')}
+- Sentences: ${toAbs('/sentences/')}
+- Shelf: ${toAbs('/shelf/')}
 
 High-signal pages:
-- Systems foundations: ${toAbs('/systems/systems-001-foundations')}
-- Prompt to production: ${toAbs('/systems/from-prompt-to-production')}
-- NLPg SDLC: ${toAbs('/systems/tech-stack-for-nlpg-driven-ai-assisted-sdlc')}
-- Shared resources: ${toAbs('/shelf/shared-resources')}
+- Systems foundations: ${toAbs('/systems/systems-001-foundations/')}
+- Prompt to production: ${toAbs('/systems/from-prompt-to-production/')}
+- NLPg SDLC: ${toAbs('/systems/tech-stack-for-nlpg-driven-ai-assisted-sdlc/')}
+- Shared resources: ${toAbs('/shelf/shared-resources/')}
 
 Author:
-- About: ${toAbs('/about')}
-- Portfolio: ${toAbs('/portfolio')}
+- About: ${toAbs('/about/')}
+- Portfolio: ${toAbs('/portfolio/')}
 `;
 
   return new Response(body, {
@@ -27,4 +27,3 @@ Author:
     },
   });
 }
-

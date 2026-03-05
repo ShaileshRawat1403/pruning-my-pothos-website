@@ -48,15 +48,18 @@ const tagLabel =
 
 const toUrl = (entry: any) => {
   if (entry.collection === 'shelf') {
-    return `/shelf/${entry.slug}`;
+    return `/shelf/${entry.slug}/`;
   }
   if (entry.collection === 'sticky-notes') {
-    return `/sticky-notes/${entry.slug}`;
+    return `/sticky-notes/${entry.slug}/`;
   }
-  return `/${entry.collection}/${entry.slug}`;
+  return `/${entry.collection}/${entry.slug}/`;
 };
 ---
-<Layout title={`Tag: ${tagLabel} | A Thinking Workspace`}>
+<Layout
+  title={`Tag: ${tagLabel} | A Thinking Workspace`}
+  description={`Explore ${matches.length} entries tagged "${tagLabel}" across all sections.`}
+>
   <h1>#{tagLabel}</h1>
   <p class="tag-intro">{matches.length} item(s) tagged with this theme.</p>
 

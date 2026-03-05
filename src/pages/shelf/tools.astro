@@ -16,7 +16,7 @@ const sortedTools = sortedByDate(toolEntries);
   </div>
   <div class="card-grid">
     {sortedTools.map(entry => (
-      <a href={`/shelf/tools/${entry.slug.split('/')[1]}`} class="card">
+      <a href={`/shelf/tools/${entry.slug.split('/')[1]}/`} class="card">
         <div class="card-img">
           {entry.data.coverUrl ? (
             <img src={entry.data.coverUrl} alt={`Cover image for ${entry.data.title}`} loading="lazy" />

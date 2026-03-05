@@ -4,9 +4,9 @@ interface Props {
 }
 const { entry } = Astro.props;
 const { collection, slug } = entry;
-let url = `/${collection}/${slug}`;
+let url = `/${collection}/${slug}/`;
 if (collection === 'shelf') {
-    url = `/shelf/${slug}`;
+    url = `/shelf/${slug}/`;
 }
 ---
 <a href={url} class="card">

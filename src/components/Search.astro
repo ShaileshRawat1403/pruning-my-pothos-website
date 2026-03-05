@@ -11,7 +11,7 @@ const allContent = [
 const searchData = JSON.stringify(allContent.map(item => ({
     title: item.data.title,
     description: item.data.description || '',
-    href: item.collection === 'shelf' ? `/shelf/${item.slug}` : `/${item.collection}/${item.slug}`,
+    href: item.collection === 'shelf' ? `/shelf/${item.slug}/` : `/${item.collection}/${item.slug}/`,
 })));
 import searchIcon from '@/assets/search.svg?raw';
 ---

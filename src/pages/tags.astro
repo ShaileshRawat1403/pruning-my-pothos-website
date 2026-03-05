@@ -30,13 +30,16 @@ const tags = Array.from(tagMap.entries())
   .map(([slug, data]) => ({ slug, ...data }))
   .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 ---
-<Layout title="Tags | A Thinking Workspace">
+<Layout
+  title="Tags | A Thinking Workspace"
+  description="Browse all themes across systems, sentences, self, shelf, and sticky notes."
+>
   <h1>Tags</h1>
   <p class="tag-intro">Explore the site by theme instead of section.</p>
 
   <div class="tag-cloud">
     {tags.map((tag) => (
-      <a class="tag-pill" href={`/tags/${tag.slug}`}>
+      <a class="tag-pill" href={`/tags/${tag.slug}/`}>
         {tag.label} <span class="tag-count">{tag.count}</span>
       </a>
     ))}

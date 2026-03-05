@@ -18,12 +18,15 @@ const { Content } = await note.render();
 const stickyNotes = await getCollection('sticky-notes');
 const { previous, next } = getAdjacentEntries(stickyNotes, note.slug);
 const relatedEntries = getRelatedEntries(stickyNotes, note.slug, note.data.tags, 2);
-const toLink = (entry) => ({ title: entry.data.title, href: `/sticky-notes/${entry.slug}` });
+const toLink = (entry) => ({ title: entry.data.title, href: `/sticky-notes/${entry.slug}/` });
 const previousLink = previous ? toLink(previous) : null;
 const nextLink = next ? toLink(next) : null;
 const relatedLinks = relatedEntries.map(toLink);
 ---
-<Layout title={note.data.title}>
+<Layout
+  title={`${note.data.title} | Sticky Notes | A Thinking Workspace`}
+  description={`Sticky note: ${note.data.title}. A short working note from the thinking workspace.`}
+>
   <div class="note-detail">
     <h1>{note.data.title}</h1>
     <TagList tags={note.data.tags} />
@@ -32,7 +35,7 @@ const relatedLinks = relatedEntries.map(toLink);
     </div>
     <ContinueBlock
       sectionLabel="/sticky-notes"
-      sectionHref="/sticky-notes"
+      sectionHref="/sticky-notes/"
       previous={previousLink}
       next={nextLink}
       related={relatedLinks}

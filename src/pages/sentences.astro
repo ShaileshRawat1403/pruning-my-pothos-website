@@ -17,7 +17,7 @@ import { sentenceCategories } from '../utils/sentenceCategories';
     {sentenceCategories.map((category) => (
       <a
         class="sentence-category-card"
-        href={`/sentences/${category.slug}`}
+        href={`/sentences/${category.slug}/`}
         style={`--category-tone: ${category.tone}`}
       >
         <h2>{category.title}</h2>

@@ -125,8 +125,12 @@ Instructions for CLI agents working in this repo.
 
 ## Systems doc standards (match Systems 001)
 - Use plain‑text `description` in frontmatter (no HTML).
+- Systems is a long-form section: target 900-1800 words per doc; hard minimum is 800 words (excluding frontmatter).
+- Word count is a consistency gate, not a quality guarantee; keep conceptual density and clear progression across all 3 acts.
 - Keep the 3‑act structure with clear section headers and a short lead.
 - Include a **Key takeaways** blockquote near the top of every systems doc.
+- Include at least one `<aside class="callout ...">` block in every systems doc.
+- Include at least one `<span class="highlight">...</span>` phrase in every systems doc (use sparingly).
 - Use the shared 3‑act TOC pattern (details + Act headings).
 - Tables should use the `comparison-table` class so grid lines render.
 - Systems tables must stay readable: no clipped cells; allow horizontal scrolling when width is tight.
@@ -135,6 +139,7 @@ Instructions for CLI agents working in this repo.
 - Do not add inline CSS or `<script>` inside MDX.
 - Do not use HTML comments (`<!-- -->`) inside MDX; use `{/* ... */}` if needed.
 - Systems docs are MDX (`.mdx`) so inline SVG/HTML renders correctly.
+- For practical checks, validate word count with: `wc -w src/content/systems/<slug>.mdx`.
 
 ## Navigation + interlinking
 - End-of-article "Continue" block should stay consistent across types.
@@ -152,6 +157,30 @@ Instructions for CLI agents working in this repo.
 - Verify mobile layout for any layout changes.
 - Ensure `site.zip` stays out of git (already in `.gitignore`).
 - Restart the dev server after content schema or MDX changes.
+
+## SEO/AEO/GEO instruction framework
+- Core framework (transferable defaults): `docs/agent-instructions/seo-aeo-geo-core.md`.
+- Site-specific adaptation layer: `docs/agent-instructions/seo-aeo-geo-site-overlay.md`.
+- Execution playbooks:
+  - `docs/agent-instructions/playbooks/content-cluster-rollout.md`
+  - `docs/agent-instructions/playbooks/schema-rollout.md`
+  - `docs/agent-instructions/playbooks/measurement-and-reporting.md`
+  - `docs/agent-instructions/playbooks/distribution-and-canonical-syndication.md`
+- Implementation roadmap:
+  - `docs/agent-instructions/implementation/seo-aeo-geo-roadmap.md`
+  - `docs/agent-instructions/implementation/cross-section-topic-map-v1.md`
+- Authoring templates:
+  - `docs/agent-instructions/templates/systems-seo-aeo-geo-template.md`
+  - `docs/agent-instructions/templates/entity-page-template.md`
+  - `docs/agent-instructions/templates/faq-block-template.md`
+  - `docs/agent-instructions/templates/agent-ops-case-study-template.md`
+- Agent usage rule:
+  - Start from Core, then apply Site Overlay, then choose the smallest relevant Playbook and Template.
+  - If there is a conflict, Site Overlay overrides Core for this repo.
+  - Keep the framework transferable: do not encode one-off campaign details into Core.
+  - Reflect major SEO/AEO/GEO decisions in `docs/agent-handoff/current.md`.
+  - For systematic gap checks before large content batches, run `npm run report:topics`.
+  - For gap closure reporting against the main gap categories, run `npm run report:gaps`.
 
 ## Agent handoff memory protocol
 - Maintain `docs/agent-handoff/current.md` as the active handoff state for future agents.

@@ -18,6 +18,12 @@ tags:
 
 The idea of "prompt engineering" has been mystified into an art of finding secret words to unlock a model's power. This is a misunderstanding. The real skill is not about crafting clever phrases; it is about clearly and explicitly specifying your intent, constraints, and desired output format.
 
+
+In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> Read this page as a tradeoff map: make boundaries explicit, track feedback loops, and optimize only after constraints are clear.</p>
+</aside>
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
@@ -94,7 +100,11 @@ Stop searching for the "perfect prompt." Instead, embrace a process of iterative
 -   If the answer is too generic, add more context to the prompt.
 -   If the answer is factually incorrect, use Retrieval-Augmented Generation (RAG) to provide the necessary facts in the context window.
 
+Treat prompt updates like code changes: version them, note expected behavior shifts, and test against a small fixed prompt set. This makes prompt quality observable and prevents regressions when multiple contributors edit instructions over time.
+
 The skill is not in the initial prompt, but in the ability to diagnose the output's flaws and systematically add the right constraints and context to correct them.
+
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
 
 ### What this changes in practice
 

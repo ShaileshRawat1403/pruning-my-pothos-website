@@ -4,7 +4,10 @@ import Layout from '@/layouts/Layout.astro';
 
 const stickyNotes = await getCollection('sticky-notes');
 ---
-<Layout title="Sticky Notes | A Thinking Workspace">
+<Layout
+  title="Sticky Notes | A Thinking Workspace"
+  description="Micro-notes in progress: early signals, unfinished thoughts, and compact ideas worth revisiting."
+>
   <div class="section-head">
     <h1>Sticky Notes</h1>
     <p class="mode-line lead">How ideas actually begin - messy, partial, human.</p>
@@ -13,7 +16,7 @@ const stickyNotes = await getCollection('sticky-notes');
 
   <div class="sticky-wall">
     {stickyNotes.map(note => (
-      <a href={`/sticky-notes/${note.slug}`} class="note" style={`--rotation: ${note.data.rotation || 0}deg; --bg: ${note.data.color || 'var(--color-sticky-1)'};`}>
+      <a href={`/sticky-notes/${note.slug}/`} class="note" style={`--rotation: ${note.data.rotation || 0}deg; --bg: ${note.data.color || 'var(--color-sticky-1)'};`}>
         <span class="note-title">{note.data.title}</span>
       </a>
     ))}

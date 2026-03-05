@@ -43,6 +43,14 @@ const systemsCollection = defineCollection({
         description: z.string(),
         category: z.enum(['Explanations', 'Concepts', 'How-things-fit-together']),
         tags: tagSchema,
+        updatedAt: z.string().transform((str) => new Date(str)).optional(),
+        proofPoints: z.array(z.string()).optional().default([]),
+        faq: z.array(
+          z.object({
+            question: z.string(),
+            answer: z.string(),
+          })
+        ).optional().default([]),
         featured: featuredSchema,
         readingTime: readingTimeSchema,
         contentType: contentTypeSchema,

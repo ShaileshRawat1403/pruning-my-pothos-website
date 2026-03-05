@@ -35,6 +35,93 @@ const discoveryPosts = allContent.sort((a, b) => {
   if (!a.data.featured && b.data.featured) return 1;
   return 0;
 });
+
+const featuredPriorityKeys = [
+  'systems/systems-001-foundations',
+  'systems/runtime-over-model-why-orchestration-is-the-product',
+  'systems/observability-first-ai-systems',
+  'systems/seo-aeo-geo-how-things-fit-together',
+  'systems/entity-glossary-for-ai-discoverability',
+  'systems/from-agent-intent-to-governed-execution',
+  'systems/agent-instructions-and-handoff-as-an-operating-system',
+  'systems/retrieval-augmented-generation-in-plain-terms',
+];
+
+const postKey = (post: (typeof discoveryPosts)[number]) => `${post.collection}/${post.slug ?? post.id}`;
+const featuredPriorityRank = new Map(featuredPriorityKeys.map((key, index) => [key, index]));
+
+const discoveryPostsRanked = [...discoveryPosts].sort((a, b) => {
+  const rankA = featuredPriorityRank.get(postKey(a));
+  const rankB = featuredPriorityRank.get(postKey(b));
+  const aPinned = rankA !== undefined;
+  const bPinned = rankB !== undefined;
+  if (aPinned && bPinned) return (rankA ?? 0) - (rankB ?? 0);
+  if (aPinned) return -1;
+  if (bPinned) return 1;
+  return 0;
+});
+
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const absoluteUrl = (path: string) => new URL(path, siteUrl).toString();
+const postUrl = (post: (typeof discoveryPosts)[number]) => {
+  const slug = post.slug ?? post.id;
+  if (post.collection === 'shelf') return absoluteUrl(`/shelf/${slug}/`);
+  return absoluteUrl(`/${post.collection}/${slug}/`);
+};
+const latestUpdated = discoveryPostsRanked.find((post) => post.data.publishDate)?.data.publishDate;
+const latestUpdatedIso = latestUpdated ? latestUpdated.toISOString() : undefined;
+
+const collectionJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'A Thinking Workspace',
+  url: absoluteUrl('/'),
+  inLanguage: 'en',
+  dateModified: latestUpdatedIso,
+  about: [
+    { '@type': 'Thing', name: 'AI systems' },
+    { '@type': 'Thing', name: 'language and meaning' },
+    { '@type': 'Thing', name: 'AI observability' },
+    { '@type': 'Thing', name: 'SEO AEO GEO' },
+  ],
+  mentions: [
+    {
+      '@type': 'DefinedTerm',
+      name: 'SEO, AEO, and GEO',
+      url: absoluteUrl('/systems/seo-aeo-geo-how-things-fit-together/'),
+    },
+    {
+      '@type': 'DefinedTerm',
+      name: 'Entity glossary',
+      url: absoluteUrl('/systems/entity-glossary-for-ai-discoverability/'),
+    },
+    {
+      '@type': 'DefinedTerm',
+      name: 'Agent instructions and handoff',
+      url: absoluteUrl('/systems/agent-instructions-and-handoff-as-an-operating-system/'),
+    },
+  ],
+  hasPart: discoveryPostsRanked.slice(0, 12).map((post) => ({
+    '@type': 'WebPage',
+    name: post.data.title,
+    url: postUrl(post),
+  })),
+};
+
+const itemListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Latest and featured writing',
+  itemListOrder: 'https://schema.org/ItemListOrderDescending',
+  dateModified: latestUpdatedIso,
+  numberOfItems: Math.min(discoveryPostsRanked.length, 10),
+  itemListElement: discoveryPostsRanked.slice(0, 10).map((post, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: postUrl(post),
+    name: post.data.title,
+  })),
+};
 ---
 
 <Layout
@@ -46,7 +133,7 @@ const discoveryPosts = allContent.sort((a, b) => {
     <div class="noise-overlay" aria-hidden="true"></div>
 
     <p class="hero-animated-line">
-      <a href="/self/diy" class="hero-diy-cta">D.I.Y.</a>
+      <a href="/self/diy/" class="hero-diy-cta">D.I.Y.</a>
       <span class="hero-highlight hero-intel">
         <span class="hero-aura" aria-hidden="true"></span>
         <span class="hero-bounce hero-bounce-1">i</span>ntell<span class="hero-bounce hero-bounce-2">i</span>gence
@@ -61,11 +148,13 @@ const discoveryPosts = allContent.sort((a, b) => {
       title="Portrait illustration"
     ></iframe>
 
-    <a href="/dual-nlp-framework" class="hero-build-cta">
+    <a href="/dual-nlp-framework/" class="hero-build-cta">
       <span class="hero-build-dot" aria-hidden="true"></span>
       <span class="hero-build-text">
-        start building
-        <span class="hero-build-cursor" aria-hidden="true"></span>
+        <span class="hero-build-type-wrap">
+          <span class="hero-build-type" data-typewriter data-text="start building">start building</span>
+          <span class="hero-build-caret" aria-hidden="true"></span>
+        </span>
       </span>
     </a>
 
@@ -75,7 +164,127 @@ const discoveryPosts = allContent.sort((a, b) => {
     </p>
   </section>
 
-  <ContentDiscovery posts={discoveryPosts} />
+  <section class="home-direct-answer" aria-labelledby="home-direct-answer-title">
+    <h2 id="home-direct-answer-title">What is this workspace for in practice?</h2>
+    <figure class="home-signal-graph" aria-label="Connected workspace signals">
+      <svg viewBox="0 0 420 170" role="img" aria-labelledby="home-signal-graph-title">
+        <title id="home-signal-graph-title">Linked signals across systems, entities, handoff, and observability</title>
+        <path class="graph-link graph-link-1" d="M 210 82 L 86 42" />
+        <path class="graph-link graph-link-2" d="M 210 82 L 334 42" />
+        <path class="graph-link graph-link-3" d="M 210 82 L 106 132" />
+        <path class="graph-link graph-link-4" d="M 210 82 L 314 132" />
+
+        <a href="/systems/systems-001-foundations/">
+          <g class="graph-node graph-node-core graph-drift-core">
+            <circle cx="210" cy="82" r="24" />
+            <text x="210" y="86" text-anchor="middle">core</text>
+          </g>
+        </a>
+        <a href="/systems/entity-glossary-for-ai-discoverability/">
+          <g class="graph-node graph-drift-a">
+            <circle cx="86" cy="42" r="15" />
+            <text x="86" y="46" text-anchor="middle">entity</text>
+          </g>
+        </a>
+        <a href="/systems/seo-aeo-geo-how-things-fit-together/">
+          <g class="graph-node graph-drift-b">
+            <circle cx="334" cy="42" r="17" />
+            <text x="334" y="46" text-anchor="middle">signals</text>
+          </g>
+        </a>
+        <a href="/systems/agent-instructions-and-handoff-as-an-operating-system/">
+          <g class="graph-node graph-drift-c">
+            <circle cx="106" cy="132" r="17" />
+            <text x="106" y="136" text-anchor="middle">handoff</text>
+          </g>
+        </a>
+        <a href="/systems/observability-first-ai-systems/">
+          <g class="graph-node graph-drift-d">
+            <circle cx="314" cy="132" r="15" />
+            <text x="314" y="136" text-anchor="middle">observe</text>
+          </g>
+        </a>
+      </svg>
+    </figure>
+    <p>
+      This workspace helps practitioners design and operate AI systems with clearer language, stronger retrieval structure, and better decision traceability. It combines <a href="/systems/systems-001-foundations/">systems explainers</a>, <a href="/systems/entity-glossary-for-ai-discoverability/">entity-level definitions</a>, and <a href="/systems/agent-instructions-and-handoff-as-an-operating-system/">handoff patterns</a> so teams can ship faster with fewer silent failures across <a href="/systems/seo-aeo-geo-how-things-fit-together/">SEO, AEO, and GEO</a> surfaces.
+    </p>
+  </section>
+
+  <ContentDiscovery posts={discoveryPostsRanked} />
+
+  <script type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)}></script>
+  <script is:inline>
+    const initHeroTypewriter = () => {
+      const el = document.querySelector('.hero-build-type[data-typewriter]');
+      const caret = document.querySelector('.hero-build-caret');
+      if (!el) return;
+
+      const text = el.getAttribute('data-text') || 'start building';
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        el.textContent = text;
+        el.classList.remove('is-typing');
+        return;
+      }
+
+      if (el.dataset.bound === 'true') return;
+      el.dataset.bound = 'true';
+      el.classList.add('is-typing');
+
+      if (el._typeTimer) {
+        window.clearTimeout(el._typeTimer);
+      }
+
+      let index = 0;
+      let deleting = false;
+
+      const typeSpeed = 92;
+      const deleteSpeed = 66;
+      const holdAtEnd = 280;
+      const blinkCycleMs = 1980;
+
+      const tick = () => {
+        if (!deleting) {
+          index += 1;
+          el.textContent = text.slice(0, index);
+          if (index >= text.length) {
+            deleting = true;
+            el._typeTimer = window.setTimeout(() => {
+              if (caret) {
+                caret.classList.remove('blink-cycle');
+                void caret.offsetWidth;
+                caret.classList.add('blink-cycle');
+              }
+              el._typeTimer = window.setTimeout(() => {
+                if (caret) caret.classList.remove('blink-cycle');
+                tick();
+              }, blinkCycleMs);
+            }, holdAtEnd);
+            return;
+          }
+          el._typeTimer = window.setTimeout(tick, typeSpeed);
+          return;
+        }
+
+        index -= 1;
+        el.textContent = text.slice(0, Math.max(0, index));
+        if (index <= 0) {
+          deleting = false;
+          el._typeTimer = window.setTimeout(tick, 220);
+          return;
+        }
+        el._typeTimer = window.setTimeout(tick, deleteSpeed);
+      };
+
+      el.textContent = '';
+      el._typeTimer = window.setTimeout(tick, 400);
+    };
+
+    initHeroTypewriter();
+    document.addEventListener('astro:page-load', initHeroTypewriter);
+    document.addEventListener('astro:after-swap', initHeroTypewriter);
+  </script>
 </Layout>
 
 <style>
@@ -262,15 +471,185 @@ const discoveryPosts = allContent.sort((a, b) => {
     gap: 0.16rem;
   }
 
-  .hero-build-cursor {
+  .hero-build-type-wrap {
+    display: inline-flex;
+    align-items: baseline;
+    min-width: 14.8ch;
+    padding-right: 0.24ch;
+    text-align: left;
+  }
+
+  .hero-build-type {
     display: inline-block;
-    flex-shrink: 0;
-    width: 0.48em;
-    height: 1.05em;
-    border-right: 2px solid #f97316;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .hero-build-type.is-typing {
+    padding-right: 0.08ch;
+  }
+
+  .hero-build-caret {
+    display: inline-block;
+    width: 0.58ch;
+    color: #f97316;
+    opacity: 1;
+    transform: translateY(-0.01em);
+  }
+
+  .hero-build-caret::before {
+    content: '|';
+  }
+
+  .hero-build-caret.blink-cycle {
+    animation: cta-caret-breathe 0.66s ease-in-out 3;
+  }
+
+  .home-direct-answer {
+    max-width: 760px;
+    margin: 0 auto 1.6rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .home-direct-answer h2 {
+    margin: 0 0 0.45rem;
+    font-size: 1.08rem;
+    font-family: var(--font-heading);
+  }
+
+  .home-signal-graph {
+    margin: 0.15rem auto 0.7rem;
+    width: min(420px, 92vw);
+  }
+
+  .home-signal-graph svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .graph-link {
+    fill: none;
+    stroke: color-mix(in srgb, var(--color-border) 70%, #f97316 30%);
+    stroke-width: 1.45;
     opacity: 0.9;
-    transform: translateY(0.06em);
-    animation: cta-cursor-blink 0.9s steps(1, end) infinite;
+    stroke-linecap: round;
+    stroke-dasharray: 3.5 6.8;
+    animation:
+      graph-link-flow 7.8s linear infinite,
+      graph-link-breathe 4.6s ease-in-out infinite;
+  }
+
+  .graph-link-2 {
+    animation-delay: -1.1s, -0.8s;
+  }
+
+  .graph-link-3 {
+    animation-delay: -2.2s, -1.7s;
+  }
+
+  .graph-link-4 {
+    animation-delay: -3.1s, -2.6s;
+  }
+
+  .graph-node {
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transform-box: fill-box;
+    transform-origin: center;
+    will-change: transform;
+  }
+
+  .home-signal-graph a {
+    cursor: pointer;
+  }
+
+  .graph-node circle {
+    fill: color-mix(in srgb, var(--color-bg) 97%, #f97316 3%);
+    stroke: color-mix(in srgb, var(--color-border) 80%, #f97316 20%);
+    stroke-width: 1.15;
+    transition: fill 0.22s ease, stroke 0.22s ease, transform 0.22s ease;
+    transform-origin: center;
+  }
+
+  .graph-node text {
+    fill: currentColor;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.01em;
+    transition: fill 0.22s ease;
+    user-select: none;
+  }
+
+  .graph-drift-core {
+    animation: graph-drift-core 6.6s ease-in-out infinite;
+  }
+
+  .graph-node-core circle {
+    animation: graph-core-pulse 4.8s ease-in-out infinite;
+  }
+
+  .graph-drift-a {
+    animation: graph-drift-a 6.1s ease-in-out infinite;
+  }
+
+  .graph-drift-b {
+    animation: graph-drift-b 6.9s ease-in-out infinite;
+  }
+
+  .graph-drift-c {
+    animation: graph-drift-c 5.8s ease-in-out infinite;
+  }
+
+  .graph-drift-d {
+    animation: graph-drift-d 7.2s ease-in-out infinite;
+  }
+
+  .graph-node-core text {
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .graph-node:hover circle {
+    fill: color-mix(in srgb, #f97316 12%, var(--color-bg));
+    stroke: color-mix(in srgb, #f97316 50%, var(--color-border));
+    transform: scale(1.09);
+  }
+
+  .graph-node:hover text {
+    fill: color-mix(in srgb, var(--color-text-heading) 80%, #f97316 20%);
+  }
+
+  .home-signal-graph a:focus-visible {
+    outline: none;
+  }
+
+  .home-signal-graph a:focus-visible .graph-node circle {
+    fill: color-mix(in srgb, #f97316 12%, var(--color-bg));
+    stroke: color-mix(in srgb, #f97316 50%, var(--color-border));
+    transform: scale(1.09);
+  }
+
+  .home-signal-graph a:focus-visible .graph-node text {
+    fill: color-mix(in srgb, var(--color-text-heading) 80%, #f97316 20%);
+  }
+
+  .home-signal-graph:hover .graph-link {
+    stroke: color-mix(in srgb, #f97316 44%, var(--color-border));
+    opacity: 1;
+  }
+
+  .home-signal-graph:hover .graph-node circle {
+    stroke-width: 1.3;
+  }
+
+  .home-direct-answer p {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    max-width: 66ch;
+    margin-inline: auto;
   }
 
   .hero-build-cta:hover {
@@ -336,17 +715,39 @@ const discoveryPosts = allContent.sort((a, b) => {
       animation: none;
     }
 
-    .hero-build-cursor {
-      animation: none;
-      opacity: 0.65;
-    }
-
     .noise-overlay {
       display: none;
     }
 
     .hero-build-cta {
       opacity: 1;
+    }
+
+    .hero-build-type {
+      border-right: none;
+      animation: none;
+      padding-right: 0;
+    }
+
+    .hero-build-caret {
+      animation: none;
+    }
+
+    .home-signal-graph {
+      display: none;
+    }
+
+    .graph-drift-core,
+    .graph-drift-a,
+    .graph-drift-b,
+    .graph-drift-c,
+    .graph-drift-d {
+      animation: none;
+    }
+
+    .graph-link,
+    .graph-node-core circle {
+      animation: none;
     }
   }
 
@@ -404,14 +805,95 @@ const discoveryPosts = allContent.sort((a, b) => {
     }
   }
 
-  @keyframes cta-cursor-blink {
+  @keyframes cta-caret-breathe {
     0%,
-    49% {
-      opacity: 1;
-    }
-    50%,
     100% {
-      opacity: 0;
+      opacity: 1;
+      transform: translateY(-0.01em);
+    }
+    50% {
+      opacity: 0.35;
+      transform: translateY(-0.01em) scaleY(0.94);
     }
   }
+
+  @keyframes graph-drift-core {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(0, -4.8px);
+    }
+  }
+
+  @keyframes graph-drift-a {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-2.4px, -3.9px);
+    }
+  }
+
+  @keyframes graph-drift-b {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(2.9px, -4.4px);
+    }
+  }
+
+  @keyframes graph-drift-c {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-3.2px, 3.5px);
+    }
+  }
+
+  @keyframes graph-drift-d {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(3.1px, 3.8px);
+    }
+  }
+
+  @keyframes graph-link-flow {
+    from {
+      stroke-dashoffset: 0;
+    }
+    to {
+      stroke-dashoffset: -54;
+    }
+  }
+
+  @keyframes graph-link-breathe {
+    0%,
+    100% {
+      opacity: 0.84;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes graph-core-pulse {
+    0%,
+    100% {
+      filter: none;
+    }
+    50% {
+      filter: drop-shadow(0 0 5px color-mix(in srgb, #f97316 36%, transparent));
+    }
+  }
+
 </style>

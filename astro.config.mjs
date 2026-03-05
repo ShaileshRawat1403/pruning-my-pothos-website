@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import rehypeRaw from 'rehype-raw';
+import rehypeTrailingSlashInternalLinks from './src/utils/rehypeTrailingSlashInternalLinks.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,7 +9,7 @@ export default defineConfig({
   viewTransitions: true,
   integrations: [mdx()],
   markdown: {
-    rehypePlugins: [rehypeRaw],
+    rehypePlugins: [rehypeRaw, rehypeTrailingSlashInternalLinks],
     remarkRehype: { allowDangerousHtml: true },
     shikiConfig: { theme: 'github-light' },
   },

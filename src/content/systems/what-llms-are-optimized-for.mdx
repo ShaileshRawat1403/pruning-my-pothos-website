@@ -18,6 +18,12 @@ tags:
 
 Large Language Models (LLMs) are not optimized for truth, accuracy, or user intent. They are optimized for one simple goal: predicting the most probable next token in a sequence. This core mechanic is the source of their incredible capabilities and their most frustrating failure modes.
 
+
+In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> Read this page as a tradeoff map: make boundaries explicit, track feedback loops, and optimize only after constraints are clear.</p>
+</aside>
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
@@ -87,6 +93,10 @@ This also explains why they "hallucinate." If the training data contains conflic
 Treating an LLM as a database or a reasoning engine will lead to frustration. Instead, you must treat it as a powerful text-completion machine that is trying to find the most plausible continuation of your prompt.
 
 This means that the quality of your input directly shapes the quality of the output. A vague prompt will get a vague and generic completion. A precise prompt with clear constraints and context will guide the model toward a more reliable and useful response. This is the art of prompt engineering: structuring the input sequence to make the desired output the most probable one.
+
+Temperature, top-p, and output length also change behavior because they alter how aggressively the model samples alternatives. For critical tasks, lower-variance settings plus strict output constraints usually produce more stable results than creative, open-ended generation settings.
+
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
 
 ### What this changes in practice
 

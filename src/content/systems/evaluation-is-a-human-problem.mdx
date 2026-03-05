@@ -18,6 +18,12 @@ tags:
 
 The quality of a Large Language Model is not a number. While automated benchmarks can measure performance on standardized tests, the real measure of quality—whether a model is helpful, safe, and reliable for a specific purpose—is a matter of human judgment. Evaluation is the process of encoding that judgment into a repeatable system.
 
+
+In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> Read this page as a tradeoff map: make boundaries explicit, track feedback loops, and optimize only after constraints are clear.</p>
+</aside>
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
@@ -93,6 +99,10 @@ Building a good evaluation system is more of a governance and process design cha
 -   What tradeoffs are we willing to make between, for example, helpfulness and harmlessness?
 
 The robustness of your evaluation framework is the ultimate ceiling on the quality and safety of your AI system. An automated benchmark can tell you if your model is powerful, but only a human-centered evaluation process can tell you if it is useful.
+
+One practical addition is to maintain a "failure library" of real bad outputs by category (factual, tone, policy, escalation). Re-scoring this fixed set after every major prompt or model change gives you a stable regression signal that generic benchmarks cannot provide.
+
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
 
 ### What this changes in practice
 

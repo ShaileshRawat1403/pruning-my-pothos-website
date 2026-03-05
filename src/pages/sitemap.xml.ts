@@ -34,10 +34,15 @@ type UrlEntry = {
   lastmod?: string;
 };
 
+const withTrailingSlash = (path: string) => {
+  if (path === '/' || path.endsWith('/')) return path;
+  return `${path}/`;
+};
+
 const toPath = (entry: any) => {
-  if (entry.collection === 'shelf') return `/shelf/${entry.slug}`;
-  if (entry.collection === 'sticky-notes') return `/sticky-notes/${entry.slug}`;
-  return `/${entry.collection}/${entry.slug}`;
+  if (entry.collection === 'shelf') return withTrailingSlash(`/shelf/${entry.slug}`);
+  if (entry.collection === 'sticky-notes') return withTrailingSlash(`/sticky-notes/${entry.slug}`);
+  return withTrailingSlash(`/${entry.collection}/${entry.slug}`);
 };
 
 const xmlEscape = (value: string) =>
@@ -62,7 +67,7 @@ export async function GET({ site }: { site?: URL }) {
   const urls: UrlEntry[] = [];
 
   STATIC_ROUTES.forEach((route) => {
-    urls.push({ path: route });
+    urls.push({ path: withTrailingSlash(route) });
   });
 
   allEntries.forEach((entry) => {
@@ -83,7 +88,7 @@ export async function GET({ site }: { site?: URL }) {
   });
 
   tagSet.forEach((tag) => {
-    urls.push({ path: `/tags/${tag}` });
+    urls.push({ path: withTrailingSlash(`/tags/${tag}`) });
   });
 
   const dedup = new Map<string, UrlEntry>();
@@ -108,4 +113,3 @@ ${Array.from(dedup.values())
     },
   });
 }
-

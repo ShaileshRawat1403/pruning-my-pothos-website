@@ -23,13 +23,16 @@ const { Content } = await entry.render();
 const selfEntries = await getCollection('self');
 const { previous, next } = getAdjacentEntries(selfEntries, entry.slug);
 const relatedEntries = getRelatedEntries(selfEntries, entry.slug, entry.data.tags, 2);
-const toLink = (item) => ({ title: item.data.title, href: `/self/${item.slug}` });
+const toLink = (item) => ({ title: item.data.title, href: `/self/${item.slug}/` });
 const previousLink = previous ? toLink(previous) : null;
 const nextLink = next ? toLink(next) : null;
 const relatedLinks = relatedEntries.map(toLink);
 ---
 
-<Layout title={`${entry.data.title} | A Thinking Workspace`}>
+<Layout
+  title={`${entry.data.title} | Self | A Thinking Workspace`}
+  description={entry.data.description}
+>
   <article class="self-entry">
     <header>
       <h1>{entry.data.title}</h1>
@@ -39,7 +42,7 @@ const relatedLinks = relatedEntries.map(toLink);
     <Content />
     <ContinueBlock
       sectionLabel="/self"
-      sectionHref="/self"
+      sectionHref="/self/"
       previous={previousLink}
       next={nextLink}
       related={relatedLinks}

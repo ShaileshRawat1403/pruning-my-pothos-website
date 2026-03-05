@@ -14,26 +14,46 @@ export async function getStaticPaths() {
 }
 
 const system = Astro.props;
-const { Content } = await system.render();
+const { Content, headings } = await system.render();
 const systems = await getCollection('systems');
 const { previous, next } = getAdjacentEntries(systems, system.slug);
 const relatedEntries = getRelatedEntries(systems, system.slug, system.data.tags, 2);
-const toLink = (entry) => ({ title: entry.data.title, href: `/systems/${entry.slug}` });
+const toLink = (entry) => ({ title: entry.data.title, href: `/systems/${entry.slug}/` });
 const previousLink = previous ? toLink(previous) : null;
 const nextLink = next ? toLink(next) : null;
 const relatedLinks = relatedEntries.map(toLink);
 const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
-const canonical = new URL(`/systems/${system.slug}`, siteUrl).toString();
+const canonical = new URL(`/systems/${system.slug}/`, siteUrl).toString();
 const articleImage = new URL('/covers/shelf/shared-semantic-bridge.svg', siteUrl).toString();
+const glossaryUrl = new URL('/systems/entity-glossary-for-ai-discoverability/', siteUrl).toString();
+const slugifyTerm = (value) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+const faqs = system.data.faq ?? [];
+const proofPoints = system.data.proofPoints ?? [];
 const articleSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': ['Article', 'TechArticle'],
   headline: system.data.title,
   description: system.data.description,
   image: [articleImage],
   articleSection: system.data.category,
   keywords: (system.data.tags ?? []).join(', '),
   mainEntityOfPage: canonical,
+  inLanguage: 'en',
+  about: (system.data.tags ?? []).map((tag) => ({
+    '@type': 'DefinedTerm',
+    name: tag,
+    url: `${glossaryUrl}#term-${slugifyTerm(tag)}`,
+    inDefinedTermSet: glossaryUrl,
+  })),
+  mentions: relatedLinks.map((entry) => ({
+    '@type': 'WebPage',
+    name: entry.title,
+    url: new URL(entry.href, siteUrl).toString(),
+  })),
   author: {
     '@type': 'Person',
     name: 'Shailesh Rawat',
@@ -49,14 +69,89 @@ const articleSchema = {
     },
   },
 };
+const breadcrumbsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Systems',
+      item: new URL('/systems/', siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: system.data.title,
+      item: canonical,
+    },
+  ],
+};
+const tocHeadings = (headings ?? []).filter((heading) => heading.depth <= 2);
+const tableOfContentsSchema = tocHeadings.length > 0
+  ? {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `${system.data.title} table of contents`,
+    itemListElement: tocHeadings.map((heading, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: heading.text,
+      url: `${canonical}#${heading.slug}`,
+    })),
+  }
+  : null;
+const relatedReadingSchema = relatedLinks.length > 0
+  ? {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `${system.data.title} related reading`,
+    itemListElement: relatedLinks.map((entry, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: entry.title,
+      url: new URL(entry.href, siteUrl).toString(),
+    })),
+  }
+  : null;
+const faqSchema = faqs.length > 0
+  ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  }
+  : null;
 ---
 <Layout
-  title={system.data.title}
+  title={`${system.data.title} | Systems | A Thinking Workspace`}
   description={system.data.description}
   image="/covers/shelf/shared-semantic-bridge.svg"
   ogType="article"
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)}></script>
+  {tableOfContentsSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(tableOfContentsSchema)}></script>
+  )}
+  {relatedReadingSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(relatedReadingSchema)}></script>
+  )}
+  {faqSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  )}
   <article id="systems-article" data-slug={system.slug}>
     <header class="system-header">
       <div>
@@ -74,12 +169,38 @@ const articleSchema = {
     <div class="content-body">
         <div class="content-main">
             <Content />
+            {(system.data.updatedAt || proofPoints.length > 0 || faqs.length > 0) && (
+              <section class="meta-reinforcement" aria-label="Evidence and update metadata">
+                {system.data.updatedAt && (
+                  <p class="updated-at"><strong>Updated:</strong> {system.data.updatedAt.toISOString().slice(0, 10)}</p>
+                )}
+                {proofPoints.length > 0 && (
+                  <>
+                    <h2>Proof Block</h2>
+                    <ul class="proof-list">
+                      {proofPoints.map((point) => <li>{point}</li>)}
+                    </ul>
+                  </>
+                )}
+                {faqs.length > 0 && (
+                  <section class="faq-block" aria-label="Frequently asked questions">
+                    <h2>FAQ</h2>
+                    {faqs.map((item) => (
+                      <>
+                        <h3>{item.question}</h3>
+                        <p>{item.answer}</p>
+                      </>
+                    ))}
+                  </section>
+                )}
+              </section>
+            )}
         </div>
         <aside class="content-sidebar" aria-label="On-page navigation"></aside>
     </div>
     <ContinueBlock
       sectionLabel="/systems"
-      sectionHref="/systems"
+      sectionHref="/systems/"
       previous={previousLink}
       next={nextLink}
       related={relatedLinks}
@@ -449,6 +570,25 @@ const articleSchema = {
     }
     :global(.content-body .ref-link:hover) {
         color: var(--color-accent);
+    }
+    .meta-reinforcement {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--color-border);
+    }
+    .updated-at {
+        margin: 0 0 1rem;
+        color: var(--color-text-muted);
+        font-size: 0.95rem;
+    }
+    .proof-list {
+        margin: 0.5rem 0 1.25rem;
+        padding-left: 1.2rem;
+    }
+    .faq-block h3 {
+        margin-top: 1rem;
+        margin-bottom: 0.35rem;
+        font-size: 1rem;
     }
     @media (min-width: 960px) {
         :global(.content-body .references-list) {

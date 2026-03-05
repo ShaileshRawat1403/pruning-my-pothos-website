@@ -18,6 +18,12 @@ tags:
 
 Unlike traditional software which fails loudly and predictably, AI systems can degrade in silence. Their performance can worsen over time due to subtle shifts in the data they process, a phenomenon known as drift. This silent failure is one of the greatest operational risks in production AI.
 
+
+In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> Read this page as a tradeoff map: make boundaries explicit, track feedback loops, and optimize only after constraints are clear.</p>
+</aside>
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">
   <h2 class="toc-title">Contents</h2>
@@ -91,6 +97,8 @@ Assume your model will degrade. A "deploy and forget" mindset is a recipe for fa
 -   **Establish a baseline.** Before deploying a model, measure its performance on a held-out test set. This baseline is what you will compare against to detect decay.
 -   **Automate your monitoring.** Set up automated alerts for data drift and sudden drops in performance. Do not rely on your users to tell you when your model is failing.
 -   **Have a retraining strategy.** Plan for how you will update your model with new data. Will you retrain from scratch every quarter? Or will you continuously fine-tune on a stream of new data? The right strategy depends on the application, but you must have one.
+
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
 
 ### What this changes in practice
 

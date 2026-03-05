@@ -1,5 +1,6 @@
 ---
 import FeaturedGrid from './FeaturedGrid.astro';
+import { slugifyTag } from '@/utils/tags';
 
 interface Props {
     posts: any[];
@@ -58,7 +59,7 @@ const collectionNames = {
                 <h3>By Collection</h3>
                 <div class="stats-grid">
                     {Object.entries(contentStats).map(([collection, count]) => (
-                        <a href={`/${collection}`} class="stat-item">
+                        <a href={`/${collection}/`} class="stat-item">
                             <span class="stat-name">{collectionNames[collection] || collection}</span>
                             <span class="stat-count">{count}</span>
                         </a>
@@ -71,7 +72,7 @@ const collectionNames = {
                     <h3>Popular Topics</h3>
                     <div class="tag-cloud">
                         {popularTags.map(({tag, count}) => (
-                            <a href={`/tags/${tag}`} class="popular-tag" data-count={count}>
+                            <a href={`/tags/${slugifyTag(tag)}/`} class="popular-tag" data-count={count}>
                                 {tag}
                                 <span class="tag-count">{count}</span>
                             </a>

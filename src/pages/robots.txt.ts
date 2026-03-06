@@ -2,10 +2,8 @@ export async function GET({ site }: { site?: URL }) {
   const siteUrl = site ?? new URL(process.env.SITE_URL || 'https://pruningmypothos.com');
   const sitemapUrl = new URL('/sitemap.xml', siteUrl).toString();
 
-  const body = `User-agent: *
+const body = `User-agent: *
 Allow: /
-Disallow: /blog/
-Disallow: /blogs/
 
 Sitemap: ${sitemapUrl}
 # LLM guidance: ${new URL('/llms.txt', siteUrl).toString()}

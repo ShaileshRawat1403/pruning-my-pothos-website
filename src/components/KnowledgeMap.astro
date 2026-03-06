@@ -1,0 +1,299 @@
+<section class="knowledge-map" aria-labelledby="knowledge-map-title">
+  <h2 id="knowledge-map-title">How this workspace is organized</h2>
+  <p class="knowledge-map-intro">
+    The work here is structured across four connected domains: systems, sentences, self, and shelf.
+  </p>
+
+  <figure class="knowledge-map-graph" aria-label="Workspace knowledge map">
+    <svg viewBox="0 0 520 260" role="img" aria-labelledby="knowledge-map-graph-title">
+      <title id="knowledge-map-graph-title">Knowledge map connecting systems, sentences, self, and shelf</title>
+      <path class="graph-link graph-link-1" d="M 260 130 L 132 64" />
+      <path class="graph-link graph-link-2" d="M 260 130 L 388 64" />
+      <path class="graph-link graph-link-3" d="M 260 130 L 132 196" />
+      <path class="graph-link graph-link-4" d="M 260 130 L 388 196" />
+
+      <g class="graph-node graph-node-core graph-drift-core" tabindex="0" role="link" data-href="/" aria-label="Open homepage">
+        <circle cx="260" cy="130" r="34"></circle>
+        <text x="260" y="136" text-anchor="middle">workspace</text>
+      </g>
+      <g class="graph-node graph-drift-a" tabindex="0" role="link" data-href="/systems/" aria-label="Open systems">
+        <circle cx="132" cy="64" r="25"></circle>
+        <text x="132" y="68" text-anchor="middle">systems</text>
+      </g>
+      <g class="graph-node graph-drift-b" tabindex="0" role="link" data-href="/sentences/" aria-label="Open sentences">
+        <circle cx="388" cy="64" r="25"></circle>
+        <text x="388" y="68" text-anchor="middle">sentences</text>
+      </g>
+      <g class="graph-node graph-drift-c" tabindex="0" role="link" data-href="/self/" aria-label="Open self">
+        <circle cx="132" cy="196" r="22"></circle>
+        <text x="132" y="200" text-anchor="middle">self</text>
+      </g>
+      <g class="graph-node graph-drift-d" tabindex="0" role="link" data-href="/shelf/" aria-label="Open shelf">
+        <circle cx="388" cy="196" r="23"></circle>
+        <text x="388" y="200" text-anchor="middle">shelf</text>
+      </g>
+    </svg>
+  </figure>
+
+  <div class="knowledge-pathways">
+    <h3>Suggested pathways</h3>
+    <div class="pathway-list">
+      <a href="/systems/" class="pathway-item">
+        <span class="pathway-title">Start with systems thinking</span>
+        <span class="pathway-desc">Architecture, orchestration, and reliability patterns.</span>
+      </a>
+      <a href="/sentences/meaning/" class="pathway-item">
+        <span class="pathway-title">Explore language and meaning</span>
+        <span class="pathway-desc">Short reflections on attention, meaning, and judgment.</span>
+      </a>
+      <a href="/shelf/local-experiments/" class="pathway-item">
+        <span class="pathway-title">See experiments in practice</span>
+        <span class="pathway-desc">Tooling and field notes from local AI workflows.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const initKnowledgeMap = () => {
+    const nodes = document.querySelectorAll('.knowledge-map .graph-node[data-href]');
+    nodes.forEach((node) => {
+      if (node.dataset.bound === 'true') return;
+      node.dataset.bound = 'true';
+      const href = node.getAttribute('data-href');
+      if (!href) return;
+      node.addEventListener('click', () => {
+        window.location.href = href;
+      });
+      node.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          window.location.href = href;
+        }
+      });
+    });
+  };
+
+  initKnowledgeMap();
+  document.addEventListener('astro:page-load', initKnowledgeMap);
+  document.addEventListener('astro:after-swap', initKnowledgeMap);
+</script>
+
+<style>
+  .knowledge-map {
+    max-width: 860px;
+    margin: 0 auto 2.25rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .knowledge-map h2 {
+    margin: 0 0 0.45rem;
+    font-size: clamp(1.6rem, 4vw, 2.35rem);
+  }
+
+  .knowledge-map-intro {
+    margin: 0 auto 1rem;
+    max-width: 62ch;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .knowledge-map-graph {
+    margin: 0 auto 0.95rem;
+    width: min(520px, 96vw);
+  }
+
+  .knowledge-map-graph svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .graph-link {
+    fill: none;
+    stroke: color-mix(in srgb, var(--color-border) 70%, #f97316 30%);
+    stroke-width: 1.4;
+    opacity: 0.88;
+    stroke-linecap: round;
+  }
+
+  .graph-node {
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transform-box: fill-box;
+    transform-origin: center;
+    will-change: transform;
+  }
+
+  .graph-node circle {
+    fill: color-mix(in srgb, var(--color-bg) 97%, #f97316 3%);
+    stroke: color-mix(in srgb, var(--color-border) 80%, #f97316 20%);
+    stroke-width: 1.2;
+    transition: fill 0.2s ease, stroke 0.2s ease, transform 0.2s ease;
+  }
+
+  .graph-node text {
+    fill: currentColor;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.01em;
+    user-select: none;
+  }
+
+  .graph-node-core text {
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .graph-node:hover circle,
+  .graph-node:focus-visible circle {
+    fill: color-mix(in srgb, #f97316 10%, var(--color-bg));
+    stroke: color-mix(in srgb, #f97316 50%, var(--color-border));
+    transform: scale(1.08);
+  }
+
+  .graph-node:hover text,
+  .graph-node:focus-visible text {
+    fill: color-mix(in srgb, var(--color-text-heading) 80%, #f97316 20%);
+  }
+
+  .graph-node:focus-visible {
+    outline: none;
+  }
+
+  .graph-drift-core {
+    animation: graph-drift-core 6.4s ease-in-out infinite;
+  }
+
+  .graph-drift-a {
+    animation: graph-drift-a 6.1s ease-in-out infinite;
+  }
+
+  .graph-drift-b {
+    animation: graph-drift-b 6.9s ease-in-out infinite;
+  }
+
+  .graph-drift-c {
+    animation: graph-drift-c 5.8s ease-in-out infinite;
+  }
+
+  .graph-drift-d {
+    animation: graph-drift-d 7.2s ease-in-out infinite;
+  }
+
+  .knowledge-pathways {
+    margin-top: 0.6rem;
+  }
+
+  .knowledge-pathways h3 {
+    margin: 0 0 0.65rem;
+    font-size: 1.05rem;
+    font-family: var(--font-heading);
+  }
+
+  .pathway-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    text-align: left;
+  }
+
+  .pathway-item {
+    display: block;
+    border: 1px solid color-mix(in srgb, var(--color-border) 85%, #f97316 15%);
+    border-radius: 0.7rem;
+    background: color-mix(in srgb, var(--color-bg) 97%, #f97316 3%);
+    text-decoration: none;
+    padding: 0.75rem 0.85rem;
+    color: inherit;
+  }
+
+  .pathway-title {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.22rem;
+  }
+
+  .pathway-desc {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 0.94rem;
+    line-height: 1.45;
+  }
+
+  .pathway-item:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .graph-drift-core,
+    .graph-drift-a,
+    .graph-drift-b,
+    .graph-drift-c,
+    .graph-drift-d {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .pathway-list {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .knowledge-map-graph {
+      width: min(460px, 98vw);
+    }
+  }
+
+  @keyframes graph-drift-core {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(0, -4px);
+    }
+  }
+
+  @keyframes graph-drift-a {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-2px, -3px);
+    }
+  }
+
+  @keyframes graph-drift-b {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(2px, -3px);
+    }
+  }
+
+  @keyframes graph-drift-c {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-2px, 3px);
+    }
+  }
+
+  @keyframes graph-drift-d {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(2px, 3px);
+    }
+  }
+</style>

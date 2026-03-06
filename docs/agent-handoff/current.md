@@ -259,6 +259,45 @@
 - Added an automated topic coverage report script (`report:topics`) so future expansion can be evidence-driven rather than ad-hoc.
 - Wired both into `AGENTS.md` under the SEO/AEO/GEO instruction framework section.
 
+## Update: 2026-03-06 (Phase 1 URL detox + Phase 2 knowledge map foundation)
+
+### Summary
+- Implemented strict crawl/index cleanup without rewriting core content.
+- Reduced sitemap scope to strict-core plus live content entries under centralized exclusions.
+- Deindexed tag pages while keeping them crawlable and canonicalized.
+- Demoted homepage tag prominence below primary discovery sections.
+- Introduced a lightweight homepage `KnowledgeMap` component with direct pillar navigation.
+
+### Files touched
+- `src/pages/sitemap.xml.ts`
+- `src/pages/tags.astro`
+- `src/pages/tags/[tag].astro`
+- `src/components/ContentDiscovery.astro`
+- `src/components/KnowledgeMap.astro` (new)
+- `src/pages/index.astro`
+
+### Decisions
+- Sitemap model: hybrid auto (small core allowlist + collection entries), with centralized route exclusions.
+- Tag policy: keep accessible for UX, set `noindex`, and remove from sitemap.
+- Backlink policy: monitor-only (no disavow in this phase).
+- Knowledge map rollout: static/semi-interactive SVG only (no graph libraries).
+
+### Validation
+- `npm run build` passed.
+- `dist/sitemap.xml` no longer includes tags and excluded non-strategic route classes.
+- `dist/tags/index.html` and `dist/tags/*/index.html` output `meta robots` as `noindex, nofollow`.
+- Internal-link audit on built output found no broken internal links.
+
+### Monitoring thresholds
+- Investigate if any of the following occur:
+  1. toxic referring domains increase by `>= 20%` month-over-month
+  2. target URL errors in backlink tools increase by `>= 15` in a reporting cycle
+  3. GSC indexed core pages drop by `>= 10%` week-over-week
+
+### Open risks / follow-ups
+- Existing global runtime payload in `Layout.astro` (Mermaid and other global scripts) remains and should be trimmed in a dedicated performance pass.
+- If exclusion policy changes, update `EXCLUDED_ROUTE_PREFIXES` in `sitemap.xml.ts` to prevent crawl drift.
+
 ### Files touched
 - `docs/agent-instructions/implementation/cross-section-topic-map-v1.md` (new)
 - `scripts/report-topic-coverage.mjs` (new)

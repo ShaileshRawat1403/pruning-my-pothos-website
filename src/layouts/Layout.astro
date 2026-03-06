@@ -33,7 +33,7 @@ const pageDescription =
 const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
 const canonical = new URL(pathname, siteUrl).toString();
 const socialImage = new URL(image, siteUrl).toString();
-const pageRobots = noindex ? 'noindex, nofollow' : 'index, follow';
+const pageRobots = noindex ? 'noindex, follow' : 'index, follow';
 const jsonLdWebPage = {
 	'@context': 'https://schema.org',
 	'@type': 'WebPage',

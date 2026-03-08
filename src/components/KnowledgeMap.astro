@@ -5,32 +5,44 @@
   </p>
 
   <figure class="knowledge-map-graph" aria-label="Workspace knowledge map">
-    <svg viewBox="0 0 520 260" role="img" aria-labelledby="knowledge-map-graph-title" data-knowledge-map-graph>
+    <svg viewBox="0 0 520 300" role="img" aria-labelledby="knowledge-map-graph-title" data-knowledge-map-graph>
       <title id="knowledge-map-graph-title">Knowledge map connecting systems, sentences, self, and shelf</title>
-      <path class="graph-link graph-link-1" data-link-to="systems" d="M 260 130 L 132 64" />
-      <path class="graph-link graph-link-2" data-link-to="sentences" d="M 260 130 L 388 64" />
-      <path class="graph-link graph-link-3" data-link-to="self" d="M 260 130 L 132 196" />
-      <path class="graph-link graph-link-4" data-link-to="shelf" d="M 260 130 L 388 196" />
+
+      <g class="graph-branch graph-branch-a" data-link-to="systems">
+        <path class="graph-link" d="M 260 144 L 154 88" />
+        <g class="graph-node graph-branch-node" tabindex="0" role="link" data-node-name="systems" data-href="/systems/" aria-label="Open systems">
+          <circle cx="154" cy="88" r="25"></circle>
+          <text x="154" y="92" text-anchor="middle">systems</text>
+        </g>
+      </g>
+
+      <g class="graph-branch graph-branch-b" data-link-to="sentences">
+        <path class="graph-link" d="M 260 144 L 366 88" />
+        <g class="graph-node graph-branch-node" tabindex="0" role="link" data-node-name="sentences" data-href="/sentences/" aria-label="Open sentences">
+          <circle cx="366" cy="88" r="25"></circle>
+          <text x="366" y="92" text-anchor="middle">sentences</text>
+        </g>
+      </g>
+
+      <g class="graph-branch graph-branch-c" data-link-to="self">
+        <path class="graph-link" d="M 260 144 L 154 220" />
+        <g class="graph-node graph-branch-node" tabindex="0" role="link" data-node-name="self" data-href="/self/" aria-label="Open self">
+          <circle cx="154" cy="220" r="22"></circle>
+          <text x="154" y="224" text-anchor="middle">self</text>
+        </g>
+      </g>
+
+      <g class="graph-branch graph-branch-d" data-link-to="shelf">
+        <path class="graph-link" d="M 260 144 L 366 220" />
+        <g class="graph-node graph-branch-node" tabindex="0" role="link" data-node-name="shelf" data-href="/shelf/" aria-label="Open shelf">
+          <circle cx="366" cy="220" r="23"></circle>
+          <text x="366" y="224" text-anchor="middle">shelf</text>
+        </g>
+      </g>
 
       <g class="graph-node graph-node-core graph-drift-core" tabindex="0" role="link" data-node-name="workspace" data-href="/" aria-label="Open homepage">
-        <circle cx="260" cy="130" r="34"></circle>
-        <text x="260" y="136" text-anchor="middle">workspace</text>
-      </g>
-      <g class="graph-node graph-drift-a" tabindex="0" role="link" data-node-name="systems" data-href="/systems/" aria-label="Open systems">
-        <circle cx="132" cy="64" r="25"></circle>
-        <text x="132" y="68" text-anchor="middle">systems</text>
-      </g>
-      <g class="graph-node graph-drift-b" tabindex="0" role="link" data-node-name="sentences" data-href="/sentences/" aria-label="Open sentences">
-        <circle cx="388" cy="64" r="25"></circle>
-        <text x="388" y="68" text-anchor="middle">sentences</text>
-      </g>
-      <g class="graph-node graph-drift-c" tabindex="0" role="link" data-node-name="self" data-href="/self/" aria-label="Open self">
-        <circle cx="132" cy="196" r="22"></circle>
-        <text x="132" y="200" text-anchor="middle">self</text>
-      </g>
-      <g class="graph-node graph-drift-d" tabindex="0" role="link" data-node-name="shelf" data-href="/shelf/" aria-label="Open shelf">
-        <circle cx="388" cy="196" r="23"></circle>
-        <text x="388" y="200" text-anchor="middle">shelf</text>
+        <circle cx="260" cy="144" r="34"></circle>
+        <text x="260" y="150" text-anchor="middle">workspace</text>
       </g>
     </svg>
   </figure>
@@ -58,13 +70,13 @@
   const initKnowledgeMap = () => {
     const nodes = document.querySelectorAll('.knowledge-map .graph-node[data-href]');
     const graph = document.querySelector('[data-knowledge-map-graph]');
-    const links = document.querySelectorAll('.knowledge-map .graph-link[data-link-to]');
+    const branches = document.querySelectorAll('.knowledge-map .graph-branch[data-link-to]');
 
     const setActiveNode = (name) => {
       if (!graph) return;
       graph.dataset.activeNode = name || '';
-      links.forEach((link) => {
-        link.classList.toggle('is-active', !!name && link.getAttribute('data-link-to') === name);
+      branches.forEach((branch) => {
+        branch.classList.toggle('is-active', !!name && branch.getAttribute('data-link-to') === name);
       });
     };
 
@@ -106,7 +118,7 @@
 <style>
   .knowledge-map {
     max-width: 860px;
-    margin: 0 auto 2.25rem;
+    margin: 0 auto 2.4rem;
     padding: 0 1rem;
     text-align: center;
   }
@@ -117,36 +129,47 @@
   }
 
   .knowledge-map-intro {
-    margin: 0 auto 1rem;
-    max-width: 62ch;
+    margin: 0 auto 1.15rem;
+    max-width: 36rem;
     color: var(--color-text-muted);
-    line-height: 1.7;
+    line-height: 1.72;
+    text-wrap: balance;
   }
 
   .knowledge-map-graph {
-    margin: 0 auto 0.95rem;
-    width: min(520px, 96vw);
+    margin: 0 auto 1.1rem;
+    width: min(520px, 100%);
+    display: flex;
+    justify-content: center;
   }
 
   .knowledge-map-graph svg {
     display: block;
     width: 100%;
     height: auto;
+    overflow: visible;
+  }
+
+  .graph-branch {
+    transform-origin: 260px 144px;
+    will-change: transform;
   }
 
   .graph-link {
     fill: none;
     stroke: color-mix(in srgb, var(--color-border) 70%, #f97316 30%);
-    stroke-width: 1.4;
-    opacity: 0.88;
+    stroke-width: 1.5;
+    opacity: 0.86;
     stroke-linecap: round;
+    stroke-dasharray: 4 7;
+    animation: graph-link-flow 9.5s linear infinite;
     transition: stroke 0.22s ease, opacity 0.22s ease, stroke-width 0.22s ease;
   }
 
-  .graph-link.is-active {
+  .graph-branch.is-active .graph-link {
     stroke: color-mix(in srgb, #f97316 64%, var(--color-border));
     opacity: 1;
-    stroke-width: 1.8;
+    stroke-width: 1.9;
   }
 
   .graph-node {
@@ -154,7 +177,6 @@
     cursor: pointer;
     transform-box: fill-box;
     transform-origin: center;
-    will-change: transform;
     transition: opacity 0.22s ease;
   }
 
@@ -162,7 +184,7 @@
     fill: color-mix(in srgb, var(--color-bg) 97%, #f97316 3%);
     stroke: color-mix(in srgb, var(--color-border) 80%, #f97316 20%);
     stroke-width: 1.2;
-    transition: fill 0.2s ease, stroke 0.2s ease, transform 0.2s ease;
+    transition: fill 0.22s ease, stroke 0.22s ease, transform 0.22s ease, filter 0.22s ease;
   }
 
   .graph-node text {
@@ -171,6 +193,7 @@
     font-size: 11px;
     letter-spacing: 0.01em;
     user-select: none;
+    transition: fill 0.22s ease;
   }
 
   .graph-node-core text {
@@ -179,16 +202,18 @@
   }
 
   .graph-node:hover circle,
-  .graph-node:focus-visible circle {
+  .graph-node:focus-visible circle,
+  .graph-branch.is-active .graph-branch-node circle {
     fill: color-mix(in srgb, #f97316 10%, var(--color-bg));
-    stroke: color-mix(in srgb, #f97316 50%, var(--color-border));
+    stroke: color-mix(in srgb, #f97316 54%, var(--color-border));
     transform: scale(1.08);
-    filter: drop-shadow(0 0 7px color-mix(in srgb, #f97316 18%, transparent));
+    filter: drop-shadow(0 0 8px color-mix(in srgb, #f97316 20%, transparent));
   }
 
   .graph-node:hover text,
-  .graph-node:focus-visible text {
-    fill: color-mix(in srgb, var(--color-text-heading) 80%, #f97316 20%);
+  .graph-node:focus-visible text,
+  .graph-branch.is-active .graph-branch-node text {
+    fill: color-mix(in srgb, var(--color-text-heading) 82%, #f97316 18%);
   }
 
   .graph-node:focus-visible {
@@ -196,31 +221,31 @@
   }
 
   .graph-drift-core {
-    animation: graph-drift-core 6.4s ease-in-out infinite;
+    animation: graph-drift-core 5.8s ease-in-out infinite;
   }
 
-  .graph-drift-a {
-    animation: graph-drift-a 6.1s ease-in-out infinite;
+  .graph-branch-a {
+    animation: graph-swing-a 7.6s ease-in-out infinite;
   }
 
-  .graph-drift-b {
-    animation: graph-drift-b 6.9s ease-in-out infinite;
+  .graph-branch-b {
+    animation: graph-swing-b 8.1s ease-in-out infinite;
   }
 
-  .graph-drift-c {
-    animation: graph-drift-c 5.8s ease-in-out infinite;
+  .graph-branch-c {
+    animation: graph-swing-c 7.1s ease-in-out infinite;
   }
 
-  .graph-drift-d {
-    animation: graph-drift-d 7.2s ease-in-out infinite;
+  .graph-branch-d {
+    animation: graph-swing-d 8.4s ease-in-out infinite;
   }
 
   .knowledge-pathways {
-    margin-top: 0.6rem;
+    margin-top: 0.75rem;
   }
 
   .knowledge-pathways h3 {
-    margin: 0 0 0.65rem;
+    margin: 0 0 0.7rem;
     font-size: 1.05rem;
     font-family: var(--font-heading);
   }
@@ -238,7 +263,7 @@
     border-radius: 0.7rem;
     background: color-mix(in srgb, var(--color-bg) 97%, #f97316 3%);
     text-decoration: none;
-    padding: 0.75rem 0.85rem;
+    padding: 0.82rem 0.9rem;
     color: inherit;
     transition: transform 0.18s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   }
@@ -246,7 +271,7 @@
   .pathway-title {
     display: block;
     font-weight: 600;
-    margin-bottom: 0.22rem;
+    margin-bottom: 0.24rem;
   }
 
   .pathway-desc {
@@ -270,10 +295,11 @@
 
   @media (prefers-reduced-motion: reduce) {
     .graph-drift-core,
-    .graph-drift-a,
-    .graph-drift-b,
-    .graph-drift-c,
-    .graph-drift-d,
+    .graph-branch-a,
+    .graph-branch-b,
+    .graph-branch-c,
+    .graph-branch-d,
+    .graph-link,
     .pathway-item {
       animation: none;
       transition: none;
@@ -281,63 +307,139 @@
   }
 
   @media (max-width: 760px) {
+    .knowledge-map {
+      margin-bottom: 2rem;
+      padding-inline: 0.85rem;
+    }
+
+    .knowledge-map-intro {
+      max-width: 30ch;
+      margin-bottom: 0.85rem;
+    }
+
+    .knowledge-map-graph {
+      width: min(420px, calc(100vw - 1.7rem));
+      margin-bottom: 0.8rem;
+    }
+
     .pathway-list {
       grid-template-columns: 1fr;
       text-align: center;
     }
 
+    .pathway-item {
+      max-width: 29rem;
+      margin-inline: auto;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .knowledge-map h2 {
+      font-size: clamp(1.35rem, 8vw, 1.9rem);
+      line-height: 1.12;
+    }
+
+    .knowledge-map-intro {
+      max-width: 24ch;
+      font-size: 0.98rem;
+    }
+
     .knowledge-map-graph {
-      width: min(460px, 98vw);
+      width: min(400px, calc(100vw - 1.4rem));
+    }
+
+    .knowledge-map-graph svg {
+      transform: translateX(-1px);
+    }
+
+    .knowledge-pathways h3 {
+      font-size: 0.98rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .pathway-item {
+      padding: 0.78rem 0.82rem;
+      border-radius: 0.8rem;
+    }
+
+    .pathway-title {
+      margin-bottom: 0.16rem;
+    }
+
+    .pathway-desc {
+      font-size: 0.9rem;
+      line-height: 1.42;
+    }
+  }
+
+  @keyframes graph-link-flow {
+    from {
+      stroke-dashoffset: 0;
+    }
+    to {
+      stroke-dashoffset: -48;
     }
   }
 
   @keyframes graph-drift-core {
     0%,
     100% {
-      transform: translate(0, 0);
+      transform: translateY(0);
     }
     50% {
-      transform: translate(0, -4px);
+      transform: translateY(-3px);
     }
   }
 
-  @keyframes graph-drift-a {
+  @keyframes graph-swing-a {
     0%,
     100% {
-      transform: translate(0, 0);
+      transform: rotate(0deg);
     }
-    50% {
-      transform: translate(-2px, -3px);
+    25% {
+      transform: rotate(-1.35deg);
+    }
+    60% {
+      transform: rotate(0.55deg);
     }
   }
 
-  @keyframes graph-drift-b {
+  @keyframes graph-swing-b {
     0%,
     100% {
-      transform: translate(0, 0);
+      transform: rotate(0deg);
     }
-    50% {
-      transform: translate(2px, -3px);
+    30% {
+      transform: rotate(1.45deg);
+    }
+    68% {
+      transform: rotate(-0.65deg);
     }
   }
 
-  @keyframes graph-drift-c {
+  @keyframes graph-swing-c {
     0%,
     100% {
-      transform: translate(0, 0);
+      transform: rotate(0deg);
     }
-    50% {
-      transform: translate(-2px, 3px);
+    28% {
+      transform: rotate(-1.55deg);
+    }
+    66% {
+      transform: rotate(0.8deg);
     }
   }
 
-  @keyframes graph-drift-d {
+  @keyframes graph-swing-d {
     0%,
     100% {
-      transform: translate(0, 0);
+      transform: rotate(0deg);
     }
-    50% {
-      transform: translate(2px, 3px);
+    34% {
+      transform: rotate(1.4deg);
+    }
+    70% {
+      transform: rotate(-0.75deg);
     }
   }
 </style>

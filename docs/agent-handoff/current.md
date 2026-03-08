@@ -302,6 +302,36 @@
 2. Re-submit `https://pruningmypothos.com/sitemap.xml` only after live tag meta and sitemap output are confirmed.
 3. Consider a second-pass upgrade for `/systems/` category pages so each category gets a smaller `Start Here` cluster as well.
 
+## Update: 2026-03-08 (Support cluster expansion + micro-interaction polish)
+
+### Summary
+- Added one support document each to `systems`, `sentences`, `self`, `shelf/shared-resources`, plus one sticky note to reinforce retrieval, grounding, and evaluation language across sections.
+- Added a small interaction polish pass to the homepage knowledge map:
+  - active connected-link highlighting on node hover/focus
+  - calmer pathway card hover/focus states
+- Kept the editorial layout model unchanged; changes are limited to support content and subtle interaction feedback.
+
+### Files touched
+- `src/content/systems/evaluation-as-a-runtime-discipline.mdx`
+- `src/content/sentences/retrieve-before-claim.md`
+- `src/content/self/how-i-run-a-weekly-eval-loop.md`
+- `src/content/shelf/shared-resources/retrieval-and-grounding-evaluation-kit.md`
+- `src/content/sticky-notes/note-39.md`
+- `src/components/KnowledgeMap.astro`
+
+### Decisions
+- Chose a support batch aligned to the existing topic map instead of expanding the cornerstone set.
+- Reinforced retrieval, grounding, and evaluation as supporting keywords because those surfaces are already strong enough to deepen, not broad enough to fragment.
+- Kept micro-interactions restrained and keyboard-accessible.
+
+### Open risks / follow-ups
+- New support docs improve cluster depth, but related “continue reading” patterns could still be made more systematic across non-systems sections.
+- The homepage hero still carries the heaviest motion on the page; no performance trim was attempted in this pass.
+
+### Suggested next actions
+1. Add one more support resource or tool page for evaluation/observability if you want stronger shelf depth around the new systems doc.
+2. After live deploy, re-run topic reports and live SEO verification before sitemap submission.
+
 ## Update: 2026-03-06 (Phase 1 URL detox + Phase 2 knowledge map foundation)
 
 ### Summary

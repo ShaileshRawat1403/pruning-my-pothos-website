@@ -1,6 +1,44 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { systemCategories } from '../utils/systemCategories';
+
+const cornerstoneGuides = [
+  {
+    title: 'SEO, AEO, GEO: How Discoverability Actually Works',
+    href: '/systems/seo-aeo-geo-how-things-fit-together/',
+    summary: 'The top-level map for crawl, retrieval, answer extraction, and citation.',
+  },
+  {
+    title: 'AEO and GEO as a Retrieval Design Problem',
+    href: '/systems/aeo-and-geo-as-a-retrieval-design-problem/',
+    summary: 'How retrievable evidence, chunking, and citation shape answer visibility.',
+  },
+  {
+    title: 'Prompting Is Not the Skill You Think It Is',
+    href: '/systems/prompting-is-not-the-skill-you-think-it-is/',
+    summary: 'Why prompt engineering works better when treated as system design.',
+  },
+  {
+    title: 'Observability First: How AI Systems Learn After Launch',
+    href: '/systems/observability-first-ai-systems/',
+    summary: 'The operational layer for debugging, evaluation, and reliable iteration.',
+  },
+  {
+    title: 'Agent Instructions and Handoff as an Operating System',
+    href: '/systems/agent-instructions-and-handoff-as-an-operating-system/',
+    summary: 'A governed workflow model for repeatable agent execution.',
+  },
+  {
+    title: 'Tech Stack for NLPg-Driven AI-Assisted SDLC',
+    href: '/systems/tech-stack-for-nlpg-driven-ai-assisted-sdlc/',
+    summary: 'A language-first SDLC stack for AI-assisted delivery with gates and validation.',
+  },
+  {
+    title: 'Entity Glossary for AI Discoverability',
+    href: '/systems/entity-glossary-for-ai-discoverability/',
+    summary: 'Canonical concept anchors for SEO, AEO, GEO, and runtime language.',
+  },
+];
 ---
 <Layout
   title="Systems | A Thinking Workspace"
@@ -12,6 +50,42 @@ import { systemCategories } from '../utils/systemCategories';
     <p class="mode-line lead">How things are built and governed.</p>
     <p class="subtitle">Long-form thinking about frameworks, AI, documentation, and structure.</p>
   </div>
+
+  <section class="systems-start-here" aria-labelledby="systems-start-here-title">
+    <div class="systems-start-here-head">
+      <p class="systems-kicker">Start Here</p>
+      <h2 id="systems-start-here-title">Seven cornerstone guides</h2>
+      <p>
+        These are the main entry points for how this site thinks about discoverability,
+        agent operations, observability, prompting, and AI-assisted delivery.
+      </p>
+    </div>
+
+    <div class="systems-cornerstones">
+      {cornerstoneGuides.map((guide) => (
+        <a class="systems-cornerstone-card" href={guide.href}>
+          <h3>{guide.title}</h3>
+          <p>{guide.summary}</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="systems-framework-note">
+      <p class="systems-kicker">Framework Page</p>
+      <h3>DIY Intelligence and Dual NLP</h3>
+      <p>
+        For the site-level thesis behind these guides, read
+        {' '}<a href="/dual-nlp-framework/">Dual NLP for AI-assisted SDLC</a>.
+        That page explains how DIY intelligence, prompt design, and governed execution fit together.
+      </p>
+    </div>
+  </section>
+
+  <section class="systems-browse" aria-labelledby="systems-browse-title">
+    <div class="systems-browse-head">
+      <p class="systems-kicker">Browse By Category</p>
+      <h2 id="systems-browse-title">Explore the rest of the archive</h2>
+    </div>
 
   <div class="systems-categories">
     {systemCategories.map((category) => (
@@ -25,9 +99,97 @@ import { systemCategories } from '../utils/systemCategories';
       </a>
     ))}
   </div>
+  </section>
 </Layout>
 
 <style>
+  .systems-start-here,
+  .systems-browse {
+    margin-bottom: 2.25rem;
+  }
+
+  .systems-start-here-head,
+  .systems-browse-head {
+    margin-bottom: 1rem;
+  }
+
+  .systems-kicker {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+
+  .systems-start-here-head h2,
+  .systems-browse-head h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1.6rem;
+  }
+
+  .systems-start-here-head p:last-child,
+  .systems-browse-head p:last-child {
+    margin: 0;
+    color: var(--color-text-muted);
+    max-width: 62ch;
+  }
+
+  .systems-cornerstones {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .systems-cornerstone-card,
+  .systems-categories {
+    display: grid;
+  }
+
+  .systems-cornerstone-card {
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 1.25rem;
+    background: color-mix(in srgb, var(--color-bg) 92%, var(--color-blockquote-bg));
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .systems-cornerstone-card:hover,
+  .systems-framework-note:hover {
+    background: color-mix(in srgb, var(--color-accent) 6%, var(--color-bg));
+    border-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-border));
+    transform: translateY(-2px);
+  }
+
+  .systems-cornerstone-card h3,
+  .systems-framework-note h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.08rem;
+    line-height: 1.3;
+  }
+
+  .systems-cornerstone-card p,
+  .systems-framework-note p:last-child {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+  }
+
+  .systems-framework-note {
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 1.1rem 1.25rem;
+    background: color-mix(in srgb, var(--color-bg) 95%, var(--color-blockquote-bg));
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .systems-framework-note a {
+    font-weight: 600;
+  }
+
   .systems-categories {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -66,6 +228,7 @@ import { systemCategories } from '../utils/systemCategories';
     line-height: 1.5;
   }
   @media (max-width: 1000px) {
+    .systems-cornerstones,
     .systems-categories {
       grid-template-columns: 1fr;
     }

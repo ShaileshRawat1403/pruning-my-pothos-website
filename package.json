@@ -11,6 +11,7 @@
     "report:systems": "node scripts/report-systems-consistency.mjs",
     "report:topics": "node scripts/report-topic-coverage.mjs",
     "report:gaps": "node scripts/report-main-gaps.mjs",
+    "verify:seo-live": "bash scripts/verify-seo-live.sh",
     "verify:systems": "npm run lint:systems:advisory && npm run lint:systems && npm run report:systems",
     "deploy:zip": "npm run build && rm -f site.zip && cd dist && zip -r ../site.zip .",
     "deploy:ftp": "npm run build && bash scripts/deploy-ftp.sh",

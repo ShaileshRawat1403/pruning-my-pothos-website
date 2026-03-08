@@ -259,6 +259,49 @@
 - Added an automated topic coverage report script (`report:topics`) so future expansion can be evidence-driven rather than ad-hoc.
 - Wired both into `AGENTS.md` under the SEO/AEO/GEO instruction framework section.
 
+## Update: 2026-03-08 (Cornerstone systems hub + Dual NLP surfacing)
+
+### Summary
+- Added a clear `Start Here` hub to the Systems section page for the seven locked cornerstone guides.
+- Surfaced `Dual NLP for AI-assisted SDLC` as the manifesto/framework page behind DIY intelligence, NLPg, and governed execution.
+- Strengthened internal cross-links across the cornerstone systems pages so the cluster reads as one authority mesh instead of isolated essays.
+- Added a live SEO verification script entry point (`verify:seo-live`) to make post-deploy tag/sitemap checks repeatable.
+
+### Files touched
+- `src/pages/systems.astro`
+- `src/pages/dual-nlp-framework.astro`
+- `src/content/systems/seo-aeo-geo-how-things-fit-together.mdx`
+- `src/content/systems/aeo-and-geo-as-a-retrieval-design-problem.mdx`
+- `src/content/systems/prompting-is-not-the-skill-you-think-it-is.mdx`
+- `src/content/systems/observability-first-ai-systems.mdx`
+- `src/content/systems/agent-instructions-and-handoff-as-an-operating-system.mdx`
+- `src/content/systems/tech-stack-for-nlpg-driven-ai-assisted-sdlc.mdx`
+- `src/content/systems/entity-glossary-for-ai-discoverability.mdx`
+- `package.json`
+- `scripts/verify-seo-live.sh`
+
+### Decisions
+- Locked the seven-cornerstone Systems cluster:
+  - discoverability map
+  - retrieval design
+  - prompting as system design
+  - observability
+  - agent operating system
+  - AI-assisted SDLC stack
+  - entity glossary
+- Kept `DIY Intelligence / Dual NLP` as a framework page, not a search pillar.
+- Homepage remains four-pillar (`systems`, `sentences`, `self`, `shelf`) while `/systems/` now exposes the deeper authority spine.
+
+### Open risks / follow-ups
+- Production still needs a fully current deploy before live tag `noindex, follow` verification can pass.
+- The cornerstone mesh is now explicit, but `/systems/` category pages still behave mostly as browse pages rather than curated sub-hubs.
+- No dedicated `DIY Intelligence` manifesto slug was added; the current framework page carries that role.
+
+### Suggested next actions
+1. Deploy latest `main`, then run `npm run verify:seo-live`.
+2. Re-submit `https://pruningmypothos.com/sitemap.xml` only after live tag meta and sitemap output are confirmed.
+3. Consider a second-pass upgrade for `/systems/` category pages so each category gets a smaller `Start Here` cluster as well.
+
 ## Update: 2026-03-06 (Phase 1 URL detox + Phase 2 knowledge map foundation)
 
 ### Summary

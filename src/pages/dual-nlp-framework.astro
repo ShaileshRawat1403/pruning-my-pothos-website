@@ -1,6 +1,37 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { BUILD_MAPPINGS } from '@/data/buildMappings';
+
+const cornerstoneGuides = [
+  {
+    title: 'SEO, AEO, and GEO',
+    href: '/systems/seo-aeo-geo-how-things-fit-together/',
+  },
+  {
+    title: 'Retrieval design',
+    href: '/systems/aeo-and-geo-as-a-retrieval-design-problem/',
+  },
+  {
+    title: 'Prompting as system design',
+    href: '/systems/prompting-is-not-the-skill-you-think-it-is/',
+  },
+  {
+    title: 'Observability-first AI',
+    href: '/systems/observability-first-ai-systems/',
+  },
+  {
+    title: 'Agent operating systems',
+    href: '/systems/agent-instructions-and-handoff-as-an-operating-system/',
+  },
+  {
+    title: 'AI-assisted SDLC stack',
+    href: '/systems/tech-stack-for-nlpg-driven-ai-assisted-sdlc/',
+  },
+  {
+    title: 'Entity glossary',
+    href: '/systems/entity-glossary-for-ai-discoverability/',
+  },
+];
 ---
 
 <Layout
@@ -14,6 +45,32 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
         <h1>Dual NLP for AI-assisted SDLC</h1>
         <p class="subtitle">First understand language, then compile language into governed execution.</p>
       </header>
+
+      <section class="framework-intro" aria-labelledby="framework-intro-title">
+        <div class="framework-copy">
+          <p class="framework-kicker">Framework Page</p>
+          <h2 id="framework-intro-title">DIY intelligence as a governed practice</h2>
+          <p>
+            This page is the manifesto and builder surface for the site’s core thesis:
+            natural language can be used both to understand intent and to compile intent
+            into safer execution. That is the working frame behind Dual NLP, NLPg, and
+            AI-assisted SDLC on this site.
+          </p>
+          <p>
+            The seven core Systems guides below explain the search-facing and runtime-facing
+            parts of that model in more concrete detail.
+          </p>
+        </div>
+
+        <div class="framework-guides">
+          <p class="framework-kicker">Core Guides</p>
+          <ul>
+            {cornerstoneGuides.map((guide) => (
+              <li><a href={guide.href}>{guide.title}</a></li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
       <section class="lens-intro" aria-labelledby="lens-intro-title">
         <h2 id="lens-intro-title">Choose Your Lens</h2>
@@ -1792,6 +1849,62 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
     max-width: 48ch;
   }
 
+  .framework-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.9fr);
+    gap: 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background:
+      linear-gradient(165deg, color-mix(in srgb, var(--color-bg) 90%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 95%, transparent));
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
+      0 10px 24px color-mix(in srgb, #020617 6%, transparent);
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .framework-kicker {
+    margin: 0 0 0.28rem;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+
+  .framework-copy h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1.28rem;
+  }
+
+  .framework-copy p:last-child,
+  .framework-copy p {
+    color: var(--color-text-muted);
+    line-height: 1.55;
+  }
+
+  .framework-guides {
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--color-bg) 95%, var(--color-blockquote-bg));
+    padding: 0.9rem 1rem;
+  }
+
+  .framework-guides ul {
+    margin: 0;
+    padding-left: 1rem;
+  }
+
+  .framework-guides li + li {
+    margin-top: 0.35rem;
+  }
+
+  .framework-guides a {
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
+  }
+
   .lens-intro {
     border: 1px solid var(--color-border);
     border-radius: 14px;
@@ -2691,6 +2804,7 @@ import { BUILD_MAPPINGS } from '@/data/buildMappings';
   }
 
   @media (max-width: 1120px) {
+    .framework-intro,
     .builder-grid {
       grid-template-columns: 1fr;
       gap: 0.8rem;

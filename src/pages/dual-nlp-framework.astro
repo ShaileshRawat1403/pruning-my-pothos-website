@@ -1286,12 +1286,14 @@ const cornerstoneGuides = [
 
                 graphState.nodes.forEach((item) => {
                   if (item === dragged) return;
-                  item.vx += (item.anchorX - item.x) * 0.0018;
-                  item.vy += (item.anchorY - item.y) * 0.0018;
-                  item.vx += (graphState.width * 0.5 - item.x) * (0.00035 / nodeCount);
-                  item.vy += (graphState.height * 0.5 - item.y) * (0.00035 / nodeCount);
-                  item.vx *= 0.88;
-                  item.vy *= 0.88;
+                  const waveX = Math.sin((performance.now() * 0.0011) + item.phase) * 5 * item.driftX;
+                  const waveY = Math.cos((performance.now() * 0.0009) + (item.phase * 1.17)) * 4 * item.driftY;
+                  const targetX = item.anchorX + waveX;
+                  const targetY = item.anchorY + waveY;
+                  item.vx += (targetX - item.x) * 0.0017;
+                  item.vy += (targetY - item.y) * 0.0017;
+                  item.vx *= 0.9;
+                  item.vy *= 0.9;
                   item.x = clamp(item.x + item.vx, item.radius, graphState.width - item.radius);
                   item.y = clamp(item.y + item.vy, item.radius, graphState.height - item.radius);
                 });
@@ -1316,7 +1318,7 @@ const cornerstoneGuides = [
               const safeGroup = layout[node.group] ? node.group : 'delivery';
               const anchor = layout[safeGroup];
               const prev = prevNodeById.get(node.id);
-              const radius = node.group === 'core' ? 44 : 34;
+              const radius = node.group === 'core' ? 36 : 28;
               const jitterX = ((index % 3) - 1) * 22;
               const jitterY = ((index % 5) - 2) * 16;
               const startX = prev?.x ?? ((anchor.x * graphState.width) + jitterX);
@@ -1331,6 +1333,9 @@ const cornerstoneGuides = [
                 radius,
                 anchorX: anchor.x * graphState.width,
                 anchorY: anchor.y * graphState.height,
+                phase: (index + 1) * 0.9,
+                driftX: index % 2 === 0 ? 1 : -1,
+                driftY: index % 3 === 0 ? -1 : 1,
                 el: null,
               };
 
@@ -1836,7 +1841,7 @@ const cornerstoneGuides = [
     margin-left: -50vw;
     margin-right: -50vw;
     width: 100vw;
-    padding: 1.2rem 0 3.2rem;
+    padding: 1.2rem 0 2rem;
     background:
       radial-gradient(circle at 8% 9%, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 28%),
       radial-gradient(circle at 91% 14%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 30%),
@@ -2484,17 +2489,17 @@ const cornerstoneGuides = [
   :global(.graph-node) {
     position: absolute;
     transform: translate(-50%, -50%);
-    width: 68px;
-    height: 68px;
+    width: 56px;
+    height: 56px;
     border: 1px solid color-mix(in srgb, var(--color-border) 60%, #ffffff);
     background: color-mix(in srgb, var(--color-bg) 38%, #0f172a);
     color: #f8fafc;
     border-radius: 999px;
-    font-size: 0.54rem;
+    font-size: 0.5rem;
     font-family: var(--font-mono);
     line-height: 1.15;
     text-align: center;
-    padding: 0.45rem;
+    padding: 0.34rem;
     white-space: normal;
     overflow-wrap: anywhere;
     display: inline-flex;
@@ -2504,20 +2509,20 @@ const cornerstoneGuides = [
     transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
     box-shadow:
       inset 0 1px 0 color-mix(in srgb, #ffffff 12%, transparent),
-      0 6px 14px color-mix(in srgb, #0f172a 38%, transparent);
+      0 5px 10px color-mix(in srgb, #0f172a 28%, transparent);
   }
 
   :global(.graph-node.group-core) {
-    width: 86px;
-    height: 86px;
+    width: 72px;
+    height: 72px;
     border-color: color-mix(in srgb, var(--color-accent) 75%, #dbeafe);
     background: radial-gradient(circle at 32% 30%, #a7f3d0 0%, #14b8a6 58%, #0f766e 100%);
-    font-size: 0.62rem;
+    font-size: 0.57rem;
     font-weight: 700;
     color: #052e2b;
     box-shadow:
       inset 0 1px 0 color-mix(in srgb, #ffffff 35%, transparent),
-      0 8px 16px color-mix(in srgb, #0f766e 45%, transparent);
+      0 7px 14px color-mix(in srgb, #0f766e 34%, transparent);
   }
 
   :global(.graph-node.group-domain) {
@@ -2566,8 +2571,8 @@ const cornerstoneGuides = [
   :global(.graph-node.is-spotlight) {
     opacity: 1;
     z-index: 20;
-    box-shadow: 0 0 0 4px var(--color-accent), 0 8px 20px rgba(0,0,0,0.5);
-    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 58%, transparent), 0 8px 18px rgba(0,0,0,0.3);
+    transform: translate(-50%, -50%) scale(1.06);
   }
 
   .graph-nodes.is-imploding :global(.graph-node) {
@@ -2869,15 +2874,15 @@ const cornerstoneGuides = [
     }
 
     :global(.graph-node) {
-      font-size: 0.58rem;
-      width: 58px;
-      height: 58px;
-      padding: 0.3rem;
+      font-size: 0.52rem;
+      width: 50px;
+      height: 50px;
+      padding: 0.24rem;
     }
 
     :global(.graph-node.group-core) {
-      width: 72px;
-      height: 72px;
+      width: 62px;
+      height: 62px;
     }
   }
 </style>

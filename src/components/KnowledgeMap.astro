@@ -11,23 +11,23 @@
       <g class="graph-branch graph-branch-a" data-link-to="systems">
         <path class="graph-link" d="M 260 144 L 154 88" />
         <g class="graph-node graph-branch-node" tabindex="0" role="link" data-node-name="systems" data-href="/systems/" aria-label="Open systems">
-          <circle cx="154" cy="88" r="25"></circle>
-          <text x="154" y="92" text-anchor="middle">systems</text>
+          <circle cx="154" cy="88" r="22"></circle>
+          <text x="154" y="91" text-anchor="middle">systems</text>
         </g>
       </g>
 
       <g class="graph-branch graph-branch-b" data-link-to="sentences">
         <path class="graph-link" d="M 260 144 L 366 88" />
         <g class="graph-node graph-branch-node" tabindex="0" role="link" data-node-name="sentences" data-href="/sentences/" aria-label="Open sentences">
-          <circle cx="366" cy="88" r="25"></circle>
-          <text x="366" y="92" text-anchor="middle">sentences</text>
+          <circle cx="366" cy="88" r="22"></circle>
+          <text x="366" y="91" text-anchor="middle">sentences</text>
         </g>
       </g>
 
       <g class="graph-branch graph-branch-c" data-link-to="self">
         <path class="graph-link" d="M 260 144 L 154 220" />
         <g class="graph-node graph-branch-node" tabindex="0" role="link" data-node-name="self" data-href="/self/" aria-label="Open self">
-          <circle cx="154" cy="220" r="22"></circle>
+          <circle cx="154" cy="220" r="19"></circle>
           <text x="154" y="224" text-anchor="middle">self</text>
         </g>
       </g>
@@ -35,14 +35,14 @@
       <g class="graph-branch graph-branch-d" data-link-to="shelf">
         <path class="graph-link" d="M 260 144 L 366 220" />
         <g class="graph-node graph-branch-node" tabindex="0" role="link" data-node-name="shelf" data-href="/shelf/" aria-label="Open shelf">
-          <circle cx="366" cy="220" r="23"></circle>
+          <circle cx="366" cy="220" r="20"></circle>
           <text x="366" y="224" text-anchor="middle">shelf</text>
         </g>
       </g>
 
       <g class="graph-node graph-node-core graph-drift-core" tabindex="0" role="link" data-node-name="workspace" data-href="/" aria-label="Open homepage">
-        <circle cx="260" cy="144" r="34"></circle>
-        <text x="260" y="150" text-anchor="middle">workspace</text>
+        <circle cx="260" cy="144" r="29"></circle>
+        <text x="260" y="149" text-anchor="middle">workspace</text>
       </g>
     </svg>
   </figure>
@@ -206,8 +206,7 @@
   .graph-branch.is-active .graph-branch-node circle {
     fill: color-mix(in srgb, #f97316 10%, var(--color-bg));
     stroke: color-mix(in srgb, #f97316 54%, var(--color-border));
-    transform: scale(1.08);
-    filter: drop-shadow(0 0 8px color-mix(in srgb, #f97316 20%, transparent));
+    filter: drop-shadow(0 0 5px color-mix(in srgb, #f97316 14%, transparent));
   }
 
   .graph-node:hover text,
@@ -221,23 +220,23 @@
   }
 
   .graph-drift-core {
-    animation: graph-drift-core 5.8s ease-in-out infinite;
+    animation: graph-drift-core 5.4s ease-in-out infinite;
   }
 
   .graph-branch-a {
-    animation: graph-swing-a 7.6s ease-in-out infinite;
+    animation: graph-swing-a 8.4s cubic-bezier(0.42, 0, 0.22, 1) infinite;
   }
 
   .graph-branch-b {
-    animation: graph-swing-b 8.1s ease-in-out infinite;
+    animation: graph-swing-b 7.9s cubic-bezier(0.42, 0, 0.22, 1) infinite;
   }
 
   .graph-branch-c {
-    animation: graph-swing-c 7.1s ease-in-out infinite;
+    animation: graph-swing-c 8.8s cubic-bezier(0.42, 0, 0.22, 1) infinite;
   }
 
   .graph-branch-d {
-    animation: graph-swing-d 8.4s ease-in-out infinite;
+    animation: graph-swing-d 7.4s cubic-bezier(0.42, 0, 0.22, 1) infinite;
   }
 
   .knowledge-pathways {
@@ -348,10 +347,6 @@
       width: min(400px, calc(100vw - 1.4rem));
     }
 
-    .knowledge-map-graph svg {
-      transform: translateX(-1px);
-    }
-
     .knowledge-pathways h3 {
       font-size: 0.98rem;
       margin-bottom: 0.55rem;
@@ -386,8 +381,11 @@
     100% {
       transform: translateY(0);
     }
-    50% {
-      transform: translateY(-3px);
+    45% {
+      transform: translateY(-2px);
+    }
+    70% {
+      transform: translateY(0.6px);
     }
   }
 
@@ -396,11 +394,14 @@
     100% {
       transform: rotate(0deg);
     }
-    25% {
-      transform: rotate(-1.35deg);
+    22% {
+      transform: rotate(-1.05deg);
     }
-    60% {
-      transform: rotate(0.55deg);
+    52% {
+      transform: rotate(0.42deg);
+    }
+    76% {
+      transform: rotate(-0.18deg);
     }
   }
 
@@ -409,11 +410,14 @@
     100% {
       transform: rotate(0deg);
     }
-    30% {
-      transform: rotate(1.45deg);
+    24% {
+      transform: rotate(0.98deg);
     }
-    68% {
-      transform: rotate(-0.65deg);
+    58% {
+      transform: rotate(-0.38deg);
+    }
+    80% {
+      transform: rotate(0.16deg);
     }
   }
 
@@ -422,11 +426,14 @@
     100% {
       transform: rotate(0deg);
     }
-    28% {
-      transform: rotate(-1.55deg);
+    26% {
+      transform: rotate(0.88deg);
     }
-    66% {
-      transform: rotate(0.8deg);
+    60% {
+      transform: rotate(-0.44deg);
+    }
+    82% {
+      transform: rotate(0.12deg);
     }
   }
 
@@ -435,11 +442,14 @@
     100% {
       transform: rotate(0deg);
     }
-    34% {
-      transform: rotate(1.4deg);
+    20% {
+      transform: rotate(-0.94deg);
     }
-    70% {
-      transform: rotate(-0.75deg);
+    56% {
+      transform: rotate(0.34deg);
+    }
+    78% {
+      transform: rotate(-0.14deg);
     }
   }
 </style>

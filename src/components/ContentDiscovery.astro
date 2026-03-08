@@ -15,17 +15,55 @@ const contentStats = posts.reduce((stats, post) => {
     return stats;
 }, {});
 
-// Get popular tags (top 6)
+// Get popular tags (top 6), prioritizing strategic discoverability terms that
+// already exist in the published content graph.
 const allTags = posts.flatMap(post => post.data.tags || []);
 const tagCounts = allTags.reduce((counts, tag) => {
     counts[tag] = (counts[tag] || 0) + 1;
     return counts;
 }, {});
 
-const popularTags = Object.entries(tagCounts)
-    .sort(([,a], [,b]) => b - a)
-    .slice(0, 6)
-    .map(([tag, count]) => ({ tag, count }));
+const strategicTagPriority = [
+    'answer engine optimization',
+    'generative engine optimization',
+    'ai discoverability',
+    'seo',
+    'retrieval',
+    'context',
+    'prompting',
+    'prompt engineering',
+    'observability',
+    'evaluation',
+    'agent workflows',
+    'agents',
+    'skills',
+    'workflow',
+    'nlpg',
+    'ai-assisted sdlc',
+    'grounding',
+    'rag',
+    'entity seo',
+    'entities',
+];
+
+const normalizedTagEntries = Object.entries(tagCounts).map(([tag, count]) => ({
+    tag,
+    count,
+    slug: slugifyTag(tag),
+    normalized: tag.trim().toLowerCase(),
+}));
+
+const strategicMatches = strategicTagPriority
+    .map((term) => normalizedTagEntries.find((entry) => entry.normalized === term))
+    .filter(Boolean);
+
+const fallbackPopularTags = normalizedTagEntries
+    .filter((entry) => !strategicMatches.some((match) => match.slug === entry.slug))
+    .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+
+const popularTags = [...strategicMatches, ...fallbackPopularTags]
+    .slice(0, 8)
+    .map(({ tag, count }) => ({ tag, count }));
 
 // Collection display names
 const collectionNames = {

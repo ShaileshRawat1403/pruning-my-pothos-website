@@ -39,6 +39,25 @@ const cornerstoneGuides = [
     summary: 'Canonical concept anchors for SEO, AEO, GEO, and runtime language.',
   },
 ];
+
+const skillsCluster = [
+  {
+    title: 'What a skill is in AI systems',
+    href: '/systems/what-a-skill-is-in-ai-systems/',
+  },
+  {
+    title: 'Skills vs prompts vs agents',
+    href: '/systems/skills-vs-prompts-vs-agents/',
+  },
+  {
+    title: 'Designing reusable AI skills',
+    href: '/systems/designing-reusable-ai-skills/',
+  },
+  {
+    title: 'Skill evaluation and versioning',
+    href: '/systems/skill-evaluation-and-versioning/',
+  },
+];
 ---
 <Layout
   title="Systems | A Thinking Workspace"
@@ -78,6 +97,19 @@ const cornerstoneGuides = [
         {' '}<a href="/dual-nlp-framework/">Dual NLP for AI-assisted SDLC</a>.
         That page explains how DIY intelligence, prompt design, and governed execution fit together.
       </p>
+    </div>
+
+    <div class="systems-cluster-note">
+      <p class="systems-kicker">Operational Cluster</p>
+      <h3>Skills in AI systems</h3>
+      <p>
+        This smaller cluster treats skills as reusable execution units inside workflows and agent runtimes.
+      </p>
+      <ul class="systems-cluster-links">
+        {skillsCluster.map((entry) => (
+          <li><a href={entry.href}>{entry.title}</a></li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -190,6 +222,39 @@ const cornerstoneGuides = [
     font-weight: 600;
   }
 
+  .systems-cluster-note {
+    margin-top: 1rem;
+    border-left: 2px solid color-mix(in srgb, var(--color-accent) 26%, var(--color-border));
+    padding: 0.15rem 0 0.15rem 1rem;
+    max-width: 58rem;
+  }
+
+  .systems-cluster-note h3 {
+    margin: 0 0 0.3rem;
+    font-size: 1rem;
+  }
+
+  .systems-cluster-note p {
+    margin: 0 0 0.45rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .systems-cluster-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.85rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .systems-cluster-links a {
+    font-family: var(--font-mono);
+    font-size: 0.83rem;
+    text-decoration-thickness: 1px;
+  }
+
   .systems-categories {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -231,6 +296,11 @@ const cornerstoneGuides = [
     .systems-cornerstones,
     .systems-categories {
       grid-template-columns: 1fr;
+    }
+
+    .systems-cluster-links {
+      display: grid;
+      gap: 0.4rem;
     }
   }
 </style>

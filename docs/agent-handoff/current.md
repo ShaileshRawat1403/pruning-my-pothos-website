@@ -361,6 +361,32 @@
 1. Add the two deeper skills pages only after reviewing how the first batch integrates into the Systems cluster.
 2. Consider a small systems-hub update later so the skills cluster is more visible without crowding the seven cornerstone cards.
 
+## Update: 2026-03-08 (Skills cluster phase 2)
+
+### Summary
+- Added the two deeper operational skills pages:
+  - reusable skill design
+  - skill evaluation and versioning
+- Added a compact skills cluster callout under the main Systems cornerstone section.
+- Kept the skills cluster subordinate to the seven-page cornerstone spine.
+
+### Files touched
+- `src/content/systems/designing-reusable-ai-skills.mdx`
+- `src/content/systems/skill-evaluation-and-versioning.mdx`
+- `src/pages/systems.astro`
+
+### Decisions
+- Skills cluster is now complete enough to cover concept, comparison, design, and evaluation without expanding beyond the approved four pages.
+- The Systems hub change stays subordinate: visible cluster reference, no redesign, no homepage spillover.
+
+### Open risks / follow-ups
+- The new skills cluster is linked from `/systems/`, but the individual skill pages do not yet have a fully developed “continue” navigation pattern among themselves.
+- No extra shelf or sticky-note reinforcement was added for this second phase.
+
+### Suggested next actions
+1. After production deploy and live SEO verification, assess whether the skills cluster needs one small internal nav enhancement at the end of each page.
+2. Keep future additions around skills limited to supporting assets, not new top-level conceptual sprawl.
+
 ## Update: 2026-03-06 (Phase 1 URL detox + Phase 2 knowledge map foundation)
 
 ### Summary

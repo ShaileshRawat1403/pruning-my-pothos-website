@@ -1,0 +1,217 @@
+---
+title: "Designing Reusable AI Skills"
+description: "How to design AI skills with clear boundaries, input and output contracts, tool limits, side-effect controls, and escalation paths."
+category: "Explanations"
+tags:
+  - skills
+  - workflow
+  - orchestration
+  - governance
+  - prompting
+  - reliability
+updatedAt: "2026-03-08"
+proofPoints:
+  - "This page defines the operational design criteria for reusable AI skills instead of treating skills as prompt fragments."
+  - "The guidance is linked directly to the template resource and the existing skills concept pages."
+faq:
+  - question: "What makes a skill reusable instead of just repeatable?"
+    answer: "A reusable skill has stable boundaries, clear inputs, a known output contract, and explicit behavior under failure or uncertainty."
+  - question: "When should one skill be split into two?"
+    answer: "Split it when the task has two different objectives, two different risk profiles, or two different output contracts that should be evaluated separately."
+---
+
+> **Key takeaways**
+>
+> - Reusable skills need explicit boundaries, not only good wording.
+> - Input and output contracts matter because reuse depends on predictability.
+> - Tool access and side effects should be deliberately constrained.
+> - A skill is incomplete until it knows when to escalate instead of continuing.
+
+It is easy to overestimate how much structure a repeated task needs. Teams often take a successful prompt, save it, call it a skill, and assume the architecture problem is solved. Usually it is not. What they saved was a useful phrase, not a reusable capability.
+
+Reusable skills require more than repetition. They need design decisions that make the task legible across runs, contributors, and contexts. That is what separates a prompt that worked once from a skill that can operate safely inside a larger system.
+
+### What makes a skill reusable in practice?
+
+A reusable skill has a bounded purpose, explicit input expectations, a known output contract, limited tool authority, and a clear rule for when to stop or escalate. Reuse becomes possible when the task behaves predictably enough to trust across multiple invocations.
+
+In practice, <span class="highlight">reuse depends on bounded behavior more than on elegant phrasing</span>.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> If a skill can do "a little bit of everything," it usually becomes hard to test, hard to version, and hard to trust. Reusability starts when scope is intentionally small.</p>
+</aside>
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The design boundary</summary>
+      <ol>
+        <li><a href="#start-with-one-bounded-purpose">Start with one bounded purpose</a></li>
+        <li><a href="#why-bad-skill-design-spreads-fast">Why bad skill design spreads fast</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The design components</summary>
+      <ol>
+        <li><a href="#input-and-output-contracts">Input and output contracts</a></li>
+        <li><a href="#tool-limits-and-side-effect-control">Tool limits and side-effect control</a></li>
+        <li><a href="#split-vs-merge-decisions">Split vs merge decisions</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Safe operation</summary>
+      <ol>
+        <li><a href="#escalation-paths">Escalation paths</a></li>
+        <li><a href="#common-design-failures">Common design failures</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: The design boundary
+
+### Start with one bounded purpose
+
+The first design question is simple: what job does this skill own that nothing else should own?
+
+That answer should fit inside one sentence. If the definition starts sounding like a process document, you are probably designing a workflow instead of a skill.
+
+A reusable skill tends to have:
+
+- one primary objective
+- one dominant kind of output
+- one main risk profile
+- one recognizable invocation pattern
+
+The point is not minimalism for its own sake. The point is controllability. A bounded skill is easier to improve because you can tell what it is supposed to do and what it should refuse to do.
+
+### Why bad skill design spreads fast
+
+Bad skills spread because they feel efficient early. A broad skill seems flexible because it accepts many inputs and produces several kinds of output. But that flexibility usually hides a design cost:
+
+- unclear expectations
+- unstable output quality
+- mixed risk categories
+- unclear ownership when something fails
+
+This is the same architectural mistake discussed in [Skills vs Prompts vs Agents](/systems/skills-vs-prompts-vs-agents/). Once layers blur, every improvement conversation becomes slower because the system no longer has clean units of change.
+
+## Act II: The design components
+
+### Input and output contracts
+
+Reusable skills need contracts.
+
+<div class="table-scroll-wrap">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Good pattern</th>
+        <th>Failure if missing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Input contract</strong></td>
+        <td>Known required fields, context scope, exclusions</td>
+        <td>Skill behaves differently on every invocation</td>
+      </tr>
+      <tr>
+        <td><strong>Output contract</strong></td>
+        <td>Stable structure, success conditions, explicit shape</td>
+        <td>Downstream workflow cannot depend on results</td>
+      </tr>
+      <tr>
+        <td><strong>Escalation rule</strong></td>
+        <td>Defined stop condition under uncertainty or risk</td>
+        <td>Skill keeps going when it should defer</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Input contracts answer:
+
+- what information is required?
+- what optional context improves quality?
+- what context should be ignored?
+
+Output contracts answer:
+
+- what form should the result take?
+- what qualifies as success?
+- what should happen if the skill cannot satisfy the request?
+
+If you want a reusable starting structure, see [AI skill design templates](/shelf/shared-resources/ai-skill-design-templates/).
+
+### Tool limits and side-effect control
+
+A skill should not inherit unlimited authority just because it is useful.
+
+Tool boundaries matter because skills often sit close to execution. A skill that drafts a release summary does not need billing access. A skill that classifies risk does not need write access to production. Tool scope should be as narrow as the task allows.
+
+This is where side-effect control enters. Ask:
+
+- can this skill read or also write?
+- can it call external tools?
+- can it trigger changes with financial, security, or user-facing consequences?
+- what evidence must exist before a side effect is allowed?
+
+These questions align directly with [Agent Instructions and Handoff as an Operating System](/systems/agent-instructions-and-handoff-as-an-operating-system/) and [Tech Stack for NLPg-Driven AI-Assisted SDLC](/systems/tech-stack-for-nlpg-driven-ai-assisted-sdlc/). Skills become safer when they are embedded in governed execution rather than treated like free-floating convenience features.
+
+### Split vs merge decisions
+
+One of the most important design decisions is whether a skill should remain whole or be split into smaller skills.
+
+Split the skill when:
+
+- it performs two different jobs
+- it serves two different risk profiles
+- it produces outputs used by different downstream systems
+- one part needs different tool permissions than the other
+
+Keep the skill whole when:
+
+- the steps are tightly coupled to one objective
+- the same inputs are required throughout
+- the same output contract defines success
+- the same escalation rule governs the whole operation
+
+The practical test is simple: if two parts of the skill would need to be evaluated differently, they probably should not stay inside one capability.
+
+## Act III: Safe operation
+
+### Escalation paths
+
+Every reusable skill needs to know when not to continue.
+
+That means defining:
+
+- uncertainty thresholds
+- missing-input conditions
+- high-risk side-effect triggers
+- conflicts between retrieved evidence and requested action
+
+Escalation is not a sign of weakness. It is the control surface that makes reuse safe. A skill that never escalates is usually either trivial or overconfident.
+
+### Common design failures
+
+The most common failures are predictable:
+
+- the skill accepts vague inputs and still tries to complete the task
+- the output contract is implied rather than written down
+- tool authority is broader than the task requires
+- one skill handles planning, execution, and review all at once
+- no one defines what should trigger human review
+
+These are design failures, not prompting failures.
+
+For the conceptual layer, start with [What a Skill Is in AI Systems](/systems/what-a-skill-is-in-ai-systems/). For the operational follow-up, continue to [Skill Evaluation and Versioning](/systems/skill-evaluation-and-versioning/).
+
+### What this changes in practice
+
+You stop asking whether a prompt can be reused and start designing whether a capability can be trusted, constrained, and handed off safely.

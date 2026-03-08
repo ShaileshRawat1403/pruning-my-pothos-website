@@ -1,0 +1,210 @@
+---
+title: "Skills vs Prompts vs Agents"
+description: "A systems-level comparison of prompts, skills, workflows, and agents so teams can stop mixing up instruction surfaces with execution architecture."
+category: "Explanations"
+tags:
+  - skills
+  - prompting
+  - agents
+  - workflow
+  - orchestration
+  - governance
+updatedAt: "2026-03-08"
+proofPoints:
+  - "This page gives the site a direct comparison surface for prompts, skills, workflows, and agents."
+  - "The comparison now links directly to reusable skill templates and the Dual NLP framework."
+faq:
+  - question: "What is the simplest difference between a prompt and a skill?"
+    answer: "A prompt is one instruction for one interaction, while a skill is a reusable capability with clearer behavior boundaries."
+  - question: "Does an agent always need skills?"
+    answer: "Not always, but any agent doing repeated work becomes more reliable when common tasks are packaged as skills instead of re-explained every time."
+---
+
+> **Key takeaways**
+>
+> - A prompt is an instruction surface, not an operating model.
+> - A skill is a reusable capability with clearer inputs, outputs, and constraints.
+> - A workflow coordinates several steps, often including multiple skills.
+> - An agent is a runtime actor executing workflows under tools, memory, and policy.
+
+One reason AI systems feel confusing right now is that teams reuse the same words for different layers of the stack. A prompt gets called a workflow. A workflow gets called an agent. A reusable task gets called a prompt template. The result is architectural ambiguity.
+
+That ambiguity matters because each layer solves a different problem. If the team cannot name the layer correctly, it usually cannot govern or improve it correctly either.
+
+### What is the simplest way to separate these terms?
+
+A prompt is a one-step instruction. A skill is a reusable capability. A workflow is a sequence of steps. An agent is the runtime actor that executes or coordinates those steps. The layers relate to one another, but they are not interchangeable.
+
+In practice, <span class="highlight">clarity in naming prevents architecture drift later</span>.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> If you cannot point to where the prompt ends and the runtime begins, the system is usually harder to debug, evaluate, and scale.</p>
+</aside>
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: Why the confusion persists</summary>
+      <ol>
+        <li><a href="#same-language-different-layers">Same language, different layers</a></li>
+        <li><a href="#why-this-confusion-is-costly">Why this confusion is costly</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: A clean comparison model</summary>
+      <ol>
+        <li><a href="#the-four-layer-comparison">The four-layer comparison</a></li>
+        <li><a href="#where-workflows-fit">Where workflows fit</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Applying the distinction</summary>
+      <ol>
+        <li><a href="#a-practical-decision-rule">A practical decision rule</a></li>
+        <li><a href="#common-misclassifications">Common misclassifications</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: Why the confusion persists
+
+### Same language, different layers
+
+The confusion is understandable because all these things involve natural language:
+
+- you write prompts in language
+- you define skills in language
+- workflows are often described in language
+- agents may appear to "reason" in language
+
+But shared medium does not mean shared role.
+
+A prompt is closest to the request surface. It initiates a task. A skill packages a task so it can be reused. A workflow sequences tasks toward an outcome. An agent executes or coordinates tasks within a runtime that includes tools, state, and policy.
+
+### Why this confusion is costly
+
+When these are mixed up, teams make weak design choices:
+
+- they try to improve workflows only by editing prompts
+- they call a reusable task a skill without defining output boundaries
+- they describe an agent as if it were just a chat surface
+- they skip governance because the architecture is still spoken about too vaguely
+
+This is why a comparison page matters. The vocabulary shapes the system.
+
+## Act II: A clean comparison model
+
+### The four-layer comparison
+
+<div class="table-scroll-wrap">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Main job</th>
+        <th>Typical scope</th>
+        <th>Failure if misused</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Prompt</strong></td>
+        <td>Initiate or shape one interaction</td>
+        <td>Single instruction</td>
+        <td>Repeated work stays informal</td>
+      </tr>
+      <tr>
+        <td><strong>Skill</strong></td>
+        <td>Package a repeated capability for reuse</td>
+        <td>One bounded task</td>
+        <td>Behavior drifts between invocations</td>
+      </tr>
+      <tr>
+        <td><strong>Workflow</strong></td>
+        <td>Sequence steps toward an outcome</td>
+        <td>Several linked tasks</td>
+        <td>Handoffs become ambiguous</td>
+      </tr>
+      <tr>
+        <td><strong>Agent</strong></td>
+        <td>Execute or coordinate within runtime</td>
+        <td>Live system actor</td>
+        <td>Policy and tool behavior stay opaque</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+This model pairs directly with [What a Skill Is in AI Systems](/systems/what-a-skill-is-in-ai-systems/). That page defines the skill layer; this page separates it from the other layers around it.
+
+### Where workflows fit
+
+Workflows are the bridge between skills and agents.
+
+<figure class="diagram">
+  <svg viewBox="0 0 960 250" role="img" aria-labelledby="skills-stack-title skills-stack-desc">
+    <title id="skills-stack-title">Prompt to skill to workflow to agent stack</title>
+    <desc id="skills-stack-desc">A stacked model showing prompt, skill, workflow, and agent as different layers of the system.</desc>
+    <rect width="960" height="250" fill="var(--color-bg)" />
+    <rect x="120" y="160" width="180" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.8" />
+    <rect x="330" y="124" width="180" height="42" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="1.8" />
+    <rect x="540" y="88" width="180" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.8" />
+    <rect x="750" y="52" width="140" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.8" />
+
+    <text x="176" y="186" font-size="11" font-family="var(--font-mono)">Prompt</text>
+    <text x="388" y="150" font-size="11" font-family="var(--font-mono)" fill="var(--color-accent)">Skill</text>
+    <text x="592" y="114" font-size="11" font-family="var(--font-mono)">Workflow</text>
+    <text x="785" y="78" font-size="11" font-family="var(--font-mono)">Agent</text>
+
+    <path d="M300 181 H330 M510 145 H540 M720 109 H750" stroke="currentColor" stroke-width="1.7" />
+  </svg>
+  <figcaption>Workflows coordinate reusable skills, and agents execute those workflows inside a governed runtime.</figcaption>
+</figure>
+
+A workflow might include several skills:
+
+- classify incoming task
+- retrieve relevant context
+- draft a structured plan
+- validate output shape
+- escalate if risk threshold is crossed
+
+That workflow may be executed by an agent system, but the workflow itself is not the same thing as the agent. The agent is the runtime actor; the workflow is the structure it follows.
+
+If you want the practical asset layer behind this distinction, see [AI skill design templates](/shelf/shared-resources/ai-skill-design-templates/).
+
+## Act III: Applying the distinction
+
+### A practical decision rule
+
+When a team asks, "What should we build here?" the following rule helps:
+
+- if it is a one-off request, use a prompt
+- if it is a repeated bounded task, define a skill
+- if it joins several steps together, define a workflow
+- if it needs tools, memory, and policy in live execution, design the agent runtime
+
+That rule is simple, but it removes a lot of conceptual waste.
+
+It also aligns with [Dual NLP for AI-assisted SDLC](/dual-nlp-framework/). That page is strongest when read as the bridge from intent to structured capability. In that framing, the sandbox is not just a place to play with wording. It is the place where a vague request can be compiled into a more explicit skill blueprint.
+
+### Common misclassifications
+
+Several mistakes appear repeatedly:
+
+- calling a prompt template a skill even though nothing about reuse is defined
+- calling a workflow an agent because it uses several tool calls
+- calling an agent "smart" when the real improvement came from better workflow structure
+- calling a reusable task architecture "prompt engineering"
+
+These mistakes slow improvement because they focus attention on the wrong layer.
+
+For prompt-specific context, see [Prompting Is Not the Skill You Think It Is](/systems/prompting-is-not-the-skill-you-think-it-is/). For runtime execution context, see [Agent Instructions and Handoff as an Operating System](/systems/agent-instructions-and-handoff-as-an-operating-system/).
+
+### What this changes in practice
+
+You design the right thing at the right level: prompts for one-offs, skills for reusable tasks, workflows for coordination, and agents for governed runtime execution.

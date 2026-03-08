@@ -72,6 +72,16 @@ const cornerstoneGuides = [
         </div>
       </section>
 
+      <section class="skill-blueprint-note" aria-labelledby="skill-blueprint-title">
+        <p class="framework-kicker">Compiler View</p>
+        <h2 id="skill-blueprint-title">Use the sandbox as a skill blueprint compiler</h2>
+        <p>
+          The practical use of this page is not only experimentation. It is to move from
+          intent, to NLP interpretation, to a skill specification, then into the NLPg
+          constraint layer that shapes an executable blueprint.
+        </p>
+      </section>
+
       <section class="lens-intro" aria-labelledby="lens-intro-title">
         <h2 id="lens-intro-title">Choose Your Lens</h2>
         <p class="lens-copy">NLP helps you understand intent and context. NLPg turns that intent into constraints, architecture, and delivery decisions.</p>
@@ -1903,6 +1913,26 @@ const cornerstoneGuides = [
   .framework-guides a {
     font-family: var(--font-mono);
     font-size: 0.84rem;
+  }
+
+  .skill-blueprint-note {
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--color-bg) 96%, var(--color-blockquote-bg));
+    padding: 0.9rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .skill-blueprint-note h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.05rem;
+    font-family: var(--font-mono);
+  }
+
+  .skill-blueprint-note p:last-child {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.5;
   }
 
   .lens-intro {

@@ -332,6 +332,35 @@
 1. Add one more support resource or tool page for evaluation/observability if you want stronger shelf depth around the new systems doc.
 2. After live deploy, re-run topic reports and live SEO verification before sitemap submission.
 
+## Update: 2026-03-08 (Skills cluster phase 1)
+
+### Summary
+- Added the first published batch of the `skills` cluster inside `systems`:
+  - one concept page defining skills as reusable execution units
+  - one comparison page separating skills, prompts, workflows, and agents
+- Added one shelf shared-resource page with three compact AI skill templates.
+- Updated the Dual NLP framework page with a small note positioning the sandbox as a skill blueprint compiler.
+
+### Files touched
+- `src/content/systems/what-a-skill-is-in-ai-systems.mdx`
+- `src/content/systems/skills-vs-prompts-vs-agents.mdx`
+- `src/content/shelf/shared-resources/ai-skill-design-templates.md`
+- `src/pages/dual-nlp-framework.astro`
+
+### Decisions
+- `Skills` remains a Systems sub-cluster, not a new site pillar.
+- Kept phase 1 constrained to two systems pages, one resource page, and one framing update.
+- Positioned templates as practical support assets, not as the thesis of the cluster.
+- Positioned the sandbox as a compiler surface for moving from intent to skill blueprint.
+
+### Open risks / follow-ups
+- The two deeper planned skills pages (`designing-reusable-ai-skills`, `skill-evaluation-and-versioning`) are intentionally not added yet.
+- The Systems landing page has not yet been updated to surface the new skills cluster explicitly in its `Start Here` area.
+
+### Suggested next actions
+1. Add the two deeper skills pages only after reviewing how the first batch integrates into the Systems cluster.
+2. Consider a small systems-hub update later so the skills cluster is more visible without crowding the seven cornerstone cards.
+
 ## Update: 2026-03-06 (Phase 1 URL detox + Phase 2 knowledge map foundation)
 
 ### Summary

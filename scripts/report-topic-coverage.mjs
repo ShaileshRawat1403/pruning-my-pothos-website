@@ -5,6 +5,7 @@ const CONTENT_DIR = path.resolve('src/content');
 const SECTION_ORDER = ['systems', 'sentences', 'self', 'shelf', 'sticky-notes'];
 const FRONTMATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/;
 const TOPIC_SEED = [
+  'architecture',
   'seo',
   'aeo',
   'geo',
@@ -19,6 +20,8 @@ const TOPIC_SEED = [
   'workflow',
   'knowledge-management',
   'decision-making',
+  'integration',
+  'adoption',
 ];
 const TAG_ALIASES = new Map([
   ['workflows', 'workflow'],

@@ -7,6 +7,9 @@ const SYSTEMS_PAGE = path.join(ROOT, 'src/pages/systems/[slug].astro');
 const DISTRIBUTION_PLAYBOOK = path.join(ROOT, 'docs/agent-instructions/playbooks/distribution-and-canonical-syndication.md');
 
 const KEY_DOCS = [
+  'ai-architecture-explained-how-modern-llm-applications-work.mdx',
+  'ai-agents-vs-ai-workflows.mdx',
+  'why-most-ai-projects-fail-after-the-demo-stage.mdx',
   'seo-aeo-geo-how-things-fit-together.mdx',
   'observability-first-ai-systems.mdx',
   'knowledge-management-as-runtime-memory.mdx',
@@ -35,6 +38,14 @@ function hasDirectAnswerLength(content) {
   return Boolean(matches && matches.length > 0);
 }
 
+function hasAudienceDeclaration(content) {
+  return /\b(this article|this document|this page|this guide|for practitioners|for builders|for operators|for leaders|for teams|for organizations|for product teams|for small teams)\b/i.test(content);
+}
+
+function hasProofLink(content) {
+  return /\[[^\]]+\]\(\/(portfolio|shelf\/local-experiments|shelf\/shared-resources)\//i.test(content);
+}
+
 async function main() {
   const glossaryPath = path.join(SYSTEMS_DIR, 'entity-glossary-for-ai-discoverability.mdx');
   const glossaryExists = await exists(glossaryPath);
@@ -49,6 +60,8 @@ async function main() {
   let docsWithProof = 0;
   let docsWithUpdatedAt = 0;
   let docsWithDirectAnswers = 0;
+  let docsWithAudienceDeclaration = 0;
+  let docsWithProofLinks = 0;
 
   for (const doc of KEY_DOCS) {
     const full = path.join(SYSTEMS_DIR, doc);
@@ -58,6 +71,8 @@ async function main() {
     if (/^proofPoints:/m.test(raw)) docsWithProof += 1;
     if (/^updatedAt:/m.test(raw)) docsWithUpdatedAt += 1;
     if (hasQuestionHeading(raw) && hasDirectAnswerLength(raw)) docsWithDirectAnswers += 1;
+    if (hasAudienceDeclaration(raw)) docsWithAudienceDeclaration += 1;
+    if (hasProofLink(raw)) docsWithProofLinks += 1;
   }
 
   const hasDistributionPlaybook = await exists(DISTRIBUTION_PLAYBOOK);
@@ -70,6 +85,8 @@ async function main() {
   console.log(`| Schema | ${hasFaqSchema && hasDefinedTermLinking ? 'Addressed' : 'Partial'} | FAQ schema=${hasFaqSchema}, defined-term linking=${hasDefinedTermLinking}, key docs with faq=${docsWithFaq} |`);
   console.log(`| Evidence/citation (GEO) | ${docsWithProof >= 3 && docsWithUpdatedAt >= 3 ? 'Addressed' : 'Partial'} | key docs with proofPoints=${docsWithProof}, updatedAt=${docsWithUpdatedAt} |`);
   console.log(`| AEO extraction | ${docsWithDirectAnswers >= 3 ? 'Addressed' : 'Partial'} | key docs with question+answer blocks=${docsWithDirectAnswers} |`);
+  console.log(`| Audience declaration | ${docsWithAudienceDeclaration >= 4 ? 'Addressed' : 'Partial'} | key docs with audience framing=${docsWithAudienceDeclaration} |`);
+  console.log(`| Proof surfaces | ${docsWithProofLinks >= 4 ? 'Addressed' : 'Partial'} | key docs linking to portfolio/experiments/resources=${docsWithProofLinks} |`);
   console.log(`| Distribution | ${hasDistributionPlaybook ? 'Addressed (framework)' : 'Partial'} | canonical distribution playbook=${hasDistributionPlaybook} |`);
   console.log('');
   console.log('Note: Distribution status indicates framework readiness in-repo; off-site publication execution is external.');

@@ -1,0 +1,253 @@
+---
+title: "AI Architecture Explained: How Modern LLM Applications Work"
+description: "A practical map of the layers that make modern LLM applications reliable: model access, retrieval, orchestration, interfaces, and governance."
+category: "How-things-fit-together"
+tags:
+  - architecture
+  - llm
+  - orchestration
+  - retrieval
+  - governance
+  - ai
+updatedAt: "2026-03-14"
+proofPoints:
+  - "Architecture guidance is connected to existing runtime, observability, retrieval, and governed execution systems docs."
+  - "Soothsayer is used as a working in-repo experiment for orchestration and controlled execution."
+faq:
+  - question: "What are the main layers in a modern LLM application?"
+    answer: "Most production systems need five layers: model access, knowledge and retrieval, orchestration, interface, and governance. Reliability comes from how those layers work together, not from the model alone."
+  - question: "Why do many AI architecture diagrams feel incomplete?"
+    answer: "Because they stop at the model and UI. Production behavior depends on retrieval, policy, verification, and operational controls that sit between them."
+---
+
+> **Key takeaways**
+>
+> - A modern LLM application is a layered system, not a prompt attached to a model.
+> - The critical layers are model access, retrieval, orchestration, interface, and governance.
+> - Reliability usually breaks between layers, especially where policy, context, and execution meet.
+> - Good architecture makes model changes survivable because the control logic lives outside the prompt.
+
+This article explains a core component of modern AI systems: architecture. It focuses on how model access, retrieval, orchestration, interfaces, and governance combine into one working application.
+
+It is most useful for teams moving from prototype thinking to production architecture, especially when they need clearer boundaries between model behavior, retrieval, and operational control.
+
+Most teams first picture an LLM app as a simple chain: user prompt in, answer out. That picture is good enough for a demo, but it is too thin for anything that needs trust, uptime, or organizational adoption. Real systems have more layers because they need to manage state, context, tools, permissions, verification, and failure recovery.
+
+### What does modern AI architecture actually include?
+
+A modern LLM application usually includes five working layers: the model layer, the retrieval layer, the orchestration layer, the interface layer, and the governance layer. The model produces proposals, but the surrounding layers decide what context is available, what actions are allowed, how results are verified, and how the system can be improved over time.
+
+In practice, <span class="highlight">architecture quality is the difference between a fluent demo and a dependable system</span>.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> If one layer silently absorbs the responsibilities of another, incidents become hard to diagnose. Keep boundaries explicit even when the first version feels "simpler" without them.</p>
+</aside>
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The architecture model</summary>
+      <ol>
+        <li><a href="#why-the-chatbot-mental-model-fails">Why the chatbot mental model fails</a></li>
+        <li><a href="#the-five-working-layers">The five working layers</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: What each layer does</summary>
+      <ol>
+        <li><a href="#layer-1-model-access">Layer 1: Model access</a></li>
+        <li><a href="#layer-2-knowledge-and-retrieval">Layer 2: Knowledge and retrieval</a></li>
+        <li><a href="#layer-3-orchestration-and-runtime-control">Layer 3: Orchestration and runtime control</a></li>
+        <li><a href="#layer-4-interface-and-user-state">Layer 4: Interface and user state</a></li>
+        <li><a href="#layer-5-governance-and-operations">Layer 5: Governance and operations</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: What makes the architecture hold</summary>
+      <ol>
+        <li><a href="#how-the-layers-fail-in-practice">How the layers fail in practice</a></li>
+        <li><a href="#a-better-default-architecture">A better default architecture</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: The architecture model
+
+### Why the chatbot mental model fails
+
+The common mental model is:
+
+`user -> prompt -> model -> response`
+
+That model hides most of the work that makes a system useful in an organization. It does not show:
+
+- where context comes from
+- how source truth is refreshed
+- how tools are authorized
+- how the system recovers from uncertainty
+- how teams inspect behavior after launch
+
+This is why many AI implementations look impressive in a meeting and fragile a month later. The model can still answer, but the surrounding architecture cannot explain what happened or guarantee that the same quality will happen again.
+
+### The five working layers
+
+<figure class="diagram">
+  <svg viewBox="0 0 980 310" role="img" aria-labelledby="architecture-stack-title architecture-stack-desc">
+    <title id="architecture-stack-title">Five-layer architecture for a modern LLM application</title>
+    <desc id="architecture-stack-desc">A stack showing model access, retrieval, orchestration, interface, and governance as connected layers around an LLM application.</desc>
+    <rect width="980" height="310" fill="var(--color-bg)" />
+    <rect x="180" y="32" width="620" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.7" />
+    <rect x="180" y="84" width="620" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.7" />
+    <rect x="180" y="136" width="620" height="42" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="1.9" />
+    <rect x="180" y="188" width="620" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.7" />
+    <rect x="180" y="240" width="620" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.7" />
+    <text x="210" y="58" font-family="var(--font-mono)" font-size="12">Layer 1: Model access and provider routing</text>
+    <text x="210" y="110" font-family="var(--font-mono)" font-size="12">Layer 2: Knowledge, retrieval, and memory</text>
+    <text x="210" y="162" font-family="var(--font-mono)" font-size="12" fill="var(--color-accent)">Layer 3: Orchestration, policy, and verification</text>
+    <text x="210" y="214" font-family="var(--font-mono)" font-size="12">Layer 4: Interface, workflow, and user state</text>
+    <text x="210" y="266" font-family="var(--font-mono)" font-size="12">Layer 5: Governance, observability, and operations</text>
+  </svg>
+  <figcaption>The orchestration layer is the bridge between intelligence, tools, user state, and operational control.</figcaption>
+</figure>
+
+The five-layer view is a better default because it separates responsibilities clearly enough to debug and evolve them.
+
+## Act II: What each layer does
+
+### Layer 1: Model access
+
+This layer manages model providers, context limits, latency profiles, and fallback choices. It should answer questions like:
+
+- which model is being used for this task
+- what budget or latency threshold applies
+- when should the system switch models
+- how are output contracts enforced
+
+Teams often over-invest here because model catalogs are visible and exciting. But the model layer is only one part of the stack. It is where capability enters the system, not where reliability is created.
+
+For a deeper explanation of model behavior itself, see [What an AI Model Actually Is](/systems/what-an-ai-model-actually-is/) and [What Large Language Models Are Optimized For](/systems/what-llms-are-optimized-for/).
+
+### Layer 2: Knowledge and retrieval
+
+If the application depends on current or proprietary information, it needs a knowledge layer. That means ingestion, chunking, indexing, freshness rules, retrieval logic, and citation discipline.
+
+This is where many teams treat "RAG" as a feature instead of a system. In reality, retrieval quality depends on:
+
+- source quality
+- content segmentation
+- ranking logic
+- freshness policy
+- verification after retrieval
+
+Without this layer, the system can sound competent while using stale or irrelevant evidence. For deeper treatment, continue to [Retrieval-Augmented Generation in Plain Terms](/systems/retrieval-augmented-generation-in-plain-terms/) and [Knowledge Management as Runtime Memory](/systems/knowledge-management-as-runtime-memory/).
+
+### Layer 3: Orchestration and runtime control
+
+This is the layer most "simple" diagrams omit and the one that matters most once the system has to do real work. Orchestration decides the next step, applies policy, coordinates tools, checks evidence, and determines whether the workflow should continue, ask, compact, or stop.
+
+This is why the runtime is often the real product. Once language starts triggering actions, you need governed execution, not just good prompting. That is the logic behind [Runtime Over Model: Why Orchestration Is the Product](/systems/runtime-over-model-why-orchestration-is-the-product/) and [From Agent Intent to Governed Execution](/systems/from-agent-intent-to-governed-execution/).
+
+Soothsayer is useful here as a concrete example. Its value is not that it can call tools. Its value is that tool use sits inside a controlled loop with permission boundaries, verification, and traceability. That is architecture, not interface polish.
+
+### Layer 4: Interface and user state
+
+Users never interact with the architecture diagram. They interact with workflow state, expectations, and failure recovery. The interface layer manages:
+
+- session state
+- task framing
+- user approvals
+- result presentation
+- handoff paths when ambiguity remains
+
+This layer decides whether the system feels coherent. A strong runtime can still create a bad experience if the interface hides uncertainty or forces users to infer what the system is doing.
+
+### Layer 5: Governance and operations
+
+Governance is not a final approval checkbox. It is the operating discipline that keeps the system aligned over time. This layer includes:
+
+- policy controls
+- observability and trace review
+- evaluation loops
+- change management
+- incident response
+
+<div class="table-scroll-wrap">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Primary question</th>
+        <th>Failure if missing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Model</strong></td>
+        <td>Can the system generate a useful proposal?</td>
+        <td>Weak capability or unstable contracts</td>
+      </tr>
+      <tr>
+        <td><strong>Retrieval</strong></td>
+        <td>Is the system using the right knowledge?</td>
+        <td>Stale, irrelevant, or uncited answers</td>
+      </tr>
+      <tr>
+        <td><strong>Orchestration</strong></td>
+        <td>What happens next and under what policy?</td>
+        <td>Unsafe execution and opaque failures</td>
+      </tr>
+      <tr>
+        <td><strong>Interface</strong></td>
+        <td>Can users understand and steer the workflow?</td>
+        <td>Low trust and poor adoption</td>
+      </tr>
+      <tr>
+        <td><strong>Governance</strong></td>
+        <td>How does the system learn safely over time?</td>
+        <td>Silent drift and reactive operations</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+For the operational view, see [Observability First: How AI Systems Learn After Launch](/systems/observability-first-ai-systems/) and [Evaluation as a Runtime Discipline](/systems/evaluation-as-a-runtime-discipline/).
+
+## Act III: What makes the architecture hold
+
+### How the layers fail in practice
+
+Production AI systems usually fail at their seams:
+
+- a good model with bad retrieval
+- useful retrieval with no policy boundary
+- valid tool execution with no verification
+- strong controls with a weak interface and no adoption path
+
+This is why architecture discussions should start with boundaries, not vendor logos. A team does not need an elaborate diagram first. It needs a clear picture of where responsibility moves from one layer to another.
+
+### A better default architecture
+
+For most teams, a good default looks like this:
+
+1. Keep model access replaceable.
+2. Build retrieval around governed source truth, not only embeddings.
+3. Put orchestration between model proposals and side effects.
+4. Design interface state around approvals, uncertainty, and result review.
+5. Instrument governance from the first working loop.
+
+This sequence keeps the architecture flexible. It also makes provider or model changes much less disruptive because the system does not depend on prompt heroics to stay coherent.
+
+### What this changes in practice
+
+Treat AI architecture as the design of cooperating layers, not the selection of a model vendor. When retrieval, orchestration, interface, and governance are designed as first-class layers, modern LLM applications become easier to trust, easier to change, and easier to operate.
+
+## Related AI systems topics
+
+- [Runtime Over Model: Why Orchestration Is the Product](/systems/runtime-over-model-why-orchestration-is-the-product/)
+- [Retrieval-Augmented Generation in Plain Terms](/systems/retrieval-augmented-generation-in-plain-terms/)
+- [Observability First: How AI Systems Learn After Launch](/systems/observability-first-ai-systems/)
+- [Soothsayer MCP kernel: from prompts to controlled orchestration](/shelf/local-experiments/soothsayer-mcp-kernel/)

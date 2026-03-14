@@ -24,8 +24,23 @@ function analyze(raw, body) {
   const tables = countMatches(raw, /<table\b/gi);
   const diagrams = countMatches(raw, /<figure\s+class=["'][^"']*diagram/gi);
   const callouts = countMatches(raw, /<aside\s+class=["'][^"']*callout/gi);
+  const hasDefinitionIntro = /^###\s+(What|Why|How)\b.*\?\s*$/mi.test(raw);
+  const hasAudienceDeclaration =
+    /\b(this article|this document|this page|this guide|for practitioners|for builders|for operators|for leaders|for teams|for organizations|for product teams|for small teams)\b/i.test(raw);
+  const hasProofLink =
+    /\[[^\]]+\]\(\/(portfolio|shelf\/local-experiments|shelf\/shared-resources)\//i.test(raw);
 
-  return { words, internalLinks, externalLinks, tables, diagrams, callouts };
+  return {
+    words,
+    internalLinks,
+    externalLinks,
+    tables,
+    diagrams,
+    callouts,
+    hasDefinitionIntro,
+    hasAudienceDeclaration,
+    hasProofLink,
+  };
 }
 
 function buildWarnings(file, metrics) {
@@ -39,6 +54,15 @@ function buildWarnings(file, metrics) {
   }
   if (metrics.tables + metrics.diagrams < 1) {
     warnings.push('missing visual aid (table or diagram recommended: >= 1)');
+  }
+  if (!metrics.hasDefinitionIntro) {
+    warnings.push('missing direct-answer intro (recommended: add a What/Why/How question block)');
+  }
+  if (!metrics.hasAudienceDeclaration) {
+    warnings.push('missing audience declaration (recommended: state who the page helps)');
+  }
+  if (!metrics.hasProofLink) {
+    warnings.push('missing proof link (recommended: link to portfolio, local experiment, or shared resource)');
   }
 
   return warnings.map((warning) => ({ file, warning }));

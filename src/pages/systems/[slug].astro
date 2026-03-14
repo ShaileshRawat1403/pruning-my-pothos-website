@@ -4,6 +4,7 @@ import Layout from '@/layouts/Layout.astro';
 import TagList from '@/components/TagList.astro';
 import ContinueBlock from '@/components/ContinueBlock.astro';
 import { getAdjacentEntries, getRelatedEntries } from '@/utils/navigation';
+import glossarySource from '@/content/systems/entity-glossary-for-ai-discoverability.mdx?raw';
 
 export async function getStaticPaths() {
   const systems = await getCollection('systems');
@@ -26,11 +27,15 @@ const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
 const canonical = new URL(`/systems/${system.slug}/`, siteUrl).toString();
 const articleImage = new URL('/covers/shelf/shared-semantic-bridge.svg', siteUrl).toString();
 const glossaryUrl = new URL('/systems/entity-glossary-for-ai-discoverability/', siteUrl).toString();
+const glossaryTerms = new Set(
+  Array.from(glossarySource.matchAll(/id="term-([a-z0-9-]+)"/g), (match) => match[1])
+);
 const slugifyTerm = (value) =>
   value
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
+const glossaryBackedTags = (system.data.tags ?? []).filter((tag) => glossaryTerms.has(slugifyTerm(tag)));
 const faqs = system.data.faq ?? [];
 const proofPoints = system.data.proofPoints ?? [];
 const articleSchema = {
@@ -43,7 +48,7 @@ const articleSchema = {
   keywords: (system.data.tags ?? []).join(', '),
   mainEntityOfPage: canonical,
   inLanguage: 'en',
-  about: (system.data.tags ?? []).map((tag) => ({
+  about: glossaryBackedTags.map((tag) => ({
     '@type': 'DefinedTerm',
     name: tag,
     url: `${glossaryUrl}#term-${slugifyTerm(tag)}`,

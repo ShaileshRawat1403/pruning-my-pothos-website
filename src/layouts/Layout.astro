@@ -19,6 +19,10 @@ interface Props {
 
 const pathname = Astro.url.pathname;
 const bodyClass = pathname === '/' ? 'page-home' : 'page-content';
+const siteName = 'PruningMyPothos';
+const siteSubtitle = 'A Thinking Workspace';
+const siteDescription =
+	'PruningMyPothos is a thinking workspace on AI systems, orchestration, platform integration, governance, and adoption.';
 const {
 	title,
 	description,
@@ -26,10 +30,9 @@ const {
 	noindex = false,
 	ogType = 'website',
 } = Astro.props;
-const titleStem = title.replace(/\s*\|\s*A Thinking Workspace$/, '');
+const titleStem = title.replace(/\s*\|\s*(A Thinking Workspace|PruningMyPothos)$/, '');
 const pageDescription =
-	description ??
-	`${titleStem} in A Thinking Workspace: systems, language, and reflective technical writing.`;
+	description ?? `${siteDescription} ${titleStem} adds context through systems, language, and reflective technical writing.`;
 const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
 const canonical = new URL(pathname, siteUrl).toString();
 const socialImage = new URL(image, siteUrl).toString();
@@ -42,24 +45,27 @@ const jsonLdWebPage = {
 	url: canonical,
 	isPartOf: {
 		'@type': 'WebSite',
-		name: 'A Thinking Workspace',
+		name: siteName,
+		alternateName: siteSubtitle,
 		url: siteUrl.toString(),
 	},
 };
 const jsonLdWebSite = {
 	'@context': 'https://schema.org',
 	'@type': 'WebSite',
-	name: 'A Thinking Workspace',
-	alternateName: 'pruningmypothos.com',
+	name: siteName,
+	alternateName: siteSubtitle,
 	url: siteUrl.toString(),
 	inLanguage: 'en',
+	description: siteDescription,
 };
 const jsonLdOrganization = {
 	'@context': 'https://schema.org',
 	'@type': 'Organization',
-	name: 'A Thinking Workspace',
+	name: siteName,
 	url: siteUrl.toString(),
 	logo: new URL('/favicon.png', siteUrl).toString(),
+	description: siteDescription,
 	founder: {
 		'@type': 'Person',
 		name: 'Shailesh Rawat',
@@ -74,12 +80,13 @@ const jsonLdPerson = {
 	'@type': 'Person',
 	name: 'Shailesh Rawat',
 	url: siteUrl.toString(),
-	jobTitle: 'Technical Writer and AI Systems Educator',
+	jobTitle: 'AI Systems Consultant and Technical Writer',
 	worksFor: {
 		'@type': 'Organization',
-		name: 'A Thinking Workspace',
+		name: siteName,
 		url: siteUrl.toString(),
 	},
+	description: siteDescription,
 	sameAs: [
 		'https://www.linkedin.com/in/shailesh-rawat',
 		'https://github.com/ShaileshRawat1403',
@@ -98,7 +105,7 @@ const jsonLdPerson = {
 		<link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
 		<link rel="canonical" href={canonical} />
 		<meta name="generator" content={Astro.generator} />
-		<meta property="og:site_name" content="A Thinking Workspace" />
+		<meta property="og:site_name" content={siteName} />
 		<meta property="og:type" content={ogType} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={pageDescription} />

@@ -38,6 +38,9 @@ const discoveryPosts = allContent.sort((a, b) => {
 });
 
 const featuredPriorityKeys = [
+  'systems/ai-architecture-explained-how-modern-llm-applications-work',
+  'systems/ai-agents-vs-ai-workflows',
+  'systems/why-most-ai-projects-fail-after-the-demo-stage',
   'systems/systems-001-foundations',
   'systems/runtime-over-model-why-orchestration-is-the-product',
   'systems/observability-first-ai-systems',
@@ -128,8 +131,8 @@ const itemListJsonLd = {
 ---
 
 <Layout
-  title="Home | A Thinking Workspace"
-  description="A personal workspace for AI systems, language, and reflective technical writing across systems, sentences, shelf, and notes."
+  title="PruningMyPothos | A Thinking Workspace"
+  description="PruningMyPothos is a thinking workspace on AI systems, orchestration, platform integration, governance, and adoption."
   image="/my-self-portrait.png"
 >
   <section class="homepage-hero">
@@ -163,7 +166,18 @@ const itemListJsonLd = {
 
     <h1 class="tagline">Thinker. Tinkerer. Translator.</h1>
     <p class="intro">
-      A personal workspace for exploring ideas in artificial intelligence, language, and systems. This site is a collection of notes, essays, and frameworks in various states of completion.
+      PruningMyPothos is a thinking workspace on AI systems, orchestration, platform integration, governance, and adoption.
+    </p>
+  </section>
+
+  <section class="home-authority-brief" aria-labelledby="home-authority-brief-title">
+    <h2 id="home-authority-brief-title">What authority lives here</h2>
+    <p>
+      This site explores how modern AI systems actually work: LLM architecture, orchestration and agent workflows,
+      retrieval and knowledge pipelines, governance and evaluation, and working experiments such as
+      <a href="/shelf/local-experiments/soothsayer-mcp-kernel/"> Soothsayer</a>,
+      <a href="/systems/runtime-over-model-why-orchestration-is-the-product/"> runtime orchestration</a>, and
+      <a href="/portfolio/"> portfolio case studies</a>.
     </p>
   </section>
 
@@ -477,6 +491,27 @@ const itemListJsonLd = {
     text-align: center;
   }
 
+  .home-authority-brief {
+    max-width: 760px;
+    margin: 0 auto 1.75rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .home-authority-brief h2 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.85rem, 4.2vw, 2.75rem);
+    line-height: 1.08;
+  }
+
+  .home-authority-brief p {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.68;
+    max-width: 66ch;
+    margin-inline: auto;
+  }
+
   .home-direct-answer h2 {
     margin: 0 0 0.45rem;
     font-size: 1.38rem;
@@ -607,11 +642,21 @@ const itemListJsonLd = {
       padding: 0 0.75rem;
     }
 
+    .home-authority-brief {
+      padding: 0 0.75rem;
+    }
+
+    .home-authority-brief h2 {
+      font-size: 1.58rem;
+      line-height: 1.12;
+    }
+
     .home-direct-answer h2 {
       font-size: 1.45rem;
       line-height: 1.15;
     }
 
+    .home-authority-brief p,
     .home-direct-answer p {
       max-width: 34ch;
       margin-inline: auto;

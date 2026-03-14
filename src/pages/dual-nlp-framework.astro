@@ -43,7 +43,18 @@ const cornerstoneGuides = [
     <div class="builder-shell-inner">
       <header class="section-head section-head--centered builder-head">
         <h1>Dual NLP for AI-assisted SDLC</h1>
+        <p class="mode-line">A cornerstone page for understanding how language becomes governed execution.</p>
         <p class="subtitle">First understand language, then compile language into governed execution.</p>
+        <p class="hero-proof">Use this page to move from intent to deterministic architecture, constraints, and execution plans.</p>
+        <div class="hero-actions">
+          <a href="#constraint-console-title" class="hero-action hero-action-primary">Open Builder Lab</a>
+          <a href="/systems/systems-001-foundations/" class="hero-action">Read Systems Foundations</a>
+        </div>
+        <ul class="hero-signals" aria-label="Cornerstone signals">
+          <li>7 core guides</li>
+          <li>interactive architecture graph</li>
+          <li>deterministic blueprint export</li>
+        </ul>
       </header>
 
       <section class="framework-intro" aria-labelledby="framework-intro-title">
@@ -161,6 +172,55 @@ const cornerstoneGuides = [
           <p class="visually-hidden" id="lab-live" aria-live="polite" aria-atomic="true"></p>
         </div>
 
+        <section class="scenario-strip" aria-labelledby="scenario-strip-title">
+          <h2 id="scenario-strip-title">Quick start scenarios</h2>
+          <p class="scenario-strip-intro">Start from a proven pattern, then adapt constraints to your context.</p>
+          <div class="scenario-grid">
+            <button
+              type="button"
+              class="scenario-card"
+              data-builder-preset
+              data-lens="nlpg"
+              data-domain="healthcare"
+              data-ai-mode="assisted-ai"
+              data-regulation="strict"
+              data-scale="team-scale"
+              data-delivery="agent-workflow"
+            >
+              <span class="scenario-title">Governed Healthcare Copilot</span>
+              <span class="scenario-meta">Strict compliance + human oversight</span>
+            </button>
+            <button
+              type="button"
+              class="scenario-card"
+              data-builder-preset
+              data-lens="nlpg"
+              data-domain="saas"
+              data-ai-mode="autonomous-ai"
+              data-regulation="moderate"
+              data-scale="internet-scale"
+              data-delivery="api-service"
+            >
+              <span class="scenario-title">SaaS Automation Runtime</span>
+              <span class="scenario-meta">Scale, policy gates, rollback safety</span>
+            </button>
+            <button
+              type="button"
+              class="scenario-card"
+              data-builder-preset
+              data-lens="nlp"
+              data-domain="internal-tooling"
+              data-ai-mode="assisted-ai"
+              data-regulation="low"
+              data-scale="team-scale"
+              data-delivery="web-app"
+            >
+              <span class="scenario-title">Internal Team Copilot</span>
+              <span class="scenario-meta">Fast adoption + workflow reliability</span>
+            </button>
+          </div>
+        </section>
+
         <div class="builder-grid">
           <aside class="lab-panel constraint-panel" aria-labelledby="constraint-console-title">
             <div class="panel-head">
@@ -220,7 +280,10 @@ const cornerstoneGuides = [
           </section>
 
           <aside class="lab-panel output-panel" aria-labelledby="stack-skills-title">
-            <h2 id="stack-skills-title">Stack + Skills</h2>
+            <div class="panel-head">
+              <h2 id="stack-skills-title">Stack + Skills</h2>
+            </div>
+            <p class="panel-copy">Live build artifact: stack profile, skills checklist, and execution plan.</p>
             <div class="output-scroll">
               <div class="output-block">
                 <h3>Recommended Stack</h3>
@@ -252,6 +315,25 @@ const cornerstoneGuides = [
         <h2>Your Build Blueprint</h2>
         <p id="blueprint-summary">All constraints captured. Export your deterministic implementation blueprint.</p>
       </div>
+
+      <section class="sandbox-value" aria-labelledby="sandbox-value-title">
+        <h2 id="sandbox-value-title">Turn the blueprint into delivery</h2>
+        <p class="sandbox-value-intro">Use the generated plan as a decision artifact, not just output. The value comes from repeatability and reviewability.</p>
+        <div class="sandbox-value-grid">
+          <article class="value-card">
+            <h3>1. Review with stakeholders</h3>
+            <p>Walk through constraints, risk gates, and success criteria before implementation starts.</p>
+          </article>
+          <article class="value-card">
+            <h3>2. Convert to execution tickets</h3>
+            <p>Split the plan into sequenced tasks with ownership, acceptance checks, and rollback steps.</p>
+          </article>
+          <article class="value-card">
+            <h3>3. Validate in an eval loop</h3>
+            <p>Measure behavior against policy, latency, and reliability so the system improves predictably.</p>
+          </article>
+        </div>
+      </section>
     </div>
   </section>
 
@@ -795,6 +877,9 @@ const cornerstoneGuides = [
           const blueprintSummary = byId('blueprint-summary');
           const exportButton = byId('export-blueprint');
           const resetButton = byId('reset-builder');
+          const constraintPanel = shell.querySelector('.constraint-panel');
+          const graphPanel = shell.querySelector('.graph-panel');
+          const outputPanel = shell.querySelector('.output-panel');
 
           if (
             !stepList || !coverageValue || !coverageTrack || !coverageFill || !badgesEl || !noteEl || !labLiveEl || !graphCountEl || !graphFootnote || !graphNote
@@ -1012,6 +1097,7 @@ const cornerstoneGuides = [
 
           const stepBlocks = Array.from(shell.querySelectorAll('[data-step-block]')).filter((node) => node instanceof HTMLElement);
           const lensButtons = Array.from(shell.querySelectorAll('.lens-btn')).filter((btn) => btn instanceof HTMLButtonElement);
+          const presetButtons = Array.from(shell.querySelectorAll('[data-builder-preset]')).filter((btn) => btn instanceof HTMLButtonElement);
 
           const toUnique = (arr) => {
             const seen = new Set();
@@ -1555,6 +1641,20 @@ const cornerstoneGuides = [
             return { answered, percent: Math.round((answered / stepOrder.length) * 100) };
           };
 
+          const syncDesktopPanelHeights = () => {
+            if (!(constraintPanel instanceof HTMLElement) || !(graphPanel instanceof HTMLElement) || !(outputPanel instanceof HTMLElement)) return;
+            if (window.innerWidth < 1121) {
+              constraintPanel.style.height = '';
+              outputPanel.style.height = '';
+              return;
+            }
+            const graphHeight = Math.ceil(graphPanel.offsetHeight);
+            if (graphHeight > 0) {
+              constraintPanel.style.height = `${graphHeight}px`;
+              outputPanel.style.height = `${graphHeight}px`;
+            }
+          };
+
           const buildMarkdown = (model) => {
             const selectionLines = stepOrder.map((stepId) => {
               const step = stepMap.get(stepId);
@@ -1705,6 +1805,7 @@ const cornerstoneGuides = [
             }
             if (complete && !wasComplete) announceLive('Blueprint complete. Constraint coverage reached 100 percent.');
             wasComplete = complete;
+            syncDesktopPanelHeights();
           };
 
           const selectOption = (button) => {
@@ -1720,13 +1821,56 @@ const cornerstoneGuides = [
             update();
           };
 
+          const clearSelections = () => {
+            stepOrder.forEach((stepId) => { selections[stepId] = ''; });
+            stepList.querySelectorAll('.step-option').forEach((btn) => {
+              btn.classList.remove('is-selected');
+              btn.setAttribute('aria-pressed', 'false');
+            });
+          };
+
+          const applyPreset = (button) => {
+            clearSelections();
+            const preset = {
+              domain: button.dataset.domain || '',
+              aiMode: button.dataset.aiMode || '',
+              regulation: button.dataset.regulation || '',
+              scale: button.dataset.scale || '',
+              delivery: button.dataset.delivery || '',
+            };
+
+            Object.entries(preset).forEach(([stepId, value]) => {
+              if (!value) return;
+              const optionButton = stepList.querySelector(`.step-option[data-step="${stepId}"][data-value="${value}"]`);
+              if (!(optionButton instanceof HTMLButtonElement)) return;
+              selections[stepId] = value;
+              optionButton.classList.add('is-selected');
+              optionButton.setAttribute('aria-pressed', 'true');
+            });
+
+            selectedLens = button.dataset.lens || '';
+            lensButtons.forEach((btn) => btn.classList.toggle('is-selected', btn.dataset.lens === selectedLens));
+            presetButtons.forEach((btn) => btn.classList.toggle('is-active', btn === button));
+            wasComplete = false;
+            announcedCoverageMilestones.clear();
+            update();
+            announceLive(`${button.querySelector('.scenario-title')?.textContent || 'Preset'} loaded.`);
+          };
+
           lensButtons.forEach((button) => {
             button.addEventListener('click', () => {
               selectedLens = button.dataset.lens || '';
               lensButtons.forEach((btn) => btn.classList.toggle('is-selected', btn === button));
+              presetButtons.forEach((btn) => btn.classList.remove('is-active'));
               update();
               const firstStepButton = stepList.querySelector('.step-option[data-step="domain"]');
               if (firstStepButton instanceof HTMLButtonElement) firstStepButton.focus();
+            });
+          });
+
+          presetButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+              applyPreset(button);
             });
           });
 
@@ -1776,6 +1920,7 @@ const cornerstoneGuides = [
                 btn.setAttribute('aria-pressed', 'false');
               });
               lensButtons.forEach((btn) => btn.classList.remove('is-selected'));
+              presetButtons.forEach((btn) => btn.classList.remove('is-active'));
               previousNodeIds = new Set();
               update();
             };
@@ -1794,6 +1939,15 @@ const cornerstoneGuides = [
             }, 500);
           });
 
+          if (typeof ResizeObserver === 'function' && graphPanel instanceof HTMLElement) {
+            new ResizeObserver(() => {
+              syncDesktopPanelHeights();
+            }).observe(graphPanel);
+          }
+          window.addEventListener('resize', () => {
+            syncDesktopPanelHeights();
+          });
+
           exportButton.addEventListener('click', () => {
             const model = computeModel();
             const markdown = buildMarkdown(model);
@@ -1809,6 +1963,7 @@ const cornerstoneGuides = [
           });
 
           update();
+          syncDesktopPanelHeights();
           shell.dataset.bound = 'true';
         } catch (error) {
           console.error('Builder Lab init failed:', error);
@@ -1837,46 +1992,131 @@ const cornerstoneGuides = [
   .builder-page {
     position: relative;
     left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    width: 100vw;
-    padding: 1.2rem 0 2rem;
+    transform: translateX(-50%);
+    width: min(1260px, calc(100vw - 2.2rem));
+    max-width: 100vw;
+    margin: 0;
+    padding: 0.5rem 0 2.5rem;
     background:
-      radial-gradient(circle at 8% 9%, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 28%),
-      radial-gradient(circle at 91% 14%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 30%),
+      radial-gradient(circle at 10% 8%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 24%),
+      radial-gradient(circle at 88% 14%, color-mix(in srgb, var(--color-accent) 7%, transparent), transparent 28%),
       linear-gradient(to right, color-mix(in srgb, var(--color-border) 26%, transparent) 1px, transparent 1px),
       linear-gradient(to bottom, color-mix(in srgb, var(--color-border) 26%, transparent) 1px, transparent 1px),
       var(--color-bg);
     background-size: auto, auto, 30px 30px, 30px 30px, auto;
+    border-radius: 1.5rem;
+    border: 1px solid color-mix(in srgb, var(--color-border) 88%, transparent);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #ffffff 12%, transparent),
+      0 24px 42px color-mix(in srgb, #020617 7%, transparent);
+    overflow-x: hidden;
   }
 
   .builder-shell-inner {
-    width: min(1220px, calc(100vw - 2.25rem));
+    width: min(1180px, calc(100% - 2rem));
+    max-width: 100%;
     margin: 0 auto;
+    padding-inline: 0;
   }
 
   .builder-head {
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.8rem;
   }
 
+  .builder-head h1 {
+    margin: 0 auto 0.6rem;
+    max-width: 14ch;
+    font-size: clamp(1.9rem, 4.2vw, 2.85rem);
+    line-height: 1.08;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .builder-head .mode-line,
   .builder-head .subtitle {
-    max-width: 48ch;
+    max-width: 52ch;
+  }
+
+  .builder-head .hero-proof {
+    margin: 0;
+    max-width: 60ch;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+  }
+
+  .builder-head .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    justify-content: center;
+    margin-top: 0.2rem;
+  }
+
+  .hero-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.2rem;
+    padding: 0.42rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text-body);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .hero-action:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--color-accent) 50%, var(--color-border));
+    box-shadow: 0 8px 16px color-mix(in srgb, #020617 6%, transparent);
+    text-decoration: none;
+  }
+
+  .hero-action-primary {
+    border-color: color-mix(in srgb, var(--color-accent) 60%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg));
+    color: var(--color-text-heading);
+  }
+
+  .hero-signals {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.38rem;
+    margin: 0.15rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero-signals li {
+    margin: 0;
+    border: 1px solid color-mix(in srgb, var(--color-border) 86%, transparent);
+    border-radius: 999px;
+    padding: 0.2rem 0.56rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+    color: var(--color-text-muted);
+    background: color-mix(in srgb, var(--color-bg) 94%, var(--color-blockquote-bg));
   }
 
   .framework-intro {
     display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.9fr);
-    gap: 0.9rem;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.82fr);
+    gap: 1rem;
     border: 1px solid var(--color-border);
-    border-radius: 14px;
+    border-radius: 18px;
     background:
-      linear-gradient(165deg, color-mix(in srgb, var(--color-bg) 90%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 95%, transparent));
+      linear-gradient(165deg, color-mix(in srgb, var(--color-bg) 91%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 96%, transparent));
     box-shadow:
-      inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
-      0 10px 24px color-mix(in srgb, #020617 6%, transparent);
-    padding: 1rem;
-    margin-bottom: 1rem;
+      inset 0 1px 0 color-mix(in srgb, #ffffff 14%, transparent),
+      0 14px 30px color-mix(in srgb, #020617 7%, transparent);
+    padding: 1.15rem;
+    margin-bottom: 1.15rem;
   }
 
   .framework-kicker {
@@ -1890,25 +2130,29 @@ const cornerstoneGuides = [
 
   .framework-copy h2 {
     margin: 0 0 0.4rem;
-    font-size: 1.28rem;
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
   }
 
   .framework-copy p:last-child,
   .framework-copy p {
     color: var(--color-text-muted);
-    line-height: 1.55;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
   }
 
   .framework-guides {
     border: 1px solid var(--color-border);
-    border-radius: 12px;
+    border-radius: 16px;
     background: color-mix(in srgb, var(--color-bg) 95%, var(--color-blockquote-bg));
-    padding: 0.9rem 1rem;
+    padding: 1rem 1.05rem;
+    align-self: start;
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
   }
 
   .framework-guides ul {
     margin: 0;
     padding-left: 1rem;
+    min-width: 0;
   }
 
   .framework-guides li + li {
@@ -1918,14 +2162,22 @@ const cornerstoneGuides = [
   .framework-guides a {
     font-family: var(--font-mono);
     font-size: 0.84rem;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .framework-guides:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--color-accent) 38%, var(--color-border));
+    box-shadow: 0 12px 22px color-mix(in srgb, #020617 6%, transparent);
   }
 
   .skill-blueprint-note {
     border: 1px solid var(--color-border);
-    border-radius: 12px;
+    border-radius: 16px;
     background: color-mix(in srgb, var(--color-bg) 96%, var(--color-blockquote-bg));
-    padding: 0.9rem 1rem;
-    margin-bottom: 1rem;
+    padding: 1rem 1.05rem;
+    margin-bottom: 1.15rem;
   }
 
   .skill-blueprint-note h2 {
@@ -1942,14 +2194,14 @@ const cornerstoneGuides = [
 
   .lens-intro {
     border: 1px solid var(--color-border);
-    border-radius: 14px;
+    border-radius: 18px;
     background:
       linear-gradient(165deg, color-mix(in srgb, var(--color-bg) 88%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 93%, transparent));
     box-shadow:
-      inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
-      0 10px 24px color-mix(in srgb, #020617 7%, transparent);
-    padding: 1rem;
-    margin-bottom: 1rem;
+      inset 0 1px 0 color-mix(in srgb, #ffffff 14%, transparent),
+      0 14px 30px color-mix(in srgb, #020617 7%, transparent);
+    padding: 1.05rem;
+    margin-bottom: 1.15rem;
   }
 
   .lens-intro h2 {
@@ -1968,18 +2220,19 @@ const cornerstoneGuides = [
   .lens-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
+    gap: 0.9rem;
   }
 
   .lens-card {
     border: 1px solid var(--color-border);
-    border-radius: 10px;
+    border-radius: 16px;
     background:
       linear-gradient(175deg, color-mix(in srgb, var(--color-bg) 95%, #ffffff), color-mix(in srgb, var(--color-bg) 88%, var(--color-blockquote-bg)));
     box-shadow:
-      inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
-      0 6px 18px color-mix(in srgb, #020617 6%, transparent);
-    padding: 0.72rem;
+      inset 0 1px 0 color-mix(in srgb, #ffffff 12%, transparent),
+      0 10px 22px color-mix(in srgb, #020617 6%, transparent);
+    padding: 0.86rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   .lens-card h3 {
@@ -1987,6 +2240,12 @@ const cornerstoneGuides = [
     font-size: 0.9rem;
     font-family: var(--font-mono);
     color: var(--color-text-heading);
+  }
+
+  .lens-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--color-accent) 36%, var(--color-border));
+    box-shadow: 0 14px 24px color-mix(in srgb, #020617 7%, transparent);
   }
 
   .lens-node-map {
@@ -2060,7 +2319,7 @@ const cornerstoneGuides = [
     pointer-events: auto;
     user-select: none;
     cursor: grab;
-    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, transform 0.2s ease;
   }
 
   .lens-core {
@@ -2098,6 +2357,10 @@ const cornerstoneGuides = [
   .lens-node:focus-visible {
     outline: 2px solid color-mix(in srgb, var(--color-accent) 75%, var(--color-border));
     outline-offset: 2px;
+  }
+
+  .lens-node:hover {
+    transform: translate(-50%, -50%) scale(1.05);
   }
 
   .lens-node-insight {
@@ -2149,6 +2412,72 @@ const cornerstoneGuides = [
     gap: 0.9rem;
   }
 
+  .scenario-strip {
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--color-bg) 97%, var(--color-blockquote-bg));
+    padding: 0.82rem 0.92rem;
+  }
+
+  .scenario-strip h2 {
+    margin: 0 0 0.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .scenario-strip-intro {
+    margin: 0 0 0.55rem;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.52rem;
+  }
+
+  .scenario-card {
+    border: 1px solid color-mix(in srgb, var(--color-border) 85%, transparent);
+    border-radius: 11px;
+    background: var(--color-bg);
+    color: var(--color-text-body);
+    text-align: left;
+    padding: 0.58rem 0.64rem;
+    cursor: pointer;
+    transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+  }
+
+  .scenario-card:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 52%, var(--color-border));
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px color-mix(in srgb, #020617 6%, transparent);
+  }
+
+  .scenario-card.is-active {
+    border-color: color-mix(in srgb, var(--color-accent) 62%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 9%, var(--color-bg));
+  }
+
+  .scenario-title {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--color-text-heading);
+    margin-bottom: 0.14rem;
+  }
+
+  .scenario-meta {
+    display: block;
+    font-size: 0.74rem;
+    color: var(--color-text-muted);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
   .lab-status {
     border: 1px solid var(--color-border);
     border-radius: 12px;
@@ -2156,7 +2485,7 @@ const cornerstoneGuides = [
       linear-gradient(170deg, color-mix(in srgb, var(--color-bg) 82%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 93%, transparent)),
       linear-gradient(90deg, color-mix(in srgb, var(--color-border) 20%, transparent) 1px, transparent 1px);
     background-size: auto, 22px 22px;
-    padding: 0.92rem 1rem;
+    padding: 1rem 1.05rem;
     margin-bottom: 0;
     box-shadow:
       inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
@@ -2294,22 +2623,27 @@ const cornerstoneGuides = [
 
   .builder-grid {
     display: grid;
-    grid-template-columns: minmax(280px, 320px) minmax(0, 1fr) minmax(300px, 340px);
+    grid-template-columns: minmax(270px, 320px) minmax(0, 1fr) minmax(280px, 330px);
     gap: 1rem;
-    align-items: start;
+    align-items: stretch;
+    min-width: 0;
+  }
+
+  .builder-grid > * {
+    min-width: 0;
   }
 
   .lab-panel {
     border: 1px solid var(--color-border);
-    border-radius: 12px;
+    border-radius: 18px;
     background:
       linear-gradient(170deg, color-mix(in srgb, var(--color-bg) 94%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 88%, transparent));
     box-shadow:
-      inset 0 1px 0 color-mix(in srgb, #ffffff 10%, transparent),
-      0 10px 22px color-mix(in srgb, #020617 6%, transparent);
-    padding: 0.9rem;
+      inset 0 1px 0 color-mix(in srgb, #ffffff 12%, transparent),
+      0 12px 24px color-mix(in srgb, #020617 6%, transparent);
+    padding: 1rem;
     min-height: 0;
-    height: auto;
+    height: 100%;
   }
 
   .constraint-panel,
@@ -2317,22 +2651,23 @@ const cornerstoneGuides = [
     display: flex;
     flex-direction: column;
     gap: 0.56rem;
-    height: min(78vh, 920px);
+    height: 100%;
   }
 
   .graph-panel {
     display: flex;
     flex-direction: column;
     gap: 0.56rem;
-    height: auto;
+    height: 100%;
   }
 
   .panel-head {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.5rem;
     margin-bottom: 0.35rem;
+    min-height: 2rem;
   }
 
   .lab-panel h2 {
@@ -2348,6 +2683,8 @@ const cornerstoneGuides = [
     font-size: 0.82rem;
     color: var(--color-text-muted);
     line-height: 1.45;
+    overflow-wrap: anywhere;
+    min-height: 3.1rem;
   }
 
   .panel-meta {
@@ -2355,6 +2692,8 @@ const cornerstoneGuides = [
     font-size: 0.72rem;
     color: var(--color-text-muted);
     font-family: var(--font-mono);
+    line-height: 1.4;
+    padding-top: 0.1rem;
   }
 
   .panel-reset {
@@ -2380,8 +2719,8 @@ const cornerstoneGuides = [
 
   .step-block {
     border: 1px solid var(--color-border);
-    border-radius: 10px;
-    padding: 0.54rem;
+    border-radius: 14px;
+    padding: 0.62rem;
     min-inline-size: 0;
     transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   }
@@ -2440,12 +2779,13 @@ const cornerstoneGuides = [
     font-family: var(--font-mono);
     padding: 0.28rem 0.52rem;
     cursor: pointer;
-    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.16s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.16s ease, box-shadow 0.16s ease;
   }
 
   .step-option:hover {
     border-color: color-mix(in srgb, var(--color-accent) 44%, var(--color-border));
     transform: translateY(-1px);
+    box-shadow: 0 8px 14px color-mix(in srgb, #020617 7%, transparent);
   }
 
   .step-option.is-selected {
@@ -2456,9 +2796,9 @@ const cornerstoneGuides = [
   .graph-wrap {
     position: relative;
     border: 1px solid var(--color-border);
-    border-radius: 10px;
+    border-radius: 16px;
     flex: 1 1 auto;
-    min-height: 320px;
+    min-height: 360px;
     background:
       radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--color-accent) 7%, transparent), transparent 70%),
       linear-gradient(to right, color-mix(in srgb, var(--color-border) 45%, transparent) 1px, transparent 1px),
@@ -2585,12 +2925,25 @@ const cornerstoneGuides = [
     margin: 0;
     color: var(--color-text-muted);
     font-size: 0.79rem;
-    min-height: 1.5em;
+    line-height: 1.45;
+    min-height: 2.9em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .graph-footnote-muted {
     margin-top: 0.28rem;
     opacity: 0.92;
+    line-height: 1.45;
+    min-height: 2.9em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .graph-learning {
@@ -2623,6 +2976,7 @@ const cornerstoneGuides = [
     font-size: 0.76rem;
     color: var(--color-text-muted);
     line-height: 1.45;
+    overflow-wrap: anywhere;
   }
 
   .graph-learning-line strong {
@@ -2650,6 +3004,17 @@ const cornerstoneGuides = [
     color: var(--color-text-heading);
   }
 
+  .output-panel h2,
+  .output-panel h3,
+  .output-panel h4 {
+    font-family: var(--font-mono);
+  }
+
+  .output-panel li,
+  .output-panel p {
+    font-family: var(--font-sans);
+  }
+
   .stack-group + .stack-group {
     margin-top: 0.42rem;
   }
@@ -2671,15 +3036,20 @@ const cornerstoneGuides = [
     font-size: 0.79rem;
     line-height: 1.45;
     cursor: default;
+    min-width: 0;
   }
 
   .output-panel li {
     margin: 0.1rem 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .links-list a {
     font-family: var(--font-mono);
     font-size: 0.74rem;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .skills-list {
@@ -2716,12 +3086,13 @@ const cornerstoneGuides = [
     text-transform: uppercase;
     padding: 0.54rem 0.85rem;
     cursor: pointer;
-    transition: transform 0.18s ease, border-color 0.2s ease, background-color 0.2s ease;
+    transition: transform 0.18s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   .export-button:not(:disabled):hover {
     transform: translateY(-1px);
     border-color: color-mix(in srgb, var(--color-accent) 74%, var(--color-border));
+    box-shadow: 0 12px 22px color-mix(in srgb, #020617 8%, transparent);
   }
 
   .export-button:disabled {
@@ -2733,8 +3104,57 @@ const cornerstoneGuides = [
     margin-top: 1rem;
     border: 1px solid color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
     background: color-mix(in srgb, var(--color-accent) 7%, var(--color-bg));
-    border-radius: 12px;
-    padding: 0.9rem 1rem;
+    border-radius: 18px;
+    padding: 1rem 1.05rem;
+  }
+
+  .sandbox-value {
+    margin-top: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 18px;
+    background:
+      linear-gradient(165deg, color-mix(in srgb, var(--color-bg) 96%, var(--color-blockquote-bg)), color-mix(in srgb, var(--color-bg) 92%, transparent));
+    padding: 1rem 1.05rem;
+  }
+
+  .sandbox-value h2 {
+    margin: 0 0 0.3rem;
+    font-size: 1.05rem;
+    font-family: var(--font-mono);
+  }
+
+  .sandbox-value-intro {
+    margin: 0 0 0.72rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    max-width: 72ch;
+  }
+
+  .sandbox-value-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.72rem;
+  }
+
+  .value-card {
+    border: 1px solid color-mix(in srgb, var(--color-border) 88%, transparent);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--color-bg) 96%, var(--color-blockquote-bg));
+    padding: 0.78rem 0.84rem;
+  }
+
+  .value-card h3 {
+    margin: 0 0 0.25rem;
+    font-size: 0.88rem;
+    font-family: var(--font-mono);
+  }
+
+  .value-card p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    line-height: 1.48;
+    overflow-wrap: anywhere;
   }
 
   .blueprint-kicker {
@@ -2833,7 +3253,9 @@ const cornerstoneGuides = [
     }
 
     .step-option:hover,
-    .export-button:not(:disabled):hover {
+    .export-button:not(:disabled):hover,
+    .hero-action:hover,
+    .scenario-card:hover {
       transform: none;
     }
   }
@@ -2845,6 +3267,18 @@ const cornerstoneGuides = [
       gap: 0.8rem;
     }
 
+    .scenario-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sandbox-value-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .builder-page {
+      border-radius: 1.2rem;
+    }
+
     .lab-panel {
       height: auto;
     }
@@ -2852,6 +3286,7 @@ const cornerstoneGuides = [
     .step-list,
     .output-scroll {
       overflow: visible;
+      max-height: none;
       padding-right: 0;
     }
 
@@ -2859,18 +3294,104 @@ const cornerstoneGuides = [
       grid-template-columns: 1fr;
     }
 
+    .constraint-panel {
+      order: 2;
+    }
+
+    .graph-panel {
+      order: 1;
+    }
+
+    .output-panel {
+      order: 3;
+    }
+
     .graph-wrap {
       min-height: 380px;
     }
   }
 
-  @media (max-width: 640px) {
-    .builder-shell-inner {
-      width: calc(100vw - 1.25rem);
+  @media (min-width: 1121px) {
+    .constraint-panel,
+    .output-panel {
+      position: sticky;
+      top: 6.2rem;
+      height: auto;
+      align-self: start;
+      overflow: hidden;
+    }
+
+    .graph-panel {
+      position: sticky;
+      top: 6.2rem;
+      height: auto;
+      align-self: start;
+      overflow: visible;
+    }
+
+    .step-list,
+    .output-scroll {
+      overflow: auto;
+      max-height: none;
+      height: 100%;
+      scrollbar-gutter: stable;
     }
 
     .graph-wrap {
-      min-height: 330px;
+      min-height: clamp(440px, 52vh, 640px);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .builder-shell-inner {
+      width: calc(100% - 1rem);
+      padding-inline: 0;
+    }
+
+    .builder-page {
+      left: 0;
+      transform: none;
+      width: calc(100vw - 0.8rem);
+      padding: 0.25rem 0 1.75rem;
+      border-radius: 1rem;
+    }
+
+    .builder-head h1 {
+      max-width: 12ch;
+      font-size: clamp(1.62rem, 8vw, 2.15rem);
+      line-height: 1.08;
+      text-wrap: pretty;
+    }
+
+    .builder-head .hero-proof {
+      max-width: 34ch;
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+    .hero-action {
+      width: 100%;
+      max-width: 22rem;
+    }
+
+    .hero-signals {
+      gap: 0.3rem;
+    }
+
+    .framework-intro,
+    .skill-blueprint-note,
+    .scenario-strip,
+    .lens-intro,
+    .lab-status,
+    .lab-panel,
+    .blueprint-card,
+    .sandbox-value {
+      border-radius: 14px;
+      padding-inline: 0.85rem;
+    }
+
+    .graph-wrap {
+      min-height: 320px;
     }
 
     :global(.graph-node) {
@@ -2884,5 +3405,25 @@ const cornerstoneGuides = [
       width: 62px;
       height: 62px;
     }
+
+    .lens-node-map {
+      height: 144px;
+    }
+
+    .lens-node {
+      font-size: 0.58rem;
+      padding: 0.14rem 0.34rem;
+      max-width: 34%;
+      white-space: normal;
+      text-align: center;
+    }
+
+    .pathway-item,
+    .framework-guides,
+    .lens-card,
+    .step-block {
+      box-shadow: 0 8px 18px color-mix(in srgb, #020617 5%, transparent);
+    }
   }
+
 </style>

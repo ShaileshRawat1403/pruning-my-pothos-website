@@ -13,7 +13,6 @@ const CORE_INDEX_ROUTES = [
 // Keep exclusions centralized so sitemap scope does not drift over time.
 const EXCLUDED_ROUTE_PREFIXES = [
   '/tags/',
-  '/portfolio/',
   '/shelf/books/',
   '/shelf/movies/',
   '/shelf/culture/',

@@ -38,6 +38,11 @@ const links =
                 </a>
             ))}
         </div>
+        {variant !== 'portfolio' && (
+            <p class="footer-description">
+                PruningMyPothos is a thinking workspace on AI systems, orchestration, platform integration, governance, and adoption.
+            </p>
+        )}
         <div class="footer-copyright">
             &copy; {today.getFullYear()} Shailesh Rawat (san_serif_sentiments). All rights reserved.
         </div>
@@ -116,6 +121,11 @@ const links =
     font-size: 0.85rem;
     color: var(--color-text-muted);
     max-width: 58ch;
+}
+.footer-description {
+    margin: 0;
+    max-width: 64ch;
+    color: var(--color-text-muted);
 }
 @media (max-width: 720px) {
     .footer-inner {

@@ -219,6 +219,86 @@
 
 ## Update: 2026-03-05 (SEO/AEO/GEO agent instruction framework)
 
+## Update: 2026-03-14 (Entity signal strengthening pass)
+
+### Summary
+- Strengthened site-wide entity clarity around `PruningMyPothos` without changing information architecture.
+- Reweighted homepage, about page, footer, sitemap, and `llms.txt` toward AI systems authority signals.
+- Fixed systems article schema so `DefinedTerm` links only emit for glossary-backed terms.
+
+### Files touched
+- `src/layouts/Layout.astro`
+- `src/components/Footer.astro`
+- `src/pages/index.astro`
+- `src/pages/about.astro`
+- `src/pages/llms.txt.ts`
+- `src/pages/sitemap.xml.ts`
+- `src/pages/systems/[slug].astro`
+
+### Decisions
+- `PruningMyPothos` is now the primary site/entity name in site-wide metadata and schema.
+- `A Thinking Workspace` remains as a subtitle/editorial frame, not the dominant structured-data entity.
+- The canonical authority sentence is: `PruningMyPothos is a thinking workspace on AI systems, orchestration, platform integration, governance, and adoption.`
+- Portfolio is included in sitemap coverage because it is a proof and consulting-intent surface.
+- Systems pages now skip `DefinedTerm` schema entries when no matching glossary anchor exists.
+
+### Open risks / follow-ups
+- Many page titles across section routes still end with `A Thinking Workspace`; this is acceptable for now but could be normalized later if a fuller brand pass is desired.
+- Homepage/about copy now better signals authority, but stronger demand-shaped pillar pages are still the main remaining content gap.
+- `llms.txt` is stronger, but a future pass could add more curated high-signal case-study/resource links.
+
+### Suggested next actions
+1. Add three demand-shaped systems pillars: AI architecture, agents vs workflows, and post-demo failure.
+2. Expand reporting scripts to check definition intros, proof links, and audience declarations.
+3. Re-run build and live verification after deploy to confirm sitemap and metadata output.
+
+## Update: 2026-03-14 (Authority pillar + reporting pass)
+
+### Summary
+- Added three demand-shaped systems pillar pages focused on AI architecture, agents vs workflows, and post-demo failure.
+- Surfaced the new pillars in the main systems discovery page, homepage featured priority order, and `llms.txt`.
+- Upgraded systems reporting so advisory and report outputs now track authority signals such as definition intros, audience framing, and proof-surface links.
+- Added proof-surface links from flagship systems docs into portfolio, local experiments, and shared resources to strengthen topical authority and GEO support.
+
+### Files touched
+- `src/content/systems/ai-architecture-explained-how-modern-llm-applications-work.mdx`
+- `src/content/systems/ai-agents-vs-ai-workflows.mdx`
+- `src/content/systems/why-most-ai-projects-fail-after-the-demo-stage.mdx`
+- `src/content/systems/seo-aeo-geo-how-things-fit-together.mdx`
+- `src/content/systems/observability-first-ai-systems.mdx`
+- `src/content/systems/knowledge-management-as-runtime-memory.mdx`
+- `src/content/systems/decision-making-under-uncertainty-in-ai-runtimes.mdx`
+- `src/pages/systems.astro`
+- `src/pages/index.astro`
+- `src/pages/llms.txt.ts`
+- `src/components/ContentDiscovery.astro`
+- `scripts/lint-systems-advisory.mjs`
+- `scripts/report-systems-consistency.mjs`
+- `scripts/report-topic-coverage.mjs`
+- `scripts/report-main-gaps.mjs`
+
+### Decisions
+- New authority pillars stay inside `systems`; no new section or navigation restructuring was introduced.
+- Discovery weighting now favors architecture, workflows/agents, and post-demo failure alongside existing orchestration/discoverability docs.
+- Reporting now treats authority signals as first-class advisory data, not only structural consistency.
+- Proof surfaces should include `portfolio`, `shelf/local-experiments`, or `shelf/shared-resources` where naturally relevant.
+
+### Validation
+- `npm run lint:systems` passed.
+- `npm run report:gaps` now shows all main gaps addressed.
+- `npm run report:systems` includes new authority-signal columns.
+- `npm run build` passed after the content and reporting updates.
+
+### Open risks / follow-ups
+- `report:topics` still shows `adoption` as thin and `architecture`/`integration` as developing, which is directionally correct and should inform the next content batch.
+- Advisory warnings remain intentionally non-blocking; older systems docs still lack some direct-answer or proof-link signals.
+- The new pillars improve authority, but off-site distribution and search-console monitoring remain external work.
+
+### Suggested next actions
+1. Add one adoption-focused systems doc and one integration-focused systems doc to close the remaining topic thin spots.
+2. Run a selective refresh pass on older flagship systems docs with the highest advisory gaps.
+3. After deploy, compare impression/click changes for the new pillars and the updated `/systems/` hub.
+
 ### Summary
 - Added a reusable SEO/AEO/GEO instruction framework with a clear separation between transferable core rules and site-specific overlay.
 - Added playbooks for cluster rollout, schema rollout, and measurement/reporting to make execution consistent.

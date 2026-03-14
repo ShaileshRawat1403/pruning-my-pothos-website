@@ -141,13 +141,14 @@
     width: min(520px, 100%);
     display: flex;
     justify-content: center;
+    overflow: clip;
   }
 
   .knowledge-map-graph svg {
     display: block;
     width: 100%;
     height: auto;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .graph-branch {
@@ -213,6 +214,11 @@
   .graph-node:focus-visible text,
   .graph-branch.is-active .graph-branch-node text {
     fill: color-mix(in srgb, var(--color-text-heading) 82%, #f97316 18%);
+  }
+
+  .graph-node:hover circle,
+  .graph-node:focus-visible circle {
+    transform: scale(1.06);
   }
 
   .graph-node:focus-visible {
@@ -317,8 +323,17 @@
     }
 
     .knowledge-map-graph {
-      width: min(420px, calc(100vw - 1.7rem));
+      width: min(390px, 100%);
+      max-width: 100%;
       margin-bottom: 0.8rem;
+    }
+
+    .graph-node text {
+      font-size: 10px;
+    }
+
+    .graph-node-core text {
+      font-size: 9px;
     }
 
     .pathway-list {
@@ -344,11 +359,22 @@
     }
 
     .knowledge-map-graph {
-      width: min(400px, calc(100vw - 1.4rem));
+      width: min(350px, 100%);
+      max-width: 100%;
+      margin-inline: auto;
+      padding-inline: 0.15rem;
     }
 
-    .knowledge-map-graph svg {
-      transform: translateX(-4px);
+    .graph-link {
+      stroke-width: 1.25;
+    }
+
+    .graph-node text {
+      font-size: 9px;
+    }
+
+    .graph-node-core text {
+      font-size: 8px;
     }
 
     .knowledge-pathways h3 {

@@ -1,9 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
-import TagList from '@/components/TagList.astro';
 import ContinueBlock from '@/components/ContinueBlock.astro';
 import { getAdjacentEntries, getRelatedEntries } from '@/utils/navigation';
+import EntryHeader from '@/components/EntryHeader.astro';
 
 export async function getStaticPaths() {
   const stickyNotes = await getCollection('sticky-notes');
@@ -28,8 +28,13 @@ const relatedLinks = relatedEntries.map(toLink);
   description={`Sticky note: ${note.data.title}. A short working note from the thinking workspace.`}
 >
   <div class="note-detail">
-    <h1>{note.data.title}</h1>
-    <TagList tags={note.data.tags} />
+    <EntryHeader
+      title={note.data.title}
+      description="A short working note from the thinking workspace."
+      tags={note.data.tags}
+      eyebrow="/sticky-notes"
+      compact={true}
+    />
     <div class="note-content">
       <Content />
     </div>
@@ -50,9 +55,7 @@ const relatedLinks = relatedEntries.map(toLink);
     padding: 4rem 0;
   }
   .note-detail h1 {
-    font-size: 2rem;
     text-align: center;
-    margin-bottom: 2rem;
   }
   .note-content {
     font-family: var(--font-serif);

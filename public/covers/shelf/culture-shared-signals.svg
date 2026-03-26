@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+  <title id="t">Culture shared signals cover</title>
+  <desc id="d">Editorial cover for culture notes on shared memory and meaning.</desc>
+  <rect width="1200" height="675" fill="#172554"/>
+  <circle cx="310" cy="320" r="98" fill="#22c55e" opacity="0.9"/>
+  <circle cx="600" cy="320" r="98" fill="#60a5fa" opacity="0.88"/>
+  <circle cx="890" cy="320" r="98" fill="#f59e0b" opacity="0.88"/>
+  <path d="M408 320 H502" stroke="#e2e8f0" stroke-width="10" stroke-linecap="round"/>
+  <path d="M698 320 H792" stroke="#e2e8f0" stroke-width="10" stroke-linecap="round"/>
+  <text x="100" y="96" fill="#dbeafe" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">Shelf / Culture</text>
+  <text x="100" y="565" fill="#eff6ff" font-family="Georgia, 'Times New Roman', serif" font-size="60">Shared signals</text>
+  <text x="100" y="612" fill="#bfdbfe" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">How culture keeps memory, language, and belonging in motion</text>
+</svg>

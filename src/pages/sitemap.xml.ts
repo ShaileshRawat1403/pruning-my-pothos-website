@@ -1,22 +1,36 @@
 import { getCollection } from 'astro:content';
+import { slugifyTag } from '@/utils/tags';
 
 const CORE_INDEX_ROUTES = [
   '/',
   '/about',
   '/systems',
+  '/systems/concepts',
+  '/systems/explanations',
+  '/systems/how-things-fit-together',
   '/sentences',
+  '/sentences/attention',
+  '/sentences/meaning',
+  '/sentences/judgment',
   '/sticky-notes',
   '/self',
   '/shelf',
+  '/shelf/books',
+  '/shelf/culture',
+  '/shelf/local-experiments',
+  '/shelf/music',
+  '/shelf/notes',
+  '/shelf/notes-tools',
+  '/shelf/philosophy',
+  '/shelf/shared-resources',
+  '/shelf/tools',
+  '/tags',
+  '/portfolio',
+  '/dual-nlp-framework',
 ];
 
 // Keep exclusions centralized so sitemap scope does not drift over time.
 const EXCLUDED_ROUTE_PREFIXES = [
-  '/tags/',
-  '/shelf/books/',
-  '/shelf/movies/',
-  '/shelf/culture/',
-  '/shelf/notes-tools/',
   '/experiments/',
   '/test/',
 ];
@@ -37,7 +51,6 @@ const toPath = (entry: any) => {
   return withTrailingSlash(`/${entry.collection}/${entry.slug}`);
 };
 
-const isNoindexPath = (path: string) => path.startsWith('/tags/');
 const isExcludedPath = (path: string) =>
   EXCLUDED_ROUTE_PREFIXES.some((prefix) => path === prefix || path.startsWith(prefix));
 
@@ -59,24 +72,38 @@ export async function GET({ site }: { site?: URL }) {
   const stickyNotes = await getCollection('sticky-notes');
 
   const allEntries = [...systems, ...sentences, ...self, ...shelf, ...stickyNotes];
+  const tagPaths = new Set<string>();
 
   const urls: UrlEntry[] = [];
 
   CORE_INDEX_ROUTES.forEach((route) => {
     const normalized = withTrailingSlash(route);
-    if (!isNoindexPath(normalized) && !isExcludedPath(normalized)) {
+    if (!isExcludedPath(normalized)) {
       urls.push({ path: normalized });
     }
   });
 
   allEntries.forEach((entry) => {
     const path = toPath(entry);
-    if (isNoindexPath(path) || isExcludedPath(path)) return;
+    if (isExcludedPath(path)) return;
     const publishDate = (entry.data as { publishDate?: Date }).publishDate;
     urls.push({
       path,
       lastmod: publishDate ? new Date(publishDate).toISOString() : undefined,
     });
+
+    const tags = (entry.data as { tags?: string[] }).tags ?? [];
+    tags.forEach((tag) => {
+      const slug = slugifyTag(tag);
+      if (!slug) return;
+      tagPaths.add(withTrailingSlash(`/tags/${slug}`));
+    });
+  });
+
+  tagPaths.forEach((path) => {
+    if (!isExcludedPath(path)) {
+      urls.push({ path });
+    }
   });
 
   const dedup = new Map<string, UrlEntry>();

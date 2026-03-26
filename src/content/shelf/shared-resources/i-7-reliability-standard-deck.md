@@ -9,6 +9,10 @@ tags:
   - governance
 coverUrl: "/covers/shelf/shared-i7-reliability.svg"
 pdfUrl: "/resources/presentations/The_I-7_Reliability_Standard.pdf"
+resourceHighlights:
+  - Stage-by-stage reliability framing for the I-7 loop
+  - Governance and verification checkpoints that catch weak execution early
+  - A compact reference for dependable cognitive workflows
 ---
 
 - [Related systems doc: I-7 Cognitive Loop](/systems/i-7-cognitive-loop) - Full written version of the framework.

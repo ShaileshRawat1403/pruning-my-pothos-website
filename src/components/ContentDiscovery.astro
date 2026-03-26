@@ -25,14 +25,21 @@ const tagCounts = allTags.reduce((counts, tag) => {
 
 const strategicTagPriority = [
     'architecture',
+    'aeo',
+    'geo',
     'adoption',
     'integration',
     'answer engine optimization',
     'generative engine optimization',
     'ai discoverability',
+    'discoverability',
     'seo',
+    'citation',
     'retrieval',
     'context',
+    'orchestration',
+    'governance',
+    'reliability',
     'prompting',
     'prompt engineering',
     'observability',
@@ -40,6 +47,10 @@ const strategicTagPriority = [
     'agent workflows',
     'agents',
     'skills',
+    'intent',
+    'semantics',
+    'memory',
+    'policy',
     'workflow',
     'nlpg',
     'ai-assisted sdlc',
@@ -47,6 +58,7 @@ const strategicTagPriority = [
     'rag',
     'entity seo',
     'entities',
+    'knowledge-management',
 ];
 
 const normalizedTagEntries = Object.entries(tagCounts).map(([tag, count]) => ({

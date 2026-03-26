@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+  <title id="t">Winning AI Search cover</title>
+  <desc id="d">Editorial cover for Winning AI Search deck.</desc>
+  <rect width="1200" height="675" fill="#0f172a"/>
+  <rect x="88" y="86" width="1024" height="503" rx="28" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <circle cx="258" cy="344" r="86" fill="#0f766e" opacity="0.92"/>
+  <circle cx="532" cy="344" r="86" fill="#1d4ed8" opacity="0.92"/>
+  <circle cx="806" cy="344" r="86" fill="#ca8a04" opacity="0.92"/>
+  <path d="M334 344 H446" stroke="#e2e8f0" stroke-width="10" stroke-linecap="round"/>
+  <path d="M608 344 H720" stroke="#e2e8f0" stroke-width="10" stroke-linecap="round"/>
+  <text x="124" y="136" fill="#cbd5e1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">Shared Resource</text>
+  <text x="124" y="510" fill="#f8fafc" font-family="Georgia, 'Times New Roman', serif" font-size="62">Winning AI Search</text>
+  <text x="124" y="558" fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">SEO, AEO, and GEO as one discoverability system</text>
+</svg>

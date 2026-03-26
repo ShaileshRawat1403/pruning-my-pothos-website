@@ -1,8 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '@/layouts/Layout.astro';
 import type { CollectionEntry } from 'astro:content';
-import TagList from '@/components/TagList.astro';
+import ShelfEntryPage from '@/components/ShelfEntryPage.astro';
 
 export async function getStaticPaths() {
   const notesEntries = await getCollection('shelf', ({ id }) => id.startsWith('notes-tools/'));
@@ -17,12 +16,7 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const entries = await getCollection('shelf', ({ id }) => id.startsWith('notes-tools/'));
 ---
 
-<Layout title={entry.data.title}>
-  <h1>{entry.data.title}</h1>
-  <p>{entry.data.description}</p>
-  <TagList tags={entry.data.tags} label="Tags" />
-  <Content />
-</Layout>
+<ShelfEntryPage entry={entry} entries={entries} sectionLabel="/shelf/notes-tools" sectionHref="/shelf/notes-tools/" eyebrow="/shelf/notes-tools" />

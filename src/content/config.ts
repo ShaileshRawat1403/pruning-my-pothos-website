@@ -1,6 +1,12 @@
 import { defineCollection, z } from 'astro:content';
 
 const tagSchema = z.array(z.string()).optional().default([]);
+const assetPathSchema = z
+  .string()
+  .refine(
+    (value) => value.startsWith('/covers/') || value.startsWith('http://') || value.startsWith('https://'),
+    'Asset URL must start with /covers/ or be an absolute http(s) URL.',
+  );
 
 // Discovery-related schemas
 const featuredSchema = z.boolean().optional().default(false);
@@ -44,6 +50,8 @@ const systemsCollection = defineCollection({
         category: z.enum(['Explanations', 'Concepts', 'How-things-fit-together']),
         tags: tagSchema,
         updatedAt: z.string().transform((str) => new Date(str)).optional(),
+        heroImage: assetPathSchema.optional(),
+        heroImageAlt: z.string().optional(),
         proofPoints: z.array(z.string()).optional().default([]),
         faq: z.array(
           z.object({
@@ -65,6 +73,8 @@ const selfCollection = defineCollection({
         description: z.string(),
         publishDate: z.string().transform((str) => new Date(str)),
         tags: tagSchema,
+        heroImage: assetPathSchema.optional(),
+        heroImageAlt: z.string().optional(),
         featured: featuredSchema,
         readingTime: readingTimeSchema,
         contentType: contentTypeSchema,
@@ -83,7 +93,7 @@ const shelfCollection = defineCollection({
         album: z.string().optional(),
         year: z.number().optional(),
         // Allow local public paths (e.g. /covers/...) as well as absolute URLs.
-        coverUrl: z.string().optional(),
+        coverUrl: assetPathSchema.optional(),
         pdfUrl: z.string().optional(),
         videoUrl: z.string().optional(),
         resourceHighlights: z.array(z.string()).optional(),
@@ -92,6 +102,23 @@ const shelfCollection = defineCollection({
         readingTime: readingTimeSchema,
         contentType: contentTypeSchema,
         difficulty: difficultySchema,
+    }).superRefine((data, ctx) => {
+      if (data.pdfUrl) {
+        if (!data.coverUrl) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['coverUrl'],
+            message: 'PDF resources must define a coverUrl.',
+          });
+        }
+        if (!data.resourceHighlights || data.resourceHighlights.length < 2) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['resourceHighlights'],
+            message: 'PDF resources should include at least two resourceHighlights.',
+          });
+        }
+      }
     }),
 });
 

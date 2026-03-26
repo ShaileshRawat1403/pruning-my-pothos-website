@@ -63,6 +63,10 @@ In traditional software, operations (Ops) is about keeping the lights on. It foc
 
 In the era of Large Language Models (LLMs), "Ops" changes fundamental meaning. The server can be up, the latency low, and the code bug-free, yet the system can still fail completely by producing toxic, incorrect, or irrelevant output. **LLM-Ops** is not just about infrastructure; it is about operationalizing <span class="keyword">judgment</span>.
 
+### What does LLM-Ops actually mean?
+
+LLM-Ops means operating probabilistic systems as living products rather than one-time model launches. This article is for product teams, operators, and builders who need reliable behavior over time, and the real work is evaluation, drift response, and governed change instead of uptime alone.
+
 <aside class="callout">
   <p><strong>Definition.</strong> LLM-Ops is the discipline of managing the lifecycle, reliability, and governance of probabilistic AI components. It treats "model behavior" as a managed asset, distinct from the code that runs it.</p>
 </aside>
@@ -211,7 +215,7 @@ Policies (e.g., "Do not give financial advice") are encoded into **System Prompt
 
 LLM-Ops is the bridge between a cool demo and a reliable business process. It acknowledges that AI is probabilistic, and therefore requires a system of checks, balances, and continuous measurement to be trusted. It turns the "magic" of AI into the "engineering" of reliability.
 
-For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). For a compact implementation companion, use the [Engineering Agentic Systems deck](/shelf/shared-resources/engineering-agentic-systems-deck/).
 
 ### What this changes in practice
 

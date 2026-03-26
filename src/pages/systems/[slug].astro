@@ -1,10 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
-import TagList from '@/components/TagList.astro';
 import ContinueBlock from '@/components/ContinueBlock.astro';
 import { getAdjacentEntries, getRelatedEntries } from '@/utils/navigation';
 import glossarySource from '@/content/systems/entity-glossary-for-ai-discoverability.mdx?raw';
+import EntryHeader from '@/components/EntryHeader.astro';
 
 export async function getStaticPaths() {
   const systems = await getCollection('systems');
@@ -25,7 +25,14 @@ const nextLink = next ? toLink(next) : null;
 const relatedLinks = relatedEntries.map(toLink);
 const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
 const canonical = new URL(`/systems/${system.slug}/`, siteUrl).toString();
-const articleImage = new URL('/covers/shelf/shared-semantic-bridge.svg', siteUrl).toString();
+const categoryHeroImages = {
+  Concepts: '/covers/shelf/shared-ai-brain-step-by-step.svg',
+  Explanations: '/covers/shelf/shared-semantic-bridge.svg',
+  'How-things-fit-together': '/covers/shelf/shared-omnichannel-system.svg',
+};
+const heroImage = system.data.heroImage ?? categoryHeroImages[system.data.category] ?? '/covers/shelf/shared-semantic-bridge.svg';
+const heroImageAlt = system.data.heroImageAlt ?? `${system.data.title} visual`;
+const articleImage = new URL(heroImage, siteUrl).toString();
 const glossaryUrl = new URL('/systems/entity-glossary-for-ai-discoverability/', siteUrl).toString();
 const glossaryTerms = new Set(
   Array.from(glossarySource.matchAll(/id="term-([a-z0-9-]+)"/g), (match) => match[1])
@@ -143,7 +150,7 @@ const faqSchema = faqs.length > 0
 <Layout
   title={`${system.data.title} | Systems | A Thinking Workspace`}
   description={system.data.description}
-  image="/covers/shelf/shared-semantic-bridge.svg"
+  image={heroImage}
   ogType="article"
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
@@ -159,10 +166,15 @@ const faqSchema = faqs.length > 0
   )}
   <article id="systems-article" data-slug={system.slug}>
     <header class="system-header">
-      <div>
-        <h1>{system.data.title}</h1>
-        <p class="description">{system.data.description}</p>
-        <TagList tags={system.data.tags} />
+      <div class="system-header-main">
+        <EntryHeader
+          title={system.data.title}
+          description={system.data.description}
+          tags={system.data.tags}
+          eyebrow={`/systems/${system.data.category.toLowerCase()}`}
+          mediaSrc={heroImage}
+          mediaAlt={heroImageAlt}
+        />
       </div>
       <div class="system-controls">
         <span class="control-label">Layout</span>
@@ -296,11 +308,13 @@ const faqSchema = faqs.length > 0
         margin: 0 auto;
     }
     .system-header {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: start;
         gap: 1.5rem;
-        flex-wrap: wrap;
+    }
+    .system-header-main {
+        min-width: 0;
     }
     .system-controls {
         display: flex;
@@ -326,13 +340,6 @@ const faqSchema = faqs.length > 0
     .layout-toggle:hover {
         border-color: var(--color-accent);
         transform: translateY(-1px);
-    }
-    .description {
-        font-size: 1.2rem;
-        color: var(--color-text-muted);
-        margin-bottom: 3rem;
-        border-left: 2px solid var(--color-border);
-        padding-left: 1.5rem;
     }
     .content-body {
         font-size: 1.1rem;
@@ -630,8 +637,7 @@ const faqSchema = faqs.length > 0
     }
     @media (max-width: 640px) {
         .system-header {
-            flex-direction: column;
-            align-items: flex-start;
+            grid-template-columns: 1fr;
         }
         .system-controls {
             display: none;
@@ -682,13 +688,6 @@ const faqSchema = faqs.length > 0
         }
     }
     @media (max-width: 520px) {
-        .description {
-            border-left: none;
-            border-top: 2px solid var(--color-border);
-            padding-left: 0;
-            padding-top: 1rem;
-            margin-bottom: 2rem;
-        }
         .content-body {
             font-size: 1rem;
             line-height: 1.75;

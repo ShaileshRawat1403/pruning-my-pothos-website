@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+  <title id="t">Engineering Agentic Systems cover</title>
+  <desc id="d">Editorial cover for Engineering Agentic Systems deck.</desc>
+  <rect width="1200" height="675" fill="#172554"/>
+  <rect x="108" y="122" width="984" height="430" rx="26" fill="#1e293b" stroke="#60a5fa" stroke-width="2"/>
+  <path d="M218 240 H968" stroke="#93c5fd" stroke-width="6" stroke-dasharray="16 14"/>
+  <circle cx="304" cy="240" r="26" fill="#38bdf8"/>
+  <circle cx="600" cy="240" r="26" fill="#22c55e"/>
+  <circle cx="896" cy="240" r="26" fill="#f59e0b"/>
+  <path d="M304 266 V430" stroke="#e2e8f0" stroke-width="6"/>
+  <path d="M600 266 V430" stroke="#e2e8f0" stroke-width="6"/>
+  <path d="M896 266 V430" stroke="#e2e8f0" stroke-width="6"/>
+  <rect x="240" y="430" width="128" height="62" rx="12" fill="#0ea5e9"/>
+  <rect x="536" y="430" width="128" height="62" rx="12" fill="#22c55e"/>
+  <rect x="832" y="430" width="128" height="62" rx="12" fill="#f59e0b"/>
+  <text x="96" y="82" fill="#dbeafe" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">Shared Resource</text>
+  <text x="96" y="596" fill="#eff6ff" font-family="Georgia, 'Times New Roman', serif" font-size="58">Engineering Agentic Systems</text>
+  <text x="96" y="638" fill="#bfdbfe" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">Control points, guardrails, and observability</text>
+</svg>

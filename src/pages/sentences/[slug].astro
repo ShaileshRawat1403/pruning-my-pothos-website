@@ -1,9 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
-import TagList from '@/components/TagList.astro';
 import ContinueBlock from '@/components/ContinueBlock.astro';
 import { getAdjacentEntries, getRelatedEntries } from '@/utils/navigation';
+import EntryHeader from '@/components/EntryHeader.astro';
 
 export async function getStaticPaths() {
   const sentences = await getCollection('sentences');
@@ -29,8 +29,13 @@ const relatedLinks = relatedEntries.map(toLink);
 >
   <div class="sentence-detail-container">
     <div class="sentence-detail">
-      <h1>{sentence.data.title}</h1>
-      <TagList tags={sentence.data.tags} label="Tags" />
+      <EntryHeader
+        title={sentence.data.title}
+        description={sentence.data.summary}
+        tags={sentence.data.tags}
+        eyebrow={`/sentences/${sentence.data.category.toLowerCase()}`}
+        compact={true}
+      />
       <div class="sentence-content">
         <Content />
       </div>
@@ -56,12 +61,6 @@ const relatedLinks = relatedEntries.map(toLink);
     max-width: 760px;
     border-left: 3px solid var(--color-accent);
     padding: 2rem;
-  }
-  .sentence-detail h1 {
-    font-family: var(--font-serif);
-    font-size: 2.3rem;
-    line-height: 1.4;
-    margin-bottom: 1.5rem;
   }
   .sentence-content {
     font-family: var(--font-serif);

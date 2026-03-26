@@ -1,0 +1,75 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout
+  title="Page Not Found | PruningMyPothos"
+  description="The page you requested does not exist on PruningMyPothos."
+  noindex={true}
+>
+  <section class="not-found">
+    <p class="eyebrow">404</p>
+    <h1>Page not found</h1>
+    <p class="lead">
+      This URL does not exist on the current Astro site.
+    </p>
+    <div class="actions">
+      <a href="/" class="primary">Go home</a>
+      <a href="/systems/" class="secondary">Browse systems</a>
+      <a href="/tags/" class="secondary">Browse tags</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .not-found {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(4rem, 10vw, 8rem) 1rem;
+    text-align: center;
+  }
+  .eyebrow {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  h1 {
+    margin-bottom: 1rem;
+  }
+  .lead {
+    margin: 0 auto 2rem;
+    max-width: 42ch;
+    color: var(--color-text-muted);
+  }
+  .actions {
+    display: flex;
+    gap: 0.85rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .actions a {
+    text-decoration: none;
+  }
+  .primary,
+  .secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 10rem;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+  }
+  .primary {
+    background: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
+  }
+  .secondary {
+    color: var(--color-text-body);
+    background: var(--color-blockquote-bg);
+  }
+</style>

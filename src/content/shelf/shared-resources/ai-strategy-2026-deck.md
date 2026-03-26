@@ -9,6 +9,10 @@ tags:
   - ai
 coverUrl: "/covers/shelf/shared-ai-strategy-2026.svg"
 pdfUrl: "/resources/presentations/AI_Strategy_2026.pdf"
+resourceHighlights:
+  - Choosing an AI operating model before scaling delivery
+  - Balancing cloud, governance, and adoption decisions together
+  - Prioritizing architecture choices that survive rapid change
 ---
 
 - [Related systems doc: Comparing Cloud Architecture in 2026](/systems/cloud-architecture-comparison-2026) - Provider choices and trade-offs.

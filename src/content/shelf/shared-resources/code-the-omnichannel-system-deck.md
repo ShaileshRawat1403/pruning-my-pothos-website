@@ -9,6 +9,10 @@ tags:
   - integration
 coverUrl: "/covers/shelf/shared-omnichannel-system.svg"
 pdfUrl: "/resources/presentations/Code_The_Omnichannel_System.pdf"
+resourceHighlights:
+  - Designing one service layer across fragmented channels
+  - Making intent and integration contracts explicit at the edges
+  - Keeping orchestration coherent as channels multiply
 ---
 
 - [Related systems doc: Natural Language Is the New API](/systems/natural-language-is-the-new-api) - Intent interfaces and behavior contracts.

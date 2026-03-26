@@ -9,6 +9,10 @@ tags:
   - systems
 coverUrl: "/covers/shelf/shared-semantic-bridge.svg"
 pdfUrl: "/resources/presentations/The_Semantic_Bridge_Framework.pdf"
+resourceHighlights:
+  - Turning open language into stable system meaning
+  - Creating bridges between intent, structure, and execution
+  - Reducing semantic drift before it reaches production behavior
 ---
 
 - [Related systems doc: Natural Language Is the New API](/systems/natural-language-is-the-new-api) - Core language-interface framing.

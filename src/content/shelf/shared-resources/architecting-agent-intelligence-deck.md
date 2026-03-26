@@ -9,6 +9,10 @@ tags:
   - reliability
 coverUrl: "/covers/shelf/shared-agent-intelligence.svg"
 pdfUrl: "/resources/presentations/Architecting_Agent_Intelligence.pdf"
+resourceHighlights:
+  - Control points for planning, execution, and review in agent systems
+  - Reliability patterns that keep autonomy bounded and inspectable
+  - Architecture choices for moving beyond prompt demos
 ---
 
 - [Related systems doc: From Prompt to Production](/systems/from-prompt-to-production) - Deployment checklist and safeguards.

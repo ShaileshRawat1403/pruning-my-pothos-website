@@ -18,6 +18,10 @@ tags:
 
 Tool use gives a Large Language Model the ability to interact with the outside world. It transforms the model from a passive text generator into an active agent that can query databases, call APIs, and perform actions. This capability is powerful, but it introduces significant new risks and responsibilities.
 
+### What changes when a model can use tools?
+
+The moment a model can use tools, language stops being only output and starts becoming a request for execution. This page is for builders designing agentic or automated workflows, and the main shift is that application policy, validation, and auditability matter more than prompt cleverness.
+
 
 In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
 
@@ -103,7 +107,7 @@ The moment an LLM can trigger an action, the stakes become much higher. A bug is
 -   **Provide precise tool descriptions.** The LLM's decision to use a tool is based entirely on the description you provide. Vague or ambiguous descriptions will lead to incorrect tool usage.
 -   **Plan for failure.** The tool might fail, an API could be down, or the result might be an error. Your system must be able to handle these failures gracefully and report them back to the LLM.
 
-For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). For an execution-focused companion, use the [Engineering Agentic Systems deck](/shelf/shared-resources/engineering-agentic-systems-deck/).
 
 ### What this changes in practice
 

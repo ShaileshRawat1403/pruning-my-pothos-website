@@ -66,6 +66,10 @@ There is a persistent myth that to use AI for your business, you need to "train"
 
 Understanding the difference between training, fine-tuning, and inference is critical for making the right architectural decisions. It is the difference between building a car engine (Training), tuning the suspension for a race (Fine-tuning), and driving to the grocery store (Inference).
 
+### What is the difference between training, fine-tuning, and inference?
+
+Training creates the base model, fine-tuning adjusts behavior, and inference is the runtime where almost all product value is delivered. This page is for teams trying to avoid expensive architectural confusion, and the key decision is usually whether a problem needs better context and retrieval rather than a new model-training effort.
+
 
 In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
 
@@ -170,7 +174,7 @@ You do not achieve this by training. You achieve this by **Retrieval-Augmented G
   </tbody>
 </table>
 
-For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). For the retrieval-first alternative, see [Retrieval-Augmented Generation in Plain Terms](/systems/retrieval-augmented-generation-in-plain-terms/).
 
 ### What this changes in practice
 

@@ -3344,16 +3344,22 @@ const cornerstoneGuides = [
 
   @media (max-width: 640px) {
     .builder-shell-inner {
-      width: calc(100% - 1rem);
-      padding-inline: 0;
+      width: 100%;
+      max-width: 100%;
+      padding-inline: 0.5rem;
+      overflow-x: clip;
     }
 
     .builder-page {
-      left: 0;
+      position: static;
+      left: auto;
       transform: none;
-      width: calc(100vw - 0.8rem);
+      width: 100%;
+      max-width: 100%;
+      margin-inline: 0;
       padding: 0.25rem 0 1.75rem;
       border-radius: 1rem;
+      overflow-x: clip;
     }
 
     .builder-head h1 {

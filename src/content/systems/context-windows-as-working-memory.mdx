@@ -22,6 +22,10 @@ difficulty: 'intermediate'
 
 The context window of a Large Language Model is best understood as its working memory. It is a finite, temporary space where the model holds the information it needs to process a request. Everything inside this window is accessible; everything outside is forgotten.
 
+### Why does the context window matter so much?
+
+The context window matters because it determines what the model can actively attend to during a task, not what it permanently knows. This page is for builders dealing with long prompts, memory pressure, or inconsistent outputs, and the real design job is managing placement, compression, and retrieval instead of just buying a bigger window.
+
 
 In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
 
@@ -118,7 +122,7 @@ A reliable operating loop usually looks like this:
 
 When this loop is explicit, performance is steadier and token budgets are predictable.
 
-For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). For a practical grounding pattern, see the [Local LLM References](/shelf/shared-resources/local-llm-references/) and [Retrieval-Augmented Generation in Plain Terms](/systems/retrieval-augmented-generation-in-plain-terms/).
 
 ### What this changes in practice
 

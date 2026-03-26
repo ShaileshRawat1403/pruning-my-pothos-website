@@ -18,6 +18,10 @@ tags:
 
 Retrieval-Augmented Generation (RAG) is a technique that connects a Large Language Model to an external knowledge source. It allows the model to generate answers that are grounded in specific, up-to-date, or private information, rather than relying solely on its static training data.
 
+### What does RAG actually solve?
+
+RAG solves the gap between a frozen model and the current information a task requires. This page is for builders who need grounded answers from private or changing knowledge, and the important shift is treating retrieval quality as part of the product instead of an optional add-on.
+
 
 In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
 
@@ -113,7 +117,7 @@ Common failure modes include:
 
 Therefore, building a RAG system is not just about connecting an LLM to a database. It is about carefully curating the knowledge base, optimizing the retrieval process, and implementing checks to handle cases where no relevant information is found.
 
-For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). For implementation references and evaluation patterns, use the [Retrieval and Grounding Evaluation Kit](/shelf/shared-resources/retrieval-and-grounding-evaluation-kit/).
 
 ### What this changes in practice
 

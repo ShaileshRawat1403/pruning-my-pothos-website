@@ -46,6 +46,30 @@ const matches = collections.filter((entry) => {
 const tagLabel =
   matches.flatMap((entry) => entry.data.tags || []).find((entryTag) => slugifyTag(entryTag) === tag) || tag;
 
+const collectionOrder = ['systems', 'sentences', 'self', 'shelf', 'sticky-notes'] as const;
+const groupedMatches = collectionOrder
+  .map((collection) => ({
+    collection,
+    entries: matches.filter((entry) => entry.collection === collection),
+  }))
+  .filter((group) => group.entries.length > 0);
+
+const collectionLabels: Record<string, string> = {
+  systems: 'Systems',
+  sentences: 'Sentences',
+  self: 'Self',
+  shelf: 'Shelf',
+  'sticky-notes': 'Sticky Notes',
+};
+
+const featuredMatches = [
+  ...matches.filter((entry) => entry.collection === 'systems'),
+  ...matches.filter((entry) => entry.collection === 'sentences'),
+  ...matches.filter((entry) => entry.collection === 'self'),
+  ...matches.filter((entry) => entry.collection === 'shelf'),
+  ...matches.filter((entry) => entry.collection === 'sticky-notes'),
+].slice(0, 4);
+
 const toUrl = (entry: any) => {
   if (entry.collection === 'shelf') {
     return `/shelf/${entry.slug}/`;
@@ -61,7 +85,42 @@ const toUrl = (entry: any) => {
   description={`Explore ${matches.length} entries tagged "${tagLabel}" across all sections.`}
 >
   <h1>#{tagLabel}</h1>
-  <p class="tag-intro">{matches.length} item(s) tagged with this theme.</p>
+  <p class="tag-intro">
+    {tagLabel} shows up across {groupedMatches.length} section(s) and {matches.length} page(s) in this workspace.
+    Use this page as a topic map, not just an archive.
+  </p>
+
+  {featuredMatches.length > 0 && (
+    <section class="tag-summary-block" aria-labelledby="start-here-heading">
+      <div class="tag-summary-card">
+        <h2 id="start-here-heading">Start here</h2>
+        <p>
+          If you are new to this topic, begin with the strongest entry points first, then move into related notes and
+          supporting material.
+        </p>
+        <ul class="tag-featured-list">
+          {featuredMatches.map((entry) => (
+            <li>
+              <a href={toUrl(entry)}>{entry.data.title}</a>
+              <span>{collectionLabels[entry.collection] ?? entry.collection}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="tag-summary-card">
+        <h2>Where it appears</h2>
+        <ul class="tag-section-list">
+          {groupedMatches.map((group) => (
+            <li>
+              <strong>{collectionLabels[group.collection] ?? group.collection}</strong>
+              <span>{group.entries.length} page(s)</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 
   <div class="tag-results">
     {matches.map((entry) => (
@@ -82,6 +141,55 @@ const toUrl = (entry: any) => {
   .tag-results {
     display: grid;
     gap: 1.5rem;
+  }
+  .tag-summary-block {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .tag-summary-card {
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 1.25rem 1.35rem;
+    background: var(--color-blockquote-bg);
+  }
+  .tag-summary-card h2 {
+    margin-top: 0;
+    margin-bottom: 0.65rem;
+    font-size: 1rem;
+  }
+  .tag-summary-card p {
+    margin-top: 0;
+    color: var(--color-text-muted);
+  }
+  .tag-featured-list,
+  .tag-section-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .tag-featured-list li,
+  .tag-section-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+  }
+  .tag-featured-list a {
+    color: var(--color-text-body);
+    text-decoration: none;
+  }
+  .tag-featured-list a:hover {
+    text-decoration: underline;
+  }
+  .tag-featured-list span,
+  .tag-section-list span {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    white-space: nowrap;
   }
   .tag-result-card {
     border: 1px solid var(--color-border);
@@ -110,6 +218,9 @@ const toUrl = (entry: any) => {
     border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
   }
   @media (max-width: 640px) {
+    .tag-summary-block {
+      grid-template-columns: 1fr;
+    }
     .tag-result-card {
       padding: 1.2rem;
     }

@@ -6,6 +6,10 @@ featured: true
 contentType: 'quick-read'
 readingTime: 1
 difficulty: 'intermediate'
+tags:
+  - friction
+  - setup
+  - documentation
 ---
 Friction log: setup is a tax with no receipt.
 Pay it once, document it twice.

@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import type { CollectionEntry } from 'astro:content';
 import TagList from '@/components/TagList.astro';
+import ContinueBlock from '@/components/ContinueBlock.astro';
+import { getAdjacentEntries, getRelatedEntries } from '@/utils/navigation';
 
 export async function getStaticPaths() {
   const experimentEntries = await getCollection('shelf', ({ id }) => id.startsWith('local-experiments/'));
@@ -18,6 +20,17 @@ interface Props {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+const experimentEntries = await getCollection('shelf', ({ id }) => id.startsWith('local-experiments/'));
+const systems = await getCollection('systems');
+const { previous, next } = getAdjacentEntries(experimentEntries, entry.slug);
+const relatedEntries = getRelatedEntries(experimentEntries, entry.slug, entry.data.tags, 2);
+const relatedSystems = getRelatedEntries(systems, entry.slug, entry.data.tags, 2);
+const previousLink = previous ? { title: previous.data.title, href: `/shelf/${previous.slug}/` } : null;
+const nextLink = next ? { title: next.data.title, href: `/shelf/${next.slug}/` } : null;
+const relatedLinks = [
+  ...relatedEntries.map((item) => ({ title: item.data.title, href: `/shelf/${item.slug}/` })),
+  ...relatedSystems.map((item) => ({ title: item.data.title, href: `/systems/${item.slug}/` })),
+].slice(0, 4);
 ---
 
 <Layout title={entry.data.title}>
@@ -38,6 +51,24 @@ const { Content } = await entry.render();
     <div class="content-body">
       <div class="content-main">
         <Content />
+        {relatedSystems.length > 0 && (
+          <aside class="context-block" aria-label="Related systems">
+            <span class="context-kicker">System context</span>
+            <p>This experiment becomes easier to reuse when it is tied back to the larger systems model behind it.</p>
+            <ul>
+              {relatedSystems.map((item) => (
+                <li><a href={`/systems/${item.slug}/`}>{item.data.title}</a></li>
+              ))}
+            </ul>
+          </aside>
+        )}
+        <ContinueBlock
+          sectionLabel="/shelf/local-experiments"
+          sectionHref="/shelf/local-experiments/"
+          previous={previousLink}
+          next={nextLink}
+          related={relatedLinks}
+        />
       </div>
       <aside class="content-sidebar" aria-label="On-page navigation"></aside>
     </div>
@@ -171,6 +202,29 @@ const { Content } = await entry.render();
   }
   .content-main {
     min-width: 0;
+  }
+  .context-block {
+    margin-top: 2.2rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-blockquote-bg);
+  }
+  .context-kicker {
+    display: block;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+  .context-block p {
+    margin-top: 0;
+  }
+  .context-block ul {
+    margin: 0;
+    padding-left: 1.2rem;
   }
   :global(.content-body h2) {
     margin-top: 3rem;

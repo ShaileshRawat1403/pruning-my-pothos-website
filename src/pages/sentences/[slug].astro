@@ -16,12 +16,18 @@ export async function getStaticPaths() {
 const sentence = Astro.props;
 const { Content } = await sentence.render();
 const sentences = await getCollection('sentences');
+const systems = await getCollection('systems');
 const { previous, next } = getAdjacentEntries(sentences, sentence.slug);
 const relatedEntries = getRelatedEntries(sentences, sentence.slug, sentence.data.tags, 2);
+const relatedSystems = getRelatedEntries(systems, sentence.slug, sentence.data.tags, 2);
 const toLink = (entry) => ({ title: entry.data.title, href: `/sentences/${entry.slug}/` });
+const toSystemLink = (entry) => ({ title: entry.data.title, href: `/systems/${entry.slug}/` });
 const previousLink = previous ? toLink(previous) : null;
 const nextLink = next ? toLink(next) : null;
-const relatedLinks = relatedEntries.map(toLink);
+const relatedLinks = [
+  ...relatedEntries.map(toLink),
+  ...relatedSystems.map(toSystemLink),
+].slice(0, 4);
 ---
 <Layout
   title={`${sentence.data.title} | Sentences | A Thinking Workspace`}
@@ -39,6 +45,17 @@ const relatedLinks = relatedEntries.map(toLink);
       <div class="sentence-content">
         <Content />
       </div>
+      {relatedSystems.length > 0 && (
+        <aside class="context-block" aria-label="Related systems">
+          <span class="context-kicker">Related systems</span>
+          <p>Use the longer systems pages when you want the operational model behind this sentence, not just the distilled claim.</p>
+          <ul>
+            {relatedSystems.map((entry) => (
+              <li><a href={`/systems/${entry.slug}/`}>{entry.data.title}</a></li>
+            ))}
+          </ul>
+        </aside>
+      )}
       <ContinueBlock
         sectionLabel="/sentences"
         sectionHref="/sentences/"
@@ -66,5 +83,26 @@ const relatedLinks = relatedEntries.map(toLink);
     font-family: var(--font-serif);
     font-size: 1.2rem;
     line-height: 1.8;
+  }
+  .context-block {
+    margin-top: 1.8rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .context-kicker {
+    display: block;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.55rem;
+  }
+  .context-block p {
+    margin-top: 0;
+  }
+  .context-block ul {
+    margin: 0;
+    padding-left: 1.2rem;
   }
 </style>

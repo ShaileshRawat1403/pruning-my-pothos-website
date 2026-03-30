@@ -2,6 +2,10 @@
 title: 'Default to draft'
 rotation: -2
 color: 'var(--color-sticky-2)'
+tags:
+  - curiosity
+  - drafting
+  - writing
 ---
 Default to draft, not done.
 The draft keeps you curious.

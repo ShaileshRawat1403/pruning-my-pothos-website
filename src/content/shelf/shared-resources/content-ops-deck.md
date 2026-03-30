@@ -15,5 +15,5 @@ resourceHighlights:
   - Metrics that track usefulness, not just volume
 ---
 
-- [Related systems doc: Systems 001: Foundations](/systems/systems-001-foundations) - Core system primitives for operating models.
-- [Related systems doc: What LLM-Ops Actually Means](/systems/llm-ops-without-the-buzzwords) - Governance loops and observability over time.
+- [Related systems doc: Systems 001: Foundations](/systems/systems-001-foundations/) - Core system primitives for operating models.
+- [Related systems doc: What LLM-Ops Actually Means](/systems/llm-ops-without-the-buzzwords/) - Governance loops and observability over time.

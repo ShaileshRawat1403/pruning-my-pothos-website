@@ -15,7 +15,7 @@ coverUrl: "/covers/shelf/local-gcp-baseline.svg"
 > - IAM and firewall rules are the actual control planes.
 > - Keep the first run narrow and repeatable.
 
-This run was about understanding GCP's platform shape, not performance. If you want the RAG fundamentals, see [Retrieval-Augmented Generation in plain terms](/systems/retrieval-augmented-generation-in-plain-terms).
+This run was about understanding GCP's platform shape, not performance. If you want the RAG fundamentals, see [Retrieval-Augmented Generation in plain terms](/systems/retrieval-augmented-generation-in-plain-terms/).
 
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">

@@ -13,4 +13,4 @@ The I-7 loop is my attempt to make human-AI interaction governable. It keeps Nor
 
 I use it as a checklist when an agent feels opaque: define intent, control context, read reasoning, validate outputs, and log corrections. The emphasis is on AI-assisted development, not AI-generated outcomes.
 
-Full framework: [I-7 Cognitive Loop: A new standard for Human-AI interaction](/systems/i-7-cognitive-loop).
+Full framework: [I-7 Cognitive Loop: A new standard for Human-AI interaction](/systems/i-7-cognitive-loop/).

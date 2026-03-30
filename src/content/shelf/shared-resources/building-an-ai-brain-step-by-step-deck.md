@@ -15,5 +15,5 @@ resourceHighlights:
   - Reliability checkpoints before production deployment
 ---
 
-- [Related systems doc: Tool Use: When Language Triggers Actions](/systems/tool-use-when-language-triggers-actions) - Guardrails and accountability for execution.
-- [Related systems doc: From Prompt to Production](/systems/from-prompt-to-production) - Practical path from prototype to operations.
+- [Related systems doc: Tool Use: When Language Triggers Actions](/systems/tool-use-when-language-triggers-actions/) - Guardrails and accountability for execution.
+- [Related systems doc: From Prompt to Production](/systems/from-prompt-to-production/) - Practical path from prototype to operations.

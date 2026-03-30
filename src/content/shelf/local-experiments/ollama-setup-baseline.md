@@ -15,7 +15,7 @@ coverUrl: "/covers/shelf/local-ollama-setup.svg"
 > - A repeatable baseline beats a fast demo.
 > - Verify the model before you wire the app.
 
-I wanted a stable local baseline before changing models, prompts, or context size. The surprise was how many failure modes live outside the code. For the RAG side of this stack, see [Retrieval-Augmented Generation in plain terms](/systems/retrieval-augmented-generation-in-plain-terms).
+I wanted a stable local baseline before changing models, prompts, or context size. The surprise was how many failure modes live outside the code. For the RAG side of this stack, see [Retrieval-Augmented Generation in plain terms](/systems/retrieval-augmented-generation-in-plain-terms/).
 
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">

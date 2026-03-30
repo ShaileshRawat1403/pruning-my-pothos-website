@@ -15,7 +15,7 @@ coverUrl: "/covers/shelf/local-aws-baseline.svg"
 > - A small, repeatable path beats a big, flexible one.
 > - Verify endpoints before wiring the app.
 
-This run was about learning the AWS shape, not squeezing performance. For system boundaries and failure loops, see [Systems 001: Foundations](/systems/systems-001-foundations).
+This run was about learning the AWS shape, not squeezing performance. For system boundaries and failure loops, see [Systems 001: Foundations](/systems/systems-001-foundations/).
 
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">

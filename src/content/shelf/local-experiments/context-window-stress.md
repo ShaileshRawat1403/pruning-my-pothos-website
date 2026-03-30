@@ -15,7 +15,7 @@ coverUrl: "/covers/shelf/local-context-stress.svg"
 > - A fixed dataset makes the drift visible.
 > - Measure the threshold where summaries go vague.
 
-If context windows are new, start with [Context windows as working memory](/systems/context-windows-as-working-memory).
+If context windows are new, start with [Context windows as working memory](/systems/context-windows-as-working-memory/).
 
 <div id="toc-anchor"></div>
 <nav class="toc" aria-label="On-page">

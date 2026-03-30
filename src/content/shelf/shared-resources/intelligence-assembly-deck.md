@@ -16,8 +16,8 @@ resourceHighlights:
   - Failure points to watch when orchestration grows faster than governance
 ---
 
-- [Related systems doc: Runtime over model: why orchestration is the product](/systems/runtime-over-model-why-orchestration-is-the-product) - The case for designing the system, not just selecting a model.
-- [Related systems doc: The Intelligence Assembly Model](/systems/the-intelligence-assembly-model) - A direct explanation of how models, memory, tools, and controls become one usable system.
-- [Related systems doc: Knowledge management as runtime memory](/systems/knowledge-management-as-runtime-memory) - How memory becomes usable inside real execution loops.
-- [Related systems doc: From ad-hoc prompts to repeatable agent workflows](/systems/from-ad-hoc-prompts-to-repeatable-agent-workflows) - A practical path from improvisation to reusable assembly.
-- [Related systems doc: Skills vs prompts vs agents](/systems/skills-vs-prompts-vs-agents) - Clarifies the parts that get composed into larger intelligent behavior.
+- [Related systems doc: Runtime over model: why orchestration is the product](/systems/runtime-over-model-why-orchestration-is-the-product/) - The case for designing the system, not just selecting a model.
+- [Related systems doc: The Intelligence Assembly Model](/systems/the-intelligence-assembly-model/) - A direct explanation of how models, memory, tools, and controls become one usable system.
+- [Related systems doc: Knowledge management as runtime memory](/systems/knowledge-management-as-runtime-memory/) - How memory becomes usable inside real execution loops.
+- [Related systems doc: From ad-hoc prompts to repeatable agent workflows](/systems/from-ad-hoc-prompts-to-repeatable-agent-workflows/) - A practical path from improvisation to reusable assembly.
+- [Related systems doc: Skills vs prompts vs agents](/systems/skills-vs-prompts-vs-agents/) - Clarifies the parts that get composed into larger intelligent behavior.

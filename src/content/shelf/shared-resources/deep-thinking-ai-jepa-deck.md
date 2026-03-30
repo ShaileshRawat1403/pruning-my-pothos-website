@@ -15,5 +15,5 @@ resourceHighlights:
   - Implications for planning and robust behavior
 ---
 
-- [Related systems doc: What an AI model actually is](/systems/what-an-ai-model-actually-is) - Model behavior without hype.
-- [Related systems doc: Probabilities, not truth](/systems/probabilities-not-truth) - Why confidence and certainty diverge.
+- [Related systems doc: What an AI model actually is](/systems/what-an-ai-model-actually-is/) - Model behavior without hype.
+- [Related systems doc: Probabilities, not truth](/systems/probabilities-not-truth/) - Why confidence and certainty diverge.

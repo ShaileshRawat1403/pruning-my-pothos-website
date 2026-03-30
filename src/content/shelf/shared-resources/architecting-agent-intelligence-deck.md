@@ -15,5 +15,5 @@ resourceHighlights:
   - Architecture choices for moving beyond prompt demos
 ---
 
-- [Related systems doc: From Prompt to Production](/systems/from-prompt-to-production) - Deployment checklist and safeguards.
-- [Related systems doc: Human-in-the-loop is a system design choice](/systems/human-in-the-loop-is-a-system-design-choice) - Oversight and autonomy levels.
+- [Related systems doc: From Prompt to Production](/systems/from-prompt-to-production/) - Deployment checklist and safeguards.
+- [Related systems doc: Human-in-the-loop is a system design choice](/systems/human-in-the-loop-is-a-system-design-choice/) - Oversight and autonomy levels.

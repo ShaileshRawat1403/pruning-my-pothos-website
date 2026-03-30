@@ -15,5 +15,5 @@ resourceHighlights:
   - A compact reference for dependable cognitive workflows
 ---
 
-- [Related systems doc: I-7 Cognitive Loop](/systems/i-7-cognitive-loop) - Full written version of the framework.
-- [Related systems doc: Evaluation is a human problem](/systems/evaluation-is-a-human-problem) - Why judgment and checks are non-optional.
+- [Related systems doc: I-7 Cognitive Loop](/systems/i-7-cognitive-loop/) - Full written version of the framework.
+- [Related systems doc: Evaluation is a human problem](/systems/evaluation-is-a-human-problem/) - Why judgment and checks are non-optional.

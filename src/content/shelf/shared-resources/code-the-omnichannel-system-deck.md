@@ -15,5 +15,5 @@ resourceHighlights:
   - Keeping orchestration coherent as channels multiply
 ---
 
-- [Related systems doc: Natural Language Is the New API](/systems/natural-language-is-the-new-api) - Intent interfaces and behavior contracts.
-- [Related systems doc: LLM Ops without the buzzwords](/systems/llm-ops-without-the-buzzwords) - Runtime, operations, and reliability basics.
+- [Related systems doc: Natural Language Is the New API](/systems/natural-language-is-the-new-api/) - Intent interfaces and behavior contracts.
+- [Related systems doc: LLM Ops without the buzzwords](/systems/llm-ops-without-the-buzzwords/) - Runtime, operations, and reliability basics.

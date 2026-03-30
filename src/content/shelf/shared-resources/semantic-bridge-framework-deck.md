@@ -15,5 +15,5 @@ resourceHighlights:
   - Reducing semantic drift before it reaches production behavior
 ---
 
-- [Related systems doc: Natural Language Is the New API](/systems/natural-language-is-the-new-api) - Core language-interface framing.
-- [Related systems doc: Structured output and why it matters](/systems/structured-output-and-why-it-matters) - Turning language into dependable outputs.
+- [Related systems doc: Natural Language Is the New API](/systems/natural-language-is-the-new-api/) - Core language-interface framing.
+- [Related systems doc: Structured output and why it matters](/systems/structured-output-and-why-it-matters/) - Turning language into dependable outputs.

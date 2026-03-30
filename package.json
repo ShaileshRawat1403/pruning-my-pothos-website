@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/copy-public-dotfiles.mjs",
     "lint:content": "node scripts/lint-content-consistency.mjs",
     "lint:systems": "node scripts/lint-systems-consistency.mjs",
     "lint:systems:advisory": "node scripts/lint-systems-advisory.mjs",

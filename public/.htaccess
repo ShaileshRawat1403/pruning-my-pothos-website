@@ -1,0 +1,6 @@
+RedirectMatch 301 ^/shelf/notes-tools/obsidian-scratchpad/?$ /shelf/notes/obsidian-scratchpad/
+RedirectMatch 301 ^/shelf/notes-tools/plaintext-logbook/?$ /shelf/notes/plaintext-logbook/
+
+RedirectMatch 301 ^/shelf/music/music-recommendation/?$ /shelf/music/
+RedirectMatch 301 ^/shelf/music/music-recommendation-2/?$ /shelf/music/
+RedirectMatch 301 ^/shelf/music/music-recommendation-3/?$ /shelf/music/

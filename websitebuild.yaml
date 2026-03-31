@@ -28,7 +28,7 @@ pipeline:
                       spec:
                         connectorRef: ghcr_pruning_my_pothos
                         imagePath: shaileshrawat1403/pruning-my-pothos-website
-                        tag: latest
+                        tag: <+input.parameters.imageTag> # Placeholder for image tag
                   manifests:
                     - manifest:
                         identifier: k8s_manifest
@@ -41,13 +41,13 @@ pipeline:
                                 apiVersion: v1
                                 kind: Namespace
                                 metadata:
-                                  name: local-dd-k8s
+                                  name: {{ .Values.namespace }} # Placeholder for namespace
                                 ---
                                 apiVersion: apps/v1
                                 kind: Deployment
                                 metadata:
                                   name: pruning-my-pothos
-                                  namespace: local-dd-k8s
+                                  namespace: {{ .Values.namespace }} # Placeholder for namespace
                                 spec:
                                   replicas: 1
                                   selector:
@@ -64,20 +64,39 @@ pipeline:
                                           imagePullPolicy: Always
                                           ports:
                                             - containerPort: 80
+                                          resources: # Added resource limits and requests
+                                            requests:
+                                              cpu: "100m"
+                                              memory: "128Mi"
+                                            limits:
+                                              cpu: "200m"
+                                              memory: "256Mi"
+                                          livenessProbe: # Added liveness probe
+                                            httpGet:
+                                              path: /
+                                              port: 80
+                                            initialDelaySeconds: 15
+                                            periodSeconds: 20
+                                          readinessProbe: # Added readiness probe
+                                            httpGet:
+                                              path: /
+                                              port: 80
+                                            initialDelaySeconds: 5
+                                            periodSeconds: 10
                                 ---
                                 apiVersion: v1
                                 kind: Service
                                 metadata:
                                   name: pruning-my-pothos
-                                  namespace: local-dd-k8s
+                                  namespace: {{ .Values.namespace }} # Placeholder for namespace
                                 spec:
                                   selector:
                                     app: pruning-my-pothos
+                                  type: LoadBalancer # Changed to LoadBalancer
                                   ports:
                                     - name: http
                                       port: 80
                                       targetPort: 80
-                                  type: LoadBalancer
           environment:
             environmentRef: localk8s
             infrastructureDefinitions:
@@ -87,7 +106,7 @@ pipeline:
                   type: KubernetesDirect
                   spec:
                     connectorRef: k8s_docker_desktop
-                    namespace: local-dd-k8s
+                    namespace: <+input.parameters.namespace> # Placeholder for namespace
                     releaseName: pruning-my-pothos
           execution:
             steps:

@@ -16,7 +16,6 @@
     "verify:systems": "npm run lint:systems:advisory && npm run lint:systems && npm run report:systems",
     "verify:content": "npm run lint:content && npm run verify:systems",
     "deploy:zip": "npm run verify:content && npm run build && rm -f site.zip && cd dist && zip -r ../site.zip .",
-    "deploy:ftp": "npm run verify:content && npm run build && bash scripts/deploy-ftp.sh",
     "preview": "astro preview",
     "shelf:music:fetch": "node scripts/fetch-music-metadata.mjs",
     "astro": "astro"
@@ -25,7 +24,6 @@
     "@astrojs/mdx": "^4.3.13",
     "astro": "^5.16.8",
     "fuse.js": "^7.1.0",
-    "imagetracerjs": "^1.2.6",
     "rehype-raw": "^7.0.0"
   }
 }

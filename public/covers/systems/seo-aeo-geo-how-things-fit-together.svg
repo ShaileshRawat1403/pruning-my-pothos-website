@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">SEO AEO GEO Discoverability</title>
+  <desc id="desc">How discoverability systems work together</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <circle cx="100" cy="80" r="30"/>
+    <circle cx="200" cy="80" r="30"/>
+    <circle cx="300" cy="80" r="30"/>
+    <line x1="125" y1="105" x2="175" y2="130"/>
+    <line x1="175" y1="105" x2="175" y2="130"/>
+    <line x1="225" y1="105" x2="225" y2="130"/>
+    <line x1="275" y1="105" x2="225" y2="130"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <circle cx="100" cy="80" r="30"/>
+    <circle cx="200" cy="80" r="30"/>
+    <circle cx="300" cy="80" r="30"/>
+  </g>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <rect x="120" y="135" width="160" height="35" rx="4"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <rect x="120" y="135" width="160" height="35" rx="4"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
+    <text x="100" y="83" text-anchor="middle">SEO</text>
+    <text x="200" y="83" text-anchor="middle">AEO</text>
+    <text x="300" y="83" text-anchor="middle">GEO</text>
+    <text x="200" y="158" text-anchor="middle">discoverability system</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="195" text-anchor="middle">discover · rank · retrieve · cite</text>
+  </g>
+</svg>

@@ -1,10 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
+import TagList from '@/components/TagList.astro';
 import ContinueBlock from '@/components/ContinueBlock.astro';
 import { getAdjacentEntries, getRelatedEntries } from '@/utils/navigation';
 import glossarySource from '@/content/systems/entity-glossary-for-ai-discoverability.mdx?raw';
-import EntryHeader from '@/components/EntryHeader.astro';
 
 export async function getStaticPaths() {
   const systems = await getCollection('systems');
@@ -25,14 +25,9 @@ const nextLink = next ? toLink(next) : null;
 const relatedLinks = relatedEntries.map(toLink);
 const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
 const canonical = new URL(`/systems/${system.slug}/`, siteUrl).toString();
-const categoryHeroImages = {
-  Concepts: '/covers/shelf/shared-ai-brain-step-by-step.svg',
-  Explanations: '/covers/shelf/shared-semantic-bridge.svg',
-  'How-things-fit-together': '/covers/shelf/shared-omnichannel-system.svg',
-};
-const heroImage = system.data.heroImage ?? categoryHeroImages[system.data.category] ?? '/covers/shelf/shared-semantic-bridge.svg';
+const heroImage = system.data.heroImage;
 const heroImageAlt = system.data.heroImageAlt ?? `${system.data.title} visual`;
-const articleImage = new URL(heroImage, siteUrl).toString();
+const articleImage = heroImage ? new URL(heroImage, siteUrl).toString() : new URL('/covers/shelf/shared-semantic-bridge.svg', siteUrl).toString();
 const glossaryUrl = new URL('/systems/entity-glossary-for-ai-discoverability/', siteUrl).toString();
 const glossaryTerms = new Set(
   Array.from(glossarySource.matchAll(/id="term-([a-z0-9-]+)"/g), (match) => match[1])
@@ -150,7 +145,7 @@ const faqSchema = faqs.length > 0
 <Layout
   title={`${system.data.title} | Systems | A Thinking Workspace`}
   description={system.data.description}
-  image={heroImage}
+  image={articleImage}
   ogType="article"
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
@@ -166,15 +161,10 @@ const faqSchema = faqs.length > 0
   )}
   <article id="systems-article" data-slug={system.slug}>
     <header class="system-header">
-      <div class="system-header-main">
-        <EntryHeader
-          title={system.data.title}
-          description={system.data.description}
-          tags={system.data.tags}
-          eyebrow={`/systems/${system.data.category.toLowerCase()}`}
-          mediaSrc={heroImage}
-          mediaAlt={heroImageAlt}
-        />
+      <div class="system-header-content">
+        <h1>{system.data.title}</h1>
+        <p class="description">{system.data.description}</p>
+        <TagList tags={system.data.tags} />
       </div>
       <div class="system-controls">
         <span class="control-label">Layout</span>
@@ -183,6 +173,11 @@ const faqSchema = faqs.length > 0
         </button>
       </div>
     </header>
+    {heroImage && (
+      <figure class="system-hero-image">
+        <img src={heroImage} alt={heroImageAlt} loading="lazy" />
+      </figure>
+    )}
     <div class="content-body">
         <div class="content-main">
             <Content />
@@ -308,13 +303,29 @@ const faqSchema = faqs.length > 0
         margin: 0 auto;
     }
     .system-header {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: start;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
         gap: 1.5rem;
+        flex-wrap: wrap;
     }
-    .system-header-main {
+    .system-header-content {
         min-width: 0;
+    }
+    .system-hero-image {
+        margin: 2rem 0;
+        border: 1px solid var(--color-border);
+        border-radius: 14px;
+        overflow: hidden;
+        background: var(--color-blockquote-bg);
+        width: min(100%, 600px);
+    }
+    .system-hero-image img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
     }
     .system-controls {
         display: flex;
@@ -340,6 +351,13 @@ const faqSchema = faqs.length > 0
     .layout-toggle:hover {
         border-color: var(--color-accent);
         transform: translateY(-1px);
+    }
+    .description {
+        font-size: 1.2rem;
+        color: var(--color-text-muted);
+        margin-bottom: 3rem;
+        border-left: 2px solid var(--color-border);
+        padding-left: 1.5rem;
     }
     .content-body {
         font-size: 1.1rem;
@@ -381,6 +399,9 @@ const faqSchema = faqs.length > 0
         margin-top: 0.75rem;
     }
     :global(.content-body .diagram) {
+        width: min(100%, 600px);
+        max-width: 100%;
+        box-sizing: border-box;
         border: 1px solid var(--color-border);
         border-radius: 14px;
         padding: 1.25rem;
@@ -637,7 +658,8 @@ const faqSchema = faqs.length > 0
     }
     @media (max-width: 640px) {
         .system-header {
-            grid-template-columns: 1fr;
+            flex-direction: column;
+            align-items: flex-start;
         }
         .system-controls {
             display: none;
@@ -646,6 +668,9 @@ const faqSchema = faqs.length > 0
             padding: 0 0.5rem;
         }
         :global(.content-body .diagram) {
+            width: min(100%, 600px);
+            max-width: 100%;
+            box-sizing: border-box;
             padding: 1rem;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -688,6 +713,13 @@ const faqSchema = faqs.length > 0
         }
     }
     @media (max-width: 520px) {
+        .description {
+            border-left: none;
+            border-top: 2px solid var(--color-border);
+            padding-left: 0;
+            padding-top: 1rem;
+            margin-bottom: 2rem;
+        }
         .content-body {
             font-size: 1rem;
             line-height: 1.75;

@@ -2,11 +2,23 @@
 title: "What LLM-Ops Actually Means"
 description: "LLM-Ops is governance over time. Understanding the lifecycle of probabilistic systems."
 category: "Explanations"
+heroImage: '/covers/systems/llm-ops-without-the-buzzwords.svg'
+heroImageAlt: 'LLM operations lifecycle'
 tags:
   - llm-ops
   - operations
   - evaluation
   - governance
+proofPoints:
+  - Defines the circular LLM-Ops lifecycle
+  - Referenced in observability-first-ai-systems.mdx
+faq:
+  - question: What is LLM-Ops?
+    answer: "LLM-Ops is governance over time for probabilistic systems. It replaces traditional DevOps concerns with evaluation, drift monitoring, and semantic observation. The lifecycle is circular: prompt, evaluate, tune, observe, repeat."
+  - question: What replaces unit testing in AI systems?
+    answer: "Evaluation replaces deterministic unit testing. Since AI outputs are probabilistic, you need test cases that compare outputs against expected behaviors, patterns, or ground truth rather than exact matches. Evals are typically slower and less deterministic than unit tests."
+  - question: What is semantic drift?
+    answer: "Semantic drift occurs when the system's outputs remain consistent in form but diverge in meaning from intended behavior. Unlike downtime (obviously broken), semantic drift is subtle: the system works, but its understanding has shifted away from current requirements."
 ---
 
 > **Key takeaways**

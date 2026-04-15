@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Engineering Reliability</title>
+  <desc id="desc">Reliability model with verification gates</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <rect x="150" y="40" width="100" height="35" rx="6"/>
+    <rect x="150" y="155" width="100" height="35" rx="6"/>
+    <line x1="200" y1="75" x2="200" y2="155"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <rect x="150" y="40" width="100" height="35" rx="6"/>
+    <rect x="150" y="155" width="100" height="35" rx="6"/>
+  </g>
+  <g stroke="#d1d5db" stroke-width="1.5" fill="none">
+    <rect x="50" y="95" width="70" height="30" rx="4"/>
+    <rect x="155" y="95" width="70" height="30" rx="4"/>
+    <rect x="280" y="95" width="70" height="30" rx="4"/>
+    <line x1="120" y1="110" x2="155" y2="110"/>
+    <line x1="225" y1="110" x2="280" y2="110"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
+    <text x="200" y="62" text-anchor="middle">governed steps</text>
+    <text x="85" y="115" text-anchor="middle">verify</text>
+    <text x="190" y="115" text-anchor="middle">escalate</text>
+    <text x="315" y="115" text-anchor="middle">observe</text>
+    <text x="200" y="178" text-anchor="middle">reliable output</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="210" text-anchor="middle">steps · verify · escalate · observe</text>
+  </g>
+</svg>

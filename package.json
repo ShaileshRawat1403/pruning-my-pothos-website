@@ -13,6 +13,7 @@
     "report:topics": "node scripts/report-topic-coverage.mjs",
     "report:gaps": "node scripts/report-main-gaps.mjs",
     "verify:seo-live": "bash scripts/verify-seo-live.sh",
+    "verify:indexing": "node scripts/verify-indexing.mjs",
     "verify:systems": "npm run lint:systems:advisory && npm run lint:systems && npm run report:systems",
     "verify:content": "npm run lint:content && npm run verify:systems",
     "deploy:zip": "npm run verify:content && npm run build && rm -f site.zip && cd dist && zip -r ../site.zip .",

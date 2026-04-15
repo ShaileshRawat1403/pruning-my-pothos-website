@@ -2,6 +2,8 @@
 title: "From Agent Intent to Governed Execution"
 description: "How an agent request becomes controlled system behavior through runtime orchestration, policy gates, verification, and traceability."
 category: "How-things-fit-together"
+heroImage: '/covers/systems/from-agent-intent-to-governed-execution.svg'
+heroImageAlt: 'Governed execution pipeline'
 tags:
   - mcp
   - orchestration
@@ -9,6 +11,17 @@ tags:
   - policy
   - verification
   - traceability
+proofPoints:
+  - Defines 7 control stages for agent execution
+  - Establishes governed step as the practical unit of production AI
+  - Core reference for Dual NLP framework implementation
+faq:
+  - question: What is a governed step in agent execution?
+    answer: "A governed step is the practical unit of production AI: a single action that has been authorized by runtime policy, verified for correctness, and logged for traceability. Agent reliability comes from the quality of these governed steps, not from model capability alone."
+  - question: How does the model-to-runtime responsibility shift work?
+    answer: "The model proposes; the runtime authorizes. The model generates potential actions based on intent. The runtime then checks permissions, validates the action against policy, executes if approved, and logs the outcome. This separation makes behavior auditable."
+  - question: What are the seven control stages?
+    answer: "The seven control stages are: (1) Intent parsing, (2) Policy check, (3) Permission gate, (4) Action proposal, (5) Validation, (6) Execution, and (7) Audit logging. Each stage can halt or redirect the flow if constraints are violated."
 ---
 
 > **Key takeaways**

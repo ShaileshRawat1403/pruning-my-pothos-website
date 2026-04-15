@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">SEO AEO GEO</title>
+  <desc id="desc">Search discoverability Venn diagram</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <circle cx="130" cy="100" r="40"/>
+    <circle cx="270" cy="100" r="40"/>
+    <circle cx="200" cy="145" r="40"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.08">
+    <circle cx="130" cy="100" r="40"/>
+    <circle cx="270" cy="100" r="40"/>
+    <circle cx="200" cy="145" r="40"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
+    <text x="130" y="95" text-anchor="middle">SEO</text>
+    <text x="130" y="107" text-anchor="middle" font-size="8">search</text>
+    <text x="270" y="95" text-anchor="middle">AEO</text>
+    <text x="270" y="107" text-anchor="middle" font-size="8">answer</text>
+    <text x="200" y="140" text-anchor="middle">GEO</text>
+    <text x="200" y="152" text-anchor="middle" font-size="8">generative</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="210" text-anchor="middle">discoverability as a system</text>
+  </g>
+</svg>

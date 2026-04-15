@@ -2,11 +2,23 @@
 title: "Evaluation Is a Human Problem"
 description: "Why benchmarks are not enough and judgment defines quality."
 category: "Explanations"
+heroImage: '/covers/systems/evaluation-is-a-human-problem.svg'
+heroImageAlt: 'Human judgment vs benchmarks'
 tags:
   - evaluation
   - quality
   - judgment
   - reliability
+proofPoints:
+  - Core reference for evaluation-as-a-runtime-discipline.mdx
+  - Defines rubric-based evaluation methodology
+faq:
+  - question: Why are benchmarks not enough for AI evaluation?
+    answer: Benchmarks measure performance on standardized tests, but they don't tell you if a model is good for your specific purpose. Human judgment defines what "good" means for your use case. A model can score well on benchmarks but fail at your task.
+  - question: What is a rubric in AI evaluation?
+    answer: A rubric is a structured scoring guide that encodes human judgment into repeatable criteria. It defines what good looks like across multiple dimensions (accuracy, safety, helpfulness) so different evaluators can score consistently.
+  - question: Why is evaluation a loop, not a score?
+    answer: AI systems change behavior as prompts, context, and models evolve. A single evaluation score becomes stale quickly. Continuous evaluation with regular sampling, rubric refinement, and trend tracking captures degradation before it becomes a production problem.
 ---
 
 > **Key takeaways**

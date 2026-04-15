@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Skills vs Prompts vs Agents</title>
+  <desc id="desc">Venn diagram showing overlapping concepts</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <circle cx="155" cy="100" r="40"/>
+    <circle cx="245" cy="100" r="40"/>
+    <circle cx="200" cy="150" r="40"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.08">
+    <circle cx="155" cy="100" r="40"/>
+    <circle cx="245" cy="100" r="40"/>
+    <circle cx="200" cy="150" r="40"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
+    <text x="130" y="95" text-anchor="middle">prompts</text>
+    <text x="270" y="95" text-anchor="middle">skills</text>
+    <text x="200" y="145" text-anchor="middle">agents</text>
+    <text x="200" y="157" text-anchor="middle">workflows</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="210" text-anchor="middle">surface vs architecture</text>
+  </g>
+</svg>

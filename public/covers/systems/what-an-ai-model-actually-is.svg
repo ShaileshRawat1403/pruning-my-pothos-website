@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">What an AI Model Is</title>
+  <desc id="desc">Neural network nodes showing pattern recognition and probability distribution</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" fill="none" stroke-width="1.5">
+    <circle cx="60" cy="70" r="8"/>
+    <circle cx="60" cy="112" r="8"/>
+    <circle cx="60" cy="155" r="8"/>
+    <circle cx="140" cy="50" r="10"/>
+    <circle cx="140" cy="95" r="10"/>
+    <circle cx="140" cy="130" r="10"/>
+    <circle cx="140" cy="175" r="10"/>
+    <circle cx="260" cy="80" r="12"/>
+    <circle cx="260" cy="145" r="12"/>
+    <circle cx="340" cy="112" r="16"/>
+    <line x1="68" y1="70" x2="130" y2="50"/>
+    <line x1="68" y1="70" x2="130" y2="95"/>
+    <line x1="68" y1="112" x2="130" y2="95"/>
+    <line x1="68" y1="112" x2="130" y2="130"/>
+    <line x1="68" y1="155" x2="130" y2="130"/>
+    <line x1="68" y1="155" x2="130" y2="175"/>
+    <line x1="150" y1="50" x2="248" y2="80" stroke="#d1d5db" stroke-dasharray="4 3"/>
+    <line x1="150" y1="95" x2="248" y2="80" stroke="#d1d5db" stroke-dasharray="4 3"/>
+    <line x1="150" y1="95" x2="248" y2="145" stroke="#d1d5db" stroke-dasharray="4 3"/>
+    <line x1="150" y1="130" x2="248" y2="145" stroke="#d1d5db" stroke-dasharray="4 3"/>
+    <line x1="150" y1="175" x2="248" y2="145" stroke="#d1d5db" stroke-dasharray="4 3"/>
+    <line x1="272" y1="80" x2="324" y2="112"/>
+    <line x1="272" y1="145" x2="324" y2="112"/>
+  </g>
+  <g fill="#3b82f6">
+    <circle cx="340" cy="112" r="5"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="210" text-anchor="middle">input → patterns → probability → output</text>
+  </g>
+</svg>

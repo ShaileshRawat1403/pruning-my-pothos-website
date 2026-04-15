@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+  <title id="t">Engineering Bounded Autonomy cover</title>
+  <desc id="d">Editorial cover for engineering bounded autonomy deck.</desc>
+  <rect width="1200" height="675" fill="#0c0a09"/>
+  <rect x="200" y="200" width="300" height="280" rx="16" fill="none" stroke="#57534e" stroke-width="4"/>
+  <rect x="700" y="200" width="300" height="280" rx="16" fill="none" stroke="#57534e" stroke-width="4"/>
+  <rect x="280" y="260" width="140" height="70" rx="8" fill="#292524"/>
+  <circle cx="350" cy="420" r="40" fill="#1c1917" stroke="#a8a29e" stroke-width="3"/>
+  <rect x="760" y="260" width="180" height="70" rx="8" fill="#292524"/>
+  <circle cx="850" cy="420" r="40" fill="#1c1917" stroke="#78716c" stroke-width="3"/>
+  <line x1="390" y1="420" x2="760" y2="420" stroke="#57534e" stroke-width="4" stroke-dasharray="12 10"/>
+  <line x1="600" y1="100" x2="600" y2="575" stroke="#44403c" stroke-width="2"/>
+  <text x="100" y="130" fill="#78716c" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">Shared Resource</text>
+  <text x="100" y="620" fill="#e7e5e4" font-family="Georgia, 'Times New Roman', serif" font-size="52">Bounded Autonomy</text>
+  <text x="100" y="670" fill="#a8a29e" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26">Engineering safety and constraint into AI systems</text>
+</svg>

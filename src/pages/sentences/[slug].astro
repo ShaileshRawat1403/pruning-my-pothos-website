@@ -28,11 +28,66 @@ const relatedLinks = [
   ...relatedEntries.map(toLink),
   ...relatedSystems.map(toSystemLink),
 ].slice(0, 4);
+
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const canonical = new URL(`/sentences/${sentence.slug}/`, siteUrl).toString();
+const publishDate = sentence.data.publishDate ? sentence.data.publishDate.toISOString() : null;
+
+const breadcrumbsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Sentences',
+      item: new URL('/sentences/', siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: sentence.data.title,
+      item: canonical,
+    },
+  ],
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: sentence.data.title,
+  description: sentence.data.summary,
+  url: canonical,
+  inLanguage: 'en',
+  keywords: (sentence.data.tags ?? []).join(', '),
+  mainEntityOfPage: canonical,
+  ...(publishDate && { datePublished: publishDate }),
+  author: {
+    '@type': 'Person',
+    name: 'Shailesh Rawat',
+    url: siteUrl.toString(),
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'PruningMyPothos',
+    url: siteUrl.toString(),
+  },
+  about: sentence.data.category,
+};
 ---
 <Layout
   title={`${sentence.data.title} | Sentences | A Thinking Workspace`}
   description={sentence.data.summary}
+  ogType="article"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
   <div class="sentence-detail-container">
     <div class="sentence-detail">
       <EntryHeader

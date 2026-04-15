@@ -2,6 +2,8 @@
 title: "What an AI Model Actually Is"
 description: "Kill the 'AI brain' myth. A model is a statistical engine that predicts the next likely token, not a mind that understands intent."
 category: "Concepts"
+heroImage: '/covers/systems/what-an-ai-model-actually-is.svg'
+heroImageAlt: 'Neural network nodes showing pattern recognition and probability distribution'
 tags:
   - ai
   - foundations
@@ -11,6 +13,16 @@ featured: true
 contentType: 'technical'
 readingTime: 8
 difficulty: 'beginner'
+proofPoints:
+  - Core foundational reference for AI understanding
+  - Referenced by 5+ other systems docs
+faq:
+  - question: What is an AI model fundamentally?
+    answer: An AI model is a statistical engine that predicts the next piece of text based on patterns learned during training. It does not "understand" in the human sense; it generates statistically probable continuations of input sequences.
+  - question: Why do AI models sometimes give wrong answers confidently?
+    answer: Models predict probable text, not correct text. When a statistically probable but factually wrong answer fits the pattern, the model produces it with the same confidence as correct answers. There is no internal "truth detector" in next-token prediction.
+  - question: What are model weights?
+    answer: Weights are the parameters learned during training. They encode statistical relationships between concepts, words, and patterns in the training data. A 70B parameter model has 70 billion of these numerical values that determine how inputs map to outputs.
 ---
 
 > **Key takeaways**

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Systems Foundations</title>
+  <desc id="desc">Abstract diagram showing interconnected nodes representing system components and feedback loops</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" fill="none" stroke-width="1.5">
+    <circle cx="80" cy="112" r="24" stroke="#d1d5db"/>
+    <circle cx="200" cy="60" r="28" stroke="#3b82f6"/>
+    <circle cx="320" cy="112" r="24" stroke="#d1d5db"/>
+    <circle cx="200" cy="165" r="32" stroke="#3b82f6"/>
+    <line x1="100" y1="100" x2="172" y2="75" stroke="#d1d5db" stroke-dasharray="4 3"/>
+    <line x1="228" y1="75" x2="296" y2="100" stroke="#d1d5db" stroke-dasharray="4 3"/>
+    <line x1="80" y1="130" x2="168" y2="150" stroke="#3b82f6"/>
+    <line x1="232" y1="150" x2="320" y2="130" stroke="#3b82f6"/>
+    <line x1="200" y1="88" x2="200" y2="133" stroke="#3b82f6" stroke-dasharray="4 3"/>
+  </g>
+  <g fill="#3b82f6">
+    <circle cx="200" cy="60" r="5"/>
+    <circle cx="200" cy="165" r="5"/>
+    <circle cx="80" cy="112" r="4" fill="#9ca3af"/>
+    <circle cx="320" cy="112" r="4" fill="#9ca3af"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="210" text-anchor="middle">boundaries · feedback · emergence</text>
+  </g>
+</svg>

@@ -1,11 +1,23 @@
 ---
-title: "From Text to Tokens"
+title: 'From Text to Tokens'
 description: "Explaining tokenization without the math. Why models don't read words, and why that matters for your prompts."
-category: "Explanations"
+category: 'Explanations'
+heroImage: '/covers/systems/a-simple-tokenizer.svg'
+heroImageAlt: 'Text being split into tokens with numeric encoding'
 tags:
   - tokenization
   - nlp
   - foundations
+proofPoints:
+  - Core foundational reference for tokenization mechanics
+  - Referenced in context-windows-as-working-memory.mdx
+faq:
+  - question: What is tokenization?
+    answer: Tokenization is the process of converting text into tokens (integers) that a language model can process. The model doesn't read characters or words; it sees a sequence of numbers representing these tokens. A token can be a full word, part of a word, a space, or punctuation.
+  - question: Why do models struggle with "Strawberry"?
+    answer: Tokenizers split text into subword units based on frequency in training data. Common words like "straw" might be one token while uncommon endings like "berry" might be split into multiple tokens. "Strawberry" has 3 tokens (straw-berry), making counting the 'r's across token boundaries difficult.
+  - question: Does shorter text always mean fewer tokens?
+    answer: No. Text length in characters doesn't correlate perfectly with token count. Dense, uncommon words can use more tokens than longer, common phrases. This is why estimating costs or context usage by character count is unreliable.
 ---
 
 > **Key takeaways**

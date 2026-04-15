@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">The Logic Void</title>
+  <desc id="desc">Gap diagram showing reasoning boundaries</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <rect x="40" y="60" width="120" height="110" rx="4"/>
+    <rect x="240" y="60" width="120" height="110" rx="4"/>
+  </g>
+  <g stroke="#d1d5db" stroke-width="1" fill="none" stroke-dasharray="4 3">
+    <rect x="160" y="60" width="80" height="155"/>
+  </g>
+  <g fill="#3b82f6">
+    <rect x="40" y="175" width="120" height="25" rx="4" opacity="0.3"/>
+    <rect x="240" y="175" width="120" height="25" rx="4" opacity="0.3"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
+    <text x="100" y="115" text-anchor="middle">logical</text>
+    <text x="300" y="115" text-anchor="middle">logical</text>
+    <text x="100" y="190" text-anchor="middle">pattern match</text>
+    <text x="300" y="190" text-anchor="middle">confidence</text>
+    <text x="200" y="145" text-anchor="middle" fill="#ef4444">void</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="210" text-anchor="middle">where logic breaks down</text>
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">I-7 Cognitive Loop</title>
+  <desc id="desc">Human-AI interaction loop</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <circle cx="200" cy="112" r="50"/>
+    <circle cx="200" cy="112" r="32"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <circle cx="200" cy="112" r="50"/>
+    <circle cx="200" cy="112" r="32"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="9" fill="#6b7280">
+    <text x="200" y="108" text-anchor="middle">I-7</text>
+    <text x="200" y="120" text-anchor="middle" font-size="8">cognitive</text>
+    <text x="70" y="65" font-size="8">intent</text>
+    <text x="320" y="65" font-size="8">interpret</text>
+    <text x="70" y="165" font-size="8">judge</text>
+    <text x="320" y="165" font-size="8">justify</text>
+    <text x="200" y="50" font-size="8">inform</text>
+    <text x="200" y="185" font-size="8">evaluate</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="215" text-anchor="middle">human-AI governance interaction</text>
+  </g>
+</svg>

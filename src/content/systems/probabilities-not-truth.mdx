@@ -2,11 +2,23 @@
 title: "Probabilities, Not Truth"
 description: "Why AI models sound confident even when they are wrong, and why hallucination is a feature of probabilistic systems, not a bug."
 category: "Concepts"
+heroImage: '/covers/systems/probabilities-not-truth.svg'
+heroImageAlt: 'Distribution curve showing confidence levels across possible outputs'
 tags:
   - probability
   - hallucination
   - reliability
   - mental-models
+proofPoints:
+  - Core mental model for AI reliability
+  - Referenced in what-llms-are-optimized-for.mdx
+faq:
+  - question: Why do AI models sound confident when wrong?
+    answer: "LLMs predict probable text, not true text. Confidence in output reflects statistical likelihood based on training patterns, not accuracy. A model generates the most probable continuation regardless of truth, so confident-sounding hallucinations are expected behavior."
+  - question: Is hallucination a bug or feature?
+    answer: "Hallucination is a feature of probabilistic systems, not a bug. The model is doing exactly what it was trained to do: predict the next likely token. Without grounding mechanisms (RAG, fact-checking, structured constraints), hallucination is inevitable."
+  - question: How should I treat model outputs?
+    answer: "Treat all model outputs as proposals requiring validation, not as facts. Build systems that verify outputs before acting on them, especially for consequential decisions. This shift from 'trust the AI' to 'verify the AI output' is fundamental to building reliable systems."
 ---
 
 > **Key takeaways**

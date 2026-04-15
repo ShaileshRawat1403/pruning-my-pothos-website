@@ -2,11 +2,23 @@
 title: "Drift, Decay, and Silent Failure"
 description: "How systems degrade quietly before they break loudly."
 category: "Explanations"
+heroImage: '/covers/systems/drift-decay-and-silent-failure.svg'
+heroImageAlt: 'Degradation curve showing performance decline over time'
 tags:
   - drift
   - monitoring
   - reliability
   - risk
+proofPoints:
+  - Documents the unique failure modes of probabilistic systems
+  - Referenced in llm-ops-without-the-buzzwords.mdx
+faq:
+  - question: What is drift in AI systems?
+    answer: Drift is gradual behavior change over time, not a single defect. It occurs when the data distribution, user intent, or model behavior shifts subtly. Unlike bugs that cause immediate failure, drift causes slow degradation that may go unnoticed.
+  - question: What is silent failure in AI?
+    answer: Silent failure is when outputs remain mostly correct in form but diverge in meaning or accuracy. The system appears to work ("it's generating responses") but the outputs no longer meet requirements. This is harder to detect than loud failures.
+  - question: How do you detect drift?
+    answer: Drift detection requires monitoring intent alignment, not just technical metrics. Track evaluation scores over time, compare outputs against known-good baselines, monitor user feedback signals, and set thresholds that trigger review when behavior shifts beyond acceptable bounds.
 ---
 
 > **Key takeaways**

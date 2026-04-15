@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Winning AI Search</title>
+  <desc id="desc">AI search discoverability system</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <circle cx="80" cy="85" r="22"/>
+    <circle cx="145" cy="85" r="22"/>
+    <circle cx="210" cy="85" r="22"/>
+    <circle cx="275" cy="85" r="22"/>
+    <circle cx="340" cy="85" r="22"/>
+    <line x1="102" y1="85" x2="123" y2="85"/>
+    <line x1="167" y1="85" x2="188" y2="85"/>
+    <line x1="232" y1="85" x2="253" y2="85"/>
+    <line x1="297" y1="85" x2="318" y2="85"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <circle cx="80" cy="85" r="22"/>
+    <circle cx="145" cy="85" r="22"/>
+    <circle cx="210" cy="85" r="22"/>
+    <circle cx="275" cy="85" r="22"/>
+    <circle cx="340" cy="85" r="22"/>
+  </g>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <rect x="120" y="135" width="160" height="35" rx="4"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <rect x="120" y="135" width="160" height="35" rx="4"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="9" fill="#6b7280">
+    <text x="80" y="88" text-anchor="middle">crawl</text>
+    <text x="145" y="88" text-anchor="middle">entity</text>
+    <text x="210" y="88" text-anchor="middle">retrieve</text>
+    <text x="275" y="88" text-anchor="middle">trust</text>
+    <text x="340" y="88" text-anchor="middle">cite</text>
+    <text x="200" y="158" text-anchor="middle">one operating model</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="210" text-anchor="middle">SEO + AEO + GEO together</text>
+  </g>
+</svg>

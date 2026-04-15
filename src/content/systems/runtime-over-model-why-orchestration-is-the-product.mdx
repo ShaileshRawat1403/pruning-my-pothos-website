@@ -2,6 +2,8 @@
 title: "Runtime Over Model: Why Orchestration Is the Product"
 description: "Reliable agents come from controlled execution loops, not model capability alone."
 category: "Explanations"
+heroImage: '/covers/systems/runtime-over-model-why-orchestration-is-the-product.svg'
+heroImageAlt: 'Loop diagram showing orchestration cycle'
 tags:
   - mcp
   - orchestration
@@ -9,6 +11,17 @@ tags:
   - policy
   - verification
   - traceability
+proofPoints:
+  - "Defines the four runtime constraints: permission, validation, scope, and rollback"
+  - "Establishes 'governed step' as the practical unit of AI execution"
+  - "Referenced in agent-instructions-and-handoff-as-an-operating-system.mdx"
+faq:
+  - question: Why is runtime more important than model quality for production AI?
+    answer: "Model capability is necessary but not sufficient. Runtime control provides the permission gates, verification, and trace logs that turn AI output into accountable system behavior. A better model without runtime control still produces unreliable systems."
+  - question: What are the four runtime constraints?
+    answer: "The four runtime constraints are: (1) Permission gates that authorize or block actions, (2) Validation that checks outputs before proceeding, (3) Scope limits that prevent unbounded execution, and (4) Rollback mechanisms that can undo completed steps."
+  - question: What is the difference between a chat loop and a control loop?
+    answer: "A chat loop is a stateless exchange where each turn is independent. A control loop maintains state across steps, can verify completion, and includes intervention points for human oversight. Production AI requires control loops, not chat loops."
 ---
 
 > **Key takeaways**

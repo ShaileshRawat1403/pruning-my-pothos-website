@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Skill Evaluation</title>
+  <desc id="desc">Skill versioning and evaluation cycle</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <rect x="50" y="65" width="80" height="35" rx="4"/>
+    <rect x="160" y="65" width="80" height="35" rx="4"/>
+    <rect x="270" y="65" width="80" height="35" rx="4"/>
+    <rect x="160" y="125" width="80" height="35" rx="4"/>
+    <line x1="130" y1="82" x2="160" y2="82"/>
+    <line x1="240" y1="82" x2="270" y2="82"/>
+    <line x1="200" y1="100" x2="200" y2="125"/>
+    <line x1="160" y1="145" x2="80" y2="145"/>
+    <line x1="80" y1="145" x2="80" y2="100"/>
+    <line x1="80" y1="100" x2="130" y2="82"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <rect x="50" y="65" width="80" height="35" rx="4"/>
+    <rect x="160" y="65" width="80" height="35" rx="4"/>
+    <rect x="270" y="65" width="80" height="35" rx="4"/>
+    <rect x="160" y="125" width="80" height="35" rx="4"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
+    <text x="90" y="88" text-anchor="middle">define</text>
+    <text x="200" y="88" text-anchor="middle">detect</text>
+    <text x="310" y="88" text-anchor="middle">version</text>
+    <text x="200" y="148" text-anchor="middle">rollback?</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="195" text-anchor="middle">expected behavior · regression · safe rollout</text>
+  </g>
+</svg>

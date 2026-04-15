@@ -2,11 +2,23 @@
 title: "Retrieval-Augmented Generation in Plain Terms"
 description: "How retrieval grounds outputs and where it can still fail."
 category: "How-things-fit-together"
+heroImage: '/covers/systems/retrieval-augmented-generation-in-plain-terms.svg'
+heroImageAlt: 'Retrieval pipeline showing query to grounded response'
 tags:
   - rag
   - retrieval
   - grounding
   - reliability
+proofPoints:
+  - Practical RAG failure modes documented
+  - Referenced in knowledge-management-as-runtime-memory.mdx
+faq:
+  - question: What is RAG and what problem does it solve?
+    answer: "RAG (Retrieval-Augmented Generation) connects an LLM to an external knowledge source so it can generate grounded answers from specific, up-to-date, or private information rather than relying only on static training data."
+  - question: What are the main failure modes of RAG?
+    answer: "RAG failures come from three sources: retrieval quality (wrong chunks retrieved), context overload (too much irrelevant content), and outdated knowledge (stale data in the vector store). Even with good retrieval, generation can still hallucinate if the retrieved content is ambiguous."
+  - question: How do you measure RAG quality?
+    answer: "RAG quality has two dimensions: retrieval precision (are the right chunks retrieved?) and generation accuracy (does the answer use those chunks correctly?). Metrics include recall@K for retrieval and faithfulness/precision scores for generation."
 ---
 
 > **Key takeaways**

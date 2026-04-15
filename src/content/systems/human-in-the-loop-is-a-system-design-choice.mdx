@@ -2,11 +2,23 @@
 title: "Human-in-the-Loop Is a System Design Choice"
 description: "Why oversight is a design decision, not a safety blanket."
 category: "How-things-fit-together"
+heroImage: '/covers/systems/human-in-the-loop-is-a-system-design-choice.svg'
+heroImageAlt: 'Decision gate with human oversight'
 tags:
   - hitl
   - oversight
   - safety
   - governance
+proofPoints:
+  - Defines HITL/HOTL/HOOTL oversight spectrum
+  - Referenced in from-agent-intent-to-governed-execution.mdx
+faq:
+  - question: What are HITL, HOTL, and HOOTL?
+    answer: "HITL (Human-in-the-Loop) pauses for approval before action. HOTL (Human-on-the-Loop) monitors and can intervene after action. HOOTL (Human-out-of-the-Loop) runs autonomously with post-hoc review. Each represents a different speed/safety tradeoff."
+  - question: How do you choose the right oversight level?
+    answer: "Choose based on risk, regulation, and error cost. High-stakes or regulated decisions need HITL. Lower-stakes tasks with time constraints can use HOTL. Well-tested, reversible tasks at scale can use HOOTL. The choice should be explicit and documented."
+  - question: Why is oversight a design decision, not a safety blanket?
+    answer: "Adding human oversight without clear intent wastes resources and creates bottlenecks. Design oversight levels based on actual risk profiles: where can errors cause harm? Where do regulations require human review? Where does speed matter more than perfection? Answering these questions produces better systems than blanket 'always add a human'."
 ---
 
 > **Key takeaways**

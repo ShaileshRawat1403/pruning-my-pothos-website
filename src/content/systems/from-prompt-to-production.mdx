@@ -1,7 +1,9 @@
 ---
 title: "From Prompt to Production: A Human Checklist"
-description: "A rigorous 7-step framework to move from 'it works on my machine' to a resilient, governed AI workflow."
+description: "A rigorous 7-step framework to move from it works on my machine to a resilient, governed AI workflow."
 category: "How-things-fit-together"
+heroImage: '/covers/systems/from-prompt-to-production.svg'
+heroImageAlt: 'Production checklist steps'
 tags:
   - checklist
   - deployment
@@ -11,6 +13,17 @@ featured: true
 contentType: 'technical'
 readingTime: 10
 difficulty: 'advanced'
+proofPoints:
+  - 7-step production checklist covering Intent, Risk, Interface, Validate, Monitor, and Fallback
+  - Practical deployment framework used in NLPg-driven SDLC
+  - Referenced in from-ad-hoc-prompts-to-repeatable-agent-workflows.mdx
+faq:
+  - question: What are the 7 steps from prompt to production?
+    answer: "The 7 steps are: (1) Define intent and success criteria, (2) Assess risks and failure modes, (3) Design the interface boundary, (4) Validate output quality, (5) Monitor runtime behavior, (6) Implement human fallback, and (7) Document and version the workflow."
+  - question: Why is a prompt in production considered a contract?
+    answer: "A prompt in production defines what the system should do, under what conditions, and what counts as success. Unlike playground testing, production prompts cannot be easily changed mid-execution. This contract must be explicit, versioned, and tested before deployment."
+  - question: What makes guardrails essential, not optional?
+    answer: "Guardrails prevent unintended actions, contain costs, protect against prompt injection, and provide audit trails. Without guardrails, AI systems can exceed their intended scope, produce harmful outputs, or consume resources unpredictably."
 ---
 
 > **Key takeaways**

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Prompt to Production</title>
+  <desc id="desc">Production checklist steps</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <rect x="60" y="50" width="280" height="130" rx="6"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.1">
+    <rect x="60" y="50" width="280" height="130" rx="6"/>
+  </g>
+  <g stroke="#d1d5db" stroke-width="1" fill="none">
+    <line x1="60" y1="75" x2="340" y2="75"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="68" text-anchor="middle">7-step framework</text>
+    <text x="90" y="100" font-size="10">1. Define intent</text>
+    <text x="90" y="118" font-size="10">2. Test boundaries</text>
+    <text x="90" y="136" font-size="10">3. Add guardrails</text>
+    <text x="240" y="100" font-size="10">4. Build observability</text>
+    <text x="240" y="118" font-size="10">5. Define rollback</text>
+    <text x="240" y="136" font-size="10">6. Document limits</text>
+    <text x="90" y="165" font-size="10">7. Govern over time</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="210" text-anchor="middle">from demo to resilient workflow</text>
+  </g>
+</svg>

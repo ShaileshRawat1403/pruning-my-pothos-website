@@ -2,11 +2,23 @@
 title: "Tool Use: When Language Triggers Actions"
 description: "Why execution changes accountability and requires guardrails."
 category: "How-things-fit-together"
+heroImage: '/covers/systems/tool-use-when-language-triggers-actions.svg'
+heroImageAlt: 'Language triggering action diagram'
 tags:
   - tools
   - automation
   - safety
   - accountability
+proofPoints:
+  - Core reference for tool use and action safety
+  - Referenced in structured-output-and-why-it-matters.mdx
+faq:
+  - question: Why does tool use change accountability?
+    answer: "Tool use turns language into actions, not just answers. When an AI can execute code, query databases, or call APIs, its outputs have real-world consequences. This shifts accountability from 'a helpful response' to 'responsible execution' and requires guardrails, verification, and audit logs."
+  - question: What guardrails are needed for AI tool use?
+    answer: "Guardrails for tool use include: permission checks before execution, input validation against injection attacks, output validation before acting, rate limiting and cost controls, timeout handling, and complete audit trails of what was executed and when."
+  - question: What is the app's role in tool use?
+    answer: "The application layer is the gatekeeper for tool use. The model proposes; the app authorizes. This separation keeps the model focused on intent while the app handles safety, validation, and execution constraints. The app must never blindly trust model-generated tool calls."
 ---
 
 > **Key takeaways**

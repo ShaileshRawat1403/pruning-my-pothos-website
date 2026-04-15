@@ -1,12 +1,24 @@
 ---
 title: "Training, Fine-Tuning, and Inference"
-description: "Clarifying the AI lifecycle. Why you probably don't need to train a model, and where business value is actually created."
+description: "Clarifying the AI lifecycle. Why you probably do not need to train a model, and where business value is actually created."
 category: "Concepts"
+heroImage: '/covers/systems/training-vs-inference.svg'
+heroImageAlt: 'Training and inference lifecycle diagram'
 tags:
   - training
   - inference
   - fine-tuning
   - lifecycle
+proofPoints:
+  - Core lifecycle reference document
+  - Referenced in what-an-ai-model-actually-is.mdx
+faq:
+  - question: What is the difference between training and inference?
+    answer: Training is the expensive, one-time process of teaching a model language patterns from scratch by adjusting billions of weights. Inference is using the trained model to generate predictions. Most business applications use inference exclusively.
+  - question: When should I fine-tune vs use RAG?
+    answer: Fine-tune when you need consistent style, format, or domain-specific reasoning patterns that cannot be reliably injected via prompts. Use RAG when you need access to specific, changing, or private information. RAG is usually cheaper and faster to implement.
+  - question: Do models learn from my prompts?
+    answer: No. During inference, models do not learn or update their weights. Each conversation is independent from the model's perspective. Customization during inference comes from context (prompts + RAG), not model modification.
 ---
 
 > **Key takeaways**

@@ -760,6 +760,120 @@
 ### Validation
 - `npm run build` passed (`417 page(s) built`).
 
+## Update: 2026-04-14 (Cross-section content clusters from presentations)
+
+### Summary
+- Created 4 cross-section content clusters based on the 4 new presentation PDFs.
+- Each cluster includes: 1 systems doc, 1 sentence, 1 self entry, 1 sticky note.
+- All docs are interlinked; shared-resource collaterals updated with related doc links.
+
+### Cluster 1: Enterprise AI at Scale
+- `src/content/systems/enterprise-ai-at-scale.mdx`
+- `src/content/sentences/governance-before-architecture.md`
+- `src/content/self/what-i-learned-running-ai-governance.md`
+- `src/content/sticky-notes/note-enterprise-governance.md`
+- Linked from: `enterprise-ai-blueprint-deck.md`
+
+### Cluster 2: The Logic Void
+- `src/content/systems/the-logic-void.mdx`
+- `src/content/sentences/the-void-is-not-a-flaw.md`
+- `src/content/self/learning-to-say-i-dont-know.md`
+- `src/content/sticky-notes/note-logic-void.md`
+- Linked from: `logic-void-deck.md`
+
+### Cluster 3: Engineering Bounded Autonomy
+- `src/content/systems/engineering-bounded-autonomy.mdx`
+- `src/content/sentences/autonomy-needs-boundaries.md`
+- `src/content/self/designing-my-first-safety-constraint.md`
+- `src/content/sticky-notes/note-bounded-autonomy.md`
+- Linked from: `engineering-bounded-autonomy-deck.md`
+
+### Cluster 4: Agentic Orchestration
+- `src/content/systems/agentic-orchestration-coordination.mdx`
+- `src/content/sentences/handoffs-are-load-bearing.md`
+- `src/content/self/debugging-multi-agent-systems.md`
+- `src/content/sticky-notes/note-agentic-orchestration.md`
+- Linked from: `dax-agentic-orchestration-deck.md`
+
+### Validation
+- `npm run lint:systems` passed (49 systems docs).
+- `npm run build` passed (472 pages).
+- All new docs follow section-specific guidelines (systems 3-act structure, sentences reflective style, self lead + inline SVG, sticky minimal format).
+
+### Decisions
+- Kept each cluster topic-focused and interconnected rather than duplicating existing content.
+- Each systems doc links to its corresponding shared-resource collateral for PDF access.
+- Cross-links between clusters reinforce topical authority (e.g., logic void links to bounded autonomy, orchestration links to both).
+
+### Open risks / follow-ups
+- None; all 18 presentation PDFs now have corresponding shelf collaterals and supporting cross-section content.
+
+### Suggested next actions
+1. Review the 4 new clusters for content accuracy based on PDF content.
+2. Consider adding more cross-links between clusters to strengthen topical authority mesh.
+
+## Update: 2026-04-14 (Presentation collaterals pass)
+
+### Summary
+- Added shared-resources collaterals for 4 presentations that were in `/public/resources/presentations/` but not yet covered on the site.
+- All 4 new entries follow shelf/shared-resources guidelines with `pdfUrl`, `coverUrl`, `resourceHighlights`, and internal related links.
+
+### New files
+- `src/content/shelf/shared-resources/enterprise-ai-blueprint-deck.md`
+- `src/content/shelf/shared-resources/logic-void-deck.md`
+- `src/content/shelf/shared-resources/engineering-bounded-autonomy-deck.md`
+- `src/content/shelf/shared-resources/dax-agentic-orchestration-deck.md`
+- `public/covers/shelf/shared-enterprise-ai-blueprint.svg`
+- `public/covers/shelf/shared-logic-void.svg`
+- `public/covers/shelf/shared-bounded-autonomy.svg`
+- `public/covers/shelf/shared-dax-orchestration.svg`
+
+### Validation
+- `npm run lint:systems` passed (45 systems docs).
+- `npm run build` passed (452 pages, up from 443).
+- All 4 new pages generated: `/shelf/shared-resources/enterprise-ai-blueprint-deck/`, `/shelf/shared-resources/logic-void-deck/`, `/shelf/shared-resources/engineering-bounded-autonomy-deck/`, `/shelf/shared-resources/dax-agentic-orchestration-deck/`.
+
+### Decisions
+- Kept collateral format consistent with existing deck entries (title, description, tags, coverUrl, pdfUrl, resourceHighlights, related internal links).
+- Each SVG cover uses a unique abstract motif following `docs/style-guides/shelf-resource-cover-style.md`.
+
+### Open risks / follow-ups
+- None; all 18 PDFs in presentations folder now have corresponding shelf/shared-resources collaterals.
+
+### Suggested next actions
+1. Review the 4 new entries for content accuracy based on PDF content.
+2. Consider adding more internal links to strengthen cross-navigation.
+
+## Update: 2026-04-14 (SEO/AEO indexability priority pass)
+
+### Summary
+- Achieved 100% FAQ frontmatter coverage on all 45 systems docs
+- Added Article schema with BreadcrumbList to all section detail pages (sentences, shelf, self)
+- Added CollectionPage + ItemList schema to systems category index pages (concepts, explanations, how-things-fit-together)
+- Added ogType="article" to detail page templates for proper OG metadata
+- Fixed YAML quoting issues in FAQ frontmatter (colons in answer text now quoted)
+
+### Files touched
+- All 45 systems docs in `src/content/systems/` (FAQ + proofPoints added)
+- `src/pages/systems/concepts.astro`
+- `src/pages/systems/explanations.astro`
+- `src/pages/systems/how-things-fit-together.astro`
+- `src/pages/sentences/[slug].astro`
+- `src/pages/self/[slug].astro`
+- `src/components/ShelfEntryPage.astro`
+- `src/pages/shelf/local-experiments/[slug].astro`
+- `src/pages/shelf/shared-resources/[slug].astro`
+
+### Validation
+- `npm run lint:systems` passed (45 systems docs)
+- `npm run build` passed
+- `npm run report:gaps` shows all main gaps addressed
+
+### Suggested next actions
+1. Deploy and verify sitemap.xml includes all detail pages
+2. Re-submit sitemap to Google Search Console
+3. Monitor index coverage report for improvements
+
 ## Update: 2026-03-05 (Homepage caret blink + AEO/GEO signal pass)
 
 ### Summary

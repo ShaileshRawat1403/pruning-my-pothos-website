@@ -2,11 +2,23 @@
 title: "Structured Output and Why It Matters"
 description: "Why format turns a response into a system you can trust."
 category: "How-things-fit-together"
+heroImage: '/covers/systems/structured-output-and-why-it-matters.svg'
+heroImageAlt: 'JSON structure diagram'
 tags:
   - structured-output
   - schemas
   - automation
   - reliability
+proofPoints:
+  - Documents the shift from free-text to structured automation
+  - Referenced in prompting-is-not-the-skill-you-think-it-is.mdx
+faq:
+  - question: Why is structured output important for AI systems?
+    answer: "Structured output (JSON, XML) makes model responses predictable and parseable by software. Free text is readable by humans but unreliable for automation. Structure turns a language model into a component that can interoperate with other systems reliably."
+  - question: What happens when models do not follow output schemas?
+    answer: "Models may produce malformed JSON, add extra fields, or omit required ones. Mitigation strategies include: using schema-constrained decoding (when available), parsing with lenient validators, adding regeneration prompts, and using JSON mode or function calling features built into the model API."
+  - question: How does structure improve downstream reliability?
+    answer: "When output format is guaranteed, downstream code can make safe assumptions. Type checking, validation, and error handling all become straightforward. Without structure, every response needs custom parsing that may fail unexpectedly."
 ---
 
 > **Key takeaways**

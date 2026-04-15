@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+  <title id="t">The Logic Void cover</title>
+  <desc id="d">Editorial cover for the logic void deck.</desc>
+  <rect width="1200" height="675" fill="#18181b"/>
+  <circle cx="600" cy="340" r="140" fill="#09090b"/>
+  <circle cx="600" cy="340" r="140" fill="none" stroke="#3f3f46" stroke-width="4" stroke-dasharray="20 15"/>
+  <circle cx="600" cy="340" r="100" fill="none" stroke="#52525b" stroke-width="3"/>
+  <circle cx="600" cy="340" r="60" fill="none" stroke="#71717a" stroke-width="2"/>
+  <text x="100" y="125" fill="#a1a1aa" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">Shared Resource</text>
+  <text x="100" y="220" fill="#fafafa" font-family="Georgia, 'Times New Roman', serif" font-size="68">The Logic Void</text>
+  <text x="100" y="285" fill="#71717a" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30">Where reasoning breaks down and design begins</text>
+</svg>

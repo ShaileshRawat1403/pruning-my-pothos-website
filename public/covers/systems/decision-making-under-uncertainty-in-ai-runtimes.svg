@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Decision Making</title>
+  <desc id="desc">Decision framework under uncertainty</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <circle cx="200" cy="80" r="30"/>
+    <rect x="80" y="135" width="70" height="30" rx="4"/>
+    <rect x="250" y="135" width="70" height="30" rx="4"/>
+    <rect x="155" y="180" width="90" height="30" rx="4"/>
+    <line x1="180" y1="105" x2="120" y2="135"/>
+    <line x1="220" y1="105" x2="290" y2="135"/>
+    <line x1="175" y1="180" x2="200" y2="165"/>
+    <line x1="225" y1="180" x2="200" y2="165"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <circle cx="200" cy="80" r="30"/>
+    <rect x="155" y="180" width="90" height="30" rx="4"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="9" fill="#6b7280">
+    <text x="200" y="77" text-anchor="middle">partial</text>
+    <text x="200" y="89" text-anchor="middle">evidence</text>
+    <text x="115" y="155" text-anchor="middle">limited</text>
+    <text x="115" y="167" text-anchor="middle">time</text>
+    <text x="285" y="155" text-anchor="middle">high</text>
+    <text x="285" y="167" text-anchor="middle">impact</text>
+    <text x="200" y="200" text-anchor="middle">accountable</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="215" text-anchor="middle">framework over guesswork</text>
+  </g>
+</svg>

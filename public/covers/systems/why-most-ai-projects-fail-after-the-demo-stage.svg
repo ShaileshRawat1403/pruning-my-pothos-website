@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Why AI Projects Fail</title>
+  <desc id="desc">Failure points in AI projects</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <rect x="60" y="55" width="120" height="65" rx="4"/>
+    <rect x="220" y="55" width="120" height="65" rx="4"/>
+    <rect x="60" y="135" width="120" height="65" rx="4"/>
+    <rect x="220" y="135" width="120" height="65" rx="4"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.1">
+    <rect x="60" y="55" width="120" height="65" rx="4"/>
+    <rect x="220" y="55" width="120" height="65" rx="4"/>
+    <rect x="60" y="135" width="120" height="65" rx="4"/>
+    <rect x="220" y="135" width="120" height="65" rx="4"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
+    <text x="120" y="80" text-anchor="middle">weak</text>
+    <text x="120" y="93" text-anchor="middle">integration</text>
+    <text x="280" y="80" text-anchor="middle">missing</text>
+    <text x="280" y="93" text-anchor="middle">governance</text>
+    <text x="120" y="160" text-anchor="middle">low</text>
+    <text x="120" y="173" text-anchor="middle">observability</text>
+    <text x="280" y="160" text-anchor="middle">unclear</text>
+    <text x="280" y="173" text-anchor="middle">adoption</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="220" text-anchor="middle">after the demo stage</text>
+  </g>
+</svg>

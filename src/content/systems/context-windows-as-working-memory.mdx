@@ -2,6 +2,8 @@
 title: "Context Windows as Working Memory"
 description: "Why context is limited, expensive, and shapes reliability."
 category: "Concepts"
+heroImage: '/covers/systems/context-windows-as-working-memory.svg'
+heroImageAlt: 'Container representing limited context capacity with content inside'
 tags:
   - llm
   - context
@@ -11,6 +13,16 @@ featured: true
 contentType: 'technical'
 readingTime: 6
 difficulty: 'intermediate'
+proofPoints:
+  - Core reference for context management principles
+  - Referenced in knowledge-management-as-runtime-memory.mdx
+faq:
+  - question: What is a context window in an LLM?
+    answer: A context window is the finite working memory of an LLM. It is the temporary space where the model holds all the information needed to process a request. Everything inside the window is accessible; everything outside is forgotten.
+  - question: Why does context size affect cost and latency?
+    answer: Larger contexts require more computation for the self-attention mechanism, which grows quadratically with sequence length. This means costs and response times increase faster than linearly as you add more context.
+  - question: What does lost in the middle mean?
+    answer: LLMs tend to emphasize information at the beginning and end of context more than information in the middle. Important instructions or facts placed centrally may receive less attention. Strategic placement matters; put critical information at the start or end of your context.
 ---
 
 > **Key takeaways**

@@ -87,11 +87,45 @@ const jsonLdPerson = {
 		url: siteUrl.toString(),
 	},
 	description: siteDescription,
+	knowsAbout: [
+		'AI Systems',
+		'LLM Orchestration',
+		'Agent Architecture',
+		'RAG',
+		'Evaluation',
+		'AI Governance',
+		'Prompt Engineering',
+	],
+	alumniOf: 'Indian Institute of Technology',
 	sameAs: [
 		'https://www.linkedin.com/in/shailesh-rawat',
 		'https://github.com/ShaileshRawat1403',
 	],
 };
+
+const isArticlePage = ogType === 'article';
+const articleSchema = isArticlePage ? {
+	'@context': 'https://schema.org',
+	'@type': 'Article',
+	headline: title,
+	description: pageDescription,
+	url: canonical,
+	datePublished: new Date().toISOString(),
+	dateModified: new Date().toISOString(),
+	author: {
+		'@type': 'Person',
+		name: 'Shailesh Rawat',
+		url: siteUrl.toString(),
+		jobTitle: 'AI Systems Consultant and Technical Writer',
+	},
+	publisher: {
+		'@type': 'Organization',
+		name: siteName,
+		url: siteUrl.toString(),
+	},
+	mainEntityOfPage: canonical,
+	inLanguage: 'en',
+} : null;
 ---
 
 <!doctype html>
@@ -101,6 +135,7 @@ const jsonLdPerson = {
 		<meta name="description" content={pageDescription} />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="robots" content={pageRobots} />
+		<meta name="author" content="Shailesh Rawat" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
 		<link rel="canonical" href={canonical} />
@@ -111,15 +146,19 @@ const jsonLdPerson = {
 		<meta property="og:description" content={pageDescription} />
 		<meta property="og:url" content={canonical} />
 		<meta property="og:image" content={socialImage} />
+		<meta property="article:author" content="https://www.linkedin.com/in/shailesh-rawat" />
+		<meta property="article:publisher" content={siteUrl.toString()} />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={pageDescription} />
 		<meta name="twitter:image" content={socialImage} />
+		<meta name="twitter:creator" content="@shaileshrawat" />
 		<title>{title}</title>
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLdWebSite)}></script>
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLdOrganization)}></script>
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLdWebPage)}></script>
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLdPerson)}></script>
+		{articleSchema && <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>}
 
         <ViewTransitions />
         <script is:inline>

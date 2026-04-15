@@ -2,6 +2,8 @@
 title: "Engineering Agentic Systems for Reliability"
 description: "A practical reliability model for agentic systems built around governed steps, verification, escalation, and observability."
 category: "How-things-fit-together"
+heroImage: '/covers/systems/engineering-agentic-systems-for-reliability.svg'
+heroImageAlt: 'Reliability model with verification gates'
 tags:
   - agents
   - engineering
@@ -9,6 +11,16 @@ tags:
   - governance
   - observability
 updatedAt: "2026-03-26"
+proofPoints:
+  - Practical reliability model for agentic systems
+  - Defines verification and escalation patterns
+faq:
+  - question: What causes agentic systems to fail?
+    answer: Agentic systems fail at boundaries more often than they fail at generation. Weak permissions allow unauthorized actions. Weak verification passes bad outputs downstream. Weak traceability makes it impossible to diagnose what happened. The generation step is usually fine; it's the control around it that breaks.
+  - question: How do you make agentic systems reliable?
+    answer: Keep planning, execution, and verification separate enough to inspect. Each step should have explicit inputs, explicit outputs, and explicit success criteria. Build escalation paths for when verification fails. The goal is not a smooth conversation; it's accountable behavior.
+  - question: What is a governed step in agent reliability?
+    answer: A governed step is a unit of agentic work that has been authorized, verified, and logged. The model proposes; the runtime authorizes. This separation makes the system auditable and prevents the model from taking unconstrained actions.
 ---
 
 > **Key takeaways**

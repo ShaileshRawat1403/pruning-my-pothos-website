@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Entity Glossary</title>
+  <desc id="desc">Glossary and entity definitions</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1" fill="none">
+    <line x1="60" y1="55" x2="340" y2="55"/>
+    <line x1="60" y1="90" x2="340" y2="90"/>
+    <line x1="60" y1="125" x2="340" y2="125"/>
+    <line x1="60" y1="160" x2="340" y2="160"/>
+  </g>
+  <g font-family="monospace" font-size="11" fill="#3b82f6">
+    <text x="70" y="78">SEO</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
+    <text x="70" y="113">AEO</text>
+  </g>
+  <g font-family="monospace" font-size="11" fill="#10b981">
+    <text x="70" y="148">GEO</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#9ca3af">
+    <text x="130" y="78">search engine optimization</text>
+    <text x="130" y="113">answer engine optimization</text>
+    <text x="130" y="148">generative engine optimization</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="205" text-anchor="middle">canonical definitions · discoverability</text>
+  </g>
+</svg>

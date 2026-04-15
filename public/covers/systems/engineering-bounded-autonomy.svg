@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Bounded Autonomy</title>
+  <desc id="desc">Autonomy with safety boundaries</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <circle cx="200" cy="112" r="35"/>
+    <circle cx="200" cy="112" r="55"/>
+  </g>
+  <g stroke="#ef4444" stroke-width="2" fill="none" stroke-dasharray="6 4">
+    <circle cx="200" cy="112" r="55"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <circle cx="200" cy="112" r="35"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
+    <text x="200" y="108" text-anchor="middle">agent</text>
+    <text x="200" y="120" text-anchor="middle" font-size="9">autonomy</text>
+    <text x="55" y="65" font-size="9">safety</text>
+    <text x="335" y="65" font-size="9">boundaries</text>
+    <text x="55" y="170" font-size="9">governance</text>
+    <text x="325" y="170" font-size="9">hooks</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="210" text-anchor="middle">useful without uncontrolled</text>
+  </g>
+</svg>

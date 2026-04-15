@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Evaluation as Runtime</title>
+  <desc id="desc">Continuous evaluation loop</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <rect x="150" y="55" width="100" height="35" rx="6"/>
+    <rect x="150" y="110" width="100" height="35" rx="6"/>
+    <rect x="150" y="165" width="100" height="35" rx="6"/>
+    <line x1="200" y1="90" x2="200" y2="110"/>
+    <line x1="250" y1="127" x2="310" y2="127"/>
+    <line x1="310" y1="127" x2="310" y2="77"/>
+    <line x1="310" y1="77" x2="250" y2="77"/>
+    <line x1="250" y1="77" x2="200" y2="77"/>
+    <line x1="200" y1="145" x2="200" y2="165"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <rect x="150" y="55" width="100" height="35" rx="6"/>
+    <rect x="150" y="110" width="100" height="35" rx="6"/>
+    <rect x="150" y="165" width="100" height="35" rx="6"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
+    <text x="200" y="77" text-anchor="middle">execute</text>
+    <text x="200" y="132" text-anchor="middle">evaluate</text>
+    <text x="200" y="187" text-anchor="middle">adjust</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="215" text-anchor="middle">inside the loop · not after</text>
+  </g>
+</svg>

@@ -22,9 +22,70 @@ const previousLink = previous ? toLink(previous) : null;
 const nextLink = next ? toLink(next) : null;
 const relatedLinks = relatedEntries.map(toLink);
 const mediaAspect = entry.data.artist || entry.data.album ? 'square' : 'wide';
+
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const canonical = new URL(`/shelf/${entry.slug}/`, siteUrl).toString();
+const publishDate = entry.data.publishDate ? entry.data.publishDate.toISOString() : null;
+
+const sectionSlug = sectionHref.replace('/shelf/', '').replace('/', '');
+
+const breadcrumbsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Shelf',
+      item: new URL('/shelf/', siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: sectionLabel.replace('/shelf/', ''),
+      item: new URL(sectionHref, siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      name: entry.data.title,
+      item: canonical,
+    },
+  ],
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: entry.data.title,
+  description: entry.data.description,
+  url: canonical,
+  inLanguage: 'en',
+  keywords: (entry.data.tags ?? []).join(', '),
+  mainEntityOfPage: canonical,
+  ...(publishDate && { datePublished: publishDate }),
+  author: {
+    '@type': 'Person',
+    name: 'Shailesh Rawat',
+    url: siteUrl.toString(),
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'PruningMyPothos',
+    url: siteUrl.toString(),
+  },
+};
 ---
 
-<Layout title={`${entry.data.title} | Shelf | A Thinking Workspace`} description={entry.data.description} image={entry.data.coverUrl}>
+<Layout title={`${entry.data.title} | Shelf | A Thinking Workspace`} description={entry.data.description} image={entry.data.coverUrl} ogType="article">
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
   <article class="shelf-entry-page">
     <EntryHeader
       title={entry.data.title}

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Runtime Over Model</title>
+  <desc id="desc">Loop diagram showing orchestration cycle</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <rect x="130" y="50" width="140" height="45" rx="22"/>
+    <rect x="130" y="155" width="140" height="35" rx="6"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <rect x="130" y="50" width="140" height="45" rx="22"/>
+    <rect x="130" y="155" width="140" height="35" rx="6"/>
+  </g>
+  <g stroke="#d1d5db" stroke-width="1.5" fill="none">
+    <rect x="50" y="100" width="70" height="35" rx="6"/>
+    <rect x="280" y="100" width="70" height="35" rx="6"/>
+  </g>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <path d="M95,117 Q95,85 160,72"/>
+    <path d="M240,72 Q305,85 305,117"/>
+    <path d="M305,117 Q305,170 240,175"/>
+    <path d="M160,175 Q95,170 95,140"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
+    <text x="95" y="122" text-anchor="middle">input</text>
+    <text x="305" y="122" text-anchor="middle">output</text>
+    <text x="200" y="73" text-anchor="middle">orchestration</text>
+    <text x="200" y="177" text-anchor="middle">execution loop</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="215" text-anchor="middle">controlled execution over raw capability</text>
+  </g>
+</svg>

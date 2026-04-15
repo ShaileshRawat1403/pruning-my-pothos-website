@@ -2,11 +2,23 @@
 title: "What Large Language Models Are Optimized For"
 description: "Why next-token prediction shapes both capability and failure modes."
 category: "Concepts"
+heroImage: '/covers/systems/what-llms-are-optimized-for.svg'
+heroImageAlt: 'Next token prediction visualization'
 tags:
   - llm
   - optimization
   - reasoning
   - reliability
+proofPoints:
+  - Core conceptual reference for LLM optimization mechanics
+  - Referenced in what-an-ai-model-actually-is.mdx
+faq:
+  - question: What are LLMs actually optimized for?
+    answer: LLMs are optimized for next-token probability, not truth, accuracy, or user intent. They generate the most statistically probable continuation of the input sequence based on patterns learned during training.
+  - question: Is hallucination a bug or a feature?
+    answer: Hallucination is a statistical side effect of next-token prediction, not an intentional design. Models generate probable text, and when the most probable continuation includes plausible-sounding but incorrect information, hallucination occurs.
+  - question: Does scaling improve model reliability?
+    answer: Scaling improves pattern matching and generates more fluent text, but it does not make models inherently more truthful. Larger models are better at mimicking correct answers but can also mimic incorrect answers more persuasively. Reliability requires architecture and runtime controls, not just more parameters.
 ---
 
 > **Key takeaways**

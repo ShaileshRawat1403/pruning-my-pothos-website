@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Prompting</title>
+  <desc id="desc">Prompt engineering components</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
+    <rect x="70" y="50" width="260" height="110" rx="6"/>
+  </g>
+  <g fill="#3b82f6" opacity="0.15">
+    <rect x="70" y="50" width="260" height="110" rx="6"/>
+  </g>
+  <g stroke="#d1d5db" stroke-width="1" fill="none">
+    <rect x="90" y="65" width="70" height="22" rx="3"/>
+    <rect x="175" y="65" width="70" height="22" rx="3"/>
+    <rect x="260" y="65" width="50" height="22" rx="3"/>
+    <rect x="90" y="95" width="70" height="22" rx="3"/>
+    <rect x="175" y="95" width="70" height="22" rx="3"/>
+    <rect x="260" y="95" width="50" height="22" rx="3"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="9" fill="#6b7280">
+    <text x="125" y="80" text-anchor="middle">intent</text>
+    <text x="210" y="80" text-anchor="middle">examples</text>
+    <text x="285" y="80" text-anchor="middle">format</text>
+    <text x="125" y="110" text-anchor="middle">constraints</text>
+    <text x="210" y="110" text-anchor="middle">context</text>
+    <text x="285" y="110" text-anchor="middle">...</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="210" text-anchor="middle">constraints · examples · intent</text>
+  </g>
+</svg>

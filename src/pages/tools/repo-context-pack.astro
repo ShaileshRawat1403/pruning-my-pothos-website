@@ -76,12 +76,11 @@ package.json"
           <li>Bootstrapping project indexes for multi-agent workflows.</li>
         </ul>
 
-        <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--text-primary); margin-bottom: 0.75rem;">Local Installation</h3>
-        <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">Tessera supports full repository structure mapping offline using the CLI repo pack:</p>
-        <div class="terminal-box" style="position: relative; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); padding: 1rem 3.5rem 1rem 1.25rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-primary); max-width: 600px;">
-          <span class="terminal-prompt" style="color: var(--accent-cyan); font-weight: bold; margin-right: 0.5rem;">$</span>
-          <code class="terminal-cmd">pip install tesserakit-core tesserakit-repo</code>
-          <button class="copy-terminal-btn" id="copy-npm-btn" style="position: absolute; right: 0.6rem; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text-secondary); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.68rem; cursor: pointer;">Copy</button>
+        <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--text-primary); margin-bottom: 0.75rem;">Planned CLI</h3>
+        <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">Deploy repository structure packaging offline inside your local workspace via our planned command:</p>
+        <div class="terminal-box" style="position: relative; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border); padding: 1rem 1.25rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-primary); max-width: 600px; opacity: 0.85;">
+          <span class="terminal-prompt" style="color: var(--accent-purple); font-weight: bold; margin-right: 0.5rem;">ℹ</span>
+          <span style="color: var(--text-secondary); font-family: var(--font-sans);">Planned CLI: pip install tesserakit-core tesserakit-repo</span>
         </div>
       </div>
 
@@ -92,19 +91,23 @@ package.json"
           <div class="tool-profile-list">
             <div class="profile-row">
               <span class="profile-label">Status</span>
-              <span class="profile-val" style="color: var(--text-secondary); font-weight: bold;">Coming Soon</span>
+              <span class="profile-val" style="color: var(--accent-purple); font-weight: bold;">Local Prototype</span>
             </div>
             <div class="profile-row">
               <span class="profile-label">Mode</span>
-              <span class="profile-val">Manual-Input</span>
+              <span class="profile-val">Manual input / Browser prototype</span>
             </div>
             <div class="profile-row">
               <span class="profile-label">Engine</span>
               <span class="profile-val">ToolSmith</span>
             </div>
             <div class="profile-row">
+              <span class="profile-label">Contract</span>
+              <span class="profile-val">Tessera-compatible</span>
+            </div>
+            <div class="profile-row">
               <span class="profile-label">Future Wiring</span>
-              <span class="profile-val"><a href="/docs/tool-status/">Tessera repo-pack</a></span>
+              <span class="profile-val"><a href="/docs/tool-status/">Tessera JobPack</a></span>
             </div>
             <div class="profile-row">
               <span class="profile-label">Output</span>
@@ -115,7 +118,7 @@ package.json"
 
         <div class="sidebar-box card-glass" style="padding: 1.75rem; border-radius: 12px;">
           <h5 style="font-family: var(--font-heading); font-size: 0.85rem; font-weight: 700; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.85rem;">Browser Limits</h5>
-          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; margin: 0;">Online inputs are limited to 20 files. Local CLI commands query the whole directory structure offline.</p>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; margin: 0;">Does not scan live repos yet. Online inputs are limited to 20 files. Local CLI commands query the whole directory structure offline.</p>
         </div>
       </div>
     </div>

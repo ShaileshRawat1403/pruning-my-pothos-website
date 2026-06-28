@@ -33,10 +33,11 @@ const featuredTools = [
     title: 'Prompt ➔ JSON',
     desc: 'Convert unstructured prose prompts into production-ready JSON schemas.',
     engine: 'ToolSmith',
-    mode: 'Client-side',
-    future: 'Tessera schema-pack',
+    mode: 'Browser prototype',
+    contract: 'Tessera-compatible',
+    future: 'Tessera JobPack',
     output: 'JSON Schema + Example',
-    install: 'pip install tesserakit-prompts',
+    install: 'tesserakit-prompts',
     href: '/tools/prompt-to-json/'
   },
   {
@@ -46,23 +47,25 @@ const featuredTools = [
     title: 'Workflow ➔ Diagram',
     desc: 'Generate interactive Mermaid flowcharts and schemas from text workflows.',
     engine: 'ToolSmith',
-    mode: 'Client-side',
-    future: 'Tessera recipes-pack',
+    mode: 'Browser prototype',
+    contract: 'Tessera-compatible',
+    future: 'Tessera JobPack',
     output: 'Mermaid + JSON Graph',
-    install: 'pip install tesserakit-recipes',
+    install: 'tesserakit-recipes',
     href: '/tools/workflow-to-diagram/'
   },
   {
     id: 'repo-context-pack',
     category: 'prompt-context',
-    status: 'coming-soon' as const,
+    status: 'prototype' as const,
     title: 'Repo ➔ Context Pack',
     desc: 'Gather and compress repository structures into a single XML pack for LLM ingestion.',
     engine: 'ToolSmith',
-    mode: 'Manual-Input',
-    future: 'Tessera repo-pack',
+    mode: 'Manual input',
+    contract: 'Tessera-compatible',
+    future: 'Tessera JobPack',
     output: 'XML Context Pack',
-    install: '',
+    install: 'tesserakit-repo',
     href: '/tools/repo-context-pack/'
   },
   {
@@ -71,11 +74,12 @@ const featuredTools = [
     status: 'prototype' as const,
     title: 'CSV ➔ Eval Harness',
     desc: 'Convert raw CSV outputs into structured evaluation datasets and rubrics.',
-    engine: 'Tessera EvalsPack',
-    mode: 'Browser Sample',
-    future: 'Tessera evals-pack',
+    engine: 'ToolSmith',
+    mode: 'Browser prototype',
+    contract: 'Tessera-compatible',
+    future: 'Tessera JobPack',
     output: 'JSONL + Rubric draft',
-    install: '',
+    install: 'tesserakit-evals',
     href: '/tools/csv-to-eval/'
   },
   {
@@ -85,10 +89,11 @@ const featuredTools = [
     title: 'Change Request ➔ HITL Checklist',
     desc: 'Analyze codebase change requests to generate human-in-the-loop review gates.',
     engine: 'ToolSmith',
-    mode: 'Rules-based',
-    future: 'Flowright + Tessera',
+    mode: 'Browser prototype',
+    contract: 'Tessera-compatible',
+    future: 'Flowright',
     output: 'Review gates + checklist',
-    install: '',
+    install: 'tesserakit-core',
     href: '/tools/change-to-checklist/'
   },
   {
@@ -98,10 +103,11 @@ const featuredTools = [
     title: 'Code/Notes ➔ PDF Brief',
     desc: 'Transform raw dev notes and diagrams into print-ready documentation briefs.',
     engine: 'ToolSmith',
-    mode: 'Browser Sample',
+    mode: 'Browser prototype',
+    contract: 'Tessera-compatible',
     future: 'Content Engine',
     output: 'Structured markdown',
-    install: '',
+    install: 'tesserakit-core',
     href: '/tools/notes-to-brief/'
   }
 ];
@@ -285,31 +291,25 @@ const stackLayers = [
                 <span class="profile-val">{tool.mode}</span>
               </div>
               <div class="profile-row">
+                <span class="profile-label">Contract</span>
+                <span class="profile-val">{tool.contract}</span>
+              </div>
+              <div class="profile-row">
                 <span class="profile-label">Future Wiring</span>
                 <span class="profile-val" style="color: var(--accent-cyan);">{tool.future}</span>
               </div>
             </div>
 
-            {tool.status === 'live' ? (
-              <div class="terminal-box">
-                <span class="terminal-prompt">$</span>
-                <code class="terminal-cmd">{tool.install}</code>
-                <button class="copy-terminal-btn" aria-label="Copy install command">Copy</button>
-              </div>
-            ) : (
-              <div class="terminal-box" style="opacity: 0.85;">
-                <span class="terminal-prompt" style="color: var(--accent-purple);">ℹ</span>
-                <span style="color: var(--text-secondary); font-size: 0.82rem; margin-left: 0.4rem; font-family: var(--font-sans);">CLI package planned &bull; Offline by design</span>
-              </div>
-            )}
+            <div class="terminal-box" style="opacity: 0.85;">
+              <span class="terminal-prompt" style="color: var(--accent-purple);">ℹ</span>
+              <span style="color: var(--text-secondary); font-size: 0.82rem; margin-left: 0.4rem; font-family: var(--font-sans);">Planned CLI: pip install {tool.install}</span>
+            </div>
 
             <div class="card-actions">
               {tool.status === 'live' ? (
                 <a href={tool.href} class="card-btn-primary">Try Live in Browser &rarr;</a>
-              ) : tool.status === 'prototype' ? (
-                <a href={tool.href} class="card-btn-primary" style="border-color: rgba(139, 92, 246, 0.3); color: var(--accent-purple); background: transparent;">Open Prototype Sandbox &rarr;</a>
               ) : (
-                <a href={tool.href} class="card-btn-primary" style="border-color: rgba(255, 255, 255, 0.1); color: var(--text-secondary); background: transparent;">View Concept &rarr;</a>
+                <a href={tool.href} class="card-btn-primary" style="border-color: rgba(139, 92, 246, 0.3); color: var(--accent-purple); background: transparent;">Open Prototype Sandbox &rarr;</a>
               )}
             </div>
           </div>

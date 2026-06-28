@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">Resilient Integration Contracts</title>
+  <desc id="desc">Schema validation gate representing structured outputs integration contract</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <!-- Schema Validation Gate Group -->
+  <g transform="translate(40, 40)">
+    <!-- LLM Output Box (Raw) -->
+    <rect x="0" y="30" width="80" height="60" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="40" y="60" font-family="monospace" font-size="10" fill="#2563eb" text-anchor="middle">LLM Output</text>
+    <text x="40" y="75" font-family="monospace" font-size="8" fill="#60a5fa" text-anchor="middle">{"type": "?"}</text>
+
+    <!-- Arrow to Gate -->
+    <path d="M 90 60 H 130" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <polygon points="125,56 133,60 125,64" fill="#94a3b8"/>
+
+    <!-- Validation Contract Gate -->
+    <rect x="140" y="20" width="80" height="80" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="180" y="55" font-family="system-ui, sans-serif" font-weight="bold" font-size="11" fill="#15803d" text-anchor="middle">Contract</text>
+    <text x="180" y="72" font-family="monospace" font-size="9" fill="#166534" text-anchor="middle">Schema.json</text>
+
+    <!-- Arrow to Downstream -->
+    <path d="M 230 60 H 270" stroke="#94a3b8" stroke-width="1.5"/>
+    <polygon points="265,56 273,60 265,64" fill="#94a3b8"/>
+
+    <!-- Downstream Target System -->
+    <rect x="280" y="30" width="80" height="60" rx="6" fill="#f8fafc" stroke="#475569" stroke-width="1.5"/>
+    <text x="320" y="60" font-family="system-ui, sans-serif" font-size="10" fill="#334155" text-anchor="middle">Downstream</text>
+    <text x="320" y="75" font-family="monospace" font-size="8" fill="#475569" text-anchor="middle">Validated</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="195" text-anchor="middle">propose → validate → consume</text>
+  </g>
+</svg>

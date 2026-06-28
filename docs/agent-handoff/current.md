@@ -888,3 +888,175 @@
 ### Notes
 - Maintained existing editorial layout style; no nav/hero/footer structural redesign.
 - Homepage schema remains aligned with visible content (no hidden FAQ schema).
+
+## Update: 2026-06-17 (Sentences content drought & SEO/AEO/GEO alignment)
+
+### Summary
+- Added 7 new sentences posts to target strategic topics and resolve content drought under brand style rules and SEO/AEO/GEO criteria.
+- Ensured all new files are pure Markdown (no MDX, no HTML tags, no SVG, no code blocks) as required by external agent guardrails.
+- Confirmed that content checks and site compilation compile and build with zero errors.
+
+### New files
+- `src/content/sentences/constraints-prevent-confusion.md`
+- `src/content/sentences/contracts-reduce-ambiguity.md`
+- `src/content/sentences/drift-is-rarely-loud.md`
+- `src/content/sentences/escalation-requires-context.md`
+- `src/content/sentences/grounding-prevents-hallucination.md`
+- `src/content/sentences/validation-is-not-static.md`
+- `src/content/sentences/measure-before-optimize.md`
+
+### Validation
+- `npm run lint:content` passed successfully.
+- `npm run build` passed successfully with 479 pages built.
+
+## Update: 2026-06-17 (Integration Contracts cross-section cluster)
+
+### Summary
+- Designed and directly deployed a topic cluster for **"Resilient Integration Contracts"** spanning all 5 sections of the repository (`systems`, `sentences`, `self`, `shelf`, and `sticky-notes`).
+- Enforced all specific style constraints for each section (e.g. 800+ word counts, takeaways, and callout validations for `systems`; lead paragraphs and SVG diagrams for `self`; coverUrl rules for `shelf`; rotation constraints for `sticky-notes`).
+
+### New files
+- `src/content/sentences/interfaces-define-integration-boundaries.md`
+- `src/content/systems/resilient-integration-contracts-for-structured-outputs.mdx`
+- `src/content/self/debugging-my-first-schema-translation-error.md`
+- `src/content/shelf/notes/structured-output-translation-playbook.md`
+- `src/content/sticky-notes/note-integration-interfaces.md`
+
+### Validation
+- `npm run lint:content` passed successfully.
+- `npm run lint:systems` passed successfully (50 systems docs checked).
+- `npm run build` passed successfully with 484 pages built.
+
+## Update: 2026-06-17 (SEO/AEO/GEO schema and indexing validation)
+
+### Summary
+- Aligned dynamic sitemap generation and tag templates with the site tag policy by removing `/tags` routes from `sitemap.xml.ts` and setting `noindex={true}` on all tag templates.
+- Added `BreadcrumbList` JSON-LD schema to the homepage to resolve validation warnings.
+- Synchronized live SEO check script `verify-seo-live.sh` with updated noindex and exclusion expectations.
+
+### Files touched
+- `src/pages/sitemap.xml.ts`
+- `src/pages/tags.astro`
+- `src/pages/tags/[tag].astro`
+- `src/pages/index.astro`
+- `scripts/verify-seo-live.sh`
+
+### Validation
+- `npm run verify:indexing` passed successfully with **25 passes, 0 warnings, 0 failures**.
+- `npm run build` passed successfully with 484 pages built.
+
+## Update: 2026-06-17 (Legacy redirects and 410 Gone configuration)
+
+### Summary
+- Audited git commit history to identify deleted files and directories (movies shelf category, old placeholder sentences, old notes, and deleted tokenizer page).
+- Configured `.htaccess` rules: used **301 redirects** for renamed paths (notes $\rightarrow$ sticky-notes) and **410 Gone** status rules for retired legacy pages to tell Google to drop them from search results permanently.
+- Created `scripts/verify-htaccess-sitemap.mjs` to dynamically cross-reference all sitemap URLs with the rewrite rules, verifying zero URL conflicts.
+
+### Files touched
+- `public/.htaccess`
+- `scripts/verify-htaccess-sitemap.mjs`
+
+### Validation
+- `node scripts/verify-htaccess-sitemap.mjs` passed with zero conflicts.
+- `npm run verify:indexing` remained green with **25 passes, 0 warnings, 0 failures**.
+- `npm run build` passed successfully.
+
+## Update: 2026-06-24 (Technical SEO/AEO/GEO Overhaul)
+
+### Summary
+- Diagnosed and resolved technical issues affecting crawl efficiency, metadata trust, and structured data hierarchy.
+- Suppressed duplicate article schemas on detail pages by adding `disableDefaultArticleSchema` support.
+- Fully integrated metadata and canonical URLs for the portfolio section page and subpages.
+- Added `BreadcrumbList` JSON-LD schema blocks to all core section landing pages.
+- Enabled systems article `<lastmod>` generated values within `sitemap.xml`.
+
+### Files touched
+- `src/layouts/Layout.astro`
+- `src/layouts/PortfolioLayout.astro`
+- `src/components/ShelfEntryPage.astro`
+- `src/pages/systems/[slug].astro`
+- `src/pages/sentences/[slug].astro`
+- `src/pages/self/[slug].astro`
+- `src/pages/shelf/local-experiments/[slug].astro`
+- `src/pages/shelf/shared-resources/[slug].astro`
+- `src/pages/about.astro`
+- `src/pages/systems.astro`
+- `src/pages/sentences.astro`
+- `src/pages/self.astro`
+- `src/pages/shelf.astro`
+- `src/pages/sticky-notes.astro`
+- `src/pages/portfolio.astro`
+- `src/pages/portfolio/[sample].astro`
+- `src/pages/sitemap.xml.ts`
+
+### Decisions
+- Prevent layout fallback article schemas from rendering on detail pages where custom structured article schemas are defined.
+- Formally index and associate the portfolio section page and case studies with the primary `PruningMyPothos` entity.
+- Map the systems collection `updatedAt` field directly to `<lastmod>` inside sitemap generation.
+
+### Validation
+- `npm run verify:content` passed successfully.
+- `npm run build` completed successfully (488 pages built).
+- `npm run verify:indexing` passed successfully with **25 passes, 0 warnings, 0 failures**.
+
+## Update: 2026-06-25 (LLMOps Evals Sentences Post)
+
+### Summary
+- Created a new sentences content page `evals-are-operational-contracts.md` under the `Judgment` category.
+- Covered the topic of LLMOps evaluations as continuous operational contracts, linking to the NewTuple blog for document parsing benchmarks.
+
+### New files
+- `src/content/sentences/evals-are-operational-contracts.md`
+
+- `npm run verify:indexing` passed successfully with **25 passes, 0 warnings, 0 failures**.
+
+## Update: 2026-06-25 (LLMOps Evals Systems Doc integration)
+
+### Summary
+- Updated and expanded the existing systems doc `llm-ops-without-the-buzzwords.mdx` under the `Explanations` category per user approved option.
+- Added a new subsection "Benchmarks vs. Runtime Evaluations" under Act II to introduce static benchmark datasets for complex workloads (specifically document parsing and OCR).
+- Integrated the external link to the NewTuple OCR benchmarking blog under the evaluations section.
+- Added new entry under `proofPoints` and incremented the `updatedAt` field.
+
+### Files modified
+- `src/content/systems/llm-ops-without-the-buzzwords.mdx`
+
+- `npm run verify:indexing` passed successfully with **25 passes, 0 warnings, 0 failures**.
+
+## Update: 2026-06-25 (Semantic Caching Cross-Section Cluster)
+
+### Summary
+- Designed and deployed a complete topic cluster for **"Semantic Caching in LLMOps"** spanning all 5 sections of the repository.
+- Created the flagship systems page defining exact-match vs vector-similarity caching trade-offs, similarity threshold gating, and invalidation strategies.
+- Added supporting files (reflective rule, debug story, policy guide note, and micro sticky-note) with consistent cross-linking and a new editorial SVG cover.
+
+### New files
+- `src/content/systems/semantic-caching-for-probabilistic-systems.mdx`
+- `src/content/sentences/caching-is-a-semantic-compromise.md`
+- `src/content/self/debugging-a-semantic-cache-miss.md`
+- `src/content/shelf/notes/semantic-cache-policy-guide.md`
+- `src/content/sticky-notes/note-semantic-caching.md`
+- `public/covers/shelf/note-semantic-cache-policy-guide.svg`
+
+### Validation
+- `npm run verify:content` passed successfully with zero advisory warnings across all 55 systems pages.
+- `npm run build` completed successfully (499 pages built).
+- `npm run verify:indexing` passed successfully with **25 passes, 0 warnings, 0 failures**.
+
+## Update: 2026-06-28 (Homepage Redesign to Vibe Debugging and About Page Migration)
+
+### Summary
+- Redesigned the homepage (`index.astro`) into a professional **two-column layout** on desktop screens, highlighting the "Debugging the Vibe" theme, introducing a target-agnostic explanation of natural language, critical thinking, context, prompting, agentic loops, and workflow engineering, backed by a soft radial-gradient aura.
+- Moved the original homepage visual hero elements (including the DIY CTA, self-portrait line-drawing iframe, tagline, and authority brief sections) to the About page (`about.astro`) to keep the personal brand intact.
+- Designed and coded a completely new **Horizontal Content Pipeline** for the interactive `<KnowledgeMap />` graph: input streams (systems & sentences) flow inward from the left, synthesize in the center core workspace node, and output streams (self & shelf) flow outward to the right along elegant bezier paths with accelerated speed flows on hover.
+
+### Files modified
+- `src/pages/index.astro`
+- `src/pages/about.astro`
+- `src/components/KnowledgeMap.astro`
+
+### Validation
+- `npm run build` completed successfully (499 pages built).
+- `npm run verify:content` passed all content validation rules successfully.
+
+

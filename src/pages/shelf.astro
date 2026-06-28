@@ -1,5 +1,27 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const canonical = new URL('/shelf/', siteUrl).toString();
+
+const breadcrumbsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Shelf',
+      item: canonical,
+    },
+  ],
+};
 ---
 
 <Layout
@@ -7,6 +29,7 @@ import Layout from '@/layouts/Layout.astro';
   description="A curated shelf of local experiments, notes, tools, philosophy, music, and shared AI resources."
   image="/covers/shelf/shared-agent-intelligence.svg"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)}></script>
   <div class="section-head">
     <h1>Shelf</h1>
     <p class="subtitle lead">

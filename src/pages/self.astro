@@ -5,12 +5,35 @@ import Layout from '@/layouts/Layout.astro';
 
 const selfEntries = await getCollection('self');
 const sortedSelf = sortedByDate(selfEntries);
+
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const canonical = new URL('/self/', siteUrl).toString();
+
+const breadcrumbsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Self',
+      item: canonical,
+    },
+  ],
+};
 ---
 
 <Layout
   title="Self | A Thinking Workspace"
   description="Reflective entries on identity, habits, attention, and the personal systems behind deliberate work."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)}></script>
   <section class="self-page">
     <div class="section-head">
       <h1>Self</h1>

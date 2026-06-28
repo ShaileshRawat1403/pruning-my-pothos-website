@@ -1,12 +1,35 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { sentenceCategories } from '../utils/sentenceCategories';
+
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const canonical = new URL('/sentences/', siteUrl).toString();
+
+const breadcrumbsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Sentences',
+      item: canonical,
+    },
+  ],
+};
 ---
 <Layout
   title="Sentences | A Thinking Workspace"
   description="Short reflective writing on attention, meaning, and judgment in modern AI and human systems."
   image="/covers/shelf/philosophy-attention.svg"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)}></script>
   <div class="section-head">
     <h1>Sentences</h1>
     <p class="mode-line lead">How humans make sense of systems.</p>

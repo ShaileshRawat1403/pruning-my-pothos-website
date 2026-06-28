@@ -32,8 +32,9 @@ faq:
 > - Bias in data becomes bias in vector space.
 > - Embeddings drift as language and data change.
 
-An embedding is a way to turn a complex concept, like a word or a sentence, into a list of numbers. This list, or "vector," acts as a coordinate, placing the concept in a high-dimensional "semantic space." In this space, distance equals a difference in meaning.
+### What is an embedding?
 
+An embedding is a mathematical representation of a concept (such as a word, sentence, or image) as a high-dimensional vector. By converting qualitative meaning into quantitative coordinates, embeddings allow computers to calculate semantic similarity mathematically: concepts with similar meanings are located closer together in the vector space.
 
 In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
 
@@ -118,7 +119,7 @@ Another practical limit is domain mismatch. A general-purpose embedding model ma
 
 For production use, monitor drift directly: sample recurring queries, track nearest-neighbor quality over time, and re-index when corpus semantics change. Embeddings are not set-and-forget infrastructure; they are living representations of your language layer.
 
-For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). To see how embeddings and semantic retrieval are validated in practice, explore our [retrieval and grounding evaluation kit](/shelf/shared-resources/retrieval-and-grounding-evaluation-kit/).
 
 ### What this changes in practice
 

@@ -1,6 +1,12 @@
 RedirectMatch 301 ^/shelf/notes-tools/obsidian-scratchpad/?$ /shelf/notes/obsidian-scratchpad/
 RedirectMatch 301 ^/shelf/notes-tools/plaintext-logbook/?$ /shelf/notes/plaintext-logbook/
 
-RedirectMatch 301 ^/shelf/music/music-recommendation/?$ /shelf/music/
-RedirectMatch 301 ^/shelf/music/music-recommendation-2/?$ /shelf/music/
-RedirectMatch 301 ^/shelf/music/music-recommendation-3/?$ /shelf/music/
+# Renamed paths (still exist in the current sitemap under new URLs)
+RedirectMatch 301 ^/notes/?$ /sticky-notes/
+RedirectMatch 301 ^/notes/([^/]+)/?$ /sticky-notes/$1/
+
+# Retired paths (permanently removed, not present in the current sitemap)
+RedirectMatch 410 ^/shelf/movies/
+RedirectMatch 410 ^/sentences/sentence-[0-9]+
+RedirectMatch 410 ^/systems/simple-tokenizer/?$
+RedirectMatch 410 ^/shelf/music/music-recommendation

@@ -24,7 +24,6 @@ const CORE_INDEX_ROUTES = [
   '/shelf/philosophy',
   '/shelf/shared-resources',
   '/shelf/tools',
-  '/tags',
   '/portfolio',
   '/dual-nlp-framework',
 ];
@@ -87,23 +86,13 @@ export async function GET({ site }: { site?: URL }) {
     const path = toPath(entry);
     if (isExcludedPath(path)) return;
     const publishDate = (entry.data as { publishDate?: Date }).publishDate;
+    const updatedAt = (entry.data as { updatedAt?: Date }).updatedAt;
+    const date = updatedAt || publishDate;
     urls.push({
       path,
-      lastmod: publishDate ? new Date(publishDate).toISOString() : undefined,
+      lastmod: date ? new Date(date).toISOString() : undefined,
     });
 
-    const tags = (entry.data as { tags?: string[] }).tags ?? [];
-    tags.forEach((tag) => {
-      const slug = slugifyTag(tag);
-      if (!slug) return;
-      tagPaths.add(withTrailingSlash(`/tags/${slug}`));
-    });
-  });
-
-  tagPaths.forEach((path) => {
-    if (!isExcludedPath(path)) {
-      urls.push({ path });
-    }
   });
 
   const dedup = new Map<string, UrlEntry>();

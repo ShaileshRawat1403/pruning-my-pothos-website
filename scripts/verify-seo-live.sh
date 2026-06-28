@@ -11,13 +11,13 @@ check_tag_page() {
   local html
   local robots
   local canonical
-  local expected_canonical="${url}/"
+  local expected_canonical="https://pruningmypothos.com${path}/"
 
   html="$(curl -fsSL "$url/")"
   robots="$(printf '%s' "$html" | rg -o '<meta name="robots" content="[^"]+"' | head -n 1 || true)"
   canonical="$(printf '%s' "$html" | rg -o '<link rel="canonical" href="[^"]+"' | head -n 1 || true)"
 
-  if [[ "$robots" != '<meta name="robots" content="index, follow"' ]]; then
+  if [[ "$robots" != '<meta name="robots" content="noindex, follow"' ]]; then
     echo "FAIL robots ${path}/ :: ${robots:-missing}"
     return 1
   fi
@@ -37,15 +37,15 @@ check_tag_page "/tags/ai"
 check_tag_page "/tags/attention"
 
 sitemap="$(curl -fsSL "${SITE_URL}/sitemap.xml")"
-if ! printf '%s' "$sitemap" | rg -q '<loc>https://pruningmypothos.com/tags/</loc>'; then
-  echo "FAIL sitemap missing /tags/"
+if printf '%s' "$sitemap" | rg -q '<loc>https://pruningmypothos.com/tags/</loc>'; then
+  echo "FAIL sitemap contains /tags/ (should be excluded)"
   exit 1
 fi
 
-if ! printf '%s' "$sitemap" | rg -q '<loc>https://pruningmypothos.com/tags/ai/</loc>'; then
-  echo "FAIL sitemap missing /tags/ai/"
+if printf '%s' "$sitemap" | rg -q '<loc>https://pruningmypothos.com/tags/ai/</loc>'; then
+  echo "FAIL sitemap contains /tags/ai/ (should be excluded)"
   exit 1
 fi
 
-echo "PASS sitemap includes tag archives"
+echo "PASS sitemap excludes tag archives"
 echo "All live SEO checks passed."

@@ -30,6 +30,9 @@ faq:
 
 "Human-in-the-loop" is not a single feature, but a spectrum of design choices for how to combine human and machine intelligence. The level of human oversight you choose is a critical decision that defines the speed, cost, and safety of your system. It is a knob, not a switch.
 
+### What is human-in-the-loop oversight?
+
+Human-in-the-loop (HITL) oversight is a system design pattern where an autonomous process is paused at a critical decision gate to require explicit human validation before proceeding. This pattern ensures that high-risk mutations (like database writes or financial transfers) are verified by human judgment, keeping operations safe and auditable.
 
 In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
 
@@ -110,7 +113,7 @@ To build an effective HITL or HOTL system:
 
 You should also define explicit "escalate-to-human" triggers before launch: confidence thresholds, policy-sensitive intents, or anomaly detection events. This avoids ad hoc handoffs and keeps review load predictable during traffic spikes.
 
-For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). For a detailed walk-through of policy-governed runtime kernels and human approval gates, check out the [Soothsayer MCP kernel local experiment](/shelf/local-experiments/soothsayer-mcp-kernel/).
 
 ### What this changes in practice
 

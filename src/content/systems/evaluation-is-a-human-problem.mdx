@@ -30,6 +30,9 @@ faq:
 
 The quality of a Large Language Model is not a number. While automated benchmarks can measure performance on standardized tests, the real measure of quality—whether a model is helpful, safe, and reliable for a specific purpose—is a matter of human judgment. Evaluation is the process of encoding that judgment into a repeatable system.
 
+### Why is evaluation a human problem?
+
+Evaluation is a human problem because quality is contextual: benchmarks measure general capabilities, but human judgment defines what "correctness" means for a specific task. To build reliable systems, we must translate subjective preferences into structured, repeatable rubrics that can evaluate outputs consistently over time.
 
 In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
 
@@ -114,7 +117,7 @@ The robustness of your evaluation framework is the ultimate ceiling on the quali
 
 One practical addition is to maintain a "failure library" of real bad outputs by category (factual, tone, policy, escalation). Re-scoring this fixed set after every major prompt or model change gives you a stable regression signal that generic benchmarks cannot provide.
 
-For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). To see how rubrics and evaluation datasets are set up for validation, explore the [retrieval and grounding evaluation kit](/shelf/shared-resources/retrieval-and-grounding-evaluation-kit/).
 
 ### What this changes in practice
 

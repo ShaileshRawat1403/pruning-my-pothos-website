@@ -30,6 +30,10 @@ faq:
 > - The right architecture separates reasoning from execution.
 > - Permission gates, verification, and trace logs turn AI output into accountable system behavior.
 
+### Why is the runtime more important than the model for reliability?
+
+The runtime is more important than the model because a model's output is probabilistic, while system behavior must be deterministic. By separating model reasoning (generating ideas or proposing tool calls) from runtime execution (checking policies, verifying schemas, and logging actions), the system ensures that decisions stay safe, auditable, and controlled regardless of model variance.
+
 Most teams begin with model quality and tool calling. That is a natural first step, but it is not enough for production behavior. The model can suggest useful actions, yet the system still needs to decide which actions are safe, valid, and complete.
 
 This is the core shift: the model is not the product boundary. The runtime is.

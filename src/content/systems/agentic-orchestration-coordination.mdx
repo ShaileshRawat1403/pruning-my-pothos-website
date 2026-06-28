@@ -35,6 +35,41 @@ This article explains how to design reliable multi-agent systems with proper coo
 
 It is most useful for teams building multi-agent AI systems and for anyone trying to understand why orchestration fails and how to make it more reliable.
 
+### What is agentic orchestration?
+
+Agentic orchestration is the systematic design of how multiple AI agents coordinate, hand off tasks, and share context to accomplish goals. Rather than relying on a single large prompt or monolithic model, orchestration decomposes complex tasks into specialized agents with explicit boundaries and interfaces.
+
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Pattern</th>
+      <th>Topology</th>
+      <th>Context Overhead</th>
+      <th>Failure Domain</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Centralized Orchestrator</strong></td>
+      <td>Hub-and-spoke</td>
+      <td>High (shared state)</td>
+      <td>Single point of failure</td>
+    </tr>
+    <tr>
+      <td><strong>Choreographed Pipeline</strong></td>
+      <td>Sequential daisy-chain</td>
+      <td>Low (handoff payload)</td>
+      <td>Cascading failure if link breaks</td>
+    </tr>
+    <tr>
+      <td><strong>Autonomous Swarm</strong></td>
+      <td>Peer-to-peer mesh</td>
+      <td>Dynamic/distributed</td>
+      <td>State drift or infinite loops</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Why orchestration is harder than it looks
 
 A single agent system is easier to understand. You give it input, it produces output, you can trace the logic. Multi-agent systems add a layer of complexity that is not immediately obvious.

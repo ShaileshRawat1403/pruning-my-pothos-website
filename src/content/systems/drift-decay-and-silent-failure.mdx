@@ -30,6 +30,9 @@ faq:
 
 Unlike traditional software which fails loudly and predictably, AI systems can degrade in silence. Their performance can worsen over time due to subtle shifts in the data they process, a phenomenon known as drift. This silent failure is one of the greatest operational risks in production AI.
 
+### What causes drift in production systems?
+
+Drift occurs when the data distribution, user behavior, or model response patterns shift over time, leading to gradual behavior change. Because the system's outputs remain structurally valid, these shifts do not trigger typical software exception logs, resulting in silent performance decay rather than a loud application crash.
 
 In practice, <span class="highlight">clarity at boundaries reduces downstream errors</span> more than late-stage tuning.
 
@@ -110,7 +113,7 @@ Assume your model will degrade. A "deploy and forget" mindset is a recipe for fa
 -   **Automate your monitoring.** Set up automated alerts for data drift and sudden drops in performance. Do not rely on your users to tell you when your model is failing.
 -   **Have a retraining strategy.** Plan for how you will update your model with new data. Will you retrain from scratch every quarter? Or will you continuously fine-tune on a stream of new data? The right strategy depends on the application, but you must have one.
 
-For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). For practical tools to evaluate intent alignment and prevent decay, see the [retrieval and grounding evaluation kit](/shelf/shared-resources/retrieval-and-grounding-evaluation-kit/) in our shared resources library.
 
 ### What this changes in practice
 

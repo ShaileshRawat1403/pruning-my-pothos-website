@@ -73,12 +73,34 @@ const skillsCluster = [
     href: '/systems/skill-evaluation-and-versioning/',
   },
 ];
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const canonical = new URL('/systems/', siteUrl).toString();
+
+const breadcrumbsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Systems',
+      item: canonical,
+    },
+  ],
+};
 ---
 <Layout
   title="Systems | A Thinking Workspace"
   description="Long-form systems thinking on AI architecture, governance, language interfaces, and production reliability."
   image="/covers/shelf/shared-semantic-bridge.svg"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)}></script>
   <div class="section-head">
     <h1>Systems</h1>
     <p class="mode-line lead">How things are built and governed.</p>

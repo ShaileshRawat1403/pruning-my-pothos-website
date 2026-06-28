@@ -28,6 +28,10 @@ faq:
 > - Format constraints reduce downstream failures.
 > - Structure turns language into automation.
 
+### What is structured output in AI integration?
+
+Structured output is the practice of constraining a model's natural language response to follow a pre-defined schema, such as a JSON or XML contract. By enforcing this structure, developers can reliably parse, typecheck, and validate AI outputs in downstream code, transforming probabilistic text generation into a dependable, automated pipeline component.
+
 For a Large Language Model's output to be useful in an automated system, it must be predictable. Structured output, such as JSON or XML, provides this predictability, turning a free-form text generator into a reliable component that can interoperate with other software.
 
 
@@ -190,7 +194,7 @@ fails, a small repair prompt can ask the model to return only a compliant
 object without changing meaning. This isolates formatting errors from semantic
 errors and improves end-to-end reliability.
 
-For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/).
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). To see how structured outputs are designed and implemented in shared resources, explore our [DAX Agentic Orchestration deck](/shelf/shared-resources/dax-agentic-orchestration-deck/).
 
 ### What this changes in practice
 

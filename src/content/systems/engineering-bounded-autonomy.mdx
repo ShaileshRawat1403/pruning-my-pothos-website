@@ -33,6 +33,41 @@ faq:
 
 This article explains how to engineer AI systems that can act autonomously while staying within safe operating boundaries. It covers boundary definition, architectural enforcement, safety constraints, and governance hooks.
 
+### What is bounded autonomy in AI systems?
+
+Bounded autonomy is a design pattern that allows AI systems to make decisions and execute actions independently, but only within strictly defined, architecturally enforced limits. Rather than relying on a model's self-restraint or safety prompts, bounded autonomy sets hard constraints at the runtime/API layer to prevent unauthorized or dangerous behaviors.
+
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Autonomy Mode</th>
+      <th>Enforcement Mechanism</th>
+      <th>Allowed Actions</th>
+      <th>Escalation Trigger</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Unrestricted</strong></td>
+      <td>Model self-policing (Prompts)</td>
+      <td>Any tool execution</td>
+      <td>None (vulnerable to prompt injection)</td>
+    </tr>
+    <tr>
+      <td><strong>Bounded (Active)</strong></td>
+      <td>Runtime sandbox + policy checks</td>
+      <td>Whitelist of tools/scopes</td>
+      <td>Token usage limit, high-risk APIs</td>
+    </tr>
+    <tr>
+      <td><strong>Human-in-the-Loop</strong></td>
+      <td>Gateway permission manager</td>
+      <td>Read-only, non-destructive</td>
+      <td>All write/delete mutations</td>
+    </tr>
+  </tbody>
+</table>
+
 It is most useful for teams building autonomous AI systems and for leaders who need to understand how to get the benefits of autonomy without the risks.
 
 ### Why autonomy needs boundaries

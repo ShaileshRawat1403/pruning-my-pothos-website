@@ -33,6 +33,10 @@ faq:
 
 Most agent failures are not caused by low model capability. They come from weak orchestration boundaries between model output and system execution. A model can be correct in language and still unsafe in behavior.
 
+### How does governed execution secure agent runtimes?
+
+Governed execution secures agent runtimes by separating action proposal from action authorization. The language model acts as a reasoning engine to propose tool calls, while a deterministic system runtime intercepts, parses, and validates each proposed action against a strict policy contract before execution, ensuring that unsafe or unauthorized actions are blocked.
+
 This document explains the end-to-end path from user intent to runtime-controlled execution, and why each control point exists.
 
 

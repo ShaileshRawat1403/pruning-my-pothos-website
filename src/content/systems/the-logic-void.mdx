@@ -33,6 +33,41 @@ faq:
 
 This article explains where AI reasoning breaks down, why those boundaries matter for system design, and how to build reliable systems that acknowledge the limits of logic.
 
+### What is the logic void in AI reasoning?
+
+The logic void refers to the boundary where an AI model's statistical pattern-matching fails to resolve ambiguous inputs, conflicting priorities, or out-of-distribution scenarios. Because language models do not possess a true internal model of logical truth or ethical consensus, they cannot reliably navigate these gaps, leading to sudden reasoning collapse or confident hallucinations.
+
+<table class="comparison-table">
+  <thead>
+    <tr>
+      <th>Scenario Type</th>
+      <th>Model Behavior in Void</th>
+      <th>System Fallback Path</th>
+      <th>Success Criteria</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Deterministic</strong></td>
+      <td>Pattern matches training data</td>
+      <td>Direct execution</td>
+      <td>High accuracy (automated check)</td>
+    </tr>
+    <tr>
+      <td><strong>Ambiguous context</strong></td>
+      <td>Extrapolates probabilistically</td>
+      <td>Escalate for clarification</td>
+      <td>Graceful fallback / prompt user</td>
+    </tr>
+    <tr>
+      <td><strong>Value conflict</strong></td>
+      <td>Vulnerable to prompt oscillation</td>
+      <td>Enforce strict policy rules</td>
+      <td>Safety gate verification</td>
+    </tr>
+  </tbody>
+</table>
+
 It is most useful for teams building AI systems that need to handle edge cases, and for anyone trying to understand why confident AI outputs can still be deeply wrong.
 
 ### Where logic ends

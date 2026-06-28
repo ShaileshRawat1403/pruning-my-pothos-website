@@ -4,14 +4,71 @@ import '../styles/systems.css';
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  noindex?: boolean;
+  ogType?: 'website' | 'article';
 }
 
-const { title, description = 'Sans Serif Systems: Open tools for AI-assisted natural language programming.' } = Astro.props;
+const { 
+  title, 
+  description: pageDescription = 'Sans Serif Systems: Open tools for AI-assisted natural language programming.',
+  image: socialImage = '/covers/notes-tools-plaintext.svg',
+  noindex = false,
+  ogType = 'website'
+} = Astro.props;
+
 const pathname = Astro.url.pathname;
 const isActive = (path: string) => {
   if (path === '/') return pathname === '/' || pathname === '';
   return pathname.startsWith(path);
 };
+
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const canonical = new URL(Astro.url.pathname, siteUrl).toString();
+const absoluteSocialImage = new URL(socialImage, siteUrl).toString();
+
+// JSON-LD Schemas
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Sans Serif Systems",
+  "url": siteUrl.toString()
+};
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Sans Serif Systems",
+  "url": siteUrl.toString(),
+  "logo": new URL('/favicon-systems.svg', siteUrl).toString()
+};
+
+const isToolPage = pathname.startsWith('/tools/') && pathname !== '/tools/' && pathname !== '/tools';
+const schemas = [];
+
+if (isToolPage) {
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": title.split('|')[0].trim(),
+    "description": pageDescription,
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    }
+  });
+} else {
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": title,
+    "description": pageDescription,
+    "url": canonical
+  });
+}
 ---
 
 <!doctype html>
@@ -21,8 +78,33 @@ const isActive = (path: string) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon-systems.svg" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
+    <meta name="description" content={pageDescription} />
+    <meta name="author" content="Shailesh Rawat" />
     <title>{title}</title>
+    
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+    
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="Sans Serif Systems" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={absoluteSocialImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={absoluteSocialImage} />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    {schemas.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
     
     <script is:inline>
       const getTheme = () => {

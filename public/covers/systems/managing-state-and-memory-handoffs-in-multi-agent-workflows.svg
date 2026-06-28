@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
+  <title id="title">State and Memory Handoffs</title>
+  <desc id="desc">Handoff protocol transferring state and context memory between multi-agent processes</desc>
+  <rect width="400" height="225" fill="#f9fafb"/>
+  <!-- State Handoff Group -->
+  <g transform="translate(40, 40)">
+    <!-- Agent A -->
+    <rect x="0" y="30" width="80" height="60" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="40" y="55" font-family="system-ui, sans-serif" font-size="10" fill="#2563eb" text-anchor="middle">Agent A</text>
+    <text x="40" y="70" font-family="monospace" font-size="8" fill="#60a5fa" text-anchor="middle">State: done</text>
+
+    <!-- Handoff Data Block -->
+    <g transform="translate(100, 40)">
+      <path d="M 0 20 H 40" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <polygon points="35,16 43,20 35,24" fill="#94a3b8"/>
+      <rect x="5" y="-15" width="30" height="25" rx="3" fill="#f8fafc" stroke="#64748b" stroke-width="1"/>
+      <text x="20" y="-3" font-family="monospace" font-weight="bold" font-size="9" fill="#475569" text-anchor="middle">{}</text>
+    </g>
+
+    <!-- State Handoff Gate (Middle) -->
+    <rect x="150" y="20" width="60" height="80" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="180" y="55" font-family="system-ui, sans-serif" font-weight="bold" font-size="10" fill="#334155" text-anchor="middle">Memory</text>
+    <text x="180" y="70" font-family="monospace" font-size="9" fill="#475569" text-anchor="middle">Handoff</text>
+
+    <!-- Handoff Target Arrow -->
+    <g transform="translate(220, 40)">
+      <path d="M 0 20 H 40" stroke="#94a3b8" stroke-width="1.5"/>
+      <polygon points="35,16 43,20 35,24" fill="#94a3b8"/>
+    </g>
+
+    <!-- Agent B -->
+    <rect x="280" y="30" width="80" height="60" rx="6" fill="#f0fdf4" stroke="#10b981" stroke-width="1.5"/>
+    <text x="320" y="55" font-family="system-ui, sans-serif" font-size="10" fill="#15803d" text-anchor="middle">Agent B</text>
+    <text x="320" y="70" font-family="monospace" font-size="8" fill="#166534" text-anchor="middle">State: ready</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
+    <text x="200" y="195" text-anchor="middle">state payload → structured handoff → context recovery</text>
+  </g>
+</svg>

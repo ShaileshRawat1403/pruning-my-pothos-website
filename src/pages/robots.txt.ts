@@ -1,9 +1,9 @@
 export async function GET({ site }: { site?: URL }) {
   const siteUrl = site ?? new URL(process.env.SITE_URL || 'https://pruningmypothos.com');
-  const sitemapUrl = new URL('/sitemap.xml', siteUrl).toString();
+  const sitemapUrl = new URL('/sitemap-index.xml', siteUrl).toString();
 
 const body = `# PruningMyPothos robots.txt
-# Last updated: 2026-04-14
+# Last updated: 2026-06-28
 
 User-agent: *
 Allow: /

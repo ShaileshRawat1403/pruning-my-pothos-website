@@ -13,7 +13,11 @@ export function getStaticPaths() {
 const { sample } = Astro.props;
 ---
 
-<PortfolioLayout title={`${sample.title} | Portfolio`}>
+<PortfolioLayout 
+  title={`${sample.title} | Portfolio`}
+  description={sample.summary}
+  ogType="article"
+>
   <nav class="nav">
     <div class="nav-inner">
       <a class="brand-link" href="/portfolio/">

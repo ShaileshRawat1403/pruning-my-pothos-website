@@ -9,9 +9,11 @@ tags:
   - operations
   - evaluation
   - governance
+updatedAt: "2026-06-25"
 proofPoints:
   - Defines the circular LLM-Ops lifecycle
   - Referenced in observability-first-ai-systems.mdx
+  - Links to NewTuple OCR benchmarking blog under the evaluations section.
 faq:
   - question: What is LLM-Ops?
     answer: "LLM-Ops is governance over time for probabilistic systems. It replaces traditional DevOps concerns with evaluation, drift monitoring, and semantic observation. The lifecycle is circular: prompt, evaluate, tune, observe, repeat."
@@ -97,6 +99,7 @@ LLM-Ops means operating probabilistic systems as living products rather than one
       <summary>Act II: The modern paradigm</summary>
       <ol>
         <li><a href="#evaluation-is-the-new-unit-test">Evaluation Is the New Unit Test</a></li>
+        <li><a href="#benchmarks-vs-runtime-evaluations">Benchmarks vs. Runtime Evaluations</a></li>
       </ol>
     </details>
     <details>
@@ -170,6 +173,12 @@ pred = {"ticket_1": "refund", "ticket_2": "billing"}
 accuracy = sum(pred[k] == gold[k] for k in gold) / len(gold)
 print(f"accuracy={accuracy:.2f}")
 ```
+
+### Benchmarks vs. Runtime Evaluations
+
+While live systems rely on runtime evaluations to monitor operational telemetry, establishing baseline confidence requires static **benchmark datasets**. These benchmarks check how different models or libraries perform on highly specific tasks.
+
+For example, in document processing and extraction workloads, developers must benchmark OCR tools, layout parsers, and text extractors (such as PaddleOCR, Docling, LlamaParse, and Surya) to determine baseline accuracy, speed, and cost trade-offs before integrating them. As detailed in the comprehensive [NewTuple document parsing benchmark](https://www.newtuple.com/post/ocr-benchmark-paddleocr-docling-llamaparse-surya), selecting the right model combination based on static datasets is the first step in the LLMOps lifecycle. Once a baseline is selected, continuous runtime evaluation takes over to guard against live behavioral drift.
 
 <figure class="diagram">
   <svg viewBox="0 0 900 180" role="img" aria-labelledby="eval-title eval-desc" style="width: 100%; height: auto; display: block;">

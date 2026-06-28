@@ -85,6 +85,7 @@ const articleSchema = {
   title={`${sentence.data.title} | Sentences | A Thinking Workspace`}
   description={sentence.data.summary}
   ogType="article"
+  disableDefaultArticleSchema={true}
 >
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)}></script>
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>

@@ -3,11 +3,34 @@ import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 
 const stickyNotes = await getCollection('sticky-notes');
+
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const canonical = new URL('/sticky-notes/', siteUrl).toString();
+
+const breadcrumbsSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', siteUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Sticky Notes',
+      item: canonical,
+    },
+  ],
+};
 ---
 <Layout
   title="Sticky Notes | A Thinking Workspace"
   description="Micro-notes in progress: early signals, unfinished thoughts, and compact ideas worth revisiting."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)}></script>
   <div class="section-head">
     <h1>Sticky Notes</h1>
     <p class="mode-line lead">How ideas actually begin - messy, partial, human.</p>

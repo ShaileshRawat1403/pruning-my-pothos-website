@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Semantic Cache Policy Guide</title>
+  <desc id="desc">Editorial cover with a query lookup matching a cached response via a similarity threshold gate.</desc>
+  <rect width="1200" height="630" fill="#f7f4ef"/>
+  <rect x="80" y="86" width="1040" height="458" rx="28" fill="#fffdf9" stroke="#d6cec1" stroke-width="4"/>
+
+  <!-- Cache system motif -->
+  <!-- Query node -->
+  <circle cx="280" cy="300" r="40" fill="none" stroke="#3a3a36" stroke-width="4"/>
+  <text x="280" y="308" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" fill="#2f2f2b" text-anchor="middle">Query</text>
+
+  <!-- Similarity threshold gate -->
+  <polygon points="560,250 640,300 560,350 480,300" fill="none" stroke="#ef7d32" stroke-width="4"/>
+  <text x="560" y="306" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" fill="#ef7d32" text-anchor="middle">Cosine &gt; 0.92</text>
+
+  <!-- Cache hit node -->
+  <rect x="800" y="250" width="220" height="100" rx="14" fill="#ef7d32" fill-opacity="0.12" stroke="#ef7d32" stroke-width="4"/>
+  <text x="910" y="308" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" fill="#ef7d32" text-anchor="middle">Cache Hit</text>
+
+  <!-- Connections -->
+  <line x1="320" y1="300" x2="480" y2="300" stroke="#3a3a36" stroke-width="4" stroke-dasharray="8 6"/>
+  <line x1="640" y1="300" x2="800" y2="300" stroke="#ef7d32" stroke-width="4"/>
+
+  <text x="140" y="140" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#1f1f1b">Semantic Cache Policy Guide</text>
+  <text x="140" y="180" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" fill="#4d4d46">Calibrating similarity thresholds and invalidation TTLs</text>
+</svg>

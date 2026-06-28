@@ -1,0 +1,81 @@
+---
+interface Props {
+  status: 'live' | 'prototype' | 'coming-soon' | 'private';
+}
+
+const { status } = Astro.props;
+
+const config = {
+  live: { label: 'Live Demo', class: 'status-live' },
+  prototype: { label: 'Local Prototype', class: 'status-proto' },
+  'coming-soon': { label: 'Coming Soon', class: 'status-soon' },
+  private: { label: 'Private System', class: 'status-private' }
+}[status] || { label: 'Concept', class: 'status-soon' };
+---
+
+<span class={`status-badge ${config.class}`}>
+  <span class="status-dot"></span>
+  <span class="status-label">{config.label}</span>
+</span>
+
+<style>
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 99px;
+  }
+
+  /* Status Colors */
+  .status-live {
+    background: rgba(0, 242, 254, 0.05);
+    border-color: rgba(0, 242, 254, 0.25);
+    color: var(--accent-cyan);
+  }
+  .status-live .status-dot {
+    background: var(--accent-cyan);
+    box-shadow: 0 0 8px var(--accent-cyan);
+  }
+
+  .status-proto {
+    background: rgba(139, 92, 246, 0.05);
+    border-color: rgba(139, 92, 246, 0.25);
+    color: var(--accent-purple);
+  }
+  .status-proto .status-dot {
+    background: var(--accent-purple);
+    box-shadow: 0 0 8px var(--accent-purple);
+  }
+
+  .status-soon {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+  }
+  .status-soon .status-dot {
+    background: var(--text-muted);
+  }
+
+  .status-private {
+    background: rgba(249, 115, 22, 0.05);
+    border-color: rgba(249, 115, 22, 0.25);
+    color: var(--accent-orange);
+  }
+  .status-private .status-dot {
+    background: var(--accent-orange);
+    box-shadow: 0 0 8px var(--accent-orange);
+  }
+</style>

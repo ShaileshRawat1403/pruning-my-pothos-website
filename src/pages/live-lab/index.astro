@@ -3,42 +3,70 @@ import Layout from '../../layouts/SystemsLayout.astro';
 
 const buildLogs = [
   {
+    entry: 'Lab Entry 004',
     date: '2026-06-28',
-    event: 'Systems Initial Scaffolded Release (v0.1.0)',
-    desc: 'Launched the home playground, tools bench directories, and the primary live sandboxes for Prompt and Workflow diagram utilities.',
-    status: 'Operational'
+    event: 'Prompt ➔ JSON Sandbox',
+    desc: 'Integrated a browser-native schema builder converting raw developer instructions into JSON validation files. Verified with client-side outputs.',
+    status: 'Live Demo',
+    evidence: 'Client-side output generation'
   },
   {
-    date: '2026-06-24',
-    event: 'Soothsayer MCP Engine Release',
-    desc: 'Wired up context-aware inspection rules and file parsers for local AI operations.',
-    status: 'Completed'
+    entry: 'Lab Entry 003',
+    date: '2026-06-28',
+    event: 'Workflow ➔ Diagram Sandbox',
+    desc: 'Launched the Mermaid flowchart and state compiler directly in the tools playground, translating text loops into visual charts.',
+    status: 'Live Demo',
+    evidence: 'Mermaid compile engine online'
+  },
+  {
+    entry: 'Lab Entry 002',
+    date: '2026-06-28',
+    event: 'Systems Light Mode + Conceptual Logo',
+    desc: 'Designed a systemic vector logo representing trajectory control bounds and integrated a premium light mode cycle into the layout.',
+    status: 'Completed',
+    evidence: 'systems-theme storage variable'
+  },
+  {
+    entry: 'Lab Entry 001',
+    date: '2026-06-28',
+    event: 'Two-Door Routing Split',
+    desc: 'Separated the domain into a product-led Systems Lab at / and moved the legacy thinker archive to /sentiments/.',
+    status: 'Completed',
+    evidence: '508 pages compiled successfully'
   }
 ];
 ---
 
-<Layout title="Live Logs & Builds | Sans Serif Systems">
+<Layout title="Live Lab Build Ledger | Sans Serif Systems">
   <div class="glow-blob glow-cyan"></div>
   <div class="glow-blob glow-purple"></div>
 
   <section class="page-header">
-    <span class="meta-badge">ACTIVITY FEED</span>
+    <span class="meta-badge">ACTIVITY LEDGER</span>
     <h1>Live Build Lab</h1>
     <p>
-      Build logs, active release ledgers, and transparency run logs showing the evolution of the natural language programming tools.
+      An immutable ledger-style log detailing the release timeline, verification checkpoints, and execution status of the lab.
     </p>
   </section>
 
   <div class="timeline-container">
     {buildLogs.map((log) => (
-      <div class="timeline-item card-glass">
-        <span class="timeline-date">{log.date}</span>
-        <div class="timeline-badge-wrap">
-          <span class="status-dot"></span>
-          <span class="status-text">{log.status}</span>
+      <div class="timeline-item card-glass" style="margin-bottom: 2rem; padding: 2rem; border-radius: 12px; position: relative; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 0.75rem;">
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--accent-cyan);">{log.entry}</span>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">{log.date}</span>
         </div>
-        <h3>{log.event}</h3>
-        <p>{log.desc}</p>
+        
+        <h3 style="font-family: var(--font-heading); color: var(--text-primary); font-size: 1.35rem; margin: 0.25rem 0;">{log.event}</h3>
+        <p style="color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; margin: 0;">{log.desc}</p>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; flex-wrap: wrap; gap: 0.5rem; background: rgba(255,255,255,0.01); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid var(--card-border);">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 6px; height: 6px; border-radius: 99px; background: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan);"></span>
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--text-primary);">{log.status}</span>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Evidence: {log.evidence}</span>
+        </div>
       </div>
     ))}
   </div>
@@ -71,72 +99,18 @@ const buildLogs = [
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 1rem;
-    letter-spacing: -0.5px;
   }
 
   .page-header p {
-    font-size: 1.1rem;
     color: var(--text-secondary);
-    max-width: 60ch;
+    font-size: 1.15rem;
+    max-width: 700px;
     margin: 0 auto;
     line-height: 1.6;
   }
 
   .timeline-container {
     max-width: 800px;
-    margin: 3rem auto 5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .timeline-item {
-    padding: 2.2rem;
-    position: relative;
-  }
-
-  .timeline-date {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--accent-cyan);
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  .timeline-badge-wrap {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-bottom: 1rem;
-  }
-
-  .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 99px;
-    background: #10b981;
-    box-shadow: 0 0 8px #10b981;
-  }
-
-  .status-text {
-    font-size: 0.72rem;
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-
-  .timeline-item h3 {
-    font-family: var(--font-heading);
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 0.75rem;
-    letter-spacing: -0.2px;
-  }
-
-  .timeline-item p {
-    color: var(--text-secondary);
-    font-size: 0.96rem;
-    line-height: 1.65;
+    margin: 2rem auto;
   }
 </style>

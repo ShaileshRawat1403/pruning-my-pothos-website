@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/SystemsLayout.astro';
+import ToolStatusBadge from '../../components/ToolStatusBadge.astro';
 
 const toolCategories = [
   {
@@ -28,6 +29,7 @@ const featuredTools = [
   {
     id: 'prompt-to-json',
     category: 'prompt-context',
+    status: 'live' as const,
     title: 'Prompt ➔ JSON',
     desc: 'Convert unstructured prose prompts into production-ready JSON schemas.',
     install: 'npm install -g @sans-serif/prompt-json',
@@ -36,6 +38,7 @@ const featuredTools = [
   {
     id: 'workflow-to-diagram',
     category: 'workflow-loop',
+    status: 'live' as const,
     title: 'Workflow ➔ Diagram',
     desc: 'Generate interactive Mermaid flowcharts and schemas from text workflows.',
     install: 'pip install sans-serif-workflow',
@@ -44,34 +47,38 @@ const featuredTools = [
   {
     id: 'repo-context-pack',
     category: 'prompt-context',
+    status: 'coming-soon' as const,
     title: 'Repo ➔ Context Pack',
     desc: 'Gather and compress repository structures into a single XML pack for LLM ingestion.',
-    install: 'npm install -g @sans-serif/repo-pack',
-    href: '/tools/repo-context-pack/'
+    install: '',
+    href: '/docs/tool-status/'
   },
   {
     id: 'csv-to-eval',
     category: 'harness-eval',
+    status: 'prototype' as const,
     title: 'CSV ➔ Eval Harness',
     desc: 'Convert raw CSV outputs into structured evaluation datasets and rubrics.',
-    install: 'pip install sans-serif-eval',
-    href: '/tools/csv-to-eval/'
+    install: '',
+    href: '/docs/tool-status/'
   },
   {
     id: 'change-to-checklist',
     category: 'workflow-loop',
+    status: 'prototype' as const,
     title: 'Change Request ➔ HITL Checklist',
     desc: 'Analyze codebase change requests to generate human-in-the-loop review gates.',
-    install: 'npm install -g @sans-serif/hitl-checklist',
-    href: '/tools/change-to-checklist/'
+    install: '',
+    href: '/docs/tool-status/'
   },
   {
     id: 'notes-to-brief',
     category: 'docs-assets',
+    status: 'prototype' as const,
     title: 'Code/Notes ➔ PDF Brief',
     desc: 'Transform raw dev notes and diagrams into print-ready documentation briefs.',
-    install: 'pip install sans-serif-brief',
-    href: '/tools/notes-to-brief/'
+    install: '',
+    href: '/docs/tool-status/'
   }
 ];
 ---
@@ -106,18 +113,32 @@ const featuredTools = [
         {featuredTools.map((tool) => (
           <div class="tool-catalog-card card-glass" data-category={tool.category}>
             <div class="card-glow" aria-hidden="true"></div>
-            <span class="cat-badge">{toolCategories.find(c => c.id === tool.category)?.name}</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem;">
+              <span class="cat-badge" style="margin-bottom: 0;">{toolCategories.find(c => c.id === tool.category)?.name}</span>
+              <ToolStatusBadge status={tool.status} />
+            </div>
             <h3>{tool.title}</h3>
             <p>{tool.desc}</p>
             
-            <div class="terminal-box">
-              <span class="terminal-prompt">$</span>
-              <code class="terminal-cmd">{tool.install}</code>
-              <button class="copy-terminal-btn">Copy</button>
-            </div>
+            {tool.status === 'live' ? (
+              <div class="terminal-box">
+                <span class="terminal-prompt">$</span>
+                <code class="terminal-cmd">{tool.install}</code>
+                <button class="copy-terminal-btn">Copy</button>
+              </div>
+            ) : (
+              <div class="terminal-box" style="opacity: 0.85;">
+                <span class="terminal-prompt" style="color: var(--accent-purple);">ℹ</span>
+                <span style="color: var(--text-secondary); font-size: 0.82rem; margin-left: 0.4rem; font-family: var(--font-sans);">CLI planned &bull; Local prototype coming soon</span>
+              </div>
+            )}
 
             <div class="card-footer-actions">
-              <a href={tool.href} class="btn-try">Try Live in Browser &rarr;</a>
+              {tool.status === 'live' ? (
+                <a href={tool.href} class="btn-try">Try Live in Browser &rarr;</a>
+              ) : (
+                <a href={tool.href} class="btn-try" style="border-color: rgba(139, 92, 246, 0.2); color: var(--accent-purple); background: transparent;">View Concept &rarr;</a>
+              )}
             </div>
           </div>
         ))}

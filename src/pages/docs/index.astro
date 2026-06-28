@@ -2,51 +2,59 @@
 import Layout from '../../layouts/SystemsLayout.astro';
 ---
 
-<Layout title="Documentation & Quickstart | Sans Serif Systems">
+<Layout title="Documentation & Guides | Sans Serif Systems">
   <div class="glow-blob glow-cyan"></div>
   <div class="glow-blob glow-purple"></div>
 
   <section class="page-header">
-    <span class="meta-badge">QUICKSTART</span>
-    <h1>Documentation & Guides</h1>
+    <span class="meta-badge">KNOWLEDGE SYSTEM</span>
+    <h1>Documentation & Architecture</h1>
     <p>
-      CLI commands, package configurations, and API integration paths for developers running the Sans Serif systems bench.
+      Explore the frameworks, execution loops, public-private boundaries, and prototype roadmaps for AI-assisted natural language programming.
     </p>
   </section>
 
   <div class="docs-container">
     <!-- Left Navigation -->
     <div class="docs-nav card-glass">
-      <h5>Quickstart</h5>
-      <a href="#install" class="active">Installation</a>
-      <a href="#config">Configuration</a>
-      <a href="#cli">CLI Commands</a>
-      <a href="#api">API Integration</a>
+      <h5>Architectural Core</h5>
+      <a href="/docs/natural-language-programming-stack/" class="active">NLP Systems Stack</a>
+      <a href="/docs/public-private-boundary/">Public / Private Boundary</a>
+      <a href="/docs/tool-status/">Tool Status Registry</a>
+      <a href="/docs/">Introduction</a>
     </div>
 
     <!-- Main Content -->
     <div class="docs-main card-glass">
-      <section id="install" class="docs-section">
-        <h2>Local Installation</h2>
-        <p>The Systems bench is available as npm packages for Node.js and pip packages for Python environments. Install individual utilities globally or as local project devDependencies:</p>
-        
-        <div class="terminal-box">
-          <span class="terminal-prompt">$</span>
-          <code class="terminal-cmd">npm install -g @sans-serif/prompt-json</code>
-        </div>
-        <div class="terminal-box" style="margin-top: 1rem;">
-          <span class="terminal-prompt">$</span>
-          <code class="terminal-cmd">pip install sans-serif-workflow</code>
-        </div>
-      </section>
+      <section id="intro" class="docs-section">
+        <h2>Introduction</h2>
+        <p>
+          Sans Serif Systems is a solo-builder systems laboratory and utility bench dedicated to making AI-assisted developer operations predictable, verifiable, and secure.
+        </p>
+        <p>
+          Our development philosophy rejects raw, ad-hoc, untracked prompt snippets in favor of formal execution loops, structured interfaces, and strict build ledgers.
+        </p>
 
-      <section id="config" class="docs-section" style="margin-top: 3rem; border-top: 1px solid var(--card-border); padding-top: 2rem;">
-        <h2>Configuration Parameters</h2>
-        <p>Define configuration keys globally or inside local `.env` files inside your codebase directories. By default, the utilities operate in <strong>local-first mode</strong>, executing transformations without making external web API network calls.</p>
-        <pre class="code-block"><code># Local environment configuration
-SANS_SERIF_ENV=development
-SANS_SERIF_LOCAL_FIRST=true
-SANS_SERIF_LLM_PROVIDER=gemini</code></pre>
+        <h3 style="margin-top: 2rem; color: var(--text-primary);">Three Operational Pillars</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          <div class="pillar-card" style="border: 1px solid var(--card-border); padding: 1.5rem; border-radius: 8px; background: rgba(255,255,255,0.01);">
+            <h4 style="color: var(--accent-cyan); font-family: var(--font-heading); margin-bottom: 0.5rem;">1. Bounded Autonomy</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">Limiting agent action spaces using declarative runtime schemas rather than raw system instructions.</p>
+          </div>
+          <div class="pillar-card" style="border: 1px solid var(--card-border); padding: 1.5rem; border-radius: 8px; background: rgba(255,255,255,0.01);">
+            <h4 style="color: var(--accent-purple); font-family: var(--font-heading); margin-bottom: 0.5rem;">2. Proof of Evidence</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">Logging verification output checks to an immutable local ledger before promoting files to main.</p>
+          </div>
+          <div class="pillar-card" style="border: 1px solid var(--card-border); padding: 1.5rem; border-radius: 8px; background: rgba(255,255,255,0.01);">
+            <h4 style="color: var(--accent-orange); font-family: var(--font-heading); margin-bottom: 0.5rem;">3. Local-First Execution</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">Enforcing local-first schemas, local tokenizers, and sandbox executions before hitting external networks.</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 3.5rem; color: var(--text-primary); font-family: var(--font-heading);">Explore the Systems Docs</h3>
+        <p style="margin-top: 0.5rem; line-height: 1.6;">
+          Select a guide from the sidebar or get started directly by reading about the <a href="/docs/natural-language-programming-stack/" style="color: var(--accent-cyan); text-decoration: none; font-weight: 500;">Natural Language Programming Stack &rarr;</a>
+        </p>
       </section>
     </div>
   </div>
@@ -79,113 +87,80 @@ SANS_SERIF_LLM_PROVIDER=gemini</code></pre>
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 1rem;
-    letter-spacing: -0.5px;
   }
 
   .page-header p {
-    font-size: 1.1rem;
     color: var(--text-secondary);
-    max-width: 60ch;
+    font-size: 1.15rem;
+    max-width: 700px;
     margin: 0 auto;
     line-height: 1.6;
   }
 
-  /* Docs Layout */
   .docs-container {
     display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 2.5rem;
-    margin: 3rem 0 5rem;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
     align-items: start;
+    margin-top: 1rem;
   }
 
   .docs-nav {
-    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    padding: 1.75rem;
+    border-radius: 12px;
   }
 
   .docs-nav h5 {
     font-family: var(--font-heading);
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--text-primary);
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-bottom: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
   }
 
   .docs-nav a {
     color: var(--text-secondary);
-    padding: 0.6rem 0.85rem;
-    border-radius: 8px;
-    font-family: var(--font-sans);
-    font-size: 0.92rem;
-    font-weight: 500;
     text-decoration: none;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 0.25rem;
     transition: all 0.2s ease;
+    font-family: var(--font-heading);
   }
 
-  .docs-nav a:hover,
+  .docs-nav a:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
   .docs-nav a.active {
     color: var(--accent-cyan);
     background: rgba(0, 242, 254, 0.05);
+    font-weight: 500;
   }
 
   .docs-main {
     padding: 3rem;
+    border-radius: 12px;
+    min-height: 500px;
   }
 
   .docs-section h2 {
     font-family: var(--font-heading);
-    font-size: 1.6rem;
-    font-weight: 700;
+    font-size: 1.75rem;
     color: var(--text-primary);
-    margin-bottom: 1rem;
-    letter-spacing: -0.3px;
+    margin-bottom: 1.25rem;
   }
 
   .docs-section p {
     color: var(--text-secondary);
-    font-size: 0.98rem;
-    line-height: 1.68;
-    margin-bottom: 1.5rem;
-  }
-
-  .terminal-box {
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-  }
-
-  .terminal-prompt {
-    color: var(--accent-orange);
-  }
-
-  .terminal-cmd {
-    color: #a7f3d0;
-  }
-
-  .code-block {
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    overflow-x: auto;
-  }
-
-  .code-block code {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    font-size: 1.05rem;
   }
 
   @media (max-width: 900px) {

@@ -74,10 +74,10 @@ I need a schema to track pull requests. It needs an id (string, uuid), title, li
         </ul>
 
         <h3>Local Installation</h3>
-        <p>Run this tool in your local workspace, terminal, or build pipelines:</p>
+        <p>Deploy prompt validations offline inside your codebase using Tessera's python package:</p>
         <div class="terminal-box">
           <span class="terminal-prompt">$</span>
-          <code class="terminal-cmd">npm install -g @sans-serif/prompt-json</code>
+          <code class="terminal-cmd">pip install tesserakit-core tesserakit-prompts</code>
           <button class="copy-terminal-btn" id="copy-npm-btn">Copy</button>
         </div>
       </div>
@@ -85,15 +85,34 @@ I need a schema to track pull requests. It needs an id (string, uuid), title, li
       <!-- Constraints & Resources Right -->
       <div class="info-sidebar">
         <div class="sidebar-box card-glass">
-          <h5>Open Source Specs</h5>
-          <p><strong>License:</strong> MIT</p>
-          <p><strong>Version:</strong> v2.1.4</p>
-          <a href="https://github.com/ShaileshRawat1403" class="sidebar-link" target="_blank" rel="noopener noreferrer">View Repository &rarr;</a>
+          <h5>Tool Profile</h5>
+          <div class="tool-profile-list">
+            <div class="profile-row">
+              <span class="profile-label">Status</span>
+              <span class="profile-val" style="color: var(--accent-cyan); font-weight: bold;">Live Demo</span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">Mode</span>
+              <span class="profile-val">Client-side</span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">Engine</span>
+              <span class="profile-val">ToolSmith</span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">Future Wiring</span>
+              <span class="profile-val"><a href="/docs/tool-status/">Tessera schema-pack</a></span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">Output</span>
+              <span class="profile-val">JSON Schema + Example</span>
+            </div>
+          </div>
         </div>
 
         <div class="sidebar-box card-glass">
           <h5>Browser Limits</h5>
-          <p>The online demo is limited to 20 keys per schema. Local CLI installations do not limit depth or key count.</p>
+          <p>The online demo is limited to 20 keys per schema. Local CLI installations using Tessera run offline with no limits.</p>
         </div>
 
         <div class="sidebar-box card-glass production-box">

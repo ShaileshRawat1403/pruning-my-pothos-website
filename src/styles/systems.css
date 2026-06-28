@@ -328,6 +328,42 @@ body {
   color: var(--accent-cyan);
 }
 
+/* Tool profile parameters block styling */
+.tool-profile-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 0.45rem;
+}
+.profile-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.profile-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-family: var(--font-heading);
+}
+.profile-val {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+.profile-val a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+.profile-val a:hover {
+  text-decoration: underline;
+}
+
 /* Utilities */
 .gradient-text {
   background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));

@@ -1,0 +1,212 @@
+---
+import Layout from '../../layouts/SystemsLayout.astro';
+---
+
+<Layout title="Change Request ➔ HITL Checklist | Sans Serif Systems">
+  <div class="glow-blob glow-cyan"></div>
+  <div class="glow-blob glow-purple"></div>
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs" style="font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 2rem; color: var(--text-muted);">
+    <a href="/tools/" style="color: var(--accent-cyan); text-decoration: none;">Tools</a> / <span style="color: var(--text-primary);">Change Request ➔ HITL Checklist</span>
+  </div>
+
+  <section class="tool-hero" style="margin-bottom: 3rem;">
+    <h1 style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Change Request ➔ HITL Checklist</h1>
+    <p class="subtitle" style="font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; line-height: 1.6;">
+      Analyze codebase change requests to generate structured risk levels, review gates, and human-in-the-loop (HITL) checklists.
+    </p>
+  </section>
+
+  <!-- Sandbox Grid (Try Live) -->
+  <section class="sandbox-section" style="margin-bottom: 5rem;">
+    <div class="sandbox-container card-glass" style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2rem; border-radius: 12px; overflow: hidden; min-height: 520px;">
+      <!-- Input Panel -->
+      <div class="sandbox-input-panel" style="padding: 2rem; display: flex; flex-direction: column; gap: 1rem; border-right: 1px solid var(--card-border);">
+        <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center; font-family: var(--font-heading); font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">
+          <span>1. Describe the Planned Change</span>
+          <button class="btn-sample" id="load-sample-btn" style="background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); color: var(--text-secondary); padding: 0.3rem 0.65rem; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Load Sample</button>
+        </div>
+        <textarea 
+          id="change-input" 
+          placeholder="Paste issue details or explain what files/routings you want to change...
+Example:
+I want to change the homepage routing split from Sentiments to Systems, overhaul the global stylesheet variable themes, and run build checks."
+          style="width: 100%; flex: 1; min-height: 250px; background: rgba(0,0,0,0.15); border: 1px solid var(--card-border); border-radius: 6px; padding: 1rem; color: var(--text-primary); font-family: var(--font-sans); font-size: 0.9rem; resize: none; outline: none; line-height: 1.6;"
+        ></textarea>
+        <button class="btn-premium btn-primary" style="width: 100%; padding: 0.85rem; border-radius: 6px; background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%); border: none; color: #fff; font-family: var(--font-heading); font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;" id="generate-btn">
+          <span>Analyze Change & Generate Checklist</span>
+        </button>
+      </div>
+
+      <!-- Output Panel -->
+      <div class="sandbox-output-panel" style="padding: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+        <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center; font-family: var(--font-heading); font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">
+          <span>2. Generated HITL Checklist Gates</span>
+          <button class="btn-export" id="copy-json-btn" style="background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); color: var(--accent-cyan); padding: 0.3rem 0.65rem; border-radius: 4px; font-size: 0.75rem; cursor: pointer; display: none;">Copy Checklist</button>
+        </div>
+        <div class="canvas-viewport" id="canvas-viewport" style="flex: 1; min-height: 250px; background: rgba(0,0,0,0.2); border: 1px solid var(--card-border); border-radius: 6px; display: flex; align-items: center; justify-content: center; position: relative; overflow-y: auto;">
+          <div class="canvas-placeholder" id="canvas-placeholder" style="text-align: center; padding: 2rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48" style="color: var(--text-muted); margin: 0 auto 1rem;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">Click Analyze Change to compile review checklist</p>
+          </div>
+          <!-- Checklist Display -->
+          <div id="checklist-output-box" style="width: 100%; height: 100%; padding: 1.5rem; text-align: left; display: none; font-size: 0.95rem;">
+            <div id="checklist-result-markup"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="details-section" style="margin-bottom: 5rem; border-top: 1px solid var(--card-border); padding-top: 3rem;">
+    <div class="details-grid" style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem;">
+      <!-- Info Left -->
+      <div class="info-content">
+        <h2 style="font-family: var(--font-heading); font-size: 1.75rem; color: var(--text-primary); margin-bottom: 1.25rem;">How It Works</h2>
+        <p style="color: var(--text-secondary); line-height: 1.7; font-size: 1.05rem; margin-bottom: 1.5rem;">
+          This demo parses keywords inside planned changes (e.g. routing, stylesheet, css, delete, refactor, config) to calculate the potential risk profile. It applies a rules-based taxonomy to output required verification checks and human review checkpoints before deployment.
+        </p>
+
+        <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--text-primary); margin-top: 2rem; margin-bottom: 0.75rem;">Use Cases</h3>
+        <ul style="color: var(--text-secondary); padding-left: 1.2rem; line-height: 1.8; font-size: 1rem; margin-bottom: 2rem;">
+          <li>Validating code changes against project safety constraints before pushes.</li>
+          <li>Auto-generating PR checklist descriptions.</li>
+          <li>Structuring gate checks for automated release workflows.</li>
+        </ul>
+
+        <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--text-primary); margin-bottom: 0.75rem;">Local Integration</h3>
+        <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">Workflows will be governed globally using Flowright execution packages in the private cockpit.</p>
+      </div>
+
+      <!-- Constraints & Resources Right -->
+      <div class="info-sidebar" style="display: flex; flex-direction: column; gap: 2rem;">
+        <div class="sidebar-box card-glass" style="padding: 1.75rem; border-radius: 12px;">
+          <h5 style="font-family: var(--font-heading); font-size: 0.85rem; font-weight: 700; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.85rem;">Tool Profile</h5>
+          <div class="tool-profile-list">
+            <div class="profile-row">
+              <span class="profile-label">Status</span>
+              <span class="profile-val" style="color: var(--accent-purple); font-weight: bold;">Concept Demo</span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">Mode</span>
+              <span class="profile-val">Rules-based</span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">Engine</span>
+              <span class="profile-val">ToolSmith</span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">Future Wiring</span>
+              <span class="profile-val"><a href="/docs/tool-status/">Flowright + Tessera</a></span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">Output</span>
+              <span class="profile-val">Review gates + checklist</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+  const changeInput = document.getElementById('change-input');
+  const generateBtn = document.getElementById('generate-btn');
+  const copyBtn = document.getElementById('copy-json-btn');
+  const loadSampleBtn = document.getElementById('load-sample-btn');
+  const placeholder = document.getElementById('canvas-placeholder');
+  const resultBox = document.getElementById('checklist-output-box');
+  const resultMarkup = document.getElementById('checklist-result-markup');
+
+  const sampleChange = `I want to add a light mode toggle to SystemsLayout.astro, adjust systems.css rules, configure global.css, and verify mobile compilation.`;
+
+  loadSampleBtn.addEventListener('click', () => {
+    changeInput.value = sampleChange;
+  });
+
+  generateBtn.addEventListener('click', () => {
+    const rawValue = changeInput.value.trim();
+    if (!rawValue) {
+      alert('Please describe your planned change first.');
+      return;
+    }
+
+    // Determine risk level based on keywords
+    let risk = 'Low';
+    let color = '#22c55e';
+    let filesTouched = 'Individual page components';
+    let evidence = 'npm run build executes successfully';
+    
+    const textLower = rawValue.toLowerCase();
+    if (textLower.includes('routing') || textLower.includes('router') || textLower.includes('split') || textLower.includes('delete')) {
+      risk = 'Critical';
+      color = '#ef4444';
+      filesTouched = 'Routing paths, index pages, slug layouts';
+      evidence = 'Manual verification of all affected routes + build status checks';
+    } else if (textLower.includes('css') || textLower.includes('style') || textLower.includes('theme') || textLower.includes('global')) {
+      risk = 'Medium';
+      color = '#f97316';
+      filesTouched = 'Global styles, layouts, layout wrappers';
+      evidence = 'Visual verification in browser + mobile screen check';
+    }
+
+    const checklistHTML = `
+      <div style="margin-bottom: 1.5rem;">
+        <span style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 4px; background: ${color}20; color: ${color}; border: 1px solid ${color}40; font-weight: bold;">
+          ${risk} Risk Change
+        </span>
+      </div>
+      <h4 style="font-family: var(--font-heading); color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1.1rem;">Risk Assessment</h4>
+      <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem;">
+        <strong>Potential impact area:</strong> ${filesTouched}<br>
+        <strong>Required evidence:</strong> ${evidence}
+      </p>
+
+      <h4 style="font-family: var(--font-heading); color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.1rem;">HITL Review Checklist</h4>
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <label style="display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-secondary); cursor: pointer; font-size: 0.9rem; line-height: 1.4;">
+          <input type="checkbox" style="margin-top: 0.2rem;">
+          <span>Verify that changes are restricted to intended files (no global bleed).</span>
+        </label>
+        <label style="display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-secondary); cursor: pointer; font-size: 0.9rem; line-height: 1.4;">
+          <input type="checkbox" style="margin-top: 0.2rem;">
+          <span>Ensure build compiles with zero compilation errors (npm run build).</span>
+        </label>
+        <label style="display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-secondary); cursor: pointer; font-size: 0.9rem; line-height: 1.4;">
+          <input type="checkbox" style="margin-top: 0.2rem;">
+          <span>Verify layout structure, responsive scaling, and alignment on mobile screen viewport.</span>
+        </label>
+        ${risk === 'Critical' ? `
+        <label style="display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-secondary); cursor: pointer; font-size: 0.9rem; line-height: 1.4;">
+          <input type="checkbox" style="margin-top: 0.2rem;">
+          <span style="color: #ef4444; font-weight: bold;">[Gated Check] Obtain manual developer sign-off for routing split modifications.</span>
+        </label>
+        ` : ''}
+        <label style="display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-secondary); cursor: pointer; font-size: 0.9rem; line-height: 1.4;">
+          <input type="checkbox" style="margin-top: 0.2rem;">
+          <span>Record execution summary to ledger.jsonl file before merge.</span>
+        </label>
+      </div>
+    `;
+
+    resultMarkup.innerHTML = checklistHTML;
+    placeholder.style.display = 'none';
+    resultBox.style.display = 'block';
+    copyBtn.style.display = 'block';
+  });
+
+  copyBtn.addEventListener('click', () => {
+    // Simple markdown copy
+    const textOutput = `### Change Risk Checklist\n- [ ] Verify restricted modifications.\n- [ ] Verify build compiles cleanly.\n- [ ] Check mobile viewports.\n- [ ] Record execution in ledger.jsonl`;
+    navigator.clipboard.writeText(textOutput).then(() => {
+      const origText = copyBtn.textContent;
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => {
+        copyBtn.textContent = origText;
+      }, 1500);
+    });
+  });
+</script>

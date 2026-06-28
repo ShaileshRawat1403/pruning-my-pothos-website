@@ -32,7 +32,11 @@ const featuredTools = [
     status: 'live' as const,
     title: 'Prompt ➔ JSON',
     desc: 'Convert unstructured prose prompts into production-ready JSON schemas.',
-    install: 'npm install -g @sans-serif/prompt-json',
+    engine: 'ToolSmith',
+    mode: 'Client-side',
+    future: 'Tessera schema-pack',
+    output: 'JSON Schema + Example',
+    install: 'pip install tesserakit-prompts',
     href: '/tools/prompt-to-json/'
   },
   {
@@ -41,7 +45,11 @@ const featuredTools = [
     status: 'live' as const,
     title: 'Workflow ➔ Diagram',
     desc: 'Generate interactive Mermaid flowcharts and schemas from text workflows.',
-    install: 'pip install sans-serif-workflow',
+    engine: 'ToolSmith',
+    mode: 'Client-side',
+    future: 'Tessera recipes-pack',
+    output: 'Mermaid + JSON Graph',
+    install: 'pip install tesserakit-recipes',
     href: '/tools/workflow-to-diagram/'
   },
   {
@@ -50,8 +58,12 @@ const featuredTools = [
     status: 'coming-soon' as const,
     title: 'Repo ➔ Context Pack',
     desc: 'Gather and compress repository structures into a single XML pack for LLM ingestion.',
+    engine: 'ToolSmith',
+    mode: 'Manual-Input',
+    future: 'Tessera repo-pack',
+    output: 'XML Context Pack',
     install: '',
-    href: '/docs/tool-status/'
+    href: '/tools/repo-context-pack/'
   },
   {
     id: 'csv-to-eval',
@@ -59,8 +71,12 @@ const featuredTools = [
     status: 'prototype' as const,
     title: 'CSV ➔ Eval Harness',
     desc: 'Convert raw CSV outputs into structured evaluation datasets and rubrics.',
+    engine: 'Tessera EvalsPack',
+    mode: 'Browser Sample',
+    future: 'Tessera evals-pack',
+    output: 'JSONL + Rubric draft',
     install: '',
-    href: '/docs/tool-status/'
+    href: '/tools/csv-to-eval/'
   },
   {
     id: 'change-to-checklist',
@@ -68,8 +84,12 @@ const featuredTools = [
     status: 'prototype' as const,
     title: 'Change Request ➔ HITL Checklist',
     desc: 'Analyze codebase change requests to generate human-in-the-loop review gates.',
+    engine: 'ToolSmith',
+    mode: 'Rules-based',
+    future: 'Flowright + Tessera',
+    output: 'Review gates + checklist',
     install: '',
-    href: '/docs/tool-status/'
+    href: '/tools/change-to-checklist/'
   },
   {
     id: 'notes-to-brief',
@@ -77,8 +97,12 @@ const featuredTools = [
     status: 'prototype' as const,
     title: 'Code/Notes ➔ PDF Brief',
     desc: 'Transform raw dev notes and diagrams into print-ready documentation briefs.',
+    engine: 'ToolSmith',
+    mode: 'Browser Sample',
+    future: 'Content Engine',
+    output: 'Structured markdown',
     install: '',
-    href: '/docs/tool-status/'
+    href: '/tools/notes-to-brief/'
   }
 ];
 ---
@@ -120,6 +144,21 @@ const featuredTools = [
             <h3>{tool.title}</h3>
             <p>{tool.desc}</p>
             
+            <div class="tool-profile-list" style="margin: 1.25rem 0; border-top: 1px solid var(--card-border); padding-top: 1rem;">
+              <div class="profile-row">
+                <span class="profile-label">Engine</span>
+                <span class="profile-val">{tool.engine}</span>
+              </div>
+              <div class="profile-row">
+                <span class="profile-label">Mode</span>
+                <span class="profile-val">{tool.mode}</span>
+              </div>
+              <div class="profile-row">
+                <span class="profile-label">Future Wiring</span>
+                <span class="profile-val" style="color: var(--accent-cyan);">{tool.future}</span>
+              </div>
+            </div>
+
             {tool.status === 'live' ? (
               <div class="terminal-box">
                 <span class="terminal-prompt">$</span>
@@ -129,15 +168,17 @@ const featuredTools = [
             ) : (
               <div class="terminal-box" style="opacity: 0.85;">
                 <span class="terminal-prompt" style="color: var(--accent-purple);">ℹ</span>
-                <span style="color: var(--text-secondary); font-size: 0.82rem; margin-left: 0.4rem; font-family: var(--font-sans);">CLI planned &bull; Local prototype coming soon</span>
+                <span style="color: var(--text-secondary); font-size: 0.82rem; margin-left: 0.4rem; font-family: var(--font-sans);">CLI package planned &bull; Offline by design</span>
               </div>
             )}
 
             <div class="card-footer-actions">
               {tool.status === 'live' ? (
                 <a href={tool.href} class="btn-try">Try Live in Browser &rarr;</a>
+              ) : tool.status === 'prototype' ? (
+                <a href={tool.href} class="btn-try" style="border-color: rgba(139, 92, 246, 0.3); color: var(--accent-purple); background: transparent;">Open Prototype Sandbox &rarr;</a>
               ) : (
-                <a href={tool.href} class="btn-try" style="border-color: rgba(139, 92, 246, 0.2); color: var(--accent-purple); background: transparent;">View Concept &rarr;</a>
+                <a href={tool.href} class="btn-try" style="border-color: rgba(255, 255, 255, 0.1); color: var(--text-secondary); background: transparent;">View Concept &rarr;</a>
               )}
             </div>
           </div>

@@ -1059,4 +1059,59 @@
 - `npm run build` completed successfully (499 pages built).
 - `npm run verify:content` passed all content validation rules successfully.
 
+## Update: 2026-06-28 (Brand Polish, CLI Safeguards, Systems SEO Parity, and Open Source CTAs)
+
+### Summary
+- **Clean Naming Split**: Renamed all headers, navigations, footers, index cards, and previews to use "Systems" and "Sentiments" (completely removing suffixes "Garden" and "Lab").
+- **Planned CLI Safeguards**: Replaced all terminal command lines on tool cards and pages with "Planned CLI target" or "Planned install command" blocks, hiding/disabling all copy buttons for packages not yet published on PyPI.
+- **Systems SEO Parity**:
+  - Added programmatic canonical links, Robots meta, Open Graph, and Twitter card tags to `SystemsLayout.astro`.
+  - Configured JSON-LD schema blocks (`WebSite`, `Organization`, `WebPage`, and `SoftwareApplication` for tools) in the document head.
+  - Set unique page-specific meta descriptions for the homepage, canvas hub, docs index, all documentation files, and the six browser tool pages.
+  - Aligned homepage hero subtitle text with the planned CLI package positioning.
+  - Installed `@astrojs/sitemap`, added it to `astro.config.mjs`, updated the dynamic `robots.txt.ts` route to target `sitemap-index.xml`, and created a static `public/robots.txt` fallback matching the build structure.
+- **Open Source CTAs**:
+  - Removed all commercial consultation pitches, sales pitches, and "Get in Touch" consulting phrases.
+  - Rewrote CTAs on the homepage, footer, about page, and tool sidebars to focus on open-source contributions, feedback, and technical collaboration via email.
+
+### Files modified
+- `src/layouts/SystemsLayout.astro`
+- `src/layouts/Layout.astro`
+- `src/pages/index.astro`
+- `src/pages/about.astro`
+- `src/pages/tools/index.astro`
+- `src/pages/tools/prompt-to-json.astro`
+- `src/pages/tools/workflow-to-diagram.astro`
+- `src/pages/tools/csv-to-eval.astro`
+- `src/pages/tools/change-to-checklist.astro`
+- `src/pages/tools/repo-context-pack.astro`
+- `src/pages/tools/notes-to-brief.astro`
+- `src/pages/canvases/index.astro`
+- `src/pages/docs/index.astro`
+- `src/pages/docs/tool-status.astro`
+- `src/pages/docs/natural-language-programming-stack.astro`
+- `src/pages/docs/public-private-boundary.astro`
+- `src/pages/live-lab/index.astro`
+- `src/pages/robots.txt.ts`
+- `astro.config.mjs`
+- `package.json`
+
+### New files
+- `public/robots.txt`
+
+### Validation
+- `npm run build` completed successfully compiling **515 static pages** with zero warnings or errors.
+- Verified that `dist/robots.txt` is outputted correctly, contains the correct lastmod date (`2026-06-28`), and references `sitemap-index.xml`.
+
+### Open risks / follow-ups
+- Edge servers (like Cloudflare edge cache) might cache older robots.txt or sitemaps briefly.
+- Monitor index coverage on GSC after deploy.
+
+### Suggested next actions
+1. Push and deploy Systems Lab V0.
+2. Build the Flowright ChangeOps case study page `/live-lab/flowright-changeops-ai-rollout/`.
+3. Build the Governed AI Rollout Loop canvas.
+4. Build the ToolSmith HITL checklist connection.
+
+
 

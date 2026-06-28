@@ -1103,12 +1103,30 @@
 - `npm run build` completed successfully compiling **515 static pages** with zero warnings or errors.
 - Verified that `dist/robots.txt` is outputted correctly, contains the correct lastmod date (`2026-06-28`), and references `sitemap-index.xml`.
 
+## Update: 2026-06-28 (Pre-Live Enhancements & Credibility Guardrails)
+
+### Summary
+- **Start Here Guidance Table**: Added a visitor path guide ("Start with the layer you need") to the homepage to orient new visitors on where to go depending on their objective.
+- **What this is / is not**: Added a dedicated credibility grid to the homepage to declare exactly what the lab is (browser native utilities, documentation, proof workspace) vs what it is not (commercial SaaS, autonomous agent deployer, live CLI package).
+- **Product Status Legend**: Added a status legend panel near the Tools directory header detailing Browser Prototype, Planned CLI Target, Tessera-compatible, and Future Wiring meanings.
+- **Ecosystem Map**: Added a structured stack ecosystem map ("How the Sans Serif Systems stack fits together") defining ToolSmith, Tessera, Flowright, BrainBench, Hermes, and Content Engine.
+- **Live Lab Proof Cards**: Improved `/live-lab/` to render a Proof Status Roadmap card grid highlighting ToolSmith, Flowright Rollout, AI Rollout Loop, and Tessera Runtime status.
+- **Footer Credibility Line**: Added the lab manifesto to the Systems Layout footer.
+
+### Files modified
+- `src/pages/index.astro`
+- `src/pages/live-lab/index.astro`
+- `src/layouts/SystemsLayout.astro`
+
+### Validation
+- `npm run build` compiled successfully (515 static pages).
+- All changes staged, committed, and pushed to remote branch main.
+
 ### Open risks / follow-ups
-- Edge servers (like Cloudflare edge cache) might cache older robots.txt or sitemaps briefly.
-- Monitor index coverage on GSC after deploy.
+- Edge servers cache settings should be monitored after deploy.
 
 ### Suggested next actions
-1. Push and deploy Systems Lab V0.
+1. Go-live deployment check on pruningmypothos.com.
 2. Build the Flowright ChangeOps case study page `/live-lab/flowright-changeops-ai-rollout/`.
 3. Build the Governed AI Rollout Loop canvas.
 4. Build the ToolSmith HITL checklist connection.

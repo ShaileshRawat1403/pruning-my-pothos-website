@@ -261,12 +261,14 @@ Step 5: If tests fail, generate failure log and block pull request.`;
     });
   });
 
-  copyPipBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText('pip install sans-serif-workflow').then(() => {
-      copyPipBtn.innerText = 'Copied';
-      setTimeout(() => copyPipBtn.innerText = 'Copy', 1500);
+  if (copyPipBtn) {
+    copyPipBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('pip install tesserakit-core tesserakit-recipes').then(() => {
+        copyPipBtn.innerText = 'Copied';
+        setTimeout(() => copyPipBtn.innerText = 'Copy', 1500);
+      });
     });
-  });
+  }
 </script>
 
 <style>

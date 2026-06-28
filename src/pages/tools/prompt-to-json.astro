@@ -230,12 +230,14 @@ Required Fields:
     });
   });
 
-  copyNpmBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText('npm install -g @sans-serif/prompt-json').then(() => {
-      copyNpmBtn.innerText = 'Copied';
-      setTimeout(() => copyNpmBtn.innerText = 'Copy', 1500);
+  if (copyNpmBtn) {
+    copyNpmBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('pip install tesserakit-core tesserakit-prompts').then(() => {
+        copyNpmBtn.innerText = 'Copied';
+        setTimeout(() => copyNpmBtn.innerText = 'Copy', 1500);
+      });
     });
-  });
+  }
 </script>
 
 <style>

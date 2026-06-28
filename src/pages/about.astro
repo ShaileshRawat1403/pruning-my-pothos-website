@@ -1,85 +1,150 @@
 ---
-import Layout from '@/layouts/Layout.astro';
+import Layout from '../layouts/SystemsLayout.astro';
 ---
 
-<Layout
-  title="About | PruningMyPothos"
-  description="PruningMyPothos is a thinking workspace on AI systems, orchestration, platform integration, governance, and adoption."
-  image="/my-self-portrait.png"
->
-  <h1>About This Space</h1>
-  <p>
-    Hi, I'm Shailesh. PruningMyPothos is my thinking workspace for exploring how AI systems work in practice: orchestration, retrieval pipelines, governance, platform integration, and real-world adoption.
-  </p>
-  <p>
-    I build and document working experiments such as Soothsayer while studying how AI moves from demos to reliable systems. The work still moves through three modes: technical systems that explain how things function, reflective sentences that slow the thinking down, and poetic sticky notes that keep the raw signal alive.
-  </p>
-  <p>
-    The core thesis is that the process of thinking is as valuable as the finished product. I'm sharing notes, fragments, and long-form essays, in the hope to create a more honest and dynamic representation of my work. The content here is intentionally fluid and subject to change as my understanding evolves.
-  </p>
-  <p>
-    If you're looking for a focused view of my documentation, enablement, and AI systems consulting work, the portfolio lives here: <a class="about-portfolio-link" href="/portfolio/">/portfolio</a>.
-  </p>
-  <p class="about-social-intro">You can find me here:</p>
-  <div class="about-social-links">
-    <a href="mailto:shailesh.rawat1403@gmail.com" class="about-social-link" aria-label="Email Shailesh Rawat">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Zm0 2 8 5 8-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span>Email</span>
-    </a>
-    <a href="https://www.linkedin.com/in/shailesh-rawat" class="about-social-link" target="_blank" rel="noopener noreferrer" aria-label="Shailesh Rawat on LinkedIn">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M4 9h4v11H4V9Zm2-5a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm6 5h4v2.2c.6-1.2 2.1-2.4 4.3-2.4 4.6 0 5.4 3 5.4 6.9V20h-4v-6.3c0-1.5 0-3.4-2.1-3.4-2.1 0-2.4 1.6-2.4 3.3V20h-4V9Z" fill="currentColor"/>
-      </svg>
-      <span>LinkedIn</span>
-    </a>
-    <a href="https://github.com/ShaileshRawat1403" class="about-social-link" target="_blank" rel="noopener noreferrer" aria-label="Shailesh Rawat on GitHub">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.3-3.4-1.3-.4-1-.9-1.3-.9-1.3-.8-.5.1-.5.1-.5.9.1 1.4.9 1.4.9.8 1.4 2.2 1 2.7.8.1-.6.3-1 .6-1.2-2.2-.2-4.5-1.1-4.5-4.9 0-1.1.4-2 1-2.7-.1-.2-.4-1.2.1-2.5 0 0 .8-.3 2.7 1a9.5 9.5 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.5.6.7 1 1.6 1 2.7 0 3.8-2.3 4.7-4.5 4.9.3.3.7.8.7 1.7v2.5c0 .3.2.6.7.5A10 10 0 0 0 12 2Z" fill="currentColor"/>
-      </svg>
-      <span>GitHub</span>
-    </a>
+<Layout title="About Systems | Sans Serif Systems">
+  <div class="glow-blob glow-cyan"></div>
+  <div class="glow-blob glow-purple"></div>
+
+  <section class="page-header">
+    <span class="meta-badge">THE BUILDER</span>
+    <h1>About Sans Serif Systems</h1>
+    <p>
+      Thinker. Tinkerer. Translator. Deconstructing prompt context, eval loops, and workflow execution states.
+    </p>
+  </section>
+
+  <div class="about-grid">
+    <!-- Biography Left -->
+    <div class="about-bio card-glass">
+      <h2>The Philosophy</h2>
+      <p>
+        Hi, I'm Shailesh Rawat. Sans Serif Systems is my dedicated space for deconstructing how AI moves from demos to robust, predictable software systems. 
+      </p>
+      <p>
+        I believe that prompt engineering and structural language formatting are declarative specifications, and that the orchestrator loop &mdash; not just the raw model weight &mdash; is the real runtime engine. 
+      </p>
+      <p>
+        Every utility hosted here is an open extract of my private agent-native workflows, packaged so that other builders can test them instantly in the browser and install them locally.
+      </p>
+      <p>
+        If you're looking for my legacy writing garden or poetic fragments, they live at:
+        <a href="https://pruningmypothos.com/sentences/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan); text-decoration: none;"> /sentences</a>.
+      </p>
+    </div>
+
+    <!-- Contact & Stats Right -->
+    <div class="about-stats">
+      <div class="stat-box card-glass">
+        <h3>100% Open Source</h3>
+        <p>All core CLI packages are distributed under the MIT license with full repository transparency.</p>
+      </div>
+
+      <div class="stat-box card-glass" style="margin-top: 1.5rem;">
+        <h3>Production Implementation</h3>
+        <p>If you need custom state validations, structured RAG adapters, or observability pipelines built for your enterprise platform, get in touch.</p>
+        <a href="mailto:shailesh.rawat1403@gmail.com" class="sidebar-link-btn" style="margin-top: 1rem; display: block; text-align: center; text-decoration: none; padding: 0.65rem; border-radius: 99px; background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%); color: #fff; font-family: var(--font-heading); font-weight: 600; font-size: 0.88rem;">Contact Shailesh &rarr;</a>
+      </div>
+    </div>
   </div>
 </Layout>
 
 <style>
-  .about-social-intro {
+  .page-header {
+    text-align: center;
+    padding: 4rem 1rem 3rem;
+  }
+
+  .meta-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 99px;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: rgba(0, 242, 254, 0.08);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .page-header h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+  }
+
+  .page-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 60ch;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Grid layout */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2.5rem;
+    margin: 3rem 0 5rem;
+  }
+
+  .about-bio {
+    padding: 3rem;
+  }
+
+  .about-bio h2 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.3px;
+  }
+
+  .about-bio p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-bio p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .about-stats {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-box {
+    padding: 2rem;
+  }
+
+  .stat-box h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
     margin-bottom: 0.75rem;
   }
-  .about-social-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: center;
+
+  .stat-box p {
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+    line-height: 1.6;
   }
-  .about-social-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.45rem 0.8rem;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    color: var(--color-text-body);
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    text-decoration: none;
-    background-color: var(--color-blockquote-bg);
-  }
-  .about-social-link svg {
-    width: 18px;
-    height: 18px;
-  }
-  .about-social-link:hover {
-    border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-border));
-    color: var(--color-text-heading);
-  }
-  .about-portfolio-link {
-    color: var(--color-accent);
-    text-decoration: none;
-    font-family: var(--font-mono);
-  }
-  .about-portfolio-link:hover {
-    text-decoration: underline;
+
+  @media (max-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

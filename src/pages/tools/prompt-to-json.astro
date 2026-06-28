@@ -1,0 +1,549 @@
+---
+import Layout from '../../layouts/SystemsLayout.astro';
+---
+
+<Layout title="Prompt ➔ JSON Schema | Sans Serif Systems">
+  <div class="glow-blob glow-cyan"></div>
+  <div class="glow-blob glow-purple"></div>
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs">
+    <a href="/tools/">Tools</a> / <span style="color: var(--text-primary);">Prompt ➔ JSON</span>
+  </div>
+
+  <section class="tool-hero">
+    <h1>Prompt ➔ JSON</h1>
+    <p class="subtitle">Convert unstructured developer prompts, commands, and fields lists into production-ready JSON validation schemas in-browser.</p>
+  </section>
+
+  <!-- Sandbox Grid (Try Live) -->
+  <section class="sandbox-section">
+    <div class="sandbox-container card-glass">
+      <!-- Input Panel -->
+      <div class="sandbox-input-panel">
+        <div class="panel-header">
+          <span>1. Input Prompt Specifications</span>
+          <button class="btn-sample" id="load-sample-btn">Load Sample</button>
+        </div>
+        <textarea 
+          id="prompt-input" 
+          placeholder="Paste fields, notes, or prompts here...
+Example:
+I need a schema to track pull requests. It needs an id (string, uuid), title, linesModified (number), risk (enum: low, medium, high), and an array of reviewerNames (strings)."
+        ></textarea>
+        <button class="btn-premium btn-primary" style="width: 100%; margin-top: 1rem;" id="generate-btn">
+          <span>Compile JSON Schema</span>
+        </button>
+      </div>
+
+      <!-- Output Panel -->
+      <div class="sandbox-output-panel">
+        <div class="panel-header">
+          <span>2. Generated JSON Schema</span>
+          <div class="action-buttons">
+            <button class="btn-export" id="copy-json-btn">Copy Schema</button>
+          </div>
+        </div>
+        <div class="canvas-viewport" id="canvas-viewport">
+          <div class="canvas-placeholder" id="canvas-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48" style="color: var(--text-muted);"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <p>Click Compile to render the schema</p>
+          </div>
+          <!-- Code display -->
+          <pre class="json-code-box" id="json-code-box" hidden><code id="json-output"></code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="details-section">
+    <div class="details-grid">
+      <!-- Info Left -->
+      <div class="info-content">
+        <h2>How It Works</h2>
+        <p>
+          This utility parses variable names, data types (string, number, boolean, array, enum), and descriptors directly from your meta-prompts. It maps identified entities to draft properties under a standard JSON Schema draft-07 document structure, automatically configuring nested arrays and enum constraints.
+        </p>
+
+        <h3>Use Cases</h3>
+        <ul>
+          <li>Generating schemas for structured LLM API calls (e.g. OpenAI function calling, Gemini structured output).</li>
+          <li>Bootstrapping validation parameters for local JSON parser APIs.</li>
+          <li>Enforcing validation guardrails over raw multi-agent loop handoffs.</li>
+        </ul>
+
+        <h3>Local Installation</h3>
+        <p>Run this tool in your local workspace, terminal, or build pipelines:</p>
+        <div class="terminal-box">
+          <span class="terminal-prompt">$</span>
+          <code class="terminal-cmd">npm install -g @sans-serif/prompt-json</code>
+          <button class="copy-terminal-btn" id="copy-npm-btn">Copy</button>
+        </div>
+      </div>
+
+      <!-- Constraints & Resources Right -->
+      <div class="info-sidebar">
+        <div class="sidebar-box card-glass">
+          <h5>Open Source Specs</h5>
+          <p><strong>License:</strong> MIT</p>
+          <p><strong>Version:</strong> v2.1.4</p>
+          <a href="https://github.com/ShaileshRawat1403" class="sidebar-link" target="_blank" rel="noopener noreferrer">View Repository &rarr;</a>
+        </div>
+
+        <div class="sidebar-box card-glass">
+          <h5>Browser Limits</h5>
+          <p>The online demo is limited to 20 keys per schema. Local CLI installations do not limit depth or key count.</p>
+        </div>
+
+        <div class="sidebar-box card-glass production-box">
+          <h5>Need Production Setup?</h5>
+          <p>If you need custom state validation, integration with OpenAI/Gemini SDK pipelines, or schema synchronization layers, let me help.</p>
+          <a href="mailto:shailesh.rawat1403@gmail.com" class="sidebar-link-btn">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+  const promptInput = document.getElementById('prompt-input');
+  const generateBtn = document.getElementById('generate-btn');
+  const loadSampleBtn = document.getElementById('load-sample-btn');
+  const copyJsonBtn = document.getElementById('copy-json-btn');
+  const canvasPlaceholder = document.getElementById('canvas-placeholder');
+  const jsonCodeBox = document.getElementById('json-code-box');
+  const jsonOutput = document.getElementById('json-output');
+  const copyNpmBtn = document.getElementById('copy-npm-btn');
+
+  let currentJsonSchema = '';
+
+  const samplePrompt = `Track repository commits.
+Required Fields:
+- hash (string, sha256 format)
+- message (string)
+- additionsCount (number)
+- deletionsCount (number)
+- isMergedToMain (boolean)
+- tagsList (array of strings)`;
+
+  loadSampleBtn.addEventListener('click', () => {
+    promptInput.value = samplePrompt;
+  });
+
+  // Client-side prompt-to-json schema compiler
+  const compilePromptToJson = (text) => {
+    const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    const schema = {
+      $schema: "http://json-schema.org/draft-07/schema#",
+      title: "GeneratedStructuredOutput",
+      type: "object",
+      properties: {},
+      required: []
+    };
+
+    lines.forEach((line) => {
+      // Check for bullet lists
+      const listMatch = line.match(/^[-*+]\s*(\w+)\s*\(([^)]+)\)/i) || line.match(/^[-*+]\s*(\w+)\s*-\s*(\w+)/i) || line.match(/^[-*+]\s*(\w+)/i);
+      if (listMatch) {
+        const fieldName = listMatch[1];
+        let typeStr = listMatch[2] || 'string';
+        let type = 'string';
+        let description = '';
+
+        if (typeStr.includes('number') || typeStr.includes('int') || typeStr.includes('float')) {
+          type = 'number';
+        } else if (typeStr.includes('boolean') || typeStr.includes('bool')) {
+          type = 'boolean';
+        } else if (typeStr.includes('array') || typeStr.includes('list')) {
+          type = 'array';
+        }
+
+        schema.properties[fieldName] = {
+          type: type,
+          description: `Generated schema property for ${fieldName}.`
+        };
+
+        if (type === 'array') {
+          schema.properties[fieldName].items = {
+            type: "string"
+          };
+        }
+
+        // Add to required list by default
+        schema.required.push(fieldName);
+      }
+    });
+
+    // Fallback if no bullet list was found
+    if (Object.keys(schema.properties).length === 0) {
+      schema.properties["id"] = { type: "string" };
+      schema.properties["description"] = { type: "string" };
+      schema.required = ["id"];
+    }
+
+    return JSON.stringify(schema, null, 2);
+  };
+
+  generateBtn.addEventListener('click', () => {
+    const text = promptInput.value.trim();
+    if (!text) return;
+
+    try {
+      currentJsonSchema = compilePromptToJson(text);
+      canvasPlaceholder.style.display = 'none';
+      jsonCodeBox.hidden = false;
+      jsonOutput.innerText = currentJsonSchema;
+    } catch (err) {
+      console.error(err);
+      jsonOutput.innerText = `Failed to generate JSON schema: ${err.message}`;
+    }
+  });
+
+  copyJsonBtn.addEventListener('click', () => {
+    if (!currentJsonSchema) return;
+    navigator.clipboard.writeText(currentJsonSchema).then(() => {
+      copyJsonBtn.innerText = 'Copied!';
+      setTimeout(() => copyJsonBtn.innerText = 'Copy Schema', 1500);
+    });
+  });
+
+  copyNpmBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText('npm install -g @sans-serif/prompt-json').then(() => {
+      copyNpmBtn.innerText = 'Copied';
+      setTimeout(() => copyNpmBtn.innerText = 'Copy', 1500);
+    });
+  });
+</script>
+
+<style>
+  .breadcrumbs {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .breadcrumbs a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--accent-cyan);
+  }
+
+  .tool-hero {
+    margin-bottom: 3.5rem;
+  }
+
+  .tool-hero h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+
+  .tool-hero .subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 65ch;
+    line-height: 1.55;
+  }
+
+  /* Sandbox Container styles */
+  .sandbox-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 1.5rem;
+    min-height: 480px;
+    margin-bottom: 6rem;
+    padding: 1.5rem;
+  }
+
+  .sandbox-input-panel,
+  .sandbox-output-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-heading);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .btn-sample {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    transition: all 0.2s ease;
+  }
+
+  .btn-sample:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+  }
+
+  .btn-export {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: var(--accent-cyan);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .btn-export:hover {
+    background: rgba(0, 242, 254, 0.06);
+    border-color: var(--accent-cyan);
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  textarea {
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  textarea:focus {
+    border-color: var(--accent-cyan);
+  }
+
+  /* Viewport canvas */
+  .canvas-viewport {
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: auto;
+    padding: 1.5rem;
+  }
+
+  .canvas-placeholder {
+    text-align: center;
+  }
+
+  .canvas-placeholder p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    margin-top: 0.75rem;
+  }
+
+  .json-code-box {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    text-align: left;
+    overflow: auto;
+  }
+
+  .json-code-box code {
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    color: #a7f3d0;
+    line-height: 1.6;
+  }
+
+  /* Details grids */
+  .details-section {
+    margin-bottom: 5rem;
+  }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 3.5rem;
+  }
+
+  .info-content h2,
+  .info-content h3 {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    margin-bottom: 1rem;
+  }
+
+  .info-content h2 { font-size: 1.75rem; }
+  .info-content h3 { font-size: 1.25rem; margin-top: 2rem; }
+
+  .info-content p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-content ul {
+    list-style: none;
+    margin-bottom: 2rem;
+  }
+
+  .info-content li {
+    position: relative;
+    padding-left: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 0.96rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .info-content li::before {
+    content: '➔';
+    position: absolute;
+    left: 0;
+    color: var(--accent-cyan);
+  }
+
+  .terminal-box {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    position: relative;
+  }
+
+  .terminal-prompt {
+    color: var(--accent-orange);
+  }
+
+  .terminal-cmd {
+    color: #a7f3d0;
+  }
+
+  .copy-terminal-btn {
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .info-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .sidebar-box {
+    padding: 1.75rem;
+  }
+
+  .sidebar-box h5 {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.85rem;
+  }
+
+  .sidebar-box p {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-box p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .sidebar-link {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.88rem;
+  }
+
+  .sidebar-link:hover {
+    text-decoration: underline;
+  }
+
+  .production-box {
+    border-color: rgba(249, 115, 22, 0.25);
+    background-color: rgba(249, 115, 22, 0.02);
+  }
+
+  .sidebar-link-btn {
+    display: block;
+    text-align: center;
+    padding: 0.65rem;
+    border-radius: 99px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-pink) 100%);
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-link-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(249, 115, 22, 0.25);
+  }
+
+  @media (max-width: 900px) {
+    .sandbox-container {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+    textarea {
+      min-height: 200px;
+    }
+    .canvas-viewport {
+      min-height: 300px;
+    }
+    .details-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

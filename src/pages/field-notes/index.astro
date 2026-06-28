@@ -1,0 +1,143 @@
+---
+import Layout from '../../layouts/SystemsLayout.astro';
+---
+
+<Layout title="Field Notes & Thought Leadership | Sans Serif Systems">
+  <div class="glow-blob glow-cyan"></div>
+  <div class="glow-blob glow-purple"></div>
+
+  <section class="page-header">
+    <span class="meta-badge">THOUGHT GARDEN</span>
+    <h1>Field Notes & Essays</h1>
+    <p>
+      Thought leadership, personal essays, and technical concepts surrounding natural language programming and agentic workflows.
+    </p>
+  </section>
+
+  <div class="field-notes-container card-glass">
+    <h2>Split Brand Alignment</h2>
+    <p>
+      To keep Systems strictly focused on product development, interactive sandbox demos, and open-source packages, our deep-dive essays and philosophical notes live in the sister brand:
+    </p>
+    
+    <div class="brands-preview-grid">
+      <div class="preview-brand-card">
+        <h3>Sans Serif Sentiments</h3>
+        <p>A personal writing garden sharing notes on AI, language, legacy systems, and practitioner ethics.</p>
+        <a href="https://pruningmypothos.com/sentences/" target="_blank" rel="noopener noreferrer" class="preview-btn">Explore Sentiments Garden &rarr;</a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .page-header {
+    text-align: center;
+    padding: 4rem 1rem 3rem;
+  }
+
+  .meta-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 99px;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: rgba(0, 242, 254, 0.08);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .page-header h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+  }
+
+  .page-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 60ch;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .field-notes-container {
+    max-width: 800px;
+    margin: 3rem auto 5rem;
+    padding: 3rem;
+    text-align: center;
+  }
+
+  .field-notes-container h2 {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.3px;
+  }
+
+  .field-notes-container p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .brands-preview-grid {
+    display: flex;
+    justify-content: center;
+  }
+
+  .preview-brand-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    padding: 2.2rem;
+    max-width: 460px;
+    text-align: left;
+  }
+
+  .preview-brand-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .preview-brand-card p {
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+
+  .preview-btn {
+    display: block;
+    text-align: center;
+    padding: 0.75rem;
+    border-radius: 99px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    background-color: rgba(0, 242, 254, 0.02);
+    text-decoration: none;
+    transition: all 0.22s ease;
+  }
+
+  .preview-btn:hover {
+    background-color: rgba(0, 242, 254, 0.08);
+    border-color: var(--accent-cyan);
+    box-shadow: var(--shadow-glow-cyan);
+  }
+</style>

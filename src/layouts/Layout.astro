@@ -15,6 +15,7 @@ interface Props {
 	image?: string;
 	noindex?: boolean;
 	ogType?: 'website' | 'article';
+	disableDefaultArticleSchema?: boolean;
 }
 
 const pathname = Astro.url.pathname;
@@ -29,6 +30,7 @@ const {
 	image = '/my-self-portrait.png',
 	noindex = false,
 	ogType = 'website',
+	disableDefaultArticleSchema = false,
 } = Astro.props;
 const titleStem = title.replace(/\s*\|\s*(A Thinking Workspace|PruningMyPothos)$/, '');
 const pageDescription =
@@ -103,7 +105,7 @@ const jsonLdPerson = {
 	],
 };
 
-const isArticlePage = ogType === 'article';
+const isArticlePage = ogType === 'article' && !disableDefaultArticleSchema;
 const articleSchema = isArticlePage ? {
 	'@context': 'https://schema.org',
 	'@type': 'Article',
@@ -187,14 +189,15 @@ const articleSchema = isArticlePage ? {
 	<body class:list={[bodyClass]}>
         <a class="skip-link" href="#main-content">Skip to content</a>
         <nav class="global-nav">
-            <a href="/" class="nav-logo" aria-label="Home" set:html={logo}></a>
+            <a href="/sentiments/" class="nav-logo" aria-label="Home" set:html={logo}></a>
             <div id="primary-navigation" class="nav-links" aria-label="Primary">
-                <a href="/systems/" class:list={[{ active: pathname.startsWith('/systems') }]}>/systems</a>
+                <a href="/" class="nav-link-systems" style="color: var(--color-accent); font-weight: bold;">Systems</a>
+                <a href="/systems/" class:list={[{ active: pathname.startsWith('/systems') }]}>/schemas</a>
                 <a href="/sentences/" class:list={[{ active: pathname.startsWith('/sentences') }]}>/sentences</a>
                 <a href="/sticky-notes/" class:list={[{ active: pathname.startsWith('/sticky-notes') }]}>/sticky-notes</a>
                 <a href="/self/" class:list={[{ active: pathname.startsWith('/self') }]}>/self</a>
                 <a href="/shelf/" class:list={[{ active: pathname.startsWith('/shelf') }]}>/shelf</a>
-                <a href="/about/" class:list={[{ active: pathname === '/about' || pathname === '/about/' }]}>/about</a>
+                <a href="/sentiments/about/" class:list={[{ active: pathname === '/sentiments/about' || pathname === '/sentiments/about/' }]}>/about</a>
             </div>
             <div class="nav-actions">
                 <button id="search-toggle" title="Search" aria-label="Open search">

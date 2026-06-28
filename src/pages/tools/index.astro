@@ -1,0 +1,408 @@
+---
+import Layout from '../../layouts/SystemsLayout.astro';
+
+const toolCategories = [
+  {
+    id: 'prompt-context',
+    name: 'Prompt & Context',
+    desc: 'Utilities to structure raw inputs and package workspace context for LLMs.'
+  },
+  {
+    id: 'harness-eval',
+    name: 'Harness & Evaluation',
+    desc: 'Harness templates to run local evaluations and score model performance.'
+  },
+  {
+    id: 'workflow-loop',
+    name: 'Workflow & Loop',
+    desc: 'Orchestrators to map loops and output human-in-the-loop review gates.'
+  },
+  {
+    id: 'docs-assets',
+    name: 'Docs & Assets',
+    desc: 'Documentation parsers and diagram generators to keep schemas in sync.'
+  }
+];
+
+const featuredTools = [
+  {
+    id: 'prompt-to-json',
+    category: 'prompt-context',
+    title: 'Prompt ➔ JSON',
+    desc: 'Convert unstructured prose prompts into production-ready JSON schemas.',
+    install: 'npm install -g @sans-serif/prompt-json',
+    href: '/tools/prompt-to-json/'
+  },
+  {
+    id: 'workflow-to-diagram',
+    category: 'workflow-loop',
+    title: 'Workflow ➔ Diagram',
+    desc: 'Generate interactive Mermaid flowcharts and schemas from text workflows.',
+    install: 'pip install sans-serif-workflow',
+    href: '/tools/workflow-to-diagram/'
+  },
+  {
+    id: 'repo-context-pack',
+    category: 'prompt-context',
+    title: 'Repo ➔ Context Pack',
+    desc: 'Gather and compress repository structures into a single XML pack for LLM ingestion.',
+    install: 'npm install -g @sans-serif/repo-pack',
+    href: '/tools/repo-context-pack/'
+  },
+  {
+    id: 'csv-to-eval',
+    category: 'harness-eval',
+    title: 'CSV ➔ Eval Harness',
+    desc: 'Convert raw CSV outputs into structured evaluation datasets and rubrics.',
+    install: 'pip install sans-serif-eval',
+    href: '/tools/csv-to-eval/'
+  },
+  {
+    id: 'change-to-checklist',
+    category: 'workflow-loop',
+    title: 'Change Request ➔ HITL Checklist',
+    desc: 'Analyze codebase change requests to generate human-in-the-loop review gates.',
+    install: 'npm install -g @sans-serif/hitl-checklist',
+    href: '/tools/change-to-checklist/'
+  },
+  {
+    id: 'notes-to-brief',
+    category: 'docs-assets',
+    title: 'Code/Notes ➔ PDF Brief',
+    desc: 'Transform raw dev notes and diagrams into print-ready documentation briefs.',
+    install: 'pip install sans-serif-brief',
+    href: '/tools/notes-to-brief/'
+  }
+];
+---
+
+<Layout title="Tools Bench Directory | Sans Serif Systems">
+  <div class="glow-blob glow-cyan"></div>
+  <div class="glow-blob glow-purple"></div>
+
+  <section class="tools-header-section">
+    <span class="meta-badge">APP STORE</span>
+    <h1>The Systems Bench</h1>
+    <p>
+      Small, focused utilities for natural language programming, workflow engineering, and agent-native operations. Try them live in the browser, or run them locally.
+    </p>
+  </section>
+
+  <div class="catalog-container">
+    <div class="catalog-sidebar">
+      <div class="category-list card-glass">
+        <h5>Categories</h5>
+        <button class="cat-filter-btn active" data-filter="all">All Tools</button>
+        {toolCategories.map((cat) => (
+          <button class="cat-filter-btn" data-filter={cat.id}>
+            <span>{cat.name}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="catalog-main">
+      <div class="tools-catalog-grid">
+        {featuredTools.map((tool) => (
+          <div class="tool-catalog-card card-glass" data-category={tool.category}>
+            <div class="card-glow" aria-hidden="true"></div>
+            <span class="cat-badge">{toolCategories.find(c => c.id === tool.category)?.name}</span>
+            <h3>{tool.title}</h3>
+            <p>{tool.desc}</p>
+            
+            <div class="terminal-box">
+              <span class="terminal-prompt">$</span>
+              <code class="terminal-cmd">{tool.install}</code>
+              <button class="copy-terminal-btn">Copy</button>
+            </div>
+
+            <div class="card-footer-actions">
+              <a href={tool.href} class="btn-try">Try Live in Browser &rarr;</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script is:inline>
+  const initCatalogFilters = () => {
+    const filterBtns = document.querySelectorAll('.cat-filter-btn');
+    const cards = document.querySelectorAll('.tool-catalog-card');
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.getAttribute('data-filter');
+        cards.forEach((card) => {
+          if (filter === 'all' || card.getAttribute('data-category') === filter) {
+            card.style.display = 'flex';
+            card.style.opacity = '0';
+            setTimeout(() => {
+              card.style.opacity = '1';
+            }, 50);
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  };
+
+  const initCopyCommands = () => {
+    const copyBtns = document.querySelectorAll('.copy-terminal-btn');
+    copyBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const cmdText = btn.parentElement.querySelector('.terminal-cmd').innerText;
+        navigator.clipboard.writeText(cmdText).then(() => {
+          btn.innerText = 'Copied';
+          setTimeout(() => {
+            btn.innerText = 'Copy';
+          }, 1500);
+        });
+      });
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initCatalogFilters();
+    initCopyCommands();
+  });
+</script>
+
+<style>
+  .tools-header-section {
+    text-align: center;
+    padding: 4rem 1rem 3rem;
+  }
+
+  .meta-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 99px;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: rgba(0, 242, 254, 0.08);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .tools-header-section h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+  }
+
+  .tools-header-section p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 60ch;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Catalog Layout */
+  .catalog-container {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 2.5rem;
+    margin: 3rem 0 5rem;
+    align-items: start;
+  }
+
+  .category-list {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .category-list h5 {
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .cat-filter-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.6rem 0.85rem;
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cat-filter-btn:hover {
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-primary);
+  }
+
+  .cat-filter-btn.active {
+    background: rgba(0, 242, 254, 0.05);
+    border-left: 3px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    padding-left: 0.65rem;
+  }
+
+  .tools-catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 1.75rem;
+  }
+
+  .tool-catalog-card {
+    padding: 2.2rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 290px;
+    height: 100%;
+  }
+
+  .tool-catalog-card:hover {
+    border-color: var(--accent-cyan);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  .card-glow {
+    position: absolute;
+    inset: -1px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    opacity: 0.05;
+    z-index: -1;
+    filter: blur(8px);
+  }
+
+  .cat-badge {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.62rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    align-self: flex-start;
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .tool-catalog-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .tool-catalog-card p {
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+    flex-grow: 1;
+  }
+
+  .terminal-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-bottom: 1.75rem;
+    position: relative;
+  }
+
+  .terminal-prompt {
+    color: var(--accent-orange);
+    user-select: none;
+  }
+
+  .terminal-cmd {
+    color: #a7f3d0;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+    padding-right: 3rem;
+  }
+
+  .copy-terminal-btn {
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: all 0.2s ease;
+  }
+
+  .copy-terminal-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+  }
+
+  .btn-try {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 99px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    background-color: rgba(0, 242, 254, 0.02);
+    text-decoration: none;
+    transition: all 0.22s ease;
+  }
+
+  .btn-try:hover {
+    background-color: rgba(0, 242, 254, 0.08);
+    border-color: var(--accent-cyan);
+    box-shadow: var(--shadow-glow-cyan);
+    transform: translateX(2px);
+  }
+
+  @media (max-width: 900px) {
+    .catalog-container {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

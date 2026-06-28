@@ -1,0 +1,142 @@
+---
+import Layout from '../../layouts/SystemsLayout.astro';
+
+const buildLogs = [
+  {
+    date: '2026-06-28',
+    event: 'Systems Initial Scaffolded Release (v0.1.0)',
+    desc: 'Launched the home playground, tools bench directories, and the primary live sandboxes for Prompt and Workflow diagram utilities.',
+    status: 'Operational'
+  },
+  {
+    date: '2026-06-24',
+    event: 'Soothsayer MCP Engine Release',
+    desc: 'Wired up context-aware inspection rules and file parsers for local AI operations.',
+    status: 'Completed'
+  }
+];
+---
+
+<Layout title="Live Logs & Builds | Sans Serif Systems">
+  <div class="glow-blob glow-cyan"></div>
+  <div class="glow-blob glow-purple"></div>
+
+  <section class="page-header">
+    <span class="meta-badge">ACTIVITY FEED</span>
+    <h1>Live Build Lab</h1>
+    <p>
+      Build logs, active release ledgers, and transparency run logs showing the evolution of the natural language programming tools.
+    </p>
+  </section>
+
+  <div class="timeline-container">
+    {buildLogs.map((log) => (
+      <div class="timeline-item card-glass">
+        <span class="timeline-date">{log.date}</span>
+        <div class="timeline-badge-wrap">
+          <span class="status-dot"></span>
+          <span class="status-text">{log.status}</span>
+        </div>
+        <h3>{log.event}</h3>
+        <p>{log.desc}</p>
+      </div>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .page-header {
+    text-align: center;
+    padding: 4rem 1rem 3rem;
+  }
+
+  .meta-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 99px;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: rgba(0, 242, 254, 0.08);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .page-header h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+  }
+
+  .page-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 60ch;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .timeline-container {
+    max-width: 800px;
+    margin: 3rem auto 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .timeline-item {
+    padding: 2.2rem;
+    position: relative;
+  }
+
+  .timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-cyan);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-badge-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 99px;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+  }
+
+  .status-text {
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .timeline-item h3 {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.2px;
+  }
+
+  .timeline-item p {
+    color: var(--text-secondary);
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+</style>

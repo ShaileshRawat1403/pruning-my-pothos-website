@@ -1,0 +1,155 @@
+---
+import Layout from '../../layouts/SystemsLayout.astro';
+---
+
+<Layout title="Interactive Visual Canvases | Sans Serif Systems">
+  <div class="glow-blob glow-cyan"></div>
+  <div class="glow-blob glow-purple"></div>
+
+  <section class="page-header">
+    <span class="meta-badge">VISUAL ENGINE</span>
+    <h1>Interactive Canvases</h1>
+    <p>
+      Type natural language specifications on the left, and watch execution structures appear on the canvas in real-time. Export as SVG, PNG, PDF, or Mermaid.
+    </p>
+  </section>
+
+  <div class="canvases-grid">
+    <!-- Canvas Card 1 -->
+    <div class="canvas-card card-glass">
+      <div class="canvas-preview-box">
+        <svg viewBox="0 0 100 60" width="100%" height="100%">
+          <rect x="10" y="20" width="20" height="20" rx="3" fill="none" stroke="var(--accent-cyan)" stroke-width="1.5"/>
+          <line x1="30" y1="30" x2="70" y2="30" stroke="var(--accent-purple)" stroke-dasharray="2 2"/>
+          <circle cx="80" cy="30" r="10" fill="none" stroke="var(--accent-cyan)" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <h3>Workflow ➔ Diagram Canvas</h3>
+      <p>Convert unstructured process text descriptions into dynamic flowchart nodes and state mappings.</p>
+      <a href="/tools/workflow-to-diagram/" class="btn-launch">Open Canvas &rarr;</a>
+    </div>
+
+    <!-- Canvas Card 2 -->
+    <div class="canvas-card card-glass">
+      <div class="canvas-preview-box">
+        <svg viewBox="0 0 100 60" width="100%" height="100%">
+          <rect x="20" y="10" width="60" height="40" rx="5" fill="none" stroke="var(--accent-purple)" stroke-width="1.5"/>
+          <line x1="35" y1="20" x2="65" y2="20" stroke="var(--accent-cyan)" stroke-width="2"/>
+          <line x1="35" y1="30" x2="55" y2="30" stroke="var(--accent-cyan)" stroke-width="2"/>
+        </svg>
+      </div>
+      <h3>Prompt ➔ Execution Graph</h3>
+      <p>Break down multi-agent configurations and prompts into visual schema flow mappings.</p>
+      <a href="/tools/prompt-to-json/" class="btn-launch">Open Canvas &rarr;</a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .page-header {
+    text-align: center;
+    padding: 4rem 1rem 3rem;
+  }
+
+  .meta-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 99px;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: rgba(0, 242, 254, 0.08);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .page-header h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+  }
+
+  .page-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 60ch;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .canvases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0 5rem;
+  }
+
+  .canvas-card {
+    padding: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .canvas-card:hover {
+    border-color: var(--accent-cyan);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  .canvas-preview-box {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.75rem;
+    padding: 1.5rem;
+  }
+
+  .canvas-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .canvas-card p {
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+    flex-grow: 1;
+  }
+
+  .btn-launch {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 99px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    background-color: rgba(0, 242, 254, 0.02);
+    text-decoration: none;
+    transition: all 0.22s ease;
+  }
+
+  .btn-launch:hover {
+    background-color: rgba(0, 242, 254, 0.08);
+    border-color: var(--accent-cyan);
+    box-shadow: var(--shadow-glow-cyan);
+  }
+</style>

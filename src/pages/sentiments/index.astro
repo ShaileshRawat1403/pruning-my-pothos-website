@@ -1,0 +1,701 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import ContentDiscovery from '@/components/ContentDiscovery.astro';
+import KnowledgeMap from '@/components/KnowledgeMap.astro';
+
+// Load all content collections
+const stickyNotes = await getCollection('sticky-notes');
+const sentences = await getCollection('sentences');
+const self = await getCollection('self');
+const systems = await getCollection('systems');
+const shelf = await getCollection('shelf', ({ id }) =>
+  id.startsWith('music/')
+  || id.startsWith('local-experiments/')
+  || id.startsWith('notes/')
+  || id.startsWith('tools/')
+  || id.startsWith('philosophy/')
+  || id.startsWith('shared-resources/')
+);
+
+// Combine all content with collection metadata
+const allContent = [
+  ...stickyNotes.map((item) => ({ ...item, collection: 'sticky-notes' })),
+  ...sentences.map((item) => ({ ...item, collection: 'sentences' })),
+  ...self.map((item) => ({ ...item, collection: 'self' })),
+  ...systems.map((item) => ({ ...item, collection: 'systems' })),
+  ...shelf.map((item) => ({ ...item, collection: 'shelf' })),
+];
+
+// Sort by date (if available) or by featured signal
+const discoveryPosts = allContent.sort((a, b) => {
+  if (a.data.publishDate && b.data.publishDate) {
+    return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+  }
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return 0;
+});
+
+const featuredPriorityKeys = [
+  'systems/ai-architecture-explained-how-modern-llm-applications-work',
+  'systems/ai-agents-vs-ai-workflows',
+  'systems/why-most-ai-projects-fail-after-the-demo-stage',
+  'systems/systems-001-foundations',
+  'systems/runtime-over-model-why-orchestration-is-the-product',
+  'systems/observability-first-ai-systems',
+  'systems/seo-aeo-geo-how-things-fit-together',
+  'systems/aeo-and-geo-as-a-retrieval-design-problem',
+  'systems/entity-glossary-for-ai-discoverability',
+  'systems/from-agent-intent-to-governed-execution',
+  'systems/from-ad-hoc-prompts-to-repeatable-agent-workflows',
+  'systems/agent-instructions-and-handoff-as-an-operating-system',
+  'systems/retrieval-augmented-generation-in-plain-terms',
+];
+
+const postKey = (post: (typeof discoveryPosts)[number]) => `${post.collection}/${post.slug ?? post.id}`;
+const featuredPriorityRank = new Map(featuredPriorityKeys.map((key, index) => [key, index]));
+
+const discoveryPostsRanked = [...discoveryPosts].sort((a, b) => {
+  const rankA = featuredPriorityRank.get(postKey(a));
+  const rankB = featuredPriorityRank.get(postKey(b));
+  const aPinned = rankA !== undefined;
+  const bPinned = rankB !== undefined;
+  if (aPinned && bPinned) return (rankA ?? 0) - (rankB ?? 0);
+  if (aPinned) return -1;
+  if (bPinned) return 1;
+  return 0;
+});
+
+const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
+const absoluteUrl = (path: string) => new URL(path, siteUrl).toString();
+const postUrl = (post: (typeof discoveryPosts)[number]) => {
+  const slug = post.slug ?? post.id;
+  if (post.collection === 'shelf') return absoluteUrl(`/shelf/${slug}/`);
+  return absoluteUrl(`/${post.collection}/${slug}/`);
+};
+const latestUpdated = discoveryPostsRanked.find((post) => post.data.publishDate)?.data.publishDate;
+const latestUpdatedIso = latestUpdated ? latestUpdated.toISOString() : undefined;
+
+const collectionJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'A Thinking Workspace',
+  url: absoluteUrl('/'),
+  inLanguage: 'en',
+  dateModified: latestUpdatedIso,
+  about: [
+    { '@type': 'Thing', name: 'AI systems' },
+    { '@type': 'Thing', name: 'language and meaning' },
+    { '@type': 'Thing', name: 'AI observability' },
+    { '@type': 'Thing', name: 'SEO AEO GEO' },
+  ],
+  mentions: [
+    {
+      '@type': 'DefinedTerm',
+      name: 'SEO, AEO, and GEO',
+      url: absoluteUrl('/systems/seo-aeo-geo-how-things-fit-together/'),
+    },
+    {
+      '@type': 'DefinedTerm',
+      name: 'Entity glossary',
+      url: absoluteUrl('/systems/entity-glossary-for-ai-discoverability/'),
+    },
+    {
+      '@type': 'DefinedTerm',
+      name: 'Agent instructions and handoff',
+      url: absoluteUrl('/systems/agent-instructions-and-handoff-as-an-operating-system/'),
+    },
+  ],
+  hasPart: discoveryPostsRanked.slice(0, 12).map((post) => ({
+    '@type': 'WebPage',
+    name: post.data.title,
+    url: postUrl(post),
+  })),
+};
+
+const itemListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Latest and featured writing',
+  itemListOrder: 'https://schema.org/ItemListOrderDescending',
+  dateModified: latestUpdatedIso,
+  numberOfItems: Math.min(discoveryPostsRanked.length, 10),
+  itemListElement: discoveryPostsRanked.slice(0, 10).map((post, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: postUrl(post),
+    name: post.data.title,
+  })),
+};
+---
+
+<Layout
+  title="PruningMyPothos | A Thinking Workspace"
+  description="PruningMyPothos is a thinking workspace on AI systems, orchestration, platform integration, governance, and adoption."
+  image="/my-self-portrait.png"
+>
+  <section class="homepage-hero">
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <p class="hero-animated-line">
+      <a href="/self/diy/" class="hero-diy-cta">D.I.Y.</a>
+      <span class="hero-highlight hero-intel">
+        <span class="hero-aura" aria-hidden="true"></span>
+        <span class="hero-bounce hero-bounce-1">i</span>ntell<span class="hero-bounce hero-bounce-2">i</span>gence
+      </span>
+    </p>
+
+    <iframe
+      class="illustration-container"
+      src="/portrait.html"
+      frameborder="0"
+      scrolling="no"
+      title="Portrait illustration"
+    ></iframe>
+
+    <a href="/dual-nlp-framework/" class="hero-build-cta">
+      <span class="hero-build-dot" aria-hidden="true"></span>
+      <span class="hero-build-text">
+        <span class="hero-build-type-wrap">
+          <span class="hero-build-type" data-typewriter data-text="start building">start building</span>
+          <span class="hero-build-caret" aria-hidden="true"></span>
+        </span>
+      </span>
+    </a>
+
+    <h1 class="tagline">Thinker. Tinkerer. Translator.</h1>
+    <p class="intro">
+      PruningMyPothos is a thinking workspace on AI systems, orchestration, platform integration, governance, and adoption.
+    </p>
+  </section>
+
+  <section class="home-authority-brief" aria-labelledby="home-authority-brief-title">
+    <h2 id="home-authority-brief-title">What authority lives here</h2>
+    <p>
+      This site explores how modern AI systems actually work: LLM architecture, orchestration and agent workflows,
+      retrieval and knowledge pipelines, governance and evaluation, and working experiments such as
+      <a href="/shelf/local-experiments/soothsayer-mcp-kernel/"> Soothsayer</a>,
+      <a href="/systems/runtime-over-model-why-orchestration-is-the-product/"> runtime orchestration</a>, and
+      <a href="/portfolio/"> portfolio case studies</a>.
+    </p>
+  </section>
+
+  <KnowledgeMap />
+
+  <section class="home-direct-answer" aria-labelledby="home-direct-answer-title">
+    <h2 id="home-direct-answer-title">What this workspace helps you do in practice</h2>
+    <p>
+      This workspace helps practitioners design and operate AI systems with clearer language, stronger retrieval structure, and better decision traceability. It combines <a href="/systems/systems-001-foundations/">systems explainers</a>, <a href="/systems/entity-glossary-for-ai-discoverability/">entity-level definitions</a>, and <a href="/systems/agent-instructions-and-handoff-as-an-operating-system/">handoff patterns</a> so teams can ship faster with fewer silent failures across <a href="/systems/seo-aeo-geo-how-things-fit-together/">SEO, AEO, and GEO</a> surfaces.
+    </p>
+  </section>
+
+  <ContentDiscovery posts={discoveryPostsRanked} />
+
+  <script type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)}></script>
+  <script is:inline>
+    const initHeroTypewriter = () => {
+      const el = document.querySelector('.hero-build-type[data-typewriter]');
+      const caret = document.querySelector('.hero-build-caret');
+      if (!el) return;
+
+      const text = el.getAttribute('data-text') || 'start building';
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        el.textContent = text;
+        el.classList.remove('is-typing');
+        return;
+      }
+
+      if (el.dataset.bound === 'true') return;
+      el.dataset.bound = 'true';
+      el.classList.add('is-typing');
+
+      if (el._typeTimer) {
+        window.clearTimeout(el._typeTimer);
+      }
+
+      let index = 0;
+      let deleting = false;
+
+      const typeSpeed = 92;
+      const deleteSpeed = 66;
+      const holdAtEnd = 280;
+      const blinkCycleMs = 1980;
+
+      const tick = () => {
+        if (!deleting) {
+          index += 1;
+          el.textContent = text.slice(0, index);
+          if (index >= text.length) {
+            deleting = true;
+            el._typeTimer = window.setTimeout(() => {
+              if (caret) {
+                caret.classList.remove('blink-cycle');
+                void caret.offsetWidth;
+                caret.classList.add('blink-cycle');
+              }
+              el._typeTimer = window.setTimeout(() => {
+                if (caret) caret.classList.remove('blink-cycle');
+                tick();
+              }, blinkCycleMs);
+            }, holdAtEnd);
+            return;
+          }
+          el._typeTimer = window.setTimeout(tick, typeSpeed);
+          return;
+        }
+
+        index -= 1;
+        el.textContent = text.slice(0, Math.max(0, index));
+        if (index <= 0) {
+          deleting = false;
+          el._typeTimer = window.setTimeout(tick, 220);
+          return;
+        }
+        el._typeTimer = window.setTimeout(tick, deleteSpeed);
+      };
+
+      el.textContent = '';
+      el._typeTimer = window.setTimeout(tick, 400);
+    };
+
+    initHeroTypewriter();
+    document.addEventListener('astro:page-load', initHeroTypewriter);
+    document.addEventListener('astro:after-swap', initHeroTypewriter);
+  </script>
+</Layout>
+
+<style>
+  .noise-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  .homepage-hero {
+    position: relative;
+    overflow: hidden;
+    left: 50%;
+    right: 50%;
+    width: 100vw;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 0 3rem;
+  }
+
+  .homepage-hero > :not(.noise-overlay) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-animated-line {
+    width: min(720px, 90vw);
+    margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 5.4vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-align: center;
+  }
+
+  .hero-diy-cta {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border-radius: 999px;
+    background-color: transparent;
+    border: 1px solid rgba(249, 115, 22, 0.4);
+    color: #f97316;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.8em;
+    transition: all 0.2s ease;
+    animation: fade-in-up 0.8s ease 0.5s forwards;
+    opacity: 0;
+  }
+
+  .hero-diy-cta:hover {
+    background-color: rgba(249, 115, 22, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .hero-highlight {
+    background-image: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-accent) 70%, var(--color-bg)),
+      var(--color-accent),
+      color-mix(in srgb, var(--color-accent) 70%, var(--color-text-heading))
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: hero-gradient-shift 8s ease infinite;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+  }
+
+  .hero-intel {
+    position: relative;
+    display: inline-block;
+    margin-left: 0.2em;
+    white-space: nowrap;
+  }
+
+  .hero-aura {
+    position: absolute;
+    inset: -22% -10%;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--color-accent) 30%, transparent),
+      transparent 70%
+    );
+    border-radius: 999px;
+    filter: blur(12px);
+    opacity: 0.5;
+    z-index: -1;
+  }
+
+  .hero-bounce {
+    display: inline-block;
+    position: relative;
+    animation: hero-bounce 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  }
+
+  .hero-bounce-2 {
+    animation-delay: 0.1s;
+  }
+
+  .illustration-container {
+    width: clamp(160px, 32vw, 260px);
+    aspect-ratio: 1 / 1;
+    margin-bottom: 0.8rem;
+    border: none;
+    animation: fade-in-up 0.8s ease 0.2s forwards;
+    opacity: 0;
+  }
+
+  .hero-build-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.34rem;
+    margin-top: -0.08rem;
+    margin-bottom: clamp(0.85rem, 1.8vw, 1.2rem);
+    padding: 0.65rem 1.5rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--color-border) 78%, #f97316 22%);
+    background: linear-gradient(
+      150deg,
+      color-mix(in srgb, var(--color-bg) 93%, #dbeafe 7%),
+      color-mix(in srgb, var(--color-bg) 97%, #f97316 3%)
+    );
+    color: var(--color-text-heading);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.01em;
+    font-weight: 600;
+    box-shadow: 0 6px 14px color-mix(in srgb, #0f172a 10%, transparent), 0 0 0 1px color-mix(in srgb, #ffffff 28%, transparent) inset;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+    animation: fade-in-up 0.8s ease 0.35s forwards;
+    opacity: 0;
+  }
+
+  .hero-build-cta::after {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 0.34rem;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, #f97316 62%, #93c5fd 38%) 50%,
+      transparent 100%
+    );
+    opacity: 0.45;
+    transform: scaleX(0.35);
+    transform-origin: center;
+    transition: transform 0.22s ease, opacity 0.22s ease;
+  }
+
+  .hero-build-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #f97316;
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.16);
+    animation: cta-dot-breathe 2.8s ease-in-out infinite;
+  }
+
+  .hero-build-text {
+    position: relative;
+    top: -0.01rem;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.16rem;
+  }
+
+  .hero-build-type-wrap {
+    display: inline-flex;
+    align-items: baseline;
+    min-width: 14.8ch;
+    padding-right: 0.24ch;
+    text-align: left;
+  }
+
+  .hero-build-type {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .hero-build-type.is-typing {
+    padding-right: 0.08ch;
+  }
+
+  .hero-build-caret {
+    display: inline-block;
+    width: 0.58ch;
+    color: #f97316;
+    opacity: 1;
+    transform: translateY(-0.01em);
+  }
+
+  .hero-build-caret::before {
+    content: '|';
+  }
+
+  .hero-build-caret.blink-cycle {
+    animation: cta-caret-breathe 0.66s ease-in-out 3;
+  }
+
+  .home-direct-answer {
+    max-width: 760px;
+    margin: 0 auto 1.6rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .home-authority-brief {
+    max-width: 760px;
+    margin: 0 auto 1.75rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .home-authority-brief h2 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.85rem, 4.2vw, 2.75rem);
+    line-height: 1.08;
+  }
+
+  .home-authority-brief p {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.68;
+    max-width: 66ch;
+    margin-inline: auto;
+  }
+
+  .home-direct-answer h2 {
+    margin: 0 0 0.45rem;
+    font-size: 1.38rem;
+    font-family: var(--font-heading);
+  }
+
+  .home-direct-answer p {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    max-width: 66ch;
+    margin-inline: auto;
+  }
+
+  .hero-build-cta:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, #f97316 34%, #93c5fd 26%);
+    box-shadow: 0 10px 18px color-mix(in srgb, #0f172a 15%, transparent), 0 0 0 1px color-mix(in srgb, #ffffff 34%, transparent) inset;
+  }
+
+  .hero-build-cta:hover::after {
+    opacity: 0.88;
+    transform: scaleX(1);
+  }
+
+  .hero-build-cta:focus-visible {
+    outline: 2px solid rgba(249, 115, 22, 0.55);
+    outline-offset: 3px;
+  }
+
+  .tagline {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+  }
+
+  .intro {
+    max-width: 560px;
+    margin: 0 auto;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  @keyframes hero-gradient-shift {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes hero-bounce {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0);
+      color: inherit;
+      text-shadow: none;
+    }
+    50% {
+      transform: translateY(-6px) rotate(-5deg);
+      color: #f97316;
+      text-shadow: 0 0 10px #f97316;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .noise-overlay,
+    .hero-highlight,
+    .hero-bounce,
+    .hero-build-cta,
+    .hero-build-dot {
+      animation: none;
+    }
+
+    .noise-overlay {
+      display: none;
+    }
+
+    .hero-build-cta {
+      opacity: 1;
+    }
+
+    .hero-build-type {
+      border-right: none;
+      animation: none;
+      padding-right: 0;
+    }
+
+    .hero-build-caret {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .homepage-hero {
+      padding: 2.75rem 0 3.25rem;
+    }
+
+    .hero-animated-line {
+      width: min(560px, 92vw);
+      margin-bottom: 1.25rem;
+    }
+
+    .tagline {
+      font-size: 1.75rem;
+    }
+
+    .intro {
+      font-size: 1rem;
+      padding: 0 0.5rem;
+    }
+
+    .hero-build-cta {
+      font-size: 0.8rem;
+      padding: 0.54rem 1.2rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .hero-animated-line {
+      font-size: clamp(1.35rem, 7.5vw, 2.2rem);
+    }
+
+    .home-direct-answer {
+      padding: 0 0.75rem;
+    }
+
+    .home-authority-brief {
+      padding: 0 0.75rem;
+    }
+
+    .home-authority-brief h2 {
+      font-size: 1.58rem;
+      line-height: 1.12;
+    }
+
+    .home-direct-answer h2 {
+      font-size: 1.45rem;
+      line-height: 1.15;
+    }
+
+    .home-authority-brief p,
+    .home-direct-answer p {
+      max-width: 34ch;
+      margin-inline: auto;
+    }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes cta-dot-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scale(1.16);
+      opacity: 1;
+    }
+  }
+
+  @keyframes cta-caret-breathe {
+    0%,
+    100% {
+      opacity: 1;
+      transform: translateY(-0.01em);
+    }
+    50% {
+      opacity: 0.35;
+      transform: translateY(-0.01em) scaleY(0.94);
+    }
+  }
+
+</style>

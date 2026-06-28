@@ -1,701 +1,885 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '@/layouts/Layout.astro';
-import ContentDiscovery from '@/components/ContentDiscovery.astro';
-import KnowledgeMap from '@/components/KnowledgeMap.astro';
+import Layout from '../layouts/SystemsLayout.astro';
 
-// Load all content collections
-const stickyNotes = await getCollection('sticky-notes');
-const sentences = await getCollection('sentences');
-const self = await getCollection('self');
-const systems = await getCollection('systems');
-const shelf = await getCollection('shelf', ({ id }) =>
-  id.startsWith('music/')
-  || id.startsWith('local-experiments/')
-  || id.startsWith('notes/')
-  || id.startsWith('tools/')
-  || id.startsWith('philosophy/')
-  || id.startsWith('shared-resources/')
-);
-
-// Combine all content with collection metadata
-const allContent = [
-  ...stickyNotes.map((item) => ({ ...item, collection: 'sticky-notes' })),
-  ...sentences.map((item) => ({ ...item, collection: 'sentences' })),
-  ...self.map((item) => ({ ...item, collection: 'self' })),
-  ...systems.map((item) => ({ ...item, collection: 'systems' })),
-  ...shelf.map((item) => ({ ...item, collection: 'shelf' })),
-];
-
-// Sort by date (if available) or by featured signal
-const discoveryPosts = allContent.sort((a, b) => {
-  if (a.data.publishDate && b.data.publishDate) {
-    return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+const toolCategories = [
+  {
+    id: 'prompt-context',
+    name: 'Prompt & Context',
+    desc: 'Utilities to structure raw inputs and package workspace context for LLMs.'
+  },
+  {
+    id: 'harness-eval',
+    name: 'Harness & Evaluation',
+    desc: 'Harness templates to run local evaluations and score model performance.'
+  },
+  {
+    id: 'workflow-loop',
+    name: 'Workflow & Loop',
+    desc: 'Orchestrators to map loops and output human-in-the-loop review gates.'
+  },
+  {
+    id: 'docs-assets',
+    name: 'Docs & Assets',
+    desc: 'Documentation parsers and diagram generators to keep schemas in sync.'
   }
-  if (a.data.featured && !b.data.featured) return -1;
-  if (!a.data.featured && b.data.featured) return 1;
-  return 0;
-});
-
-const featuredPriorityKeys = [
-  'systems/ai-architecture-explained-how-modern-llm-applications-work',
-  'systems/ai-agents-vs-ai-workflows',
-  'systems/why-most-ai-projects-fail-after-the-demo-stage',
-  'systems/systems-001-foundations',
-  'systems/runtime-over-model-why-orchestration-is-the-product',
-  'systems/observability-first-ai-systems',
-  'systems/seo-aeo-geo-how-things-fit-together',
-  'systems/aeo-and-geo-as-a-retrieval-design-problem',
-  'systems/entity-glossary-for-ai-discoverability',
-  'systems/from-agent-intent-to-governed-execution',
-  'systems/from-ad-hoc-prompts-to-repeatable-agent-workflows',
-  'systems/agent-instructions-and-handoff-as-an-operating-system',
-  'systems/retrieval-augmented-generation-in-plain-terms',
 ];
 
-const postKey = (post: (typeof discoveryPosts)[number]) => `${post.collection}/${post.slug ?? post.id}`;
-const featuredPriorityRank = new Map(featuredPriorityKeys.map((key, index) => [key, index]));
+const featuredTools = [
+  {
+    id: 'prompt-to-json',
+    category: 'prompt-context',
+    title: 'Prompt ➔ JSON',
+    desc: 'Convert unstructured prose prompts into production-ready JSON schemas.',
+    install: 'npm install -g @sans-serif/prompt-json',
+    href: '/tools/prompt-to-json/'
+  },
+  {
+    id: 'workflow-to-diagram',
+    category: 'workflow-loop',
+    title: 'Workflow ➔ Diagram',
+    desc: 'Generate interactive Mermaid flowcharts and schemas from text workflows.',
+    install: 'pip install sans-serif-workflow',
+    href: '/tools/workflow-to-diagram/'
+  },
+  {
+    id: 'repo-context-pack',
+    category: 'prompt-context',
+    title: 'Repo ➔ Context Pack',
+    desc: 'Gather and compress repository structures into a single XML pack for LLM ingestion.',
+    install: 'npm install -g @sans-serif/repo-pack',
+    href: '/tools/repo-context-pack/'
+  },
+  {
+    id: 'csv-to-eval',
+    category: 'harness-eval',
+    title: 'CSV ➔ Eval Harness',
+    desc: 'Convert raw CSV outputs into structured evaluation datasets and rubrics.',
+    install: 'pip install sans-serif-eval',
+    href: '/tools/csv-to-eval/'
+  },
+  {
+    id: 'change-to-checklist',
+    category: 'workflow-loop',
+    title: 'Change Request ➔ HITL Checklist',
+    desc: 'Analyze codebase change requests to generate human-in-the-loop review gates.',
+    install: 'npm install -g @sans-serif/hitl-checklist',
+    href: '/tools/change-to-checklist/'
+  },
+  {
+    id: 'notes-to-brief',
+    category: 'docs-assets',
+    title: 'Code/Notes ➔ PDF Brief',
+    desc: 'Transform raw dev notes and diagrams into print-ready documentation briefs.',
+    install: 'pip install sans-serif-brief',
+    href: '/tools/notes-to-brief/'
+  }
+];
 
-const discoveryPostsRanked = [...discoveryPosts].sort((a, b) => {
-  const rankA = featuredPriorityRank.get(postKey(a));
-  const rankB = featuredPriorityRank.get(postKey(b));
-  const aPinned = rankA !== undefined;
-  const bPinned = rankB !== undefined;
-  if (aPinned && bPinned) return (rankA ?? 0) - (rankB ?? 0);
-  if (aPinned) return -1;
-  if (bPinned) return 1;
-  return 0;
-});
-
-const siteUrl = Astro.site ?? new URL('https://pruningmypothos.com');
-const absoluteUrl = (path: string) => new URL(path, siteUrl).toString();
-const postUrl = (post: (typeof discoveryPosts)[number]) => {
-  const slug = post.slug ?? post.id;
-  if (post.collection === 'shelf') return absoluteUrl(`/shelf/${slug}/`);
-  return absoluteUrl(`/${post.collection}/${slug}/`);
-};
-const latestUpdated = discoveryPostsRanked.find((post) => post.data.publishDate)?.data.publishDate;
-const latestUpdatedIso = latestUpdated ? latestUpdated.toISOString() : undefined;
-
-const collectionJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: 'A Thinking Workspace',
-  url: absoluteUrl('/'),
-  inLanguage: 'en',
-  dateModified: latestUpdatedIso,
-  about: [
-    { '@type': 'Thing', name: 'AI systems' },
-    { '@type': 'Thing', name: 'language and meaning' },
-    { '@type': 'Thing', name: 'AI observability' },
-    { '@type': 'Thing', name: 'SEO AEO GEO' },
-  ],
-  mentions: [
-    {
-      '@type': 'DefinedTerm',
-      name: 'SEO, AEO, and GEO',
-      url: absoluteUrl('/systems/seo-aeo-geo-how-things-fit-together/'),
-    },
-    {
-      '@type': 'DefinedTerm',
-      name: 'Entity glossary',
-      url: absoluteUrl('/systems/entity-glossary-for-ai-discoverability/'),
-    },
-    {
-      '@type': 'DefinedTerm',
-      name: 'Agent instructions and handoff',
-      url: absoluteUrl('/systems/agent-instructions-and-handoff-as-an-operating-system/'),
-    },
-  ],
-  hasPart: discoveryPostsRanked.slice(0, 12).map((post) => ({
-    '@type': 'WebPage',
-    name: post.data.title,
-    url: postUrl(post),
-  })),
-};
-
-const itemListJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ItemList',
-  name: 'Latest and featured writing',
-  itemListOrder: 'https://schema.org/ItemListOrderDescending',
-  dateModified: latestUpdatedIso,
-  numberOfItems: Math.min(discoveryPostsRanked.length, 10),
-  itemListElement: discoveryPostsRanked.slice(0, 10).map((post, index) => ({
-    '@type': 'ListItem',
-    position: index + 1,
-    url: postUrl(post),
-    name: post.data.title,
-  })),
-};
+const stackLayers = [
+  {
+    id: 'governance',
+    name: 'Governance Layer',
+    solves: 'Aligns execution with organizational policy.',
+    breaks: 'Agents run unguided, executing unsafe or non-compliant operations.',
+    tool: 'Change Request ➔ HITL Checklist'
+  },
+  {
+    id: 'loop',
+    name: 'Execution Loops',
+    solves: 'Establishes checks and balance gates.',
+    breaks: 'Silent failures and hallucinations escape into production.',
+    tool: 'CSV ➔ Eval Harness'
+  },
+  {
+    id: 'workflow',
+    name: 'Workflow Orchestration',
+    solves: 'Structured state machines and transitions.',
+    breaks: 'Brittle prompts attempt to handle multi-step workflows sequentially.',
+    tool: 'Workflow ➔ Diagram'
+  },
+  {
+    id: 'context',
+    name: 'Context Architecture',
+    solves: 'Provides precise working memory bounds.',
+    breaks: 'Irrelevant code bloats context windows, degrading model reasoning.',
+    tool: 'Repo ➔ Context Pack'
+  },
+  {
+    id: 'prompt',
+    name: 'Prompt Specification',
+    solves: 'Contracts for structured inputs and outputs.',
+    breaks: 'Fuzzy prompts return unstructured text that crashes JSON parsers.',
+    tool: 'Prompt ➔ JSON'
+  }
+];
 ---
 
-<Layout
-  title="PruningMyPothos | A Thinking Workspace"
-  description="PruningMyPothos is a thinking workspace on AI systems, orchestration, platform integration, governance, and adoption."
-  image="/my-self-portrait.png"
->
-  <section class="homepage-hero">
-    <div class="noise-overlay" aria-hidden="true"></div>
+<Layout title="Sans Serif Systems | Open Tools for Natural Language Programming">
+  <!-- Glowing blobs -->
+  <div class="glow-blob glow-cyan"></div>
+  <div class="glow-blob glow-purple"></div>
 
-    <p class="hero-animated-line">
-      <a href="/self/diy/" class="hero-diy-cta">D.I.Y.</a>
-      <span class="hero-highlight hero-intel">
-        <span class="hero-aura" aria-hidden="true"></span>
-        <span class="hero-bounce hero-bounce-1">i</span>ntell<span class="hero-bounce hero-bounce-2">i</span>gence
-      </span>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <span class="hero-badge">Sans Serif Systems</span>
+    <h1 class="hero-title">Open tools and live demos for<br /><span class="gradient-text">natural language programming</span></h1>
+    <p class="hero-subtitle">
+      Try them in the browser. Run them locally. Use them to convert fuzzy model outputs into repeatable production execution workflows.
     </p>
-
-    <iframe
-      class="illustration-container"
-      src="/portrait.html"
-      frameborder="0"
-      scrolling="no"
-      title="Portrait illustration"
-    ></iframe>
-
-    <a href="/dual-nlp-framework/" class="hero-build-cta">
-      <span class="hero-build-dot" aria-hidden="true"></span>
-      <span class="hero-build-text">
-        <span class="hero-build-type-wrap">
-          <span class="hero-build-type" data-typewriter data-text="start building">start building</span>
-          <span class="hero-build-caret" aria-hidden="true"></span>
-        </span>
-      </span>
-    </a>
-
-    <h1 class="tagline">Thinker. Tinkerer. Translator.</h1>
-    <p class="intro">
-      PruningMyPothos is a thinking workspace on AI systems, orchestration, platform integration, governance, and adoption.
-    </p>
+    <div class="hero-ctas">
+      <a href="#tools-directory" class="btn-premium btn-primary">Explore Tools</a>
+      <a href="/sentiments/" class="btn-premium btn-secondary">Enter Sans Serif Sentiments</a>
+    </div>
   </section>
 
-  <section class="home-authority-brief" aria-labelledby="home-authority-brief-title">
-    <h2 id="home-authority-brief-title">What authority lives here</h2>
-    <p>
-      This site explores how modern AI systems actually work: LLM architecture, orchestration and agent workflows,
-      retrieval and knowledge pipelines, governance and evaluation, and working experiments such as
-      <a href="/shelf/local-experiments/soothsayer-mcp-kernel/"> Soothsayer</a>,
-      <a href="/systems/runtime-over-model-why-orchestration-is-the-product/"> runtime orchestration</a>, and
-      <a href="/portfolio/"> portfolio case studies</a>.
-    </p>
+  <!-- Two Paths Grid -->
+  <section class="two-paths-section card-glass" style="max-width: 900px; margin: 0 auto 3rem auto; padding: 2.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; text-align: left; position: relative; z-index: 10;">
+    <div style="border-right: 1px solid var(--card-border); padding-right: 2rem;">
+      <h4 style="font-family: var(--font-heading); color: var(--accent-cyan); margin-bottom: 0.5rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em;">Systems</h4>
+      <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+        Tools, interactive canvases, workflow utilities, product docs, and live lab logs.
+      </p>
+    </div>
+    <div>
+      <h4 style="font-family: var(--font-heading); color: var(--accent-purple); margin-bottom: 0.5rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em;">Sentiments</h4>
+      <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+        Essays, field notes, notes, archives, and the thinker/tinkerer/translator writing garden.
+      </p>
+    </div>
   </section>
 
-  <KnowledgeMap />
-
-  <section class="home-direct-answer" aria-labelledby="home-direct-answer-title">
-    <h2 id="home-direct-answer-title">What this workspace helps you do in practice</h2>
-    <p>
-      This workspace helps practitioners design and operate AI systems with clearer language, stronger retrieval structure, and better decision traceability. It combines <a href="/systems/systems-001-foundations/">systems explainers</a>, <a href="/systems/entity-glossary-for-ai-discoverability/">entity-level definitions</a>, and <a href="/systems/agent-instructions-and-handoff-as-an-operating-system/">handoff patterns</a> so teams can ship faster with fewer silent failures across <a href="/systems/seo-aeo-geo-how-things-fit-together/">SEO, AEO, and GEO</a> surfaces.
-    </p>
+  <!-- Interactive Pain-Point Selector -->
+  <section class="selector-section card-glass">
+    <h3>What are you trying to build today?</h3>
+    <div class="selector-grid">
+      <button class="selector-btn" data-target="workflow-to-diagram">
+        “I need to turn a text workflow into a visual diagram.”
+      </button>
+      <button class="selector-btn" data-target="repo-context-pack">
+        “I need to package a repository for an AI assistant.”
+      </button>
+      <button class="selector-btn" data-target="csv-to-eval">
+        “I need to generate evaluation rubrics from prompt logs.”
+      </button>
+      <button class="selector-btn" data-target="prompt-to-json">
+        “I need to force prompts to return valid JSON schemas.”
+      </button>
+    </div>
   </section>
 
-  <ContentDiscovery posts={discoveryPostsRanked} />
+  <!-- Signature Stack Interaction -->
+  <section id="signature-stack" class="stack-section">
+    <div class="section-header">
+      <h2>The Natural Language Programming Stack</h2>
+      <p>Interactive architectural layers required to govern agentic workflows without losing control.</p>
+    </div>
+    
+    <div class="stack-container">
+      <div class="stack-visual">
+        {stackLayers.map((layer) => (
+          <div class="stack-layer-row" data-layer={layer.id} tabindex="0" role="button" aria-label={`Inspect ${layer.name}`}>
+            <span class="layer-indicator"></span>
+            <div class="layer-body">
+              <span class="layer-name">{layer.name}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <div class="stack-details card-glass">
+        <div class="details-pane" data-pane="default">
+          <div class="details-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <h4>Inspect the Architecture</h4>
+          <p>Select or hover any layer in the stack to examine how to control non-deterministic systems in production.</p>
+        </div>
+        {stackLayers.map((layer) => (
+          <div class="details-pane" data-pane={layer.id} hidden>
+            <span class="details-meta-tag">LAYER PROTOCOL</span>
+            <h4>{layer.name}</h4>
+            <div class="details-item">
+              <strong>What it solves:</strong>
+              <p>{layer.solves}</p>
+            </div>
+            <div class="details-item">
+              <strong style="color: var(--accent-pink);">What breaks without it:</strong>
+              <p>{layer.breaks}</p>
+            </div>
+            <div class="details-item">
+              <strong>Supporting Tool:</strong>
+              <p style="color: var(--accent-cyan); font-weight: 600;">{layer.tool}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 
-  <script type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(itemListJsonLd)}></script>
-  <script is:inline>
-    const initHeroTypewriter = () => {
-      const el = document.querySelector('.hero-build-type[data-typewriter]');
-      const caret = document.querySelector('.hero-build-caret');
-      if (!el) return;
+  <!-- Tools Directory -->
+  <section id="tools-directory" class="directory-section">
+    <div class="section-header">
+      <h2>Featured Tool Bench</h2>
+      <p>Six focused utilities designed to solve friction points in AI development loops.</p>
+    </div>
 
-      const text = el.getAttribute('data-text') || 'start building';
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        el.textContent = text;
-        el.classList.remove('is-typing');
-        return;
-      }
+    <!-- Category Filters -->
+    <div class="category-filters">
+      <button class="filter-btn active" data-filter="all">All Tools</button>
+      {toolCategories.map((cat) => (
+        <button class="filter-btn" data-filter={cat.id}>{cat.name}</button>
+      ))}
+    </div>
 
-      if (el.dataset.bound === 'true') return;
-      el.dataset.bound = 'true';
-      el.classList.add('is-typing');
+    <!-- Grid -->
+    <div class="tools-grid">
+      {featuredTools.map((tool) => (
+        <div class="tool-card card-glass" data-category={tool.category} id={`card-${tool.id}`}>
+          <div class="card-glow" aria-hidden="true"></div>
+          <div class="tool-card-body">
+            <span class="tool-category-badge">{toolCategories.find(c => c.id === tool.category)?.name}</span>
+            <h3>{tool.title}</h3>
+            <p>{tool.desc}</p>
+            
+            <div class="terminal-box">
+              <span class="terminal-prompt">$</span>
+              <code class="terminal-cmd">{tool.install}</code>
+              <button class="copy-terminal-btn" aria-label="Copy install command">Copy</button>
+            </div>
 
-      if (el._typeTimer) {
-        window.clearTimeout(el._typeTimer);
-      }
+            <div class="card-actions">
+              <a href={tool.href} class="card-btn-primary">Try Live in Browser</a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
 
-      let index = 0;
-      let deleting = false;
-
-      const typeSpeed = 92;
-      const deleteSpeed = 66;
-      const holdAtEnd = 280;
-      const blinkCycleMs = 1980;
-
-      const tick = () => {
-        if (!deleting) {
-          index += 1;
-          el.textContent = text.slice(0, index);
-          if (index >= text.length) {
-            deleting = true;
-            el._typeTimer = window.setTimeout(() => {
-              if (caret) {
-                caret.classList.remove('blink-cycle');
-                void caret.offsetWidth;
-                caret.classList.add('blink-cycle');
-              }
-              el._typeTimer = window.setTimeout(() => {
-                if (caret) caret.classList.remove('blink-cycle');
-                tick();
-              }, blinkCycleMs);
-            }, holdAtEnd);
-            return;
-          }
-          el._typeTimer = window.setTimeout(tick, typeSpeed);
-          return;
-        }
-
-        index -= 1;
-        el.textContent = text.slice(0, Math.max(0, index));
-        if (index <= 0) {
-          deleting = false;
-          el._typeTimer = window.setTimeout(tick, 220);
-          return;
-        }
-        el._typeTimer = window.setTimeout(tick, deleteSpeed);
-      };
-
-      el.textContent = '';
-      el._typeTimer = window.setTimeout(tick, 400);
-    };
-
-    initHeroTypewriter();
-    document.addEventListener('astro:page-load', initHeroTypewriter);
-    document.addEventListener('astro:after-swap', initHeroTypewriter);
-  </script>
+  <!-- Production Help Section -->
+  <section class="consulting-cta-section card-glass">
+    <div class="consulting-glow"></div>
+    <div class="consulting-content">
+      <span class="consulting-tag">Production Support</span>
+      <h2>Need production-grade architecture?</h2>
+      <p>
+        The tools are open-source. The production implementation is where I help. If you need eval suites, structured workflows, or human-in-the-loop controls integrated into your private repositories or codebase environments, let's talk.
+      </p>
+      <a href="mailto:shailesh.rawat1403@gmail.com" class="btn-premium btn-primary">Get in Touch</a>
+    </div>
+  </section>
 </Layout>
 
+<script is:inline>
+  // Interactive Stack Layer Details Hover/Focus sync
+  const initStackInteraction = () => {
+    const layers = document.querySelectorAll('.stack-layer-row');
+    const panes = document.querySelectorAll('.stack-details [data-pane]');
+
+    const showPane = (layerId) => {
+      panes.forEach((pane) => {
+        pane.hidden = pane.getAttribute('data-pane') !== (layerId || 'default');
+      });
+      layers.forEach((layer) => {
+        layer.classList.toggle('active', layer.getAttribute('data-layer') === layerId);
+      });
+    };
+
+    layers.forEach((layer) => {
+      const id = layer.getAttribute('data-layer');
+      layer.addEventListener('mouseenter', () => showPane(id));
+      layer.addEventListener('focus', () => showPane(id));
+      layer.addEventListener('mouseleave', () => showPane(''));
+      layer.addEventListener('blur', () => showPane(''));
+    });
+  };
+
+  // Pain-point Selector logic
+  const initPainPointSelector = () => {
+    const btns = document.querySelectorAll('.selector-btn');
+    btns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        const targetCard = document.getElementById(`card-${targetId}`);
+        if (targetCard) {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetCard.classList.add('highlight-flash');
+          setTimeout(() => {
+            targetCard.classList.remove('highlight-flash');
+          }, 2000);
+        }
+      });
+    });
+  };
+
+  // Category filtering
+  const initFilters = () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.tool-card');
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.getAttribute('data-filter');
+        cards.forEach((card) => {
+          if (filter === 'all' || card.getAttribute('data-category') === filter) {
+            card.style.display = 'block';
+            card.style.opacity = '0';
+            setTimeout(() => {
+              card.style.opacity = '1';
+            }, 50);
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  };
+
+  // Copy Terminal Commands helper
+  const initCopyCommands = () => {
+    const copyBtns = document.querySelectorAll('.copy-terminal-btn');
+    copyBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const cmdText = btn.parentElement.querySelector('.terminal-cmd').innerText;
+        navigator.clipboard.writeText(cmdText).then(() => {
+          btn.innerText = 'Copied';
+          setTimeout(() => {
+            btn.innerText = 'Copy';
+          }, 1500);
+        });
+      });
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initStackInteraction();
+    initPainPointSelector();
+    initFilters();
+    initCopyCommands();
+  });
+</script>
+
 <style>
-  .noise-overlay {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.05;
-    pointer-events: none;
-    z-index: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  /* Hero Styles */
+  .hero-section {
+    text-align: center;
+    padding: 7rem 1rem 5.5rem;
+    position: relative;
+    z-index: 10;
   }
 
-  .homepage-hero {
+  .hero-badge {
+    display: inline-block;
+    padding: 0.4rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    background-color: rgba(0, 242, 254, 0.06);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    margin-bottom: 1.75rem;
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  .hero-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+    color: var(--text-secondary);
+    max-width: 68ch;
+    margin: 0 auto 2.5rem;
+    line-height: 1.55;
+    text-wrap: balance;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Pain-point Selector */
+  .selector-section {
+    max-width: 900px;
+    margin: 1.5rem auto 5rem;
+    padding: 2.2rem;
+    text-align: center;
     position: relative;
-    overflow: hidden;
-    left: 50%;
-    right: 50%;
-    width: 100vw;
-    margin-left: -50vw;
-    margin-right: -50vw;
+    z-index: 10;
+  }
+
+  .selector-section h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.2px;
+  }
+
+  .selector-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .selector-btn {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.1rem 1.4rem;
+    font-family: var(--font-sans);
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.22s ease;
+  }
+
+  .selector-btn:hover {
+    border-color: var(--accent-cyan);
+    color: var(--text-primary);
+    background-color: rgba(0, 242, 254, 0.03);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  /* Section Header */
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+  }
+
+  .section-header p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 50ch;
+    margin: 0 auto;
+  }
+
+  /* Architectural Stack */
+  .stack-section {
+    margin: 6rem auto;
+  }
+
+  .stack-container {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .stack-visual {
     display: flex;
     flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .stack-layer-row {
+    display: flex;
     align-items: center;
-    text-align: center;
-    padding: 4rem 0 3rem;
-  }
-
-  .homepage-hero > :not(.noise-overlay) {
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-animated-line {
-    width: min(720px, 90vw);
-    margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
-    font-family: var(--font-heading);
-    font-size: clamp(1.8rem, 5.4vw, 3.2rem);
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    text-align: center;
-  }
-
-  .hero-diy-cta {
-    display: inline-block;
-    padding: 0.4rem 1.2rem;
-    border-radius: 999px;
-    background-color: transparent;
-    border: 1px solid rgba(249, 115, 22, 0.4);
-    color: #f97316;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.8em;
-    transition: all 0.2s ease;
-    animation: fade-in-up 0.8s ease 0.5s forwards;
-    opacity: 0;
-  }
-
-  .hero-diy-cta:hover {
-    background-color: rgba(249, 115, 22, 0.1);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  }
-
-  .hero-highlight {
-    background-image: linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--color-accent) 70%, var(--color-bg)),
-      var(--color-accent),
-      color-mix(in srgb, var(--color-accent) 70%, var(--color-text-heading))
-    );
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: hero-gradient-shift 8s ease infinite;
-    text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
-  }
-
-  .hero-intel {
-    position: relative;
-    display: inline-block;
-    margin-left: 0.2em;
-    white-space: nowrap;
-  }
-
-  .hero-aura {
-    position: absolute;
-    inset: -22% -10%;
-    background: radial-gradient(
-      closest-side,
-      color-mix(in srgb, var(--color-accent) 30%, transparent),
-      transparent 70%
-    );
-    border-radius: 999px;
-    filter: blur(12px);
-    opacity: 0.5;
-    z-index: -1;
-  }
-
-  .hero-bounce {
-    display: inline-block;
-    position: relative;
-    animation: hero-bounce 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
-  }
-
-  .hero-bounce-2 {
-    animation-delay: 0.1s;
-  }
-
-  .illustration-container {
-    width: clamp(160px, 32vw, 260px);
-    aspect-ratio: 1 / 1;
-    margin-bottom: 0.8rem;
-    border: none;
-    animation: fade-in-up 0.8s ease 0.2s forwards;
-    opacity: 0;
-  }
-
-  .hero-build-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.34rem;
-    margin-top: -0.08rem;
-    margin-bottom: clamp(0.85rem, 1.8vw, 1.2rem);
-    padding: 0.65rem 1.5rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in srgb, var(--color-border) 78%, #f97316 22%);
-    background: linear-gradient(
-      150deg,
-      color-mix(in srgb, var(--color-bg) 93%, #dbeafe 7%),
-      color-mix(in srgb, var(--color-bg) 97%, #f97316 3%)
-    );
-    color: var(--color-text-heading);
-    text-decoration: none;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.01em;
-    font-weight: 600;
-    box-shadow: 0 6px 14px color-mix(in srgb, #0f172a 10%, transparent), 0 0 0 1px color-mix(in srgb, #ffffff 28%, transparent) inset;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    gap: 1rem;
+    padding: 1.35rem 1.75rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
-    will-change: transform;
-    animation: fade-in-up 0.8s ease 0.35s forwards;
-    opacity: 0;
   }
 
-  .hero-build-cta::after {
-    content: '';
-    position: absolute;
-    left: 1rem;
-    right: 1rem;
-    bottom: 0.34rem;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      color-mix(in srgb, #f97316 62%, #93c5fd 38%) 50%,
-      transparent 100%
-    );
-    opacity: 0.45;
-    transform: scaleX(0.35);
-    transform-origin: center;
-    transition: transform 0.22s ease, opacity 0.22s ease;
+  .layer-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: var(--text-muted);
+    transition: background 0.25s ease, box-shadow 0.25s ease;
   }
 
-  .hero-build-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background: #f97316;
-    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.16);
-    animation: cta-dot-breathe 2.8s ease-in-out infinite;
-  }
-
-  .hero-build-text {
-    position: relative;
-    top: -0.01rem;
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.16rem;
-  }
-
-  .hero-build-type-wrap {
-    display: inline-flex;
-    align-items: baseline;
-    min-width: 14.8ch;
-    padding-right: 0.24ch;
-    text-align: left;
-  }
-
-  .hero-build-type {
-    display: inline-block;
-    line-height: 1;
-    white-space: nowrap;
-  }
-
-  .hero-build-type.is-typing {
-    padding-right: 0.08ch;
-  }
-
-  .hero-build-caret {
-    display: inline-block;
-    width: 0.58ch;
-    color: #f97316;
-    opacity: 1;
-    transform: translateY(-0.01em);
-  }
-
-  .hero-build-caret::before {
-    content: '|';
-  }
-
-  .hero-build-caret.blink-cycle {
-    animation: cta-caret-breathe 0.66s ease-in-out 3;
-  }
-
-  .home-direct-answer {
-    max-width: 760px;
-    margin: 0 auto 1.6rem;
-    padding: 0 1rem;
-    text-align: center;
-  }
-
-  .home-authority-brief {
-    max-width: 760px;
-    margin: 0 auto 1.75rem;
-    padding: 0 1rem;
-    text-align: center;
-  }
-
-  .home-authority-brief h2 {
-    margin: 0 0 0.5rem;
-    font-size: clamp(1.85rem, 4.2vw, 2.75rem);
-    line-height: 1.08;
-  }
-
-  .home-authority-brief p {
-    margin: 0;
-    color: var(--color-text-muted);
-    line-height: 1.68;
-    max-width: 66ch;
-    margin-inline: auto;
-  }
-
-  .home-direct-answer h2 {
-    margin: 0 0 0.45rem;
-    font-size: 1.38rem;
+  .layer-name {
     font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    transition: color 0.25s ease;
   }
 
-  .home-direct-answer p {
-    margin: 0;
-    color: var(--color-text-muted);
-    line-height: 1.7;
-    max-width: 66ch;
-    margin-inline: auto;
+  .stack-layer-row:hover,
+  .stack-layer-row:focus-visible,
+  .stack-layer-row.active {
+    background: rgba(99, 102, 241, 0.05);
+    border-color: var(--accent-cyan);
+    transform: translateX(8px);
   }
 
-  .hero-build-cta:hover {
-    transform: translateY(-1px);
-    border-color: color-mix(in srgb, #f97316 34%, #93c5fd 26%);
-    box-shadow: 0 10px 18px color-mix(in srgb, #0f172a 15%, transparent), 0 0 0 1px color-mix(in srgb, #ffffff 34%, transparent) inset;
+  .stack-layer-row:hover .layer-indicator,
+  .stack-layer-row:focus-visible .layer-indicator,
+  .stack-layer-row.active .layer-indicator {
+    background: var(--accent-cyan);
+    box-shadow: var(--shadow-glow-cyan);
   }
 
-  .hero-build-cta:hover::after {
-    opacity: 0.88;
-    transform: scaleX(1);
+  .stack-layer-row:hover .layer-name,
+  .stack-layer-row:focus-visible .layer-name,
+  .stack-layer-row.active .layer-name {
+    color: var(--text-primary);
   }
 
-  .hero-build-cta:focus-visible {
-    outline: 2px solid rgba(249, 115, 22, 0.55);
-    outline-offset: 3px;
+  .stack-details {
+    padding: 2.5rem;
+    min-height: 310px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .tagline {
-    font-size: 2.2rem;
+  .details-pane {
+    width: 100%;
+    animation: fade-in-up 0.25s ease forwards;
+  }
+
+  .details-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(0, 242, 254, 0.08);
+    color: var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+  }
+
+  .details-meta-tag {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 99px;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: rgba(139, 92, 246, 0.08);
+    color: var(--accent-purple);
+    border: 1px solid rgba(139, 92, 246, 0.2);
     margin-bottom: 1rem;
-    letter-spacing: 0.5px;
+    text-transform: uppercase;
   }
 
-  .intro {
-    max-width: 560px;
-    margin: 0 auto;
-    color: var(--color-text-muted);
-    font-size: 1.1rem;
-    line-height: 1.8;
+  .stack-details h4 {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
   }
 
-  @keyframes hero-gradient-shift {
-    0%,
-    100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
+  .details-item {
+    margin-bottom: 1rem;
   }
 
-  @keyframes hero-bounce {
-    0%,
-    100% {
-      transform: translateY(0) rotate(0);
-      color: inherit;
-      text-shadow: none;
-    }
-    50% {
-      transform: translateY(-6px) rotate(-5deg);
-      color: #f97316;
-      text-shadow: 0 0 10px #f97316;
-    }
+  .details-item strong {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.25rem;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .noise-overlay,
-    .hero-highlight,
-    .hero-bounce,
-    .hero-build-cta,
-    .hero-build-dot {
-      animation: none;
-    }
-
-    .noise-overlay {
-      display: none;
-    }
-
-    .hero-build-cta {
-      opacity: 1;
-    }
-
-    .hero-build-type {
-      border-right: none;
-      animation: none;
-      padding-right: 0;
-    }
-
-    .hero-build-caret {
-      animation: none;
-    }
+  .details-item p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
   }
 
-  @media (max-width: 720px) {
-    .homepage-hero {
-      padding: 2.75rem 0 3.25rem;
-    }
-
-    .hero-animated-line {
-      width: min(560px, 92vw);
-      margin-bottom: 1.25rem;
-    }
-
-    .tagline {
-      font-size: 1.75rem;
-    }
-
-    .intro {
-      font-size: 1rem;
-      padding: 0 0.5rem;
-    }
-
-    .hero-build-cta {
-      font-size: 0.8rem;
-      padding: 0.54rem 1.2rem;
-    }
+  /* Tools Directory grid */
+  .directory-section {
+    margin: 6rem auto;
   }
 
-  @media (max-width: 420px) {
-    .hero-animated-line {
-      font-size: clamp(1.35rem, 7.5vw, 2.2rem);
-    }
+  .category-filters {
+    display: flex;
+    gap: 0.85rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
 
-    .home-direct-answer {
-      padding: 0 0.75rem;
-    }
+  .filter-btn {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    padding: 0.5rem 1.2rem;
+    border-radius: 99px;
+    font-family: var(--font-heading);
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.22s ease;
+  }
 
-    .home-authority-brief {
-      padding: 0 0.75rem;
-    }
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: rgba(0, 242, 254, 0.05);
+    border-color: var(--accent-cyan);
+    color: var(--text-primary);
+  }
 
-    .home-authority-brief h2 {
-      font-size: 1.58rem;
-      line-height: 1.12;
-    }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+  }
 
-    .home-direct-answer h2 {
-      font-size: 1.45rem;
-      line-height: 1.15;
-    }
+  .tool-card {
+    position: relative;
+    overflow: hidden;
+    padding: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 
-    .home-authority-brief p,
-    .home-direct-answer p {
-      max-width: 34ch;
-      margin-inline: auto;
-    }
+  .tool-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-cyan);
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  .tool-card.highlight-flash {
+    animation: flash-highlight-border 2s ease;
+  }
+
+  @keyframes flash-highlight-border {
+    0%, 100% { border-color: var(--card-border); box-shadow: var(--shadow-premium); }
+    30%, 70% { border-color: var(--accent-orange); box-shadow: 0 0 25px rgba(249, 115, 22, 0.3); }
+  }
+
+  .card-glow {
+    position: absolute;
+    inset: -1px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    opacity: 0.06;
+    z-index: -1;
+    filter: blur(8px);
+  }
+
+  .tool-category-badge {
+    display: inline-block;
+    padding: 0.25rem 0.55rem;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .tool-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .tool-card p {
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+    flex-grow: 1;
+  }
+
+  .terminal-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-bottom: 1.75rem;
+    position: relative;
+  }
+
+  .terminal-prompt {
+    color: var(--accent-orange);
+    user-select: none;
+  }
+
+  .terminal-cmd {
+    color: #a7f3d0;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+    padding-right: 3rem;
+  }
+
+  .copy-terminal-btn {
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: all 0.2s ease;
+  }
+
+  .copy-terminal-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+  }
+
+  .card-actions {
+    margin-top: auto;
+  }
+
+  .card-btn-primary {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 99px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    background-color: rgba(0, 242, 254, 0.02);
+    text-decoration: none;
+    transition: all 0.22s ease;
+  }
+
+  .card-btn-primary:hover {
+    background-color: rgba(0, 242, 254, 0.08);
+    border-color: var(--accent-cyan);
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  /* Consulting Section */
+  .consulting-cta-section {
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 3rem;
+    margin: 6rem auto 2rem;
+  }
+
+  .consulting-glow {
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 350px;
+    height: 350px;
+    border-radius: 999px;
+    background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%);
+    opacity: 0.15;
+    z-index: 0;
+    filter: blur(80px);
+  }
+
+  .consulting-content {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+  }
+
+  .consulting-tag {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 99px;
+    font-size: 0.7rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: rgba(249, 115, 22, 0.08);
+    color: var(--accent-orange);
+    border: 1px solid rgba(249, 115, 22, 0.2);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .consulting-cta-section h2 {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+  }
+
+  .consulting-cta-section p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
   }
 
   @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes cta-dot-breathe {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 0.9;
+  @media (max-width: 900px) {
+    .hero-section {
+      padding: 5rem 1rem 3.5rem;
     }
-    50% {
-      transform: scale(1.16);
-      opacity: 1;
+    .selector-grid {
+      grid-template-columns: 1fr;
     }
-  }
-
-  @keyframes cta-caret-breathe {
-    0%,
-    100% {
-      opacity: 1;
-      transform: translateY(-0.01em);
+    .stack-container {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
     }
-    50% {
-      opacity: 0.35;
-      transform: translateY(-0.01em) scaleY(0.94);
+    .stack-details {
+      min-height: auto;
+      padding: 2rem;
+    }
+    .consulting-cta-section {
+      padding: 2.5rem 1.75rem;
     }
   }
-
 </style>

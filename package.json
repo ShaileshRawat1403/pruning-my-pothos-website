@@ -1,31 +1,29 @@
 {
-  "name": "thinking-workspace",
-  "type": "module",
-  "version": "0.0.1",
+  "name": "next-app",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build && node scripts/copy-public-dotfiles.mjs",
-    "lint:content": "node scripts/lint-content-consistency.mjs",
-    "lint:systems": "node scripts/lint-systems-consistency.mjs",
-    "lint:systems:advisory": "node scripts/lint-systems-advisory.mjs",
-    "report:systems": "node scripts/report-systems-consistency.mjs",
-    "report:topics": "node scripts/report-topic-coverage.mjs",
-    "report:gaps": "node scripts/report-main-gaps.mjs",
-    "verify:seo-live": "bash scripts/verify-seo-live.sh",
-    "verify:indexing": "node scripts/verify-indexing.mjs",
-    "verify:systems": "npm run lint:systems:advisory && npm run lint:systems && npm run report:systems",
-    "verify:content": "npm run lint:content && npm run verify:systems",
-    "deploy:zip": "npm run verify:content && npm run build && rm -f site.zip && cd dist && zip -r ../site.zip .",
-    "preview": "astro preview",
-    "shelf:music:fetch": "node scripts/fetch-music-metadata.mjs",
-    "astro": "astro"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/sitemap": "^3.7.3",
-    "astro": "^5.16.8",
-    "fuse.js": "^7.1.0",
-    "rehype-raw": "^7.0.0"
+    "@content-collections/core": "^0.15.2",
+    "@content-collections/next": "^0.2.11",
+    "mermaid": "^11.16.0",
+    "next": "16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

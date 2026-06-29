@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&family=Playfair+Display:wght@700&family=Source+Serif+Pro:wght@400;600&family=Caveat:wght@400;600&family=Patrick+Hand&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  --font-sans: 'Outfit', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Cyber Dark Theme (Default) */
+:root,
+[data-theme="dark"] {
+  --bg-color: #030712;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #0d122b 0%, #030712 100%);
+  --card-bg: rgba(17, 24, 39, 0.65);
+  --card-border: rgba(99, 102, 241, 0.15);
+  
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  
+  --accent-cyan: #00f2fe;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ff007f;
+  --accent-orange: #f97316;
+  
+  --shadow-premium: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-glow-cyan: 0 0 20px rgba(0, 242, 254, 0.15);
+  --shadow-glow-purple: 0 0 20px rgba(139, 92, 246, 0.15);
+  --grid-color: rgba(255, 255, 255, 0.015);
+}
+
+/* Premium Light Theme */
+[data-theme="light"] {
+  --bg-color: #f8fafc;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #e2e8f0 0%, #f8fafc 100%);
+  --card-bg: rgba(255, 255, 255, 0.75);
+  --card-border: rgba(99, 102, 241, 0.12);
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  
+  --accent-cyan: #0ea5e9;
+  --accent-purple: #7c3aed;
+  --accent-pink: #db2777;
+  --accent-orange: #ea580c;
+  
+  --shadow-premium: 0 10px 40px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(0, 0, 0, 0.03);
+  --shadow-glow-cyan: 0 0 20px rgba(14, 165, 233, 0.12);
+  --shadow-glow-purple: 0 0 20px rgba(124, 58, 237, 0.12);
+  --grid-color: rgba(15, 23, 42, 0.03);
+}
+
+@theme {
+  --font-sans: 'Outfit', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-pink: var(--accent-pink);
+  --color-accent-orange: var(--accent-orange);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Background grid network effect */
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Floating mesh gradients */
+.glow-blob {
+  position: absolute;
+  width: min(600px, 90vw);
+  height: min(600px, 90vw);
+  border-radius: 999px;
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.1;
+  transition: opacity 0.3s ease;
+}
+
+.glow-cyan {
+  top: -150px;
+  left: -150px;
+  background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%);
+}
+
+.glow-purple {
+  bottom: 100px;
+  right: -150px;
+  background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%);
+}
+
+/* Glassmorphic Panel Base */
+.card-glass {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-premium);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Buttons */
+.btn-premium {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.85rem;
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 8px 24px rgba(0, 242, 254, 0.18);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 242, 254, 0.3);
+  filter: brightness(1.05);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent-purple);
+  transform: translateY(-2px);
+  background-color: rgba(139, 92, 246, 0.05);
+  box-shadow: var(--shadow-glow-purple);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Sentiments Garden Calm / Writing-Led Scoping Styles */
+.sentiments-scope {
+  --font-sans: 'IBM Plex Sans', sans-serif;
+  --font-serif: 'Source Serif Pro', serif;
+  --font-heading: 'Playfair Display', serif;
+
+  --bg-color: #111827;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #1f2937 0%, #111827 100%);
+  --card-bg: rgba(31, 41, 55, 0.45);
+  --card-border: rgba(255, 255, 255, 0.05);
+
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+
+  --accent-cyan: #60a5fa;
+  --accent-purple: #c084fc;
+  --accent-pink: #f472b6;
+  --accent-orange: #fb923c;
+
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.sentiments-scope h1,
+.sentiments-scope h2,
+.sentiments-scope h3,
+.sentiments-scope h4 {
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sentiments-scope article p {
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  line-height: 1.85;
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+/* Drop cap style for .lead paragraphs in writing garden */
+.sentiments-scope p.lead::first-letter {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: 700;
+  float: left;
+  line-height: 1;
+  padding-right: 0.5rem;
+  color: var(--text-primary);
+}
+
+.sentiments-scope a {
+  color: var(--accent-purple);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.sentiments-scope a:hover {
+  color: var(--accent-cyan);
+}
+

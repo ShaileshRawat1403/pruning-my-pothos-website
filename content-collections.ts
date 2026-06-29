@@ -1,0 +1,91 @@
+import { defineCollection, defineConfig } from "@content-collections/core";
+import { z } from "zod";
+
+const systems = defineCollection({
+  name: "systems",
+  directory: "src/content/systems",
+  include: "**/*.{md,mdx}",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    category: z.enum(["Explanations", "Concepts", "How-things-fit-together"]),
+    tags: z.array(z.string()).optional().default([]),
+    updatedAt: z.string().optional(),
+    heroImage: z.string().optional(),
+    heroImageAlt: z.string().optional(),
+    proofPoints: z.array(z.string()).optional().default([]),
+    faq: z.array(
+      z.object({
+        question: z.string(),
+        answer: z.string(),
+      })
+    ).optional().default([]),
+    content: z.string(),
+  }),
+});
+
+const sentences = defineCollection({
+  name: "sentences",
+  directory: "src/content/sentences",
+  include: "**/*.md",
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    category: z.enum(["Attention", "Meaning", "Judgment"]),
+    tags: z.array(z.string()).optional().default([]),
+    content: z.string(),
+  }),
+});
+
+const stickyNotes = defineCollection({
+  name: "stickyNotes",
+  directory: "src/content/sticky-notes",
+  include: "**/*.md",
+  schema: z.object({
+    title: z.string(),
+    rotation: z.number().optional(),
+    color: z.string().optional(),
+    tags: z.array(z.string()).optional().default([]),
+    content: z.string(),
+  }),
+});
+
+const self = defineCollection({
+  name: "self",
+  directory: "src/content/self",
+  include: "**/*.{md,mdx}",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    publishDate: z.string(),
+    tags: z.array(z.string()).optional().default([]),
+    heroImage: z.string().optional(),
+    heroImageAlt: z.string().optional(),
+    content: z.string(),
+  }),
+});
+
+const shelf = defineCollection({
+  name: "shelf",
+  directory: "src/content/shelf",
+  include: "**/*.md",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    publishDate: z.string(),
+    tags: z.array(z.string()).optional().default([]),
+    artist: z.string().optional(),
+    album: z.string().optional(),
+    year: z.number().optional(),
+    coverUrl: z.string().optional(),
+    pdfUrl: z.string().optional(),
+    videoUrl: z.string().optional(),
+    resourceHighlights: z.array(z.string()).optional(),
+    appleMusicUrl: z.string().optional(),
+    content: z.string(),
+  }),
+});
+
+export default defineConfig({
+  content: [systems, sentences, stickyNotes, self, shelf],
+});

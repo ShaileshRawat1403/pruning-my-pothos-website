@@ -1,8 +1,16 @@
 # Agent Handoff: Current State
 
 ## Last updated
-- Date: 2026-03-04
-- Updated by: Codex agent
+- Date: 2026-06-29
+- Updated by: Antigravity agent (Next.js Root Merge)
+
+## Next.js Migration & Root Merge Summary
+- Switched website root framework from Astro to Next.js 15 App Router.
+- Ported design system, dynamic collection pages, sitemaps, and ToolSmith React component playpens.
+- Enforced output: 'export' static compilation targeting simple static hosting.
+- Set pre-merge rollback git tag `pre-next-merge` and git archive branch `astro-archive` for security.
+- Audited and merged public assets directory (favicons, PDFs, images, and `.htaccess` redirects).
+- Total statically compiled page count: 440 routes prerendered successfully with zero compile warnings/errors.
 
 ## What changed
 - SEO remediation pass from SEMrush crawl exports:
@@ -1127,9 +1135,33 @@
 
 ### Suggested next actions
 1. Go-live deployment check on pruningmypothos.com.
-2. Build the Flowright ChangeOps case study page `/live-lab/flowright-changeops-ai-rollout/`.
-3. Build the Governed AI Rollout Loop canvas.
-4. Build the ToolSmith HITL checklist connection.
+2. Build the Governed AI Rollout Loop canvas.
+3. Build the ToolSmith HITL checklist connection.
 
+## Update: 2026-06-28 (Enablement Portfolio Revamp & Flowright Cleanup)
 
+### Summary
+- **Enablement Portfolio Revamp (Option A)**:
+  - Deleted the legacy React build folder `public/technical-marketing-portfolio/`.
+  - Added a `301 Redirect` in `public/.htaccess` from `/technical-marketing-portfolio/` to `/portfolio/`. Verified that sitemap URLs are not impacted.
+  - Aligned `/portfolio/` pages and layouts to focus on **AI + Documentation + Communication Enablement** instead of technical writing or consulting.
+  - Changed job titles in `PortfolioLayout.astro` and `portfolio.astro` to *"AI, Documentation, and Communication Enablement Developer"*.
+  - Reworked homepage and portfolio copy to favor technical functional positioning, replacing "Commercial velocity" with **Developer velocity**.
+- **Flowright Cleanup**:
+  - Removed all public references to the personal project `Flowright` across the site, replacing it with generic, descriptive terms like `Governance Engine` or `ChangeOps` in layouts, index cards, live-lab status roadmaps, and tool sandbox configuration objects.
 
+### Files modified
+- `src/layouts/PortfolioLayout.astro`
+- `src/pages/portfolio.astro`
+- `src/pages/index.astro`
+- `src/pages/live-lab/index.astro`
+- `src/pages/tools/index.astro`
+- `src/pages/tools/change-to-checklist.astro`
+- `src/pages/tools/csv-to-eval.astro`
+- `src/pages/docs/public-private-boundary.astro`
+- `src/pages/docs/tool-status.astro`
+- `public/.htaccess`
+
+### Validation
+- `npm run build` completed successfully, compiling **515 static pages** with zero warnings or errors.
+- Verified htaccess redirects pass checking rules successfully.

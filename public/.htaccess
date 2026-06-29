@@ -10,3 +10,7 @@ RedirectMatch 410 ^/shelf/movies/
 RedirectMatch 410 ^/sentences/sentence-[0-9]+
 RedirectMatch 410 ^/systems/simple-tokenizer/?$
 RedirectMatch 410 ^/shelf/music/music-recommendation
+
+# Redirect retired sticky notes to sentiments index (Phase 7.5 redirect plan)
+RedirectMatch 301 ^/sticky-notes/([^/]+)/?$ /sentiments/
+RedirectMatch 301 ^/sticky-notes/?$ /sentiments/

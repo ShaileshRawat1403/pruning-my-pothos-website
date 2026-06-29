@@ -1,0 +1,93 @@
+import { MetadataRoute } from "next";
+import { allSystems, allSentences, allSelves, allShelves } from "content-collections";
+import { SITE_CONFIG } from "../lib/seo/site";
+import { slugifyTag } from "../lib/tags";
+
+export const dynamic = "force-static";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticRoutes = [
+    "",
+    "/docs",
+    "/docs/natural-language-programming-stack",
+    "/docs/public-private-boundary",
+    "/docs/tool-status",
+    "/tools",
+    "/canvases",
+    "/live-lab",
+    "/sentiments",
+    "/about",
+    "/portfolio",
+    "/shelf",
+    "/tags",
+    "/tools/prompt-to-json",
+    "/tools/change-to-checklist",
+    "/tools/csv-to-eval",
+    "/tools/notes-to-brief",
+    "/tools/repo-context-pack",
+    "/tools/workflow-to-diagram",
+    "/shelf/books",
+    "/shelf/culture",
+    "/shelf/local-experiments",
+    "/shelf/music",
+    "/shelf/notes",
+    "/shelf/philosophy",
+    "/shelf/shared-resources",
+    "/shelf/tools",
+  ].map((route) => ({
+    url: route === "" ? SITE_CONFIG.url : `${SITE_CONFIG.url}${route}/`,
+    lastModified: new Date(),
+  }));
+
+  const systemRoutes = allSystems.map((item) => ({
+    url: `${SITE_CONFIG.url}/systems/${item._meta.path}/`,
+    lastModified: new Date(),
+  }));
+
+  const sentenceRoutes = allSentences.map((item) => ({
+    url: `${SITE_CONFIG.url}/sentences/${item._meta.path}/`,
+    lastModified: new Date(),
+  }));
+
+  const selfRoutes = allSelves.map((item) => ({
+    url: `${SITE_CONFIG.url}/self/${item._meta.path}/`,
+    lastModified: new Date(),
+  }));
+
+  const shelfRoutes = allShelves.map((item) => {
+    const slug = item._meta.fileName.replace(/\.mdx?$/, "");
+    return {
+      url: `${SITE_CONFIG.url}/shelf/${item._meta.directory}/${slug}/`,
+      lastModified: new Date(),
+    };
+  });
+
+  // Extract all slugified tag routes
+  const allTags = new Set<string>();
+  const items = [
+    ...allSystems.map((item) => item.tags || []),
+    ...allSentences.map((item) => item.tags || []),
+    ...allSelves.map((item) => item.tags || []),
+    ...allShelves.map((item) => item.tags || [])
+  ];
+  items.forEach((tags) => {
+    tags.forEach((tag) => {
+      const slug = slugifyTag(tag);
+      if (slug) allTags.add(slug);
+    });
+  });
+
+  const tagRoutes = Array.from(allTags).map((tag) => ({
+    url: `${SITE_CONFIG.url}/tags/${tag}/`,
+    lastModified: new Date(),
+  }));
+
+  return [
+    ...staticRoutes,
+    ...systemRoutes,
+    ...sentenceRoutes,
+    ...selfRoutes,
+    ...shelfRoutes,
+    ...tagRoutes,
+  ];
+}

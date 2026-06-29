@@ -27,29 +27,68 @@ export default function Home() {
           <span className="inline-flex self-start px-3 py-1 border border-accent-cyan/30 rounded-full text-xs font-heading font-semibold text-accent-cyan bg-accent-cyan/5">
             A Transition That Actually Sticks!
           </span>
-          <h1 className="font-heading text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.15] text-[var(--text-primary)]">
+          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-[var(--text-primary)]">
             Become an<br />
             <span className="gradient-text">AI-First Architect</span>
           </h1>
           <div className="text-xs font-mono text-text-secondary tracking-wide uppercase border-l-2 border-accent-cyan/45 pl-3 py-1 bg-white/[0.01]">
-            Build Reusable Workflows | Compile Blueprints | Run Offline Sandboxes
+            Build Governed Workflows | Design Loop Schemas | Verify Prompts
           </div>
           <p className="text-base sm:text-lg text-text-secondary leading-relaxed max-w-[540px]">
             Convert fuzzy model prompts and workflows into inspectable, governed execution schemas. Run browser-native validation utilities now.
           </p>
           <div className="flex flex-wrap gap-4 mt-2">
-            <a href="#tools-directory" className="btn-premium btn-primary">
-              Explore Tools
+            <a href="#tools-directory" className="btn-premium btn-primary shadow-glow-cyan text-sm py-3 px-6 rounded-lg font-bold transition-all hover:scale-[1.02]">
+              Explore ToolSmith Bench
             </a>
-            <Link href="/sentiments" className="btn-premium btn-secondary">
-              Enter Sentiments
+            <Link href="/sentiments" className="btn-premium btn-secondary text-sm py-3 px-6 rounded-lg font-bold transition-all hover:scale-[1.02]">
+              Enter Sentiments Garden
             </Link>
           </div>
         </div>
 
-        {/* 2. Interactive systems cockpit mockup */}
-        <div className="w-full lg:w-[48%] flex justify-center">
-          <CockpitConsole />
+        {/* 2. Hacker-Victorian Hero Image Presentation Card */}
+        <div className="w-full lg:w-[48%] flex flex-col gap-4">
+          <div className="relative group overflow-hidden rounded-2xl border border-[var(--card-border)] bg-black/40 shadow-premium">
+            {/* Glossy overlay sheen */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/10 via-transparent to-accent-purple/10 pointer-events-none z-10" />
+            
+            {/* High-res visual image */}
+            <img 
+              src="/images/ada-lovelace-hero.jpg" 
+              alt="Hacker-Victorian Ada Lovelace serving telemetry" 
+              className="w-full h-auto object-cover aspect-[4/3] opacity-85 group-hover:scale-[1.02] transition-transform duration-700"
+            />
+
+            {/* Floating Glassmorphism telemetry overlay */}
+            <div className="absolute bottom-4 left-4 right-4 card-glass p-4 z-20 flex justify-between items-center bg-black/60 border-accent-cyan/20">
+              <div className="flex flex-col gap-0.5">
+                <span className="text-[9px] font-mono text-accent-cyan font-bold tracking-widest uppercase">SYSTEMS PLAYGROUND</span>
+                <span className="text-xs font-bold text-[var(--text-primary)]">Launch Sandbox ToolSmith Bench</span>
+              </div>
+              <span className="px-2.5 py-1 rounded bg-accent-cyan/20 border border-accent-cyan/30 text-accent-cyan font-mono text-[9px] font-bold uppercase tracking-wider">
+                ACTIVE
+              </span>
+            </div>
+
+            {/* Coding Knowledge Required Badge */}
+            <div className="absolute top-4 left-4 px-2.5 py-1 rounded-full bg-black/60 border border-white/10 text-white/80 font-mono text-[9px] font-bold flex items-center gap-1.5 z-20">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-pink animate-ping"></span>
+              Coding Knowledge Required
+            </div>
+          </div>
+          
+          {/* Sub-panel telemetry metrics */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="card-glass p-3 bg-black/25 flex flex-col justify-center border-[var(--card-border)]">
+              <span className="text-[10px] text-text-muted uppercase">Interactive Sandboxes</span>
+              <span className="text-sm font-bold text-accent-cyan mt-0.5">6 Active</span>
+            </div>
+            <div className="card-glass p-3 bg-black/25 flex flex-col justify-center border-[var(--card-border)]">
+              <span className="text-[10px] text-text-muted uppercase">Security Reviews</span>
+              <span className="text-sm font-bold text-accent-purple mt-0.5">Human Required</span>
+            </div>
+          </div>
         </div>
       </section>
 

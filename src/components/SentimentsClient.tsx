@@ -136,10 +136,7 @@ export default function SentimentsClient({ initialPosts, stickyNotes }: Sentimen
                     </span>
                     {post.publishDate && (
                       <span className="text-[9px] font-mono text-text-muted">
-                        {new Date(post.publishDate).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "short",
-                        })}
+                        {post.publishDate}
                       </span>
                     )}
                   </div>

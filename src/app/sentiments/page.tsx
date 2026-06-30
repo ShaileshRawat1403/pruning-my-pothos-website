@@ -21,6 +21,7 @@ export default function SentimentsIndexPage() {
     id: `sentence-${item._meta.path}`,
     title: item.title,
     description: item.summary || item.title,
+    rawDate: undefined,
     publishDate: undefined, // Sentences do not have explicit publishDate fields
     tags: item.tags || [],
     url: `/sentences/${item._meta.path}`,
@@ -34,7 +35,12 @@ export default function SentimentsIndexPage() {
     id: `self-${item._meta.path}`,
     title: item.title,
     description: item.description,
-    publishDate: item.publishDate,
+    rawDate: item.publishDate,
+    publishDate: item.publishDate ? (() => {
+      const d = new Date(item.publishDate);
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      return `${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+    })() : undefined,
     tags: item.tags || [],
     url: `/self/${item._meta.path}`,
     type: "calibrations" as const,
@@ -49,7 +55,12 @@ export default function SentimentsIndexPage() {
       id: `shelf-${slug}`,
       title: item.title,
       description: item.description,
-      publishDate: item.publishDate,
+      rawDate: item.publishDate,
+      publishDate: item.publishDate ? (() => {
+        const d = new Date(item.publishDate);
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        return `${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+      })() : undefined,
       tags: item.tags || [],
       url: `/shelf/${item._meta.directory}/${slug}`,
       type: "curations" as const,
@@ -63,6 +74,7 @@ export default function SentimentsIndexPage() {
     id: `system-${item._meta.path}`,
     title: item.title,
     description: item.description,
+    rawDate: undefined,
     publishDate: undefined, // Systems do not have publishDates in standard frontmatter
     tags: item.tags || [],
     url: `/systems/${item._meta.path}`,
@@ -89,8 +101,8 @@ export default function SentimentsIndexPage() {
     ...mappedShelves,
     ...mappedSystems
   ].sort((a, b) => {
-    if (a.publishDate && b.publishDate) {
-      return new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime();
+    if (a.rawDate && b.rawDate) {
+      return new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime();
     }
     return a.title.localeCompare(b.title);
   });

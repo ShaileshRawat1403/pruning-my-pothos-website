@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const savedTheme = localStorage.getItem("systems-theme") as "light" | "dark" | null;
     const initialTheme = savedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     setTheme(initialTheme);
@@ -18,6 +20,10 @@ export default function ThemeToggle() {
     localStorage.setItem("systems-theme", nextTheme);
     document.documentElement.setAttribute("data-theme", nextTheme);
   };
+
+  if (!mounted) {
+    return <div style={{ width: "32px", height: "32px" }} className="w-8 h-8 rounded-full bg-white/5 border border-white/10"></div>;
+  }
 
   return (
     <button

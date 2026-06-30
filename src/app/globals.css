@@ -34,7 +34,7 @@
 
 @theme {
   --font-sans: 'Outfit', sans-serif;
-  --font-heading: 'Playfair Display', serif;
+  --font-heading: 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   --color-accent-cyan: var(--accent-cyan);

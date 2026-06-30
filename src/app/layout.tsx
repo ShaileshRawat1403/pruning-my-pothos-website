@@ -16,13 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="dark" className="h-full">
-      <body className="min-h-full flex flex-col relative bg-[var(--bg-color)] text-[var(--text-primary)]">
+      <body className="min-h-full flex flex-col relative bg-[var(--bg-color)] text-[var(--text-primary)] overflow-x-hidden">
         <ScrollAnimations />
-        <div className="glow-blob glow-cyan"></div>
-        <div className="glow-blob glow-purple"></div>
         <BackgroundGrid />
         <Header />
-        <main className="relative z-10 w-full max-w-[1200px] mx-auto px-8 py-8 flex-grow">
+        <main className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
           {children}
         </main>
         <Footer />

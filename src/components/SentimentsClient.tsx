@@ -69,19 +69,19 @@ export default function SentimentsClient({ initialPosts, stickyNotes }: Sentimen
   return (
     <div className="flex flex-col gap-8 w-full">
       {/* Search & Filter Options */}
-      <div className="card-glass p-6 bg-black/40 border-accent-purple/20 flex flex-col lg:flex-row gap-4 justify-between items-center relative z-10">
+      <div className="flex flex-col lg:flex-row gap-4 justify-between items-center relative z-10 border-b border-white/10 pb-4">
         <div className="relative w-full lg:max-w-md">
           <input
             type="text"
             placeholder="Search notes, concepts, or tags..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-text-primary focus:outline-none focus:border-accent-cyan transition-colors font-mono"
+            className="w-full bg-[#0a0a0a] border border-white/10 rounded-md px-4 py-2 text-sm text-white focus:outline-none focus:border-zinc-500 transition-colors"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-2.5 text-text-muted hover:text-text-primary text-xs"
+              className="absolute right-3 top-2.5 text-zinc-500 hover:text-white text-xs"
             >
               ✕
             </button>
@@ -89,20 +89,22 @@ export default function SentimentsClient({ initialPosts, stickyNotes }: Sentimen
         </div>
 
         {/* Tab selection */}
-        <div className="flex flex-wrap gap-1 p-1 bg-black/50 border border-white/5 rounded-xl w-full lg:w-auto justify-center">
-          {(["all", "reflections", "calibrations", "curations", "systems", "sticky-notes"] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-3 py-1.5 rounded-lg font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-wider transition-all ${
-                activeTab === tab
-                  ? "bg-accent-purple text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]"
-                  : "text-text-secondary hover:text-text-primary hover:bg-white/5"
-              }`}
-            >
-              {tab === "sticky-notes" ? "Sticky Notes" : tab}
-            </button>
-          ))}
+        <div className="flex overflow-x-auto w-full lg:w-auto scrollbar-hide border-b border-transparent">
+          <div className="flex gap-4 px-1">
+            {(["all", "reflections", "calibrations", "curations", "systems", "sticky-notes"] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`pb-2 whitespace-nowrap text-xs uppercase tracking-wider font-semibold transition-colors border-b-2 ${
+                  activeTab === tab
+                    ? "border-white text-white"
+                    : "border-transparent text-zinc-500 hover:text-zinc-300"
+                }`}
+              >
+                {tab === "sticky-notes" ? "Sticky Notes" : tab}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

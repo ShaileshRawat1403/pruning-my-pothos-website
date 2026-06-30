@@ -114,24 +114,35 @@ export default function SentimentsIndexPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
 
-      {/* Hero Header Area */}
-      <section className="card-glass p-8 flex flex-col gap-4 border-accent-purple/20 bg-black/40 shadow-premium relative overflow-hidden">
-        {/* Subtle grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.007)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.007)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
-        
-        <div className="flex items-center gap-2 relative z-10">
-          <span className="px-2 py-0.5 rounded bg-accent-purple/20 border border-accent-purple/30 text-accent-purple font-mono text-[9px] font-bold uppercase tracking-wider">
-            THE WORKSPACE
-          </span>
-          <span className="text-[10px] font-mono text-text-muted">DIRECTORY // WRITING_ARCHIVE</span>
-        </div>
+      {/* Interactive Hero Header Area with Portrait */}
+      <section className="relative z-10 w-full mb-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12 p-8 rounded-2xl bg-[#0a0a0a] border border-white/10 shadow-2xl overflow-hidden">
+          {/* Portrait Container */}
+          <div className="relative shrink-0 w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-[#18181b] overflow-hidden group">
+            <img 
+              src="/my-self-portrait.png" 
+              alt="Shailesh Rawat" 
+              className="w-full h-full object-cover grayscale opacity-90 transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+            />
+          </div>
+          
+          {/* Text Content */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded bg-zinc-800 text-white font-mono text-[9px] font-bold uppercase tracking-widest border border-white/10">
+                THE WORKSPACE
+              </span>
+              <span className="text-[10px] font-mono text-zinc-500">DIRECTORY // WRITING_ARCHIVE</span>
+            </div>
 
-        <h1 className="font-heading text-4xl font-extrabold text-[var(--text-primary)] tracking-tight relative z-10 leading-tight">
-          Sentiments Workspace
-        </h1>
-        <p className="text-text-secondary text-base leading-relaxed max-w-[650px] relative z-10">
-          A calm, text-led repository of personal notes, short reflective essays, and shared resource collections.
-        </p>
+            <h1 className="font-heading text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight">
+              Sentiments Workspace
+            </h1>
+            <p className="text-zinc-400 text-base md:text-lg leading-relaxed max-w-[600px]">
+              A calm, text-led repository of personal notes, short reflective essays, and shared resource collections. Authored by Shailesh Rawat.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Interactive client panel */}

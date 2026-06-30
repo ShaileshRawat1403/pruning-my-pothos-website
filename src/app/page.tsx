@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HeroSection from "../components/HeroSection";
 import CockpitConsole from "../components/CockpitConsole";
 import { constructMetadata } from "../lib/seo/metadata";
 import { getWebsiteSchema, getOrgSchema } from "../lib/seo/jsonld";
@@ -22,91 +23,6 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
       />
       
-      {/* 1. Hero: Ultra-Premium Philosophical Introduction */}
-      <section className="grid grid-cols-1 xl:grid-cols-12 items-center gap-16 lg:gap-8 pt-12 pb-24">
-        <div className="xl:col-span-5 flex flex-col gap-8 text-left z-10">
-          <div className="flex items-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            <div className="h-[1px] w-12 bg-gradient-to-r from-accent-cyan to-transparent"></div>
-            <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-accent-cyan/80">
-              Philosophy Meets Programming
-            </span>
-          </div>
-          
-          <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            Become an<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/40 drop-shadow-sm">
-              AI-First Architect
-            </span>
-          </h1>
-          
-          <div className="text-sm font-mono text-white/90 tracking-[0.05em] animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            "Natural language is the new API."
-          </div>
-          
-          <div className="relative pl-6 py-2 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-            <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-accent-cyan via-accent-purple to-transparent rounded-full"></div>
-            <p className="text-lg sm:text-xl text-text-secondary leading-relaxed font-light italic">
-              Debug the vibe. We deconstruct fuzzy model workflows into inspectable, governed structures using reasoning and logic.
-            </p>
-          </div>
-          
-          <div className="flex flex-wrap gap-6 mt-6 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <a href="#tools-directory" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-accent-cyan to-accent-purple text-white font-bold rounded-full transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(34,211,238,0.4)]">
-              Explore ToolSmith Bench
-            </a>
-            
-            <Link href="/sentiments" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/[0.03] border border-white/10 text-white font-medium rounded-full hover:bg-white/[0.08] transition-all hover:border-white/30 backdrop-blur-md">
-              Enter Sentiments
-            </Link>
-          </div>
-        </div>
-        
-        <div className="hidden xl:block xl:col-span-1"></div>{/* Spacer */}
-
-        {/* 2. High-Fashion Hero Image Presentation Card */}
-        <div className="xl:col-span-6 flex flex-col gap-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-          {/* Stacked mock tab window deck - Now ultra thin and elegant */}
-          <div className="card-glass p-1.5 relative group overflow-hidden bg-white/[0.02] animate-continuous-float animate-pulse-glow">
-            
-            {/* Mock browser header */}
-            <div className="flex items-center px-4 py-3 border-b border-white/[0.05]">
-              <div className="flex gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
-                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
-                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
-              </div>
-              <span className="text-[10px] font-mono text-white/40 ml-4 tracking-wider uppercase">lovelace_cockpit.xml</span>
-            </div>
-
-            <div className="relative overflow-hidden aspect-[4/3] rounded-b-[18px]">
-              {/* Glossy overlay sheen */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/5 via-transparent to-accent-purple/10 pointer-events-none z-10 mix-blend-screen" />
-              
-              {/* High-res conceptual image */}
-              <img 
-                src="/images/ada-lovelace-hero.jpg" 
-                alt="Hacker-Victorian Ada Lovelace serving telemetry" 
-                className="w-full h-full object-cover opacity-85 group-hover:scale-[1.05] group-hover:opacity-100 transition-all duration-[1.5s] ease-[cubic-bezier(0.22,1,0.36,1)]"
-              />
-
-              {/* Floating Glassmorphism telemetry overlay */}
-              <div className="absolute bottom-6 left-6 right-6 card-glass p-5 z-20 flex justify-between items-center bg-black/40 border-white/[0.05] backdrop-blur-2xl">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[9px] font-mono text-accent-cyan/80 font-medium tracking-[0.2em] uppercase">Systems Playground</span>
-                  <span className="text-sm font-medium text-white tracking-wide">Launch Sandbox ToolSmith Bench</span>
-                </div>
-                <span className="px-3 py-1.5 rounded-full bg-accent-cyan/10 border border-accent-cyan/20 text-accent-cyan font-mono text-[9px] font-bold uppercase tracking-widest">
-                  Active
-                </span>
-              </div>
-
-              {/* Language + Logic Required Badge */}
-              <div className="absolute top-6 left-6 px-4 py-2 rounded-full bg-black/40 border border-white/[0.05] backdrop-blur-xl text-white/90 font-mono text-[10px] uppercase tracking-widest flex items-center gap-3 z-20 transition-all duration-700 hover:bg-black/60">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent-cyan animate-pulse"></span>
-                Language + Logic Preferred
-              </div>
-            </div>
-          </div>
           
           {/* Sub-panel telemetry metrics */}
           <div className="grid grid-cols-2 gap-6">

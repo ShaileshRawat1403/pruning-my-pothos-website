@@ -11,6 +11,7 @@
   "dependencies": {
     "@content-collections/core": "^0.15.2",
     "@content-collections/next": "^0.2.11",
+    "framer-motion": "^12.42.0",
     "mermaid": "^11.16.0",
     "next": "16.2.9",
     "react": "19.2.4",

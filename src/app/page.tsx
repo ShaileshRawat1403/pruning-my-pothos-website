@@ -21,72 +21,84 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
       />
-      {/* 1. Hero: Sans Serif Systems Lab */}
+      {/* 1. Hero: Sans Serif Systems Platform */}
       <section className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 pt-8 pb-12">
         <div className="flex-1 flex flex-col gap-6 text-left">
           <span className="inline-flex self-start px-3 py-1 border border-accent-cyan/30 rounded-full text-xs font-heading font-semibold text-accent-cyan bg-accent-cyan/5">
-            A Transition That Actually Sticks!
+            Philosophy Meets Programming
           </span>
           <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-[var(--text-primary)]">
             Become an<br />
             <span className="gradient-text">AI-First Architect</span>
           </h1>
           <div className="text-xs font-mono text-text-secondary tracking-wide uppercase border-l-2 border-accent-cyan/45 pl-3 py-1 bg-white/[0.01]">
-            Build Governed Workflows | Design Loop Schemas | Verify Prompts
+            Language + Logic // Debugging the Vibe
           </div>
           <p className="text-base sm:text-lg text-text-secondary leading-relaxed max-w-[540px]">
-            Convert fuzzy model prompts and workflows into inspectable, governed execution schemas. Run browser-native validation utilities now.
+            We favor natural language over code. Debug the vibe. We deconstruct fuzzy model prompts and workflows into inspectable, governed structures using logic, structure, and reasoning. No coding required.
           </p>
           <div className="flex flex-wrap gap-4 mt-2">
             <a href="#tools-directory" className="btn-premium btn-primary shadow-glow-cyan text-sm py-3 px-6 rounded-lg font-bold transition-all hover:scale-[1.02]">
               Explore ToolSmith Bench
             </a>
             <Link href="/sentiments" className="btn-premium btn-secondary text-sm py-3 px-6 rounded-lg font-bold transition-all hover:scale-[1.02]">
-              Enter Sentiments Garden
+              Enter Sentiments Workspace
             </Link>
           </div>
         </div>
 
         {/* 2. Hacker-Victorian Hero Image Presentation Card */}
         <div className="w-full lg:w-[48%] flex flex-col gap-4">
-          <div className="relative group overflow-hidden rounded-2xl border border-[var(--card-border)] bg-black/40 shadow-premium">
-            {/* Glossy overlay sheen */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/10 via-transparent to-accent-purple/10 pointer-events-none z-10" />
+          {/* Stacked mock tab window deck */}
+          <div className="browser-chrome border-accent-cyan/20 relative group overflow-hidden">
             
-            {/* High-res visual image */}
-            <img 
-              src="/images/ada-lovelace-hero.jpg" 
-              alt="Hacker-Victorian Ada Lovelace serving telemetry" 
-              className="w-full h-auto object-cover aspect-[4/3] opacity-85 group-hover:scale-[1.02] transition-transform duration-700"
-            />
-
-            {/* Floating Glassmorphism telemetry overlay */}
-            <div className="absolute bottom-4 left-4 right-4 card-glass p-4 z-20 flex justify-between items-center bg-black/60 border-accent-cyan/20">
-              <div className="flex flex-col gap-0.5">
-                <span className="text-[9px] font-mono text-accent-cyan font-bold tracking-widest uppercase">SYSTEMS PLAYGROUND</span>
-                <span className="text-xs font-bold text-[var(--text-primary)]">Launch Sandbox ToolSmith Bench</span>
-              </div>
-              <span className="px-2.5 py-1 rounded bg-accent-cyan/20 border border-accent-cyan/30 text-accent-cyan font-mono text-[9px] font-bold uppercase tracking-wider">
-                ACTIVE
-              </span>
+            {/* Mock browser header */}
+            <div className="browser-header">
+              <span className="browser-dot bg-[#ef4444]" />
+              <span className="browser-dot bg-[#f59e0b]" />
+              <span className="browser-dot bg-[#10b981]" />
+              <span className="text-[10px] font-mono text-text-muted ml-2">lovelace_cockpit.xml</span>
             </div>
 
-            {/* Coding Knowledge Required Badge */}
-            <div className="absolute top-4 left-4 px-2.5 py-1 rounded-full bg-black/60 border border-white/10 text-white/80 font-mono text-[9px] font-bold flex items-center gap-1.5 z-20">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-pink animate-ping"></span>
-              Coding Knowledge Required
+            <div className="relative overflow-hidden aspect-[4/3]">
+              {/* Glossy overlay sheen */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/10 via-transparent to-accent-purple/10 pointer-events-none z-10" />
+              
+              {/* High-res visual image */}
+              <img 
+                src="/images/ada-lovelace-hero.jpg" 
+                alt="Hacker-Victorian Ada Lovelace serving telemetry" 
+                className="w-full h-full object-cover opacity-85 group-hover:scale-[1.02] transition-transform duration-700"
+              />
+
+              {/* Floating Glassmorphism telemetry overlay */}
+              <div className="absolute bottom-4 left-4 right-4 card-glass p-4 z-20 flex justify-between items-center bg-black/70 border-accent-cyan/20">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-[9px] font-mono text-accent-cyan font-bold tracking-widest uppercase">SYSTEMS PLAYGROUND</span>
+                  <span className="text-xs font-bold text-[var(--text-primary)]">Launch Sandbox ToolSmith Bench</span>
+                </div>
+                <span className="px-2.5 py-1 rounded bg-accent-cyan/20 border border-accent-cyan/30 text-accent-cyan font-mono text-[9px] font-bold uppercase tracking-wider">
+                  ACTIVE
+                </span>
+              </div>
+
+              {/* Coding Knowledge Required Badge */}
+              <div className="absolute top-12 left-4 px-2.5 py-1 rounded-full bg-black/60 border border-white/10 text-white/80 font-mono text-[9px] font-bold flex items-center gap-1.5 z-20">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-ping"></span>
+                No Coding Knowledge Required
+              </div>
             </div>
           </div>
           
           {/* Sub-panel telemetry metrics */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="card-glass p-3 bg-black/25 flex flex-col justify-center border-[var(--card-border)]">
-              <span className="text-[10px] text-text-muted uppercase">Interactive Sandboxes</span>
-              <span className="text-sm font-bold text-accent-cyan mt-0.5">6 Active</span>
+            <div className="card-glass p-3 bg-black/25 flex flex-col justify-center border-accent-cyan/20 shadow-glow-cyan">
+              <span className="text-[10px] text-text-muted uppercase font-mono">Interactive Sandboxes</span>
+              <span className="text-sm font-bold text-accent-cyan mt-0.5 font-heading">6 Active</span>
             </div>
-            <div className="card-glass p-3 bg-black/25 flex flex-col justify-center border-[var(--card-border)]">
-              <span className="text-[10px] text-text-muted uppercase">Security Reviews</span>
-              <span className="text-sm font-bold text-accent-purple mt-0.5">Human Required</span>
+            <div className="card-glass p-3 bg-black/25 flex flex-col justify-center border-accent-purple/20 shadow-glow-purple">
+              <span className="text-[10px] text-text-muted uppercase font-mono">Security Reviews</span>
+              <span className="text-sm font-bold text-accent-purple mt-0.5 font-heading">Human Required</span>
             </div>
           </div>
         </div>
@@ -314,7 +326,7 @@ export default function Home() {
         <div className="flex flex-col gap-4">
           <h4 className="font-heading text-lg font-bold text-accent-cyan uppercase tracking-wider">What this is</h4>
           <ul className="flex flex-col gap-2.5 text-sm text-text-secondary pl-4 list-disc">
-            <li>A public systems lab for governed AI workflows.</li>
+            <li>A public systems bench for governed AI workflows.</li>
             <li>A set of browser-native, offline-first helper utilities.</li>
             <li>A documentation surface for structural prompt verification patterns.</li>
             <li>A proof space for human-in-the-loop validation configurations.</li>
@@ -372,11 +384,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8. Live Lab roadmap */}
+      {/* Interactive Cockpit Dashboard Console */}
+      <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6 py-6">
+        <div className="flex flex-col gap-2 text-center max-w-[600px] mx-auto mb-4">
+          <span className="px-2 py-0.5 rounded bg-accent-cyan/15 border border-accent-cyan/30 text-accent-cyan font-mono text-[9px] font-bold uppercase tracking-wider self-center">
+            INTERACTIVE MONITOR
+          </span>
+          <h3 className="font-heading text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+            Systems Controller Simulator
+          </h3>
+          <p className="text-sm text-text-secondary">
+            Interactively monitor active validation parameters, compiler blueprint jobs, and content schema checks.
+          </p>
+        </div>
+        <CockpitConsole />
+      </section>
+
+      {/* 8. Telemetry roadmap */}
       <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <h3 className="font-heading text-2xl font-bold tracking-tight text-[var(--text-primary)]">
-            Live Lab Roadmap
+            Systems Telemetry Roadmap
           </h3>
           <p className="text-sm text-text-secondary max-w-[600px]">
             Follow the chronological ledger of systems experiments, features, and test results:

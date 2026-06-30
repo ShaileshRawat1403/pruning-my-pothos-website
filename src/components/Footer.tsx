@@ -45,7 +45,7 @@ export default function Footer() {
           
           <div className="flex flex-col gap-4 items-center border-t border-[var(--card-border)] pt-8 mt-4 text-center">
             <p className="text-sm text-text-muted max-w-[650px] leading-relaxed">
-              Sans Serif Systems is a public lab by Shailesh Rawat for inspectable AI-assisted work across code, content, communication, and change adoption.
+              Sans Serif Systems is a public platform by Shailesh Rawat for inspectable AI-assisted work across code, content, communication, and change adoption.
             </p>
             <div className="flex flex-col sm:flex-row justify-between w-full items-center gap-4 mt-2 text-xs text-text-muted">
               <p>&copy; {year} Sans Serif Systems. All rights reserved.</p>
@@ -61,7 +61,7 @@ export default function Footer() {
     );
   }
 
-  // Sentiments writing garden clean style
+  // Sentiments writing workspace clean style
   const links = [
     { label: "Email", href: "mailto:shailesh.rawat1403@gmail.com", external: false },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/shailesh-rawat", external: true },

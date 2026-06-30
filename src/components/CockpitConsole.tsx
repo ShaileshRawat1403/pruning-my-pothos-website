@@ -72,7 +72,7 @@ export default function CockpitConsole() {
         <div className="flex items-center gap-2 mb-4 px-2">
           <span className="w-2.5 h-2.5 rounded-full bg-accent-cyan animate-pulse"></span>
           <span className="font-heading font-bold text-xs uppercase tracking-widest text-[var(--text-primary)]">
-            Systems Lab Console
+            Systems Telemetry Console
           </span>
         </div>
         

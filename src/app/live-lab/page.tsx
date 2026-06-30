@@ -3,14 +3,14 @@ import { constructMetadata } from "../../lib/seo/metadata";
 import { getWebPageSchema } from "../../lib/seo/jsonld";
 
 export const metadata = constructMetadata({
-  title: "Live Lab Dashboard | Systems Bench",
+  title: "Systems Telemetry | Systems Bench",
   description: "Monitor execution telemetry, ledger updates, and status checks of offline workflow engines.",
   path: "/live-lab"
 });
 
 export default function LiveLabIndexPage() {
   const schema = getWebPageSchema({
-    title: "Live Lab Dashboard | Sans Serif Systems",
+    title: "Systems Telemetry | Sans Serif Systems",
     description: "Monitor execution telemetry, ledger updates, and status checks of offline workflow engines.",
     path: "/live-lab"
   });
@@ -27,7 +27,7 @@ export default function LiveLabIndexPage() {
 
       <section className="flex flex-col gap-2">
         <h1 className="font-heading text-3xl sm:text-4xl font-extrabold text-[var(--text-primary)]">
-          Live Lab Dashboard
+          Systems Telemetry
         </h1>
         <p className="text-text-secondary text-base leading-relaxed max-w-[700px]">
           Execution logs, runtime audits, and system status checkers showing the health of offline engineering pipelines.

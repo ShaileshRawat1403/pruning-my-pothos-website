@@ -10,6 +10,6 @@ export default function BackgroundGrid() {
     pathname.startsWith("/self") || 
     pathname.startsWith("/shelf");
 
-  if (isSentiments) return null; // No cyber grid lines inside the calm garden!
+  if (isSentiments) return null; // No cyber grid lines inside the calm workspace!
   return <div className="grid-overlay" />;
 }

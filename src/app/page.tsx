@@ -23,31 +23,34 @@ export default function Home() {
       />
       
       {/* 1. Hero: Ultra-Premium Philosophical Introduction */}
-      <section className="flex flex-col xl:flex-row items-center gap-16 lg:gap-24 pt-12 pb-24">
-        <div className="flex-1 flex flex-col gap-8 text-left z-10">
-          <div className="flex items-center gap-3 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            <div className="h-[1px] w-8 bg-accent-cyan/50"></div>
-            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-accent-cyan">
+      <section className="grid grid-cols-1 xl:grid-cols-12 items-center gap-16 lg:gap-8 pt-12 pb-24">
+        <div className="xl:col-span-5 flex flex-col gap-8 text-left z-10">
+          <div className="flex items-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <div className="h-[1px] w-12 bg-gradient-to-r from-accent-cyan to-transparent"></div>
+            <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-accent-cyan/80">
               Philosophy Meets Programming
             </span>
           </div>
           
           <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             Become an<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan via-white to-accent-purple drop-shadow-sm">
+            <span className="text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/40 drop-shadow-sm">
               AI-First Architect
             </span>
           </h1>
           
-          <div className="text-[11px] font-mono text-text-secondary tracking-[0.15em] uppercase border-l border-white/20 pl-4 py-1 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            Language + Logic <span className="text-white/40 mx-2">//</span> Debugging the Vibe
+          <div className="text-sm font-mono text-white/90 tracking-[0.05em] animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            "Natural language is the new API."
           </div>
           
-          <p className="text-lg sm:text-xl text-text-secondary leading-relaxed max-w-[500px] font-light animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-            We favor natural language over code. Debug the vibe. We deconstruct fuzzy model prompts and workflows into inspectable, governed structures using logic, structure, and reasoning.
-          </p>
+          <div className="relative pl-6 py-2 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-accent-cyan via-accent-purple to-transparent rounded-full"></div>
+            <p className="text-lg sm:text-xl text-text-secondary leading-relaxed font-light italic">
+              Debug the vibe. We deconstruct fuzzy model workflows into inspectable, governed structures using reasoning and logic.
+            </p>
+          </div>
           
-          <div className="flex flex-wrap gap-6 mt-4 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+          <div className="flex flex-wrap gap-6 mt-6 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
             <a href="#tools-directory" className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.1)]">
               <span className="relative z-10">Explore ToolSmith Bench</span>
               <div className="absolute inset-0 bg-gradient-to-r from-accent-cyan to-accent-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -55,13 +58,15 @@ export default function Home() {
             </a>
             
             <Link href="/sentiments" className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/[0.03] border border-white/10 text-white font-medium rounded-full hover:bg-white/[0.08] transition-all hover:border-white/30 backdrop-blur-md">
-              Enter Sentiments Workspace
+              Enter Sentiments
             </Link>
           </div>
         </div>
+        
+        <div className="hidden xl:block xl:col-span-1"></div>{/* Spacer */}
 
         {/* 2. High-Fashion Hero Image Presentation Card */}
-        <div className="w-full xl:w-[48%] flex flex-col gap-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+        <div className="xl:col-span-6 flex flex-col gap-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
           {/* Stacked mock tab window deck - Now ultra thin and elegant */}
           <div className="card-glass p-1.5 relative group overflow-hidden bg-white/[0.02] animate-continuous-float animate-pulse-glow">
             

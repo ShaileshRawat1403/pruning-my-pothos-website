@@ -50,58 +50,86 @@ export default function RepoContextPackClient() {
   };
 
   return (
-    <div className="card-glass p-6 grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[480px]">
+    <div className="card-glass p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[520px] border-accent-cyan/20 shadow-premium">
       {/* Input Panel */}
-      <div className="flex flex-col gap-3 min-w-0">
-        <div className="flex justify-between items-center text-xs font-heading font-semibold uppercase tracking-wider text-[var(--text-primary)]">
-          <span>1. Paste Repository Blueprint Details</span>
+      <div className="flex flex-col gap-4 min-w-0">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-accent-cyan animate-pulse"></span>
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-text-secondary">
+              PACK_INPUT // file_manifest
+            </span>
+          </div>
           <button
             onClick={loadSample}
-            className="px-2.5 py-1 text-[11px] rounded bg-white/5 border border-white/10 text-text-secondary hover:bg-white/12 hover:text-[var(--text-primary)] transition-all cursor-pointer"
+            className="px-3 py-1 text-[11px] font-mono rounded-lg bg-white/5 border border-white/10 text-text-secondary hover:bg-white/10 hover:text-[var(--text-primary)] transition-all cursor-pointer"
           >
-            Load Sample
+            LOAD SAMPLE MANIFEST
           </button>
         </div>
-        <textarea
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-          placeholder="Paste file path listings, readme content, or selected files...&#10;Example:&#10;src/pages/index.astro&#10;src/layouts/Layout.astro&#10;package.json"
-          className="flex-grow min-h-[280px] bg-black/25 border border-[var(--card-border)] rounded-xl p-4 text-xs font-mono text-[var(--text-primary)] focus:border-accent-cyan outline-none resize-none"
-        />
+        
+        <div className="relative flex-grow flex flex-col">
+          <textarea
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            placeholder="Paste file path listings, readme content, or selected files...&#10;Example:&#10;src/pages/index.astro&#10;src/layouts/Layout.astro&#10;package.json"
+            className="w-full flex-grow min-h-[300px] bg-black/40 border border-white/5 rounded-xl p-4 text-xs font-mono text-[var(--text-primary)] focus:border-accent-cyan/60 focus:bg-black/50 outline-none resize-none transition-all duration-300 placeholder:text-text-muted"
+          />
+        </div>
+
         <button
           onClick={handleCompile}
-          className="btn-premium btn-primary w-full py-3 cursor-pointer"
+          className="btn-premium btn-primary w-full py-3.5 shadow-glow-cyan from-accent-cyan to-accent-purple font-heading font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-[1.01]"
         >
           Compile Context Pack
         </button>
       </div>
 
       {/* Output Panel */}
-      <div className="flex flex-col gap-3 min-w-0">
-        <div className="flex justify-between items-center text-xs font-heading font-semibold uppercase tracking-wider text-[var(--text-primary)]">
-          <span>2. Compiled XML Context Pack</span>
+      <div className="flex flex-col gap-4 min-w-0">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-accent-purple animate-pulse"></span>
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-text-secondary">
+              PACK_OUTPUT // xml_tree
+            </span>
+          </div>
           {outputXml && (
             <button
               onClick={handleCopy}
-              className="px-2.5 py-1 text-[11px] rounded bg-white/5 border border-white/10 text-accent-cyan hover:bg-accent-cyan/10 hover:border-accent-cyan/40 transition-all cursor-pointer"
+              className="px-3 py-1 text-[11px] font-mono rounded-lg bg-accent-cyan/10 border border-accent-cyan/20 text-accent-cyan hover:bg-accent-cyan/20 hover:border-accent-cyan/40 transition-all cursor-pointer"
             >
               {copyText}
             </button>
           )}
         </div>
+        
+        <div className="flex-grow min-h-[340px] bg-black/50 border border-white/5 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden">
+          {/* Subtle grid background */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.007)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.007)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
 
-        <div className="flex-grow min-h-[340px] bg-black/40 border border-[var(--card-border)] rounded-xl p-4 flex items-center justify-center relative overflow-auto">
           {!outputXml ? (
-            <div className="text-center flex flex-col items-center gap-3">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12 text-text-muted">
-                <polygon points="5 3 19 12 5 21 5 3"/>
+            <div className="flex-grow flex flex-col items-center justify-center gap-3 relative z-10 py-12">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-12 h-12 text-text-muted animate-pulse">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
               </svg>
-              <p className="text-xs text-text-muted">Click Compile Context Pack to structure outputs</p>
+              <p className="text-[11px] font-mono text-text-muted uppercase tracking-wider">Awaiting Manifest Packaging...</p>
             </div>
           ) : (
-            <pre className="w-full h-full text-xs font-mono text-text-secondary whitespace-pre overflow-auto self-start">
-              <code>{outputXml}</code>
-            </pre>
+            <div className="flex-grow flex flex-col justify-between relative z-10 h-full">
+              <pre className="w-full max-h-[310px] text-xs font-mono text-text-secondary whitespace-pre overflow-auto self-start">
+                <code>{outputXml}</code>
+              </pre>
+              
+              {/* Telemetry status block */}
+              <div className="border-t border-white/5 pt-3 mt-4 flex items-center justify-between text-[10px] font-mono text-accent-cyan">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent-cyan animate-ping"></span>
+                  <span>[PACKAGER]: READY // XML_CONTEXT_PACKED</span>
+                </div>
+                <span className="text-text-muted">LOCAL_EXEC_OK</span>
+              </div>
+            </div>
           )}
         </div>
       </div>

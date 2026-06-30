@@ -34,29 +34,63 @@ export default function LiveLabIndexPage() {
         </p>
       </section>
 
-      <section className="card-glass p-8 flex flex-col gap-6 bg-black/10 text-sm text-text-secondary border-t-2 border-accent-purple">
-        <h3 className="font-heading text-lg font-bold text-[var(--text-primary)]">Workspace Status & Metrics</h3>
+      <section className="card-glass p-8 flex flex-col gap-8 bg-black/40 border-accent-purple/20 shadow-premium relative overflow-hidden">
+        {/* Subtle grid background */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.007)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.007)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
+
+        <div className="flex justify-between items-center relative z-10">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-accent-purple animate-pulse"></span>
+            <h3 className="font-heading text-xl font-bold text-[var(--text-primary)]">Telemetry Cockpit // status_ledger</h3>
+          </div>
+          <span className="px-2.5 py-1 rounded bg-accent-cyan/15 border border-accent-cyan/30 text-accent-cyan font-mono text-[9px] font-bold uppercase tracking-wider">
+            SYSTEM_ONLINE
+          </span>
+        </div>
         
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-2">
-          <div className="p-4 border border-[var(--card-border)] rounded bg-black/15 flex flex-col gap-1 text-center">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted">Ledger Log Hits</span>
-            <strong className="text-xl text-accent-cyan">0</strong>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-2 relative z-10">
+          <div className="p-4 border border-white/5 rounded-xl bg-black/35 flex flex-col gap-1 text-center hover:border-accent-cyan/20 transition-all duration-300">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted">LEDGER LOGS</span>
+            <strong className="text-2xl text-accent-cyan font-heading">260</strong>
           </div>
-          <div className="p-4 border border-[var(--card-border)] rounded bg-black/15 flex flex-col gap-1 text-center">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted">Active Workspaces</span>
-            <strong className="text-xl text-accent-purple">1</strong>
+          <div className="p-4 border border-white/5 rounded-xl bg-black/35 flex flex-col gap-1 text-center hover:border-accent-purple/20 transition-all duration-300">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted">ACTIVE AGENTS</span>
+            <strong className="text-2xl text-accent-purple font-heading">6</strong>
           </div>
-          <div className="p-4 border border-[var(--card-border)] rounded bg-black/15 flex flex-col gap-1 text-center">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted">Validation Suite Pass</span>
-            <strong className="text-xl text-accent-cyan">100%</strong>
+          <div className="p-4 border border-white/5 rounded-xl bg-black/35 flex flex-col gap-1 text-center hover:border-accent-pink/20 transition-all duration-300">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted">SUITE INTEGRITY</span>
+            <strong className="text-2xl text-accent-pink font-heading">100%</strong>
           </div>
-          <div className="p-4 border border-[var(--card-border)] rounded bg-black/15 flex flex-col gap-1 text-center">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted">Human Gates Pending</span>
-            <strong className="text-xl text-text-muted">0</strong>
+          <div className="p-4 border border-white/5 rounded-xl bg-black/35 flex flex-col gap-1 text-center hover:border-white/10 transition-all duration-300">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted">GATES PENDING</span>
+            <strong className="text-2xl text-text-muted font-heading">0</strong>
           </div>
         </div>
 
-        <p className="leading-relaxed mt-4">
+        {/* Interactive simulated terminal console */}
+        <div className="relative z-10 flex flex-col gap-2 rounded-xl bg-black/60 border border-white/5 p-4 font-mono text-xs text-text-secondary">
+          <div className="flex justify-between items-center border-b border-white/5 pb-2 mb-2 text-[10px] text-text-muted">
+            <span>SYS_TERMINAL // tty.node0</span>
+            <span className="text-accent-cyan">[SECURE CONNECTION]</span>
+          </div>
+          <div className="flex flex-col gap-1.5 max-h-[220px] overflow-auto">
+            <p className="text-text-muted">&gt; agy --init-telemetry</p>
+            <p className="text-green-400">[SUCCESS] Telemetry bridge initialized on port 3000.</p>
+            <p className="text-text-muted">&gt; agy --scan-collections</p>
+            <p className="text-accent-cyan">[INFO] Found 5 content collections with 260 documents.</p>
+            <p className="text-accent-cyan">[INFO] Indexing schema structures... OK.</p>
+            <p className="text-text-muted">&gt; agy --check-parity</p>
+            <p className="text-green-400">[SUCCESS] Route parity checked. 440 static paths compiled cleanly.</p>
+            <p className="text-text-muted">&gt; agy --verify-redirects</p>
+            <p className="text-accent-purple">[REDIRECT] /sticky-notes/* mapped successfully to /sentiments/.</p>
+            <p className="text-[var(--text-primary)] flex items-center gap-1.5 mt-2">
+              <span className="w-1.5 h-3 bg-accent-cyan animate-pulse"></span>
+              <span>Awaiting telemetry connection hook...</span>
+            </p>
+          </div>
+        </div>
+
+        <p className="leading-relaxed mt-2 text-xs text-text-muted relative z-10">
           This cockpit displays static variables and telemetry mocks. Real-time updates require direct CLI runtime connectivity inside your private workspace environments.
         </p>
       </section>

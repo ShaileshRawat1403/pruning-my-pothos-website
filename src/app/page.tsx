@@ -103,58 +103,60 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="card-glass p-6 overflow-hidden">
-          <div className="overflow-x-auto w-full">
-            <table className="w-full text-left border-collapse text-sm">
-              <thead>
-                <tr className="border-b border-[var(--card-border)]">
-                  <th className="py-3 px-4 font-semibold text-accent-cyan text-xs uppercase tracking-wider">Visitor Need</th>
-                  <th className="py-3 px-4 font-semibold text-accent-purple text-xs uppercase tracking-wider">Path</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[var(--card-border)] text-text-secondary">
-                <tr className="hover:bg-white/[0.02] transition-colors">
-                  <td className="py-4 px-4">Try a browser utility</td>
-                  <td className="py-4 px-4 font-mono">
-                    <a href="#tools-directory" className="text-accent-cyan hover:underline font-semibold">
-                      ToolSmith Bench &rarr;
-                    </a>
-                  </td>
-                </tr>
-                <tr className="hover:bg-white/[0.02] transition-colors">
-                  <td className="py-4 px-4">Understand the system model</td>
-                  <td className="py-4 px-4 font-mono">
-                    <Link href="/docs" className="text-accent-cyan hover:underline font-semibold">
-                      Docs Catalog &rarr;
-                    </Link>
-                  </td>
-                </tr>
-                <tr className="hover:bg-white/[0.02] transition-colors">
-                  <td className="py-4 px-4">See working proof</td>
-                  <td className="py-4 px-4 font-mono">
-                    <Link href="/live-lab" className="text-accent-cyan hover:underline font-semibold">
-                      Live Lab Ledger &rarr;
-                    </Link>
-                  </td>
-                </tr>
-                <tr className="hover:bg-white/[0.02] transition-colors">
-                  <td className="py-4 px-4">Use a thinking canvas</td>
-                  <td className="py-4 px-4 font-mono">
-                    <Link href="/canvases" className="text-accent-cyan hover:underline font-semibold">
-                      Visual Canvases &rarr;
-                    </Link>
-                  </td>
-                </tr>
-                <tr className="hover:bg-white/[0.02] transition-colors">
-                  <td className="py-4 px-4">Understand the boundary</td>
-                  <td className="py-4 px-4 font-mono">
-                    <Link href="/docs/public-private-boundary" className="text-accent-cyan hover:underline font-semibold">
-                      Public / Private Boundary &rarr;
-                    </Link>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-cyan/40 hover:shadow-glow-cyan transition-all duration-300">
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono text-accent-cyan uppercase tracking-wider font-bold">Interactive</span>
+              <h5 className="font-heading font-bold text-sm text-[var(--text-primary)]">Browser Sandbox</h5>
+              <p className="text-xs text-text-secondary leading-relaxed">Run local-first utilities directly in your browser.</p>
+            </div>
+            <Link href="#tools-directory" className="text-xs font-mono text-accent-cyan hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
+              Launch Bench &rarr;
+            </Link>
+          </div>
+
+          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-purple/40 hover:shadow-glow-purple transition-all duration-300">
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono text-accent-purple uppercase tracking-wider font-bold">Architecture</span>
+              <h5 className="font-heading font-bold text-sm text-[var(--text-primary)]">System Docs</h5>
+              <p className="text-xs text-text-secondary leading-relaxed">Read specs, boundaries, and prompt-tuning frameworks.</p>
+            </div>
+            <Link href="/docs" className="text-xs font-mono text-accent-purple hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
+              Read Docs &rarr;
+            </Link>
+          </div>
+
+          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-pink/40 hover:shadow-[0_0_20px_rgba(255,0,127,0.15)] transition-all duration-300">
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono text-accent-pink uppercase tracking-wider font-bold">Verification</span>
+              <h5 className="font-heading font-bold text-sm text-[var(--text-primary)]">Live Ledger</h5>
+              <p className="text-xs text-text-secondary leading-relaxed">Examine experiment readouts and compilation outputs.</p>
+            </div>
+            <Link href="/live-lab" className="text-xs font-mono text-accent-pink hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
+              Open Ledger &rarr;
+            </Link>
+          </div>
+
+          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-orange/40 hover:shadow-[0_0_20px_rgba(249,115,22,0.15)] transition-all duration-300">
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono text-accent-orange uppercase tracking-wider font-bold">Visualizer</span>
+              <h5 className="font-heading font-bold text-sm text-[var(--text-primary)]">Loop Canvases</h5>
+              <p className="text-xs text-text-secondary leading-relaxed">Map workflow pipelines and validation boundaries.</p>
+            </div>
+            <Link href="/canvases" className="text-xs font-mono text-accent-orange hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
+              View Canvases &rarr;
+            </Link>
+          </div>
+
+          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-cyan/40 hover:shadow-glow-cyan transition-all duration-300">
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono text-accent-cyan uppercase tracking-wider font-bold">Boundary</span>
+              <h5 className="font-heading font-bold text-sm text-[var(--text-primary)]">Public / Private</h5>
+              <p className="text-xs text-text-secondary leading-relaxed">Configure parameters, host targets, and data safety bounds.</p>
+            </div>
+            <Link href="/docs/public-private-boundary" className="text-xs font-mono text-accent-cyan hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
+              Explore Limits &rarr;
+            </Link>
           </div>
         </div>
       </section>

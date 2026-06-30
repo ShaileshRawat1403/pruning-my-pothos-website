@@ -81,29 +81,36 @@ export default function ToolsIndexPage() {
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {toolItems.map((tool, idx) => (
-          <div key={idx} className={`card-glass p-6 flex flex-col gap-4 justify-between border-t-2 ${tool.accent}`}>
-            <div className="flex flex-col gap-2">
+          <div key={idx} className={`card-glass p-6 flex flex-col gap-5 justify-between border-t-4 ${tool.accent} hover:-translate-y-1 transition-all duration-300 shadow-glow-cyan-hover`}>
+            <div className="flex flex-col gap-3">
               <div className="flex justify-between items-center">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-text-muted">
-                  Utility {idx + 1}
+                  MODULE // 0{idx + 1}
                 </span>
                 <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] font-mono font-semibold uppercase text-text-secondary">
                   {tool.status}
                 </span>
               </div>
-              <h3 className="font-heading text-lg font-bold text-[var(--text-primary)] hover:text-accent-cyan transition-colors">
+              <h3 className="font-heading text-xl font-bold text-[var(--text-primary)] hover:text-accent-cyan transition-colors">
                 <Link href={tool.path}>{tool.title}</Link>
               </h3>
               <p className="text-xs text-text-secondary leading-relaxed">
                 {tool.description}
               </p>
             </div>
-            <Link
-              href={tool.path}
-              className="text-xs font-semibold text-accent-cyan hover:underline self-start flex items-center gap-1 cursor-pointer"
-            >
-              Open Sandbox ➔
-            </Link>
+            
+            <div className="flex items-center justify-between border-t border-white/5 pt-4 mt-2">
+              <div className="flex gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 self-center"></span>
+                <span className="text-[9px] font-mono text-text-muted uppercase">100% Client-Side</span>
+              </div>
+              <Link
+                href={tool.path}
+                className="text-xs font-semibold text-accent-cyan hover:underline flex items-center gap-1 cursor-pointer"
+              >
+                Launch Console ➔
+              </Link>
+            </div>
           </div>
         ))}
       </section>

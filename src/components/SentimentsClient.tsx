@@ -123,29 +123,29 @@ export default function SentimentsClient({ initialPosts, stickyNotes }: Sentimen
             {filteredPosts.map((post) => (
               <div
                 key={post.id}
-                className="card-glass p-6 bg-black/35 flex flex-col justify-between border-t-4 hover:-translate-y-1 transition-all duration-300 group hover:shadow-premium"
+                className="card-glass p-6 bg-white/[0.02] flex flex-col justify-between border-t-2 hover:-translate-y-1 transition-all duration-300 group hover:shadow-premium"
                 style={{ borderTopColor: post.typeColor }}
               >
                 <div className="flex flex-col gap-3">
                   <div className="flex justify-between items-center">
                     <span
                       className="text-[9px] font-mono font-bold tracking-wider uppercase px-2 py-0.5 rounded"
-                      style={{ backgroundColor: `${post.typeColor}15`, color: post.typeColor }}
+                      style={{ backgroundColor: `${post.typeColor}20`, color: post.typeColor }}
                     >
                       {post.typeName}
                     </span>
                     {post.publishDate && (
-                      <span className="text-[9px] font-mono text-text-muted">
+                      <span className="text-[9px] font-mono text-white/50">
                         {post.publishDate}
                       </span>
                     )}
                   </div>
 
-                  <h3 className="font-heading text-lg font-bold text-[var(--text-primary)] group-hover:text-accent-cyan transition-colors leading-snug">
+                  <h3 className="font-heading text-lg font-bold text-white group-hover:text-accent-cyan transition-colors leading-snug mt-1">
                     <Link href={post.url}>{post.title}</Link>
                   </h3>
 
-                  <p className="text-xs text-text-secondary leading-relaxed line-clamp-3">
+                  <p className="text-sm text-white/70 font-light leading-relaxed line-clamp-3">
                     {post.description}
                   </p>
                 </div>

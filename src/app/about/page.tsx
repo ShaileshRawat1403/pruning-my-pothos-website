@@ -62,15 +62,15 @@ export default function AboutPage() {
             To support this, some of the utilities hosted in the workshop are client-side browser-native tools, while others are local CLI prototypes or public slices of a larger private operating model.
           </p>
 
-          <div className="relative group overflow-hidden rounded-xl border border-white/5 bg-black/40 shadow-premium max-w-[480px] mx-auto mt-4">
+          <div className="relative group overflow-hidden rounded-xl border border-white/5 bg-black/40 shadow-premium max-w-[480px] mx-auto mt-4 animate-continuous-float">
             <img 
-              src="/images/aristotle-coder.jpg" 
-              alt="Aristotle wearer of cyber glasses, coding terminal formulas" 
-              className="w-full h-auto object-cover opacity-80 group-hover:scale-[1.02] transition-transform duration-700"
+              src="/my-self-portrait.png" 
+              alt="Shailesh Rawat - Self Portrait" 
+              className="w-full h-auto object-cover opacity-90 group-hover:scale-[1.03] transition-transform duration-700"
             />
-            <div className="absolute bottom-2.5 left-2.5 right-2.5 card-glass p-2.5 z-20 bg-black/75 border-white/5 text-center">
-              <span className="text-[9px] font-mono text-accent-cyan font-bold tracking-widest uppercase">THE COGNITIVE ARCHITECT</span>
-              <p className="text-[10px] font-mono text-text-secondary mt-0.5">&quot;All men by nature desire to know.&quot; — Aristotle</p>
+            <div className="absolute bottom-2.5 left-2.5 right-2.5 card-glass p-2.5 z-20 bg-black/75 border-white/5 text-center translate-y-[120%] group-hover:translate-y-0 transition-transform duration-500 ease-out">
+              <span className="text-[9px] font-mono text-accent-cyan font-bold tracking-widest uppercase">THE ARCHITECT</span>
+              <p className="text-[10px] font-mono text-text-secondary mt-0.5">Shailesh Rawat // Sans Serif Systems</p>
             </div>
           </div>
           

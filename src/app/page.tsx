@@ -51,13 +51,11 @@ export default function Home() {
           </div>
           
           <div className="flex flex-wrap gap-6 mt-6 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <a href="#tools-directory" className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.1)]">
-              <span className="relative z-10">Explore ToolSmith Bench</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-accent-cyan to-accent-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <span className="relative z-10 group-hover:text-white transition-colors duration-500">Explore ToolSmith Bench</span>
+            <a href="#tools-directory" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-accent-cyan to-accent-purple text-white font-bold rounded-full transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(34,211,238,0.4)]">
+              Explore ToolSmith Bench
             </a>
             
-            <Link href="/sentiments" className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/[0.03] border border-white/10 text-white font-medium rounded-full hover:bg-white/[0.08] transition-all hover:border-white/30 backdrop-blur-md">
+            <Link href="/sentiments" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/[0.03] border border-white/10 text-white font-medium rounded-full hover:bg-white/[0.08] transition-all hover:border-white/30 backdrop-blur-md">
               Enter Sentiments
             </Link>
           </div>
@@ -86,9 +84,9 @@ export default function Home() {
               
               {/* High-res conceptual image */}
               <img 
-                src="/images/philosophy-code-hero.jpg" 
-                alt="Abstract dark glass bust of Aristotle illuminated by neon cybernetic circuits" 
-                className="w-full h-full object-cover opacity-75 group-hover:scale-[1.05] group-hover:opacity-100 transition-all duration-[1.5s] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                src="/images/ada-lovelace-hero.jpg" 
+                alt="Hacker-Victorian Ada Lovelace serving telemetry" 
+                className="w-full h-full object-cover opacity-85 group-hover:scale-[1.05] group-hover:opacity-100 transition-all duration-[1.5s] ease-[cubic-bezier(0.22,1,0.36,1)]"
               />
 
               {/* Floating Glassmorphism telemetry overlay */}

@@ -63,7 +63,7 @@ export default function Home() {
         {/* 2. High-Fashion Hero Image Presentation Card */}
         <div className="w-full xl:w-[48%] flex flex-col gap-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
           {/* Stacked mock tab window deck - Now ultra thin and elegant */}
-          <div className="card-glass p-1.5 relative group overflow-hidden bg-white/[0.02]">
+          <div className="card-glass p-1.5 relative group overflow-hidden bg-white/[0.02] animate-continuous-float animate-pulse-glow">
             
             {/* Mock browser header */}
             <div className="flex items-center px-4 py-3 border-b border-white/[0.05]">
@@ -79,11 +79,11 @@ export default function Home() {
               {/* Glossy overlay sheen */}
               <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/5 via-transparent to-accent-purple/10 pointer-events-none z-10 mix-blend-screen" />
               
-              {/* High-res visual image */}
+              {/* High-res conceptual image */}
               <img 
-                src="/images/ada-lovelace-hero.jpg" 
-                alt="Hacker-Victorian Ada Lovelace serving telemetry" 
-                className="w-full h-full object-cover opacity-80 group-hover:scale-[1.03] group-hover:opacity-100 transition-all duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                src="/images/philosophy-code-hero.jpg" 
+                alt="Abstract dark glass bust of Aristotle illuminated by neon cybernetic circuits" 
+                className="w-full h-full object-cover opacity-75 group-hover:scale-[1.05] group-hover:opacity-100 transition-all duration-[1.5s] ease-[cubic-bezier(0.22,1,0.36,1)]"
               />
 
               {/* Floating Glassmorphism telemetry overlay */}

@@ -22,7 +22,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-4 w-[calc(100%-2rem)] max-w-[1100px] mx-auto px-6 py-3.5 mt-4 rounded-3xl border border-white/5 bg-[#070b19]/75 backdrop-blur-xl shadow-premium z-50 transition-all duration-300">
+    <header className="sticky top-6 w-[calc(100%-3rem)] max-w-[1200px] mx-auto px-6 py-4 mt-6 rounded-[2rem] border border-white/[0.05] bg-white/[0.01] backdrop-blur-3xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] z-50 transition-all duration-500">
       <div className="flex justify-between items-center w-full">
         {/* Brand Logo */}
         <Link href="/" className="font-heading font-bold text-lg tracking-tight text-[var(--text-primary)] flex items-center gap-2 hover:opacity-90 transition-opacity shrink-0">

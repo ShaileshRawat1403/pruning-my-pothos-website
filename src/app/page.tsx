@@ -12,7 +12,7 @@ export default function Home() {
   const orgSchema = getOrgSchema();
 
   return (
-    <div className="flex flex-col gap-16 py-8">
+    <div className="flex flex-col gap-24 py-16 lg:py-24 animate-on-scroll">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
@@ -21,84 +21,99 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
       />
-      {/* 1. Hero: Sans Serif Systems Platform */}
-      <section className="flex flex-col xl:flex-row items-center gap-12 lg:gap-16 pt-8 pb-12">
-        <div className="flex-1 flex flex-col gap-6 text-left">
-          <span className="inline-flex self-start px-3 py-1 border border-accent-cyan/30 rounded-full text-xs font-heading font-semibold text-accent-cyan bg-accent-cyan/5">
-            Philosophy Meets Programming
-          </span>
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-[var(--text-primary)]">
-            Become an<br />
-            <span className="gradient-text">AI-First Architect</span>
-          </h1>
-          <div className="text-xs font-mono text-text-secondary tracking-wide uppercase border-l-2 border-accent-cyan/45 pl-3 py-1 bg-white/[0.01]">
-            Language + Logic // Debugging the Vibe
+      
+      {/* 1. Hero: Ultra-Premium Philosophical Introduction */}
+      <section className="flex flex-col xl:flex-row items-center gap-16 lg:gap-24 pt-12 pb-24">
+        <div className="flex-1 flex flex-col gap-8 text-left z-10">
+          <div className="flex items-center gap-3 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <div className="h-[1px] w-8 bg-accent-cyan/50"></div>
+            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-accent-cyan">
+              Philosophy Meets Programming
+            </span>
           </div>
-          <p className="text-base sm:text-lg text-text-secondary leading-relaxed max-w-[540px]">
+          
+          <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            Become an<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan via-white to-accent-purple drop-shadow-sm">
+              AI-First Architect
+            </span>
+          </h1>
+          
+          <div className="text-[11px] font-mono text-text-secondary tracking-[0.15em] uppercase border-l border-white/20 pl-4 py-1 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            Language + Logic <span className="text-white/40 mx-2">//</span> Debugging the Vibe
+          </div>
+          
+          <p className="text-lg sm:text-xl text-text-secondary leading-relaxed max-w-[500px] font-light animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             We favor natural language over code. Debug the vibe. We deconstruct fuzzy model prompts and workflows into inspectable, governed structures using logic, structure, and reasoning.
           </p>
-          <div className="flex flex-wrap gap-4 mt-2">
-            <a href="#tools-directory" className="btn-premium btn-primary shadow-glow-cyan text-sm py-3 px-6 rounded-lg font-bold transition-all hover-float">
-              Explore ToolSmith Bench
+          
+          <div className="flex flex-wrap gap-6 mt-4 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+            <a href="#tools-directory" className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.1)]">
+              <span className="relative z-10">Explore ToolSmith Bench</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-accent-cyan to-accent-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <span className="relative z-10 group-hover:text-white transition-colors duration-500">Explore ToolSmith Bench</span>
             </a>
-            <Link href="/sentiments" className="btn-premium btn-secondary text-sm py-3 px-6 rounded-lg font-bold transition-all hover-float">
+            
+            <Link href="/sentiments" className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/[0.03] border border-white/10 text-white font-medium rounded-full hover:bg-white/[0.08] transition-all hover:border-white/30 backdrop-blur-md">
               Enter Sentiments Workspace
             </Link>
           </div>
         </div>
 
-        {/* 2. Hacker-Victorian Hero Image Presentation Card */}
-        <div className="w-full xl:w-[48%] flex flex-col gap-4">
-          {/* Stacked mock tab window deck */}
-          <div className="browser-chrome border-accent-cyan/20 relative group overflow-hidden">
+        {/* 2. High-Fashion Hero Image Presentation Card */}
+        <div className="w-full xl:w-[48%] flex flex-col gap-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          {/* Stacked mock tab window deck - Now ultra thin and elegant */}
+          <div className="card-glass p-1.5 relative group overflow-hidden bg-white/[0.02]">
             
             {/* Mock browser header */}
-            <div className="browser-header">
-              <span className="browser-dot bg-[#ef4444]" />
-              <span className="browser-dot bg-[#f59e0b]" />
-              <span className="browser-dot bg-[#10b981]" />
-              <span className="text-[10px] font-mono text-text-muted ml-2">lovelace_cockpit.xml</span>
+            <div className="flex items-center px-4 py-3 border-b border-white/[0.05]">
+              <div className="flex gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+              </div>
+              <span className="text-[10px] font-mono text-white/40 ml-4 tracking-wider uppercase">lovelace_cockpit.xml</span>
             </div>
 
-            <div className="relative overflow-hidden aspect-[4/3]">
+            <div className="relative overflow-hidden aspect-[4/3] rounded-b-[18px]">
               {/* Glossy overlay sheen */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/10 via-transparent to-accent-purple/10 pointer-events-none z-10" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/5 via-transparent to-accent-purple/10 pointer-events-none z-10 mix-blend-screen" />
               
               {/* High-res visual image */}
               <img 
                 src="/images/ada-lovelace-hero.jpg" 
                 alt="Hacker-Victorian Ada Lovelace serving telemetry" 
-                className="w-full h-full object-cover opacity-85 group-hover:scale-[1.02] transition-transform duration-700"
+                className="w-full h-full object-cover opacity-80 group-hover:scale-[1.03] group-hover:opacity-100 transition-all duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)]"
               />
 
               {/* Floating Glassmorphism telemetry overlay */}
-              <div className="absolute bottom-4 left-4 right-4 card-glass p-4 z-20 flex justify-between items-center bg-black/70 border-accent-cyan/20">
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-[9px] font-mono text-accent-cyan font-bold tracking-widest uppercase">SYSTEMS PLAYGROUND</span>
-                  <span className="text-xs font-bold text-[var(--text-primary)]">Launch Sandbox ToolSmith Bench</span>
+              <div className="absolute bottom-6 left-6 right-6 card-glass p-5 z-20 flex justify-between items-center bg-black/40 border-white/[0.05] backdrop-blur-2xl">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[9px] font-mono text-accent-cyan/80 font-medium tracking-[0.2em] uppercase">Systems Playground</span>
+                  <span className="text-sm font-medium text-white tracking-wide">Launch Sandbox ToolSmith Bench</span>
                 </div>
-                <span className="px-2.5 py-1 rounded bg-accent-cyan/20 border border-accent-cyan/30 text-accent-cyan font-mono text-[9px] font-bold uppercase tracking-wider">
-                  ACTIVE
+                <span className="px-3 py-1.5 rounded-full bg-accent-cyan/10 border border-accent-cyan/20 text-accent-cyan font-mono text-[9px] font-bold uppercase tracking-widest">
+                  Active
                 </span>
               </div>
 
-              {/* Coding Knowledge Required Badge */}
-              <div className="absolute top-12 left-4 px-2.5 py-1 rounded-full bg-black/60 border border-white/10 text-white/80 font-mono text-[9px] font-bold flex items-center gap-1.5 z-20 hover-float cursor-default">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-ping"></span>
+              {/* Language + Logic Required Badge */}
+              <div className="absolute top-6 left-6 px-4 py-2 rounded-full bg-black/40 border border-white/[0.05] backdrop-blur-xl text-white/90 font-mono text-[10px] uppercase tracking-widest flex items-center gap-3 z-20 transition-all duration-700 hover:bg-black/60">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-cyan animate-pulse"></span>
                 Language + Logic Preferred
               </div>
             </div>
           </div>
           
           {/* Sub-panel telemetry metrics */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="card-glass p-3 bg-black/25 flex flex-col justify-center border-accent-cyan/20 shadow-glow-cyan">
-              <span className="text-[10px] text-text-muted uppercase font-mono">Interactive Sandboxes</span>
-              <span className="text-sm font-bold text-accent-cyan mt-0.5 font-heading">6 Active</span>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="card-glass p-5 flex flex-col justify-center border-white/[0.03] bg-gradient-to-b from-white/[0.02] to-transparent hover:bg-white/[0.04]">
+              <span className="text-[10px] text-text-muted tracking-[0.15em] uppercase font-mono">Interactive Sandboxes</span>
+              <span className="text-xl font-heading text-white mt-1">6 Active</span>
             </div>
-            <div className="card-glass p-3 bg-black/25 flex flex-col justify-center border-accent-purple/20 shadow-glow-purple">
-              <span className="text-[10px] text-text-muted uppercase font-mono">Security Reviews</span>
-              <span className="text-sm font-bold text-accent-purple mt-0.5 font-heading">Human Required</span>
+            <div className="card-glass p-5 flex flex-col justify-center border-white/[0.03] bg-gradient-to-b from-white/[0.02] to-transparent hover:bg-white/[0.04]">
+              <span className="text-[10px] text-text-muted tracking-[0.15em] uppercase font-mono">Security Reviews</span>
+              <span className="text-xl font-heading text-white mt-1">Human Required</span>
             </div>
           </div>
         </div>

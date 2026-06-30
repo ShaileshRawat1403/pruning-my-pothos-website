@@ -22,7 +22,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
       />
       {/* 1. Hero: Sans Serif Systems Platform */}
-      <section className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 pt-8 pb-12">
+      <section className="flex flex-col xl:flex-row items-center gap-12 lg:gap-16 pt-8 pb-12">
         <div className="flex-1 flex flex-col gap-6 text-left">
           <span className="inline-flex self-start px-3 py-1 border border-accent-cyan/30 rounded-full text-xs font-heading font-semibold text-accent-cyan bg-accent-cyan/5">
             Philosophy Meets Programming
@@ -35,20 +35,20 @@ export default function Home() {
             Language + Logic // Debugging the Vibe
           </div>
           <p className="text-base sm:text-lg text-text-secondary leading-relaxed max-w-[540px]">
-            We favor natural language over code. Debug the vibe. We deconstruct fuzzy model prompts and workflows into inspectable, governed structures using logic, structure, and reasoning. No coding required.
+            We favor natural language over code. Debug the vibe. We deconstruct fuzzy model prompts and workflows into inspectable, governed structures using logic, structure, and reasoning.
           </p>
           <div className="flex flex-wrap gap-4 mt-2">
-            <a href="#tools-directory" className="btn-premium btn-primary shadow-glow-cyan text-sm py-3 px-6 rounded-lg font-bold transition-all hover:scale-[1.02]">
+            <a href="#tools-directory" className="btn-premium btn-primary shadow-glow-cyan text-sm py-3 px-6 rounded-lg font-bold transition-all hover-float">
               Explore ToolSmith Bench
             </a>
-            <Link href="/sentiments" className="btn-premium btn-secondary text-sm py-3 px-6 rounded-lg font-bold transition-all hover:scale-[1.02]">
+            <Link href="/sentiments" className="btn-premium btn-secondary text-sm py-3 px-6 rounded-lg font-bold transition-all hover-float">
               Enter Sentiments Workspace
             </Link>
           </div>
         </div>
 
         {/* 2. Hacker-Victorian Hero Image Presentation Card */}
-        <div className="w-full lg:w-[48%] flex flex-col gap-4">
+        <div className="w-full xl:w-[48%] flex flex-col gap-4">
           {/* Stacked mock tab window deck */}
           <div className="browser-chrome border-accent-cyan/20 relative group overflow-hidden">
             
@@ -83,9 +83,9 @@ export default function Home() {
               </div>
 
               {/* Coding Knowledge Required Badge */}
-              <div className="absolute top-12 left-4 px-2.5 py-1 rounded-full bg-black/60 border border-white/10 text-white/80 font-mono text-[9px] font-bold flex items-center gap-1.5 z-20">
+              <div className="absolute top-12 left-4 px-2.5 py-1 rounded-full bg-black/60 border border-white/10 text-white/80 font-mono text-[9px] font-bold flex items-center gap-1.5 z-20 hover-float cursor-default">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-ping"></span>
-                No Coding Knowledge Required
+                Language + Logic Preferred
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@ export default function Home() {
       </section>
 
       {/* 3. Start with the layer you need */}
-      <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6">
+      <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6 animate-on-scroll">
         <div className="flex flex-col gap-2">
           <h3 className="font-heading text-2xl font-bold tracking-tight text-[var(--text-primary)]">
             Start with the layer you need
@@ -115,7 +115,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-cyan/40 hover:shadow-glow-cyan transition-all duration-300">
             <div className="flex flex-col gap-2">
               <span className="text-[10px] font-mono text-accent-cyan uppercase tracking-wider font-bold">Interactive</span>
@@ -127,7 +127,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-purple/40 hover:shadow-glow-purple transition-all duration-300">
+          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-purple/40 hover:shadow-glow-purple transition-all duration-300 hover-float">
             <div className="flex flex-col gap-2">
               <span className="text-[10px] font-mono text-accent-purple uppercase tracking-wider font-bold">Architecture</span>
               <h5 className="font-heading font-bold text-sm text-[var(--text-primary)]">System Docs</h5>
@@ -138,35 +138,46 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-pink/40 hover:shadow-[0_0_20px_rgba(255,0,127,0.15)] transition-all duration-300">
+          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-pink/40 hover:shadow-[0_0_20px_rgba(255,0,127,0.15)] transition-all duration-300 hover-float">
             <div className="flex flex-col gap-2">
-              <span className="text-[10px] font-mono text-accent-pink uppercase tracking-wider font-bold">Verification</span>
+              <span className="text-[10px] font-mono text-accent-pink uppercase tracking-wider font-bold">Notes</span>
+              <h5 className="font-heading font-bold text-sm text-[var(--text-primary)]">Sticky Notes</h5>
+              <p className="text-xs text-text-secondary leading-relaxed">Quick reflections, logic fragments, and decision rules.</p>
+            </div>
+            <Link href="/sentences" className="text-xs font-mono text-accent-pink hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
+              Read Sentences &rarr;
+            </Link>
+          </div>
+
+          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-orange/40 hover:shadow-[0_0_20px_rgba(255,165,0,0.15)] transition-all duration-300 hover-float">
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] font-mono text-accent-orange uppercase tracking-wider font-bold">Verification</span>
               <h5 className="font-heading font-bold text-sm text-[var(--text-primary)]">Live Ledger</h5>
               <p className="text-xs text-text-secondary leading-relaxed">Examine experiment readouts and compilation outputs.</p>
             </div>
-            <Link href="/live-lab" className="text-xs font-mono text-accent-pink hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
+            <Link href="/live-lab" className="text-xs font-mono text-accent-orange hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
               Open Ledger &rarr;
             </Link>
           </div>
 
-          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-orange/40 hover:shadow-[0_0_20px_rgba(249,115,22,0.15)] transition-all duration-300">
+          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-cyan/40 hover:shadow-[0_0_20px_rgba(0,242,254,0.15)] transition-all duration-300 hover-float">
             <div className="flex flex-col gap-2">
-              <span className="text-[10px] font-mono text-accent-orange uppercase tracking-wider font-bold">Visualizer</span>
+              <span className="text-[10px] font-mono text-accent-cyan uppercase tracking-wider font-bold">Visualizer</span>
               <h5 className="font-heading font-bold text-sm text-[var(--text-primary)]">Loop Canvases</h5>
               <p className="text-xs text-text-secondary leading-relaxed">Map workflow pipelines and validation boundaries.</p>
             </div>
-            <Link href="/canvases" className="text-xs font-mono text-accent-orange hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
+            <Link href="/canvases" className="text-xs font-mono text-accent-cyan hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
               View Canvases &rarr;
             </Link>
           </div>
 
-          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-cyan/40 hover:shadow-glow-cyan transition-all duration-300">
+          <div className="card-glass p-5 flex flex-col justify-between hover:border-accent-purple/40 hover:shadow-glow-purple transition-all duration-300 hover-float">
             <div className="flex flex-col gap-2">
-              <span className="text-[10px] font-mono text-accent-cyan uppercase tracking-wider font-bold">Boundary</span>
+              <span className="text-[10px] font-mono text-accent-purple uppercase tracking-wider font-bold">Boundary</span>
               <h5 className="font-heading font-bold text-sm text-[var(--text-primary)]">Public / Private</h5>
               <p className="text-xs text-text-secondary leading-relaxed">Configure parameters, host targets, and data safety bounds.</p>
             </div>
-            <Link href="/docs/public-private-boundary" className="text-xs font-mono text-accent-cyan hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
+            <Link href="/docs/public-private-boundary" className="text-xs font-mono text-accent-purple hover:underline mt-4 inline-flex items-center gap-1 font-semibold">
               Explore Limits &rarr;
             </Link>
           </div>
@@ -174,7 +185,7 @@ export default function Home() {
       </section>
 
       {/* 4. ToolSmith utilities */}
-      <section id="tools-directory" className="w-full max-w-[950px] mx-auto flex flex-col gap-8 scroll-mt-24">
+      <section id="tools-directory" className="w-full max-w-[950px] mx-auto flex flex-col gap-8 scroll-mt-24 animate-on-scroll">
         <div className="flex flex-col gap-2">
           <div className="flex justify-between items-end flex-wrap gap-4">
             <div>
@@ -279,7 +290,7 @@ export default function Home() {
       </section>
 
       {/* 5. Governed workflow proof strip */}
-      <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6">
+      <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6 animate-on-scroll">
         <div className="flex flex-col gap-2">
           <h3 className="font-heading text-2xl font-bold tracking-tight text-[var(--text-primary)]">
             Governed Workflow Loop Proof
@@ -322,7 +333,7 @@ export default function Home() {
       </section>
 
       {/* 6. What this is / is not */}
-      <section className="w-full max-w-[950px] mx-auto flex flex-col md:grid md:grid-cols-2 gap-8 border-y border-[var(--card-border)] py-12">
+      <section className="w-full max-w-[950px] mx-auto flex flex-col md:grid md:grid-cols-2 gap-8 border-y border-[var(--card-border)] py-12 animate-on-scroll">
         <div className="flex flex-col gap-4">
           <h4 className="font-heading text-lg font-bold text-accent-cyan uppercase tracking-wider">What this is</h4>
           <ul className="flex flex-col gap-2.5 text-sm text-text-secondary pl-4 list-disc">
@@ -345,7 +356,7 @@ export default function Home() {
       </section>
 
       {/* 7. Ecosystem map */}
-      <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6">
+      <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6 animate-on-scroll">
         <div className="flex flex-col gap-2">
           <h3 className="font-heading text-2xl font-bold tracking-tight text-[var(--text-primary)]">
             Ecosystem Map
@@ -385,7 +396,7 @@ export default function Home() {
       </section>
 
       {/* Interactive Cockpit Dashboard Console */}
-      <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6 py-6">
+      <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6 py-6 animate-on-scroll delay-100">
         <div className="flex flex-col gap-2 text-center max-w-[600px] mx-auto mb-4">
           <span className="px-2 py-0.5 rounded bg-accent-cyan/15 border border-accent-cyan/30 text-accent-cyan font-mono text-[9px] font-bold uppercase tracking-wider self-center">
             INTERACTIVE MONITOR
@@ -401,7 +412,7 @@ export default function Home() {
       </section>
 
       {/* 8. Telemetry roadmap */}
-      <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6">
+      <section className="w-full max-w-[950px] mx-auto flex flex-col gap-6 animate-on-scroll delay-200">
         <div className="flex flex-col gap-2">
           <h3 className="font-heading text-2xl font-bold tracking-tight text-[var(--text-primary)]">
             Systems Telemetry Roadmap
@@ -455,7 +466,7 @@ export default function Home() {
       </section>
 
       {/* 9. Final CTA */}
-      <section className="w-full max-w-[950px] mx-auto text-center py-12 border-t border-[var(--card-border)] mt-8 flex flex-col items-center gap-6">
+      <section className="w-full max-w-[950px] mx-auto text-center py-12 border-t border-[var(--card-border)] mt-8 flex flex-col items-center gap-6 animate-on-scroll delay-300">
         <h3 className="font-heading text-3xl font-extrabold tracking-tight text-[var(--text-primary)]">
           Ready to construct governed workflows?
         </h3>

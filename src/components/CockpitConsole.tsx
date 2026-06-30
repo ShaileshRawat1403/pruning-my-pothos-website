@@ -153,6 +153,7 @@ export default function CockpitConsole() {
 
           <div className="flex flex-col gap-2 min-h-[160px] text-text-secondary">
             {terminalLogs.map((log, idx) => {
+              if (!log) return null;
               let color = "text-text-secondary";
               if (log.includes("DENIED")) color = "text-red-400 font-bold";
               if (log.includes("APPROVED") || log.includes("OK") || log.includes("success")) color = "text-green-400 font-semibold";

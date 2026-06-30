@@ -32,27 +32,7 @@
   --grid-color: rgba(99, 102, 241, 0.025);
 }
 
-/* Premium Light Theme (Ryze Sky style) */
-[data-theme="light"] {
-  --bg-color: #f1f5f9;
-  --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #eff6ff 40%, #f8fafc 100%);
-  --card-bg: rgba(255, 255, 255, 0.75);
-  --card-border: rgba(15, 23, 42, 0.08);
-  
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  
-  --accent-cyan: #0284c7;
-  --accent-purple: #4f46e5;
-  --accent-pink: #db2777;
-  --accent-orange: #ea580c;
-  
-  --shadow-premium: 0 20px 40px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  --shadow-glow-cyan: 0 0 30px rgba(2, 132, 199, 0.12);
-  --shadow-glow-purple: 0 0 30px rgba(79, 70, 229, 0.12);
-  --grid-color: rgba(15, 23, 42, 0.025);
-}
+
 
 @theme {
   --font-sans: 'Outfit', sans-serif;
@@ -343,5 +323,49 @@ body {
   border-radius: 999px;
 }
 
+/* Animations and Scroll Effects */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+.animate-slide-down {
+  animation: slide-down 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+}
+
+.animate-on-scroll.is-visible {
+  animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+
+/* Enhanced Hover Effects */
+.hover-float {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-float:hover {
+  transform: translateY(-4px);
+}

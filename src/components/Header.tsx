@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   const pathname = usePathname();
@@ -37,7 +36,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1.5">
+        <nav className="hidden xl:flex items-center gap-1.5">
           <Link href="/systems" className={linkClass("/systems")}>Systems</Link>
           <Link href="/sentences" className={linkClass("/sentences")}>Sentences</Link>
           <Link href="/sentiments" className={linkClass("/sentiments")}>Sentiments</Link>
@@ -48,8 +47,7 @@ export default function Header() {
         </nav>
 
         {/* Right side utilities */}
-        <div className="hidden lg:flex items-center gap-3">
-          <ThemeToggle />
+        <div className="hidden xl:flex items-center gap-3">
           
           <a 
             href="https://github.com/ShaileshRawat1403" 
@@ -65,11 +63,10 @@ export default function Header() {
         </div>
 
         {/* Mobile menu toggle & utilities */}
-        <div className="flex lg:hidden items-center gap-3">
-          <ThemeToggle />
+        <div className="flex xl:hidden items-center gap-3">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="p-2 rounded-lg border border-white/10 hover:bg-white/5 text-text-primary focus:outline-none transition-colors"
+            className="p-2 rounded-lg border border-white/10 hover:bg-white/5 text-[var(--text-primary)] focus:outline-none transition-colors"
             aria-label="Toggle navigation menu"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -85,7 +82,7 @@ export default function Header() {
 
       {/* Mobile Navigation Drawer Dropdown */}
       {menuOpen && (
-        <nav className="flex lg:hidden flex-col gap-2 mt-4 pt-4 border-t border-white/5 animate-slide-down">
+        <nav className="flex xl:hidden flex-col gap-2 mt-4 pt-4 border-t border-white/5 animate-slide-down">
           <Link href="/systems" onClick={() => setMenuOpen(false)} className={linkClass("/systems")}>Systems</Link>
           <Link href="/sentences" onClick={() => setMenuOpen(false)} className={linkClass("/sentences")}>Sentences</Link>
           <Link href="/sentiments" onClick={() => setMenuOpen(false)} className={linkClass("/sentiments")}>Sentiments</Link>

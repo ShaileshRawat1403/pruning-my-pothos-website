@@ -1,0 +1,37 @@
+import CharacterPlate, { CharacterPlateProps } from "./CharacterPlate";
+
+interface PlateHeroProps extends CharacterPlateProps {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  /** color for the eyebrow tick; defaults to the plate accent */
+  tick?: string;
+}
+
+/**
+ * The shared page hero: an eyebrow + title + intro on the left,
+ * a speaking CharacterPlate on the right. Keeps every section's
+ * hero consistent with the homepage rhythm.
+ */
+export default function PlateHero({ eyebrow, title, intro, tick, ...plate }: PlateHeroProps) {
+  const tickColor = tick ?? plate.accent ?? "var(--accent-purple)";
+  return (
+    <section className="grid grid-cols-1 lg:grid-cols-[52%_48%] items-center gap-10 lg:gap-14 min-h-[86vh] pt-10 lg:pt-6">
+      <div className="flex flex-col gap-5 lg:pr-8">
+        <div className="flex items-center gap-2">
+          <span className="h-px w-8" style={{ background: tickColor }} />
+          <span className="text-[10px] font-mono font-bold uppercase tracking-[0.18em]" style={{ color: "var(--text-muted)" }}>
+            {eyebrow}
+          </span>
+        </div>
+        <h1 className="font-heading text-4xl sm:text-5xl font-black tracking-tight leading-[0.95]" style={{ color: "var(--text-primary)" }}>
+          {title}
+        </h1>
+        <p className="text-base leading-relaxed max-w-[460px]" style={{ color: "var(--text-secondary)" }}>
+          {intro}
+        </p>
+      </div>
+      <CharacterPlate {...plate} className={`w-full max-w-[540px] mx-auto lg:mx-0 lg:justify-self-end ${plate.className ?? ""}`} />
+    </section>
+  );
+}

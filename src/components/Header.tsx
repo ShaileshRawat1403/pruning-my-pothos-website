@@ -1,112 +1,186 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "./ThemeToggle";
+
+const navLinks = [
+  { href: "/systems",    label: "Systems" },
+  { href: "/sentences",  label: "Sentences" },
+  { href: "/sentiments", label: "Sentiments" },
+  { href: "/shelf",      label: "Shelf" },
+  { href: "/self",       label: "Self" },
+  { href: "/tools",      label: "Stack" },
+  { href: "/schema",     label: "Schema" },
+  { href: "/about",      label: "About" },
+];
 
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const isActive = (path: string) => {
-    if (path === "/") return pathname === "/";
-    return pathname.startsWith(path);
-  };
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  const linkClass = (path: string) => {
-    return `text-xs font-mono font-bold uppercase tracking-wider transition-all duration-200 hover:text-accent-cyan px-2.5 py-1.5 rounded-lg ${
-      isActive(path) 
-        ? "text-accent-cyan bg-accent-cyan/10 border border-accent-cyan/20" 
-        : "text-text-secondary hover:bg-white/5"
-    }`;
-  };
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-6 w-[calc(100%-3rem)] max-w-[1200px] mx-auto px-6 py-4 mt-6 rounded-[2rem] border border-white/[0.05] bg-white/[0.01] backdrop-blur-3xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] z-50 transition-all duration-500">
-      <div className="flex justify-between items-center w-full">
-        {/* Brand Logo */}
-        <Link href="/" className="font-heading font-bold text-lg tracking-tight text-[var(--text-primary)] flex items-center gap-2 hover:opacity-90 transition-opacity shrink-0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="sys-logo-icon text-accent-cyan">
-            <circle cx="12" cy="12" r="9" strokeDasharray="2.5 2.5" opacity="0.6" />
-            <path d="M5 19L19 5" />
-            <circle cx="12" cy="12" r="2.5" fill="var(--accent-purple)" stroke="none" />
-            <circle cx="19" cy="5" r="1.5" fill="var(--accent-cyan)" stroke="none" />
-          </svg>
-          <span>Sans Serif Systems</span>
+    <header className="sticky top-4 z-50 mt-4">
+      <div className="app-shell">
+      <nav
+        className="flex items-center justify-between px-5 py-2.5 transition-all duration-300"
+        style={{
+          background: scrolled ? "var(--header-bg-scrolled)" : "var(--header-bg-idle)",
+          backdropFilter: "blur(18px)",
+          WebkitBackdropFilter: "blur(18px)",
+          borderRadius: "4px",
+          border: `1px solid ${scrolled ? "var(--header-border-scrolled)" : "var(--header-border-idle)"}`,
+          boxShadow: scrolled ? "0 10px 34px rgba(0,0,0,0.28)" : "none",
+        }}
+      >
+        <Link href="/" className="flex items-center gap-2.5 shrink-0 group" style={{ textDecoration: "none" }}>
+          <div
+            className="transition-all duration-300"
+            aria-hidden="true"
+            style={{
+              width: "30px",
+              height: "30px",
+              borderRadius: "50%",
+              backgroundColor: "var(--card-bg)",
+              backgroundImage: "url('/my-self-portrait.png')",
+              backgroundPosition: "center 32%",
+              backgroundSize: "cover",
+              border: "1px solid var(--card-border-hover)",
+              boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--bg-color) 28%, transparent)",
+            }}
+          />
+          <span
+            className="font-heading font-semibold text-[15px] tracking-tight"
+            style={{ color: "var(--text-primary)" }}
+          >
+            Sans Serif Systems
+          </span>
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden xl:flex items-center gap-1.5">
-          <Link href="/systems" className={linkClass("/systems")}>Systems</Link>
-          <Link href="/sentences" className={linkClass("/sentences")}>Sentences</Link>
-          <Link href="/sentiments" className={linkClass("/sentiments")}>Sentiments</Link>
-          <Link href="/shelf" className={linkClass("/shelf")}>Shelf</Link>
-          <Link href="/self" className={linkClass("/self")}>Self</Link>
-          <Link href="/tools" className={linkClass("/tools")}>Tools</Link>
-          <Link href="/about" className={linkClass("/about")}>About</Link>
-        </nav>
-
-        {/* Right side utilities */}
-        <div className="hidden xl:flex items-center gap-3">
-          
-          <a 
-            href="https://github.com/ShaileshRawat1403" 
-            className="github-btn flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 hover:border-white/20 bg-white/5 transition-all text-[10px] font-mono font-bold uppercase tracking-wider text-text-primary hover:bg-white/10" 
-            target="_blank" 
-            rel="noopener noreferrer"
-          >
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" aria-hidden="true" className="shrink-0">
-              <path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.3-3.4-1.3-.4-1-.9-1.3-.9-1.3-.8-.5.1-.5.1-.5.9.1 1.4.9 1.4.9.8 1.4 2.2 1 2.7.8.1-.6.3-1 .6-1.2-2.2-.2-4.5-1.1-4.5-4.9 0-1.1.4-2 1-2.7-.1-.2-.4-1.2.1-2.5 0 0 .8-.3 2.7 1a9.5 9.5 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.5.6.7 1 1.6 1 2.7 0 3.8-2.3 4.7-4.5 4.9.3.3.7.8.7 1.7v2.5c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/>
-            </svg>
-            <span>GitHub</span>
-          </a>
+        {/* Desktop nav */}
+        <div className="hidden xl:flex items-center gap-1.5">
+          {navLinks.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="nav-ink relative px-3 py-1.5 transition-all duration-200"
+              style={{
+                color: isActive(href) ? "var(--text-primary)" : "var(--text-muted)",
+                fontFamily: "var(--font-mono)",
+                fontSize: "10px",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                borderRadius: "2px",
+                background: isActive(href) ? "color-mix(in srgb, var(--accent-purple) 12%, transparent)" : "transparent",
+              }}
+            >
+              {label}
+              {isActive(href) && (
+                <span
+                  className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-px"
+                  style={{ width: "16px", background: "var(--accent-cyan)" }}
+                />
+              )}
+            </Link>
+          ))}
         </div>
 
-        {/* Mobile menu toggle & utilities */}
-        <div className="flex xl:hidden items-center gap-3">
+        {/* Right actions */}
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <a
+            href="https://github.com/ShaileshRawat1403"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden xl:flex items-center gap-1.5 px-3.5 py-1.5 transition-all duration-200"
+            style={{
+              color: "var(--text-secondary)",
+              background: "var(--card-bg)",
+              border: "1px solid var(--card-border)",
+              borderRadius: "2px",
+              fontFamily: "var(--font-mono)",
+              fontSize: "10px",
+              fontWeight: 700,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+            }}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+            GitHub
+          </a>
+
+          {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="p-2 rounded-lg border border-white/10 hover:bg-white/5 text-[var(--text-primary)] focus:outline-none transition-colors"
-            aria-label="Toggle navigation menu"
+            className="xl:hidden flex flex-col gap-1.5 p-2"
+            aria-label="Toggle menu"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              {menuOpen ? (
-                <path d="M18 6L6 18M6 6l12 12" />
-              ) : (
-                <path d="M3 12h18M3 6h18M3 18h18" />
-              )}
-            </svg>
+            <span className="block w-5 h-px transition-all duration-300" style={{ background: "var(--text-secondary)", transform: menuOpen ? "translateY(8px) rotate(45deg)" : "none" }} />
+            <span className="block w-5 h-px transition-all duration-300" style={{ background: "var(--text-secondary)", opacity: menuOpen ? 0 : 1 }} />
+            <span className="block w-5 h-px transition-all duration-300" style={{ background: "var(--text-secondary)", transform: menuOpen ? "translateY(-8px) rotate(-45deg)" : "none" }} />
           </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile Navigation Drawer Dropdown */}
+      {/* Mobile menu */}
       {menuOpen && (
-        <nav className="flex xl:hidden flex-col gap-2 mt-4 pt-4 border-t border-white/5 animate-slide-down">
-          <Link href="/systems" onClick={() => setMenuOpen(false)} className={linkClass("/systems")}>Systems</Link>
-          <Link href="/sentences" onClick={() => setMenuOpen(false)} className={linkClass("/sentences")}>Sentences</Link>
-          <Link href="/sentiments" onClick={() => setMenuOpen(false)} className={linkClass("/sentiments")}>Sentiments</Link>
-          <Link href="/shelf" onClick={() => setMenuOpen(false)} className={linkClass("/shelf")}>Shelf</Link>
-          <Link href="/self" onClick={() => setMenuOpen(false)} className={linkClass("/self")}>Self</Link>
-          <Link href="/tools" onClick={() => setMenuOpen(false)} className={linkClass("/tools")}>Tools</Link>
-          <Link href="/about" onClick={() => setMenuOpen(false)} className={linkClass("/about")}>About</Link>
-          
-          <div className="pt-2 mt-2 border-t border-white/5">
-            <a 
-              href="https://github.com/ShaileshRawat1403" 
-              className="github-btn flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-xs font-mono font-bold uppercase tracking-wider text-text-primary hover:bg-white/10" 
-              target="_blank" 
-              rel="noopener noreferrer"
+        <div
+          className="xl:hidden mt-2 p-4 flex flex-col gap-1 animate-slide-down"
+          style={{
+            background: "var(--header-bg-scrolled)",
+            backdropFilter: "blur(18px)",
+            border: "1px solid var(--card-border)",
+            borderRadius: "4px",
+          }}
+        >
+          {navLinks.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
               onClick={() => setMenuOpen(false)}
+              className="px-4 py-2.5 transition-all duration-200"
+              style={{
+                color: isActive(href) ? "var(--text-primary)" : "var(--text-muted)",
+                fontFamily: "var(--font-mono)", fontSize: "11px",
+                letterSpacing: "0.14em", textTransform: "uppercase",
+                borderRadius: "2px",
+                background: isActive(href) ? "color-mix(in srgb, var(--accent-purple) 12%, transparent)" : "transparent",
+              }}
             >
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" aria-hidden="true">
-                <path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.3-3.4-1.3-.4-1-.9-1.3-.9-1.3-.8-.5.1-.5.1-.5.9.1 1.4.9 1.4.9.8 1.4 2.2 1 2.7.8.1-.6.3-1 .6-1.2-2.2-.2-4.5-1.1-4.5-4.9 0-1.1.4-2 1-2.7-.1-.2-.4-1.2.1-2.5 0 0 .8-.3 2.7 1a9.5 9.5 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.5.6.7 1 1.6 1 2.7 0 3.8-2.3 4.7-4.5 4.9.3.3.7.8.7 1.7v2.5c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/>
-              </svg>
-              <span>GitHub Repository</span>
-            </a>
-          </div>
-        </nav>
+              {label}
+            </Link>
+          ))}
+          <a
+            href="https://github.com/ShaileshRawat1403"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 px-4 py-2.5 text-center"
+            style={{
+              color: "var(--text-muted)",
+              border: "1px solid var(--card-border)",
+              borderRadius: "2px",
+              fontFamily: "var(--font-mono)", fontSize: "11px",
+              letterSpacing: "0.14em", textTransform: "uppercase",
+            }}
+          >
+            GitHub ↗
+          </a>
+        </div>
       )}
+      </div>
     </header>
   );
 }

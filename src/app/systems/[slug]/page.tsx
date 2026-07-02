@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { constructMetadata } from "../../../lib/seo/metadata";
 import { getWebPageSchema, getFaqSchema } from "../../../lib/seo/jsonld";
+import { renderMarkdown } from "../../../lib/markdown";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -59,14 +60,26 @@ export default async function SystemsDetailPage({ params }: PageProps) {
         />
       )}
       {/* Header */}
-      <header className="flex flex-col gap-4 border-b border-[var(--card-border)] pb-6">
-        <div className="flex flex-wrap gap-2 text-[10px] font-mono font-bold uppercase text-accent-cyan tracking-wider">
+      <header className="flex flex-col gap-4 border-b border-[color:var(--card-border)] pb-6">
+        <div className="flex flex-wrap gap-2 text-[10px] font-mono font-bold uppercase text-[color:var(--text-primary)] tracking-wider">
           <span>Systems</span> &bull; <span>{system.category}</span>
+          {system.readingTime && (
+            <>
+              <span>&bull;</span>
+              <span>{system.readingTime} min read</span>
+            </>
+          )}
+          {system.difficulty && (
+            <>
+              <span>&bull;</span>
+              <span>{system.difficulty}</span>
+            </>
+          )}
         </div>
-        <h1 className="font-heading text-3xl sm:text-4xl font-extrabold text-[var(--text-primary)]">
+        <h1 className="font-heading text-3xl sm:text-4xl font-extrabold text-[color:var(--text-primary)]">
           {system.title}
         </h1>
-        <p className="text-text-secondary text-base leading-relaxed">
+        <p className="text-[color:var(--text-secondary)] text-base leading-relaxed">
           {system.description}
         </p>
 
@@ -75,7 +88,7 @@ export default async function SystemsDetailPage({ params }: PageProps) {
           {system.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-0.5 border border-[var(--card-border)] bg-black/10 rounded-full text-xs font-mono text-text-secondary"
+              className="px-2.5 py-0.5 border border-[color:var(--card-border)] bg-[color:var(--bg-color)] rounded-full text-xs font-mono text-[color:var(--text-secondary)]"
             >
               #{tag}
             </span>
@@ -85,7 +98,7 @@ export default async function SystemsDetailPage({ params }: PageProps) {
 
       {/* Hero Image */}
       {system.heroImage && (
-        <figure className="w-full overflow-hidden rounded-xl border border-[var(--card-border)] max-h-[400px]">
+        <figure className="w-full overflow-hidden rounded-sm border border-[color:var(--card-border)] max-h-[400px]">
           <img
             src={system.heroImage}
             alt={system.heroImageAlt ?? system.title}
@@ -96,18 +109,18 @@ export default async function SystemsDetailPage({ params }: PageProps) {
 
       {/* HTML Content Body */}
       <div 
-        className="prose prose-invert max-w-none text-sm sm:text-base leading-relaxed text-text-secondary flex flex-col gap-6"
-        dangerouslySetInnerHTML={{ __html: system.content }}
+        className="content-body max-w-none text-sm sm:text-base leading-relaxed text-[color:var(--text-secondary)]"
+        dangerouslySetInnerHTML={{ __html: renderMarkdown(system.content) }}
       />
 
       {/* Meta Reinforcements (Proof Block & FAQ) */}
       {(proofPoints.length > 0 || faqs.length > 0) && (
-        <section className="border-t border-[var(--card-border)] pt-8 mt-6 flex flex-col gap-8">
+        <section className="border-t border-[color:var(--card-border)] pt-8 mt-6 flex flex-col gap-8">
           {/* Proof Block */}
           {proofPoints.length > 0 && (
             <div className="flex flex-col gap-3">
-              <h2 className="font-heading text-lg font-bold text-[var(--text-primary)]">Proof Block</h2>
-              <ul className="list-disc pl-5 text-sm text-text-secondary flex flex-col gap-2">
+              <h2 className="font-heading text-lg font-bold text-[color:var(--text-primary)]">Proof Block</h2>
+              <ul className="list-disc pl-5 text-sm text-[color:var(--text-secondary)] flex flex-col gap-2">
                 {proofPoints.map((point, idx) => (
                   <li key={idx}>{point}</li>
                 ))}
@@ -118,12 +131,12 @@ export default async function SystemsDetailPage({ params }: PageProps) {
           {/* FAQ Block */}
           {faqs.length > 0 && (
             <section className="flex flex-col gap-4">
-              <h2 className="font-heading text-lg font-bold text-[var(--text-primary)]">FAQ</h2>
+              <h2 className="font-heading text-lg font-bold text-[color:var(--text-primary)]">FAQ</h2>
               <div className="flex flex-col gap-4">
                 {faqs.map((item, idx) => (
-                  <div key={idx} className="border border-[var(--card-border)] p-4 rounded-lg bg-black/5 flex flex-col gap-2">
-                    <h3 className="font-heading text-sm font-semibold text-[var(--text-primary)]">{item.question}</h3>
-                    <p className="text-xs text-text-secondary leading-relaxed">{item.answer}</p>
+                  <div key={idx} className="border border-[color:var(--card-border)] p-4 rounded-lg bg-[color:var(--bg-color)] flex flex-col gap-2">
+                    <h3 className="font-heading text-sm font-semibold text-[color:var(--text-primary)]">{item.question}</h3>
+                    <p className="text-xs text-[color:var(--text-secondary)] leading-relaxed">{item.answer}</p>
                   </div>
                 ))}
               </div>
@@ -133,9 +146,12 @@ export default async function SystemsDetailPage({ params }: PageProps) {
       )}
 
       {/* Continue Navigation footer */}
-      <div className="border-t border-[var(--card-border)] pt-8 mt-8 flex justify-between items-center text-xs font-mono">
-        <Link href="/" className="text-accent-cyan hover:underline font-semibold">
-          &larr; Back to Systems
+      <div className="border-t border-[color:var(--card-border)] pt-8 mt-8 flex flex-wrap gap-4 justify-between items-center text-xs font-mono">
+        <Link href="/" className="text-[color:var(--text-primary)] hover:underline font-semibold">
+          &larr; Back to Home
+        </Link>
+        <Link href="/systems" className="text-[color:var(--text-primary)] hover:underline font-semibold">
+          Systems Index &rarr;
         </Link>
       </div>
     </article>

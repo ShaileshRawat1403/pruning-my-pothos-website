@@ -8,11 +8,9 @@ export default function DocsLayout({
   return (
     <div className="relative w-full">
       {/* Background Glow Blobs */}
-      <div className="glow-blob glow-cyan opacity-10"></div>
-      <div className="glow-blob glow-purple opacity-10"></div>
 
       {/* Grid container with sidebar and content */}
-      <div className="flex flex-col md:flex-row gap-8 max-w-[1100px] mx-auto py-8">
+      <div className="flex flex-col md:flex-row gap-8 max-w-[1100px] mx-auto py-12">
         {/* Sidebar */}
         <aside className="w-full md:w-[260px] shrink-0">
           <DocsSidebar />

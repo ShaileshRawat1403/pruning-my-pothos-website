@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { runConsole } from "./ConsoleToastHost";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -8,47 +9,84 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem("systems-theme") as "light" | "dark" | null;
-    const initialTheme = savedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    setTheme(initialTheme);
-    document.documentElement.setAttribute("data-theme", initialTheme);
+    const saved = localStorage.getItem("systems-theme") as "light" | "dark" | null;
+    const initial =
+      saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    setTheme(initial);
+    document.documentElement.setAttribute("data-theme", initial);
   }, []);
 
-  const toggleTheme = () => {
-    const nextTheme = theme === "light" ? "dark" : "light";
-    setTheme(nextTheme);
-    localStorage.setItem("systems-theme", nextTheme);
-    document.documentElement.setAttribute("data-theme", nextTheme);
+  const toggle = () => {
+    const next = theme === "light" ? "dark" : "light";
+    setTheme(next);
+    localStorage.setItem("systems-theme", next);
+    document.documentElement.setAttribute("data-theme", next);
+    runConsole("theme", next === "light"
+      ? { command: "git checkout daylight", steps: [
+          { text: "Switched to branch 'daylight'.", status: "ok" },
+          { text: "Ink stashed. Parchment restored.", status: "info" },
+        ] }
+      : { command: "git checkout midnight", steps: [
+          { text: "Switched to branch 'midnight'.", status: "ok" },
+          { text: "Parchment stashed. Back to ink.", status: "info" },
+        ] });
   };
 
   if (!mounted) {
-    return <div style={{ width: "32px", height: "32px" }} className="w-8 h-8 rounded-full bg-white/5 border border-white/10"></div>;
+    return (
+      <div
+        style={{ width: "34px", height: "34px", borderRadius: "999px", background: "var(--card-bg)", border: "1px solid var(--card-border)" }}
+      />
+    );
   }
+
+  const isDark = theme === "dark";
 
   return (
     <button
-      onClick={toggleTheme}
-      className="btn-secondary rounded-full p-2 cursor-pointer flex items-center justify-center"
-      aria-label="Toggle theme"
-      style={{ width: "32px", height: "32px" }}
+      onClick={toggle}
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+      title={`Switch to ${isDark ? "light" : "dark"} mode`}
+      style={{
+        width: "34px",
+        height: "34px",
+        borderRadius: "3px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        background: "var(--card-bg)",
+        border: "1px solid var(--card-border)",
+        color: "var(--text-secondary)",
+        transition: "all 0.2s ease",
+        flexShrink: 0,
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--accent-cyan)";
+        (e.currentTarget as HTMLButtonElement).style.color = "var(--text-primary)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--card-border)";
+        (e.currentTarget as HTMLButtonElement).style.color = "var(--text-secondary)";
+      }}
     >
-      {theme === "light" ? (
-        /* Moon Icon */
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      {isDark ? (
+        /* Sun - switch to light */
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
         </svg>
       ) : (
-        /* Sun Icon */
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        /* Moon - switch to dark */
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg>
       )}
     </button>

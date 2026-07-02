@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { constructMetadata } from "../../../lib/seo/metadata";
 import { getWebPageSchema } from "../../../lib/seo/jsonld";
+import { renderMarkdown } from "../../../lib/markdown";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -49,23 +50,25 @@ export default async function SelfDetailPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webpageSchema) }}
       />
       {/* Date Header */}
-      <span className="text-[10px] font-mono font-bold uppercase text-accent-pink tracking-widest self-start">
+      <span className="text-[10px] font-mono font-bold uppercase text-[color:var(--text-primary)] tracking-widest self-start">
         Published: {new Date(selfItem.publishDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+        {selfItem.readingTime ? ` / ${selfItem.readingTime} min read` : ""}
+        {selfItem.difficulty ? ` / ${selfItem.difficulty}` : ""}
       </span>
       
       {/* Title */}
-      <h1 className="font-heading text-2xl sm:text-3xl font-extrabold text-[var(--text-primary)] leading-snug">
+      <h1 className="font-heading text-2xl sm:text-3xl font-extrabold text-[color:var(--text-primary)] leading-snug">
         {selfItem.title}
       </h1>
 
       {/* Description / Summary */}
-      <p className="text-text-secondary font-medium italic border-l-2 border-accent-pink/40 pl-4 py-1 text-sm sm:text-base">
+      <p className="text-[color:var(--text-secondary)] font-medium italic border-l-2 border-accent-pink/40 pl-4 py-1 text-sm sm:text-base">
         {selfItem.description}
       </p>
 
       {/* Hero Image */}
       {selfItem.heroImage && (
-        <figure className="w-full overflow-hidden rounded-xl border border-[var(--card-border)] max-h-[360px] my-4">
+        <figure className="w-full overflow-hidden rounded-sm border border-[color:var(--card-border)] max-h-[360px] my-4">
           <img
             src={selfItem.heroImage}
             alt={selfItem.heroImageAlt ?? selfItem.title}
@@ -76,8 +79,8 @@ export default async function SelfDetailPage({ params }: PageProps) {
 
       {/* Content */}
       <div 
-        className="prose prose-invert max-w-none text-sm sm:text-base leading-relaxed text-text-secondary mt-4 flex flex-col gap-5"
-        dangerouslySetInnerHTML={{ __html: selfItem.content }}
+        className="content-body max-w-none text-sm sm:text-base leading-relaxed text-[color:var(--text-secondary)] mt-4"
+        dangerouslySetInnerHTML={{ __html: renderMarkdown(selfItem.content) }}
       />
 
       {/* Tag lists */}
@@ -86,7 +89,7 @@ export default async function SelfDetailPage({ params }: PageProps) {
           {selfItem.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-0.5 border border-[var(--card-border)] bg-black/10 rounded-full text-xs font-mono text-text-secondary"
+              className="px-2.5 py-0.5 border border-[color:var(--card-border)] bg-[color:var(--bg-color)] rounded-full text-xs font-mono text-[color:var(--text-secondary)]"
             >
               #{tag}
             </span>
@@ -95,8 +98,8 @@ export default async function SelfDetailPage({ params }: PageProps) {
       )}
 
       {/* Navigation back */}
-      <div className="border-t border-[var(--card-border)] pt-8 mt-12 flex justify-between items-center text-xs font-mono">
-        <Link href="/sentiments" className="text-accent-pink hover:underline font-semibold">
+      <div className="border-t border-[color:var(--card-border)] pt-8 mt-12 flex justify-between items-center text-xs font-mono">
+        <Link href="/sentiments" className="text-[color:var(--text-primary)] hover:underline font-semibold">
           &larr; Back to Sentiments
         </Link>
       </div>

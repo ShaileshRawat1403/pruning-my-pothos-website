@@ -1,15 +1,15 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-
+/**
+ * Atmosphere for the Atelier: faint laid-paper rules, engraving grain,
+ * and an edge vignette. No glow orbs. Calm, not neon.
+ */
 export default function BackgroundGrid() {
-  const pathname = usePathname();
-  const isSentiments = 
-    pathname.startsWith("/sentiments") || 
-    pathname.startsWith("/sentences") || 
-    pathname.startsWith("/self") || 
-    pathname.startsWith("/shelf");
-
-  if (isSentiments) return null; // No cyber grid lines inside the calm workspace!
-  return <div className="grid-overlay" />;
+  return (
+    <>
+      <div className="grid-overlay" aria-hidden />
+      <div className="paper-grain" aria-hidden />
+      <div className="page-vignette" aria-hidden />
+    </>
+  );
 }

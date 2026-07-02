@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://pruningmypothos.com/sitemap-index.xml

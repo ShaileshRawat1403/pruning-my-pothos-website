@@ -110,19 +110,19 @@ export default function PromptToJsonClient() {
   };
 
   return (
-    <div className="card-glass p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[520px] border-accent-cyan/20 shadow-premium">
+    <div className="card-glass p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[520px] border-accent-cyan/20 shadow-none">
       {/* Input Panel */}
       <div className="flex flex-col gap-4 min-w-0">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-accent-cyan animate-pulse"></span>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-text-secondary">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[color:var(--text-secondary)]">
               CONSOLE_INPUT // spec_parser
             </span>
           </div>
           <button
             onClick={loadSample}
-            className="px-3 py-1 text-[11px] font-mono rounded-lg bg-white/5 border border-white/10 text-text-secondary hover:bg-white/10 hover:text-[var(--text-primary)] transition-all cursor-pointer"
+            className="px-3 py-1 text-[11px] font-mono rounded-lg bg-white/5 border border-[color:var(--card-border)] text-[color:var(--text-secondary)] hover:bg-white/10 hover:text-[color:var(--text-primary)] transition-all cursor-pointer"
           >
             LOAD SAMPLE SPEC
           </button>
@@ -133,13 +133,13 @@ export default function PromptToJsonClient() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Paste fields, notes, or prompts here...&#10;Example:&#10;I need a schema to track commits:&#10;- hash (string)&#10;- additionsCount (number)&#10;- isMergedToMain (boolean)"
-            className="w-full flex-grow min-h-[300px] bg-black/40 border border-white/5 rounded-xl p-4 text-xs font-mono text-[var(--text-primary)] focus:border-accent-cyan/60 focus:bg-black/50 outline-none resize-none transition-all duration-300 placeholder:text-text-muted"
+            className="w-full flex-grow min-h-[300px] bg-[color:var(--bg-color)] border border-[color:var(--card-border)] rounded-sm p-4 text-xs font-mono text-[color:var(--text-primary)] focus:border-accent-cyan/60 focus:bg-[color:var(--bg-color)] outline-none resize-none transition-all duration-300 placeholder:text-[color:var(--text-muted)]"
           />
         </div>
 
         <button
           onClick={handleCompile}
-          className="btn-premium btn-primary w-full py-3.5 shadow-glow-cyan font-heading font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-[1.01]"
+          className="btn-premium btn-primary w-full py-3.5 shadow-none font-heading font-bold text-sm tracking-wide uppercase transition-all duration-300 hover:scale-[1.01]"
         >
           Compile Schema & Example
         </button>
@@ -148,13 +148,13 @@ export default function PromptToJsonClient() {
       {/* Output Panel */}
       <div className="flex flex-col gap-4 min-w-0">
         <div className="flex justify-between items-center">
-          <div className="flex gap-2 bg-black/35 p-1 rounded-lg border border-white/5">
+          <div className="flex gap-2 bg-[color:var(--bg-color)] p-1 rounded-lg border border-[color:var(--card-border)]">
             <button
               onClick={() => setActiveTab("schema")}
               className={`px-3 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
                 activeTab === "schema"
-                  ? "bg-accent-cyan/15 text-accent-cyan border border-accent-cyan/30 shadow-sm"
-                  : "text-text-muted hover:text-[var(--text-primary)]"
+                  ? "bg-accent-cyan/15 text-[color:var(--text-primary)] border border-accent-cyan/30 shadow-sm"
+                  : "text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
               }`}
             >
               Schema
@@ -163,8 +163,8 @@ export default function PromptToJsonClient() {
               onClick={() => setActiveTab("example")}
               className={`px-3 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
                 activeTab === "example"
-                  ? "bg-accent-cyan/15 text-accent-cyan border border-accent-cyan/30 shadow-sm"
-                  : "text-text-muted hover:text-[var(--text-primary)]"
+                  ? "bg-accent-cyan/15 text-[color:var(--text-primary)] border border-accent-cyan/30 shadow-sm"
+                  : "text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
               }`}
             >
               Example JSON
@@ -173,38 +173,38 @@ export default function PromptToJsonClient() {
           {(outputSchema || outputExample) && (
             <button
               onClick={handleCopy}
-              className="px-3 py-1 text-[11px] font-mono rounded-lg bg-accent-cyan/10 border border-accent-cyan/20 text-accent-cyan hover:bg-accent-cyan/20 hover:border-accent-cyan/40 transition-all cursor-pointer"
+              className="px-3 py-1 text-[11px] font-mono rounded-lg bg-accent-cyan/10 border border-accent-cyan/20 text-[color:var(--text-primary)] hover:bg-accent-cyan/20 hover:border-accent-cyan/40 transition-all cursor-pointer"
             >
               {copyText} {activeTab === "schema" ? "Schema" : "Example"}
             </button>
           )}
         </div>
         
-        <div className="flex-grow min-h-[340px] bg-black/50 border border-white/5 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden">
+        <div className="flex-grow min-h-[340px] bg-[color:var(--bg-color)] border border-[color:var(--card-border)] rounded-sm p-4 flex flex-col justify-between relative overflow-hidden">
           {/* Subtle grid background */}
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.007)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.007)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
 
           {!(activeTab === "schema" ? outputSchema : outputExample) ? (
             <div className="flex-grow flex flex-col items-center justify-center gap-3 relative z-10 py-12">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-12 h-12 text-text-muted animate-pulse">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-12 h-12 text-[color:var(--text-muted)] animate-pulse">
                 <rect x="3" y="3" width="18" height="18" rx="2" strokeDasharray="3 3"/>
                 <path d="M21 12H3"/>
               </svg>
-              <p className="text-[11px] font-mono text-text-muted uppercase tracking-wider">Awaiting Input Spec Compilation...</p>
+              <p className="text-[11px] font-mono text-[color:var(--text-muted)] uppercase tracking-wider">Awaiting Input Spec Compilation...</p>
             </div>
           ) : (
             <div className="flex-grow flex flex-col justify-between relative z-10 h-full">
-              <pre className="w-full max-h-[310px] text-xs font-mono text-text-secondary whitespace-pre overflow-auto self-start">
+              <pre className="w-full max-h-[310px] text-xs font-mono text-[color:var(--text-secondary)] whitespace-pre overflow-auto self-start">
                 <code>{activeTab === "schema" ? outputSchema : outputExample}</code>
               </pre>
               
               {/* Telemetry output status block */}
-              <div className="border-t border-white/5 pt-3 mt-4 flex items-center justify-between text-[10px] font-mono text-green-400">
+              <div className="border-t border-[color:var(--card-border)] pt-3 mt-4 flex items-center justify-between text-[10px] font-mono text-green-400">
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping"></span>
                   <span>[STATUS]: READY // COMPILE_SUCCESS</span>
                 </div>
-                <span className="text-text-muted">LOCAL_EXEC_OK</span>
+                <span className="text-[color:var(--text-muted)]">LOCAL_EXEC_OK</span>
               </div>
             </div>
           )}

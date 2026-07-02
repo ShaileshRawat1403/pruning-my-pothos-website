@@ -1,6 +1,13 @@
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { z } from "zod";
 
+const editorialFields = {
+  featured: z.boolean().optional().default(false),
+  contentType: z.string().optional(),
+  readingTime: z.number().optional(),
+  difficulty: z.string().optional(),
+};
+
 const systems = defineCollection({
   name: "systems",
   directory: "src/content/systems",
@@ -20,6 +27,7 @@ const systems = defineCollection({
         answer: z.string(),
       })
     ).optional().default([]),
+    ...editorialFields,
     content: z.string(),
   }),
 });
@@ -33,6 +41,7 @@ const sentences = defineCollection({
     summary: z.string(),
     category: z.enum(["Attention", "Meaning", "Judgment"]),
     tags: z.array(z.string()).optional().default([]),
+    ...editorialFields,
     content: z.string(),
   }),
 });
@@ -46,6 +55,7 @@ const stickyNotes = defineCollection({
     rotation: z.number().optional(),
     color: z.string().optional(),
     tags: z.array(z.string()).optional().default([]),
+    ...editorialFields,
     content: z.string(),
   }),
 });
@@ -61,6 +71,7 @@ const self = defineCollection({
     tags: z.array(z.string()).optional().default([]),
     heroImage: z.string().optional(),
     heroImageAlt: z.string().optional(),
+    ...editorialFields,
     content: z.string(),
   }),
 });
@@ -82,6 +93,7 @@ const shelf = defineCollection({
     videoUrl: z.string().optional(),
     resourceHighlights: z.array(z.string()).optional(),
     appleMusicUrl: z.string().optional(),
+    ...editorialFields,
     content: z.string(),
   }),
 });

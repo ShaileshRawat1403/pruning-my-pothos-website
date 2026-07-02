@@ -2,6 +2,7 @@ import { allSystems, allSentences, allSelves, allShelves } from "content-collect
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
+import SpotlightCard from "../../../components/SpotlightCard";
 import { slugifyTag } from "../../../lib/tags";
 import { constructMetadata } from "../../../lib/seo/metadata";
 import { getWebPageSchema } from "../../../lib/seo/jsonld";
@@ -49,7 +50,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!matchedLabel) return {};
 
   return constructMetadata({
-    title: `Tag: #${matchedLabel} | Sans Serif Systems`,
+    title: `Tag: #${matchedLabel}`,
     description: `Browse all articles, essays, and notes tagged with #${matchedLabel}.`,
     path: `/tags/${tag}`,
     noindex: true
@@ -133,48 +134,51 @@ export default async function TagDetailPage({ params }: PageProps) {
   });
 
   return (
-    <div className="sentiments-scope relative w-full flex flex-col gap-12 max-w-[800px] mx-auto py-12">
+    <div className="relative w-full flex flex-col gap-16 max-w-[800px] mx-auto py-12">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
 
-      <section className="flex flex-col gap-4 border-b border-[var(--card-border)] pb-8">
-        <span className="text-[10px] font-mono font-bold uppercase text-accent-cyan tracking-widest self-start">
-          THEMED MATCH
-        </span>
-        <h1 className="font-heading text-3xl sm:text-4xl font-extrabold text-[var(--text-primary)]">
+      <section className="flex flex-col gap-4 border-b pb-8" style={{ borderColor: "var(--card-border)" }}>
+        <div className="flex items-center gap-2">
+          <span className="h-px w-8" style={{ background: "var(--accent-purple)" }} />
+          <span className="text-[10px] font-mono font-bold uppercase tracking-[0.18em]" style={{ color: "var(--text-muted)" }}>
+            Themed Match
+          </span>
+        </div>
+        <h1 className="font-heading text-3xl sm:text-4xl font-extrabold" style={{ color: "var(--text-primary)" }}>
           #{tagLabel}
         </h1>
-        <p className="text-text-secondary text-base leading-relaxed">
+        <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
           Index listing of all {allMatches.length} items tagged with #{tagLabel}.
         </p>
       </section>
 
       <section className="flex flex-col gap-6">
         {allMatches.map((match, idx) => (
-          <div key={idx} className="card-glass p-6 flex flex-col gap-2 bg-black/10">
-            <span className="text-[10px] font-mono text-accent-purple uppercase font-bold">
+          <SpotlightCard key={idx} href={match.path} accent="var(--accent-purple)" className="gap-2">
+            <span className="text-[10px] font-mono uppercase font-bold tracking-wider" style={{ color: "var(--accent-purple)" }}>
               {match.type}
             </span>
-            <h3 className="font-heading text-lg font-bold text-[var(--text-primary)] hover:text-accent-cyan transition-colors">
-              <Link href={match.path}>{match.title}</Link>
+            <h3 className="font-heading text-lg font-bold" style={{ color: "var(--text-primary)" }}>
+              {match.title}
             </h3>
-            <p className="text-xs text-text-secondary leading-relaxed">
+            <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
               {match.description}
             </p>
-            <Link
-              href={match.path}
-              className="text-xs font-semibold text-accent-cyan hover:underline self-start mt-2 cursor-pointer"
+            <span
+              className="text-xs font-semibold self-start mt-2 inline-flex items-center gap-1 transition-all duration-200 group-hover:gap-2"
+              style={{ color: "var(--accent-purple)" }}
             >
               View item &rarr;
-            </Link>
-          </div>
+            </span>
+          </SpotlightCard>
         ))}
       </section>
 
-      <div className="border-t border-[var(--card-border)] pt-8 mt-4 flex justify-between items-center text-xs font-mono">
-        <Link href="/tags" className="text-accent-cyan hover:underline font-semibold">
+      <div className="border-t pt-8 mt-4 flex justify-between items-center text-xs font-mono" style={{ borderColor: "var(--card-border)" }}>
+        <Link href="/tags" className="link-slide font-semibold" style={{ color: "var(--text-secondary)" }}>
           &larr; Back to Tags
         </Link>
       </div>

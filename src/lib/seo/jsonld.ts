@@ -15,7 +15,7 @@ export function getOrgSchema() {
     "@type": "Organization",
     "name": SITE_CONFIG.name,
     "url": SITE_CONFIG.url,
-    "logo": `${SITE_CONFIG.url}/favicon-systems.svg`,
+    "logo": `${SITE_CONFIG.url}/my-self-portrait.png`,
   };
 }
 

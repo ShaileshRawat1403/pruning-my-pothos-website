@@ -16,14 +16,14 @@ export default function DocsSidebar() {
   const linkClass = (path: string) => {
     return `block p-2 text-sm font-heading rounded transition-all hover:bg-white/5 ${
       isActive(path)
-        ? "text-accent-cyan bg-accent-cyan/10 border-l-2 border-accent-cyan pl-3 font-semibold"
-        : "text-text-secondary pl-3"
+        ? "text-[color:var(--text-primary)] bg-accent-cyan/10 border-l-2 border-accent-cyan pl-3 font-semibold"
+        : "text-[color:var(--text-secondary)] pl-3"
     }`;
   };
 
   return (
     <div className="docs-nav card-glass p-5 flex flex-col gap-3 min-w-[240px] md:sticky md:top-24 h-fit">
-      <h5 className="font-heading font-bold text-xs uppercase tracking-wider text-[var(--text-primary)] mb-2 px-1">
+      <h5 className="font-heading font-bold text-xs uppercase tracking-wider text-[color:var(--text-primary)] mb-2 px-1">
         Architectural Core
       </h5>
       <Link href="/docs/natural-language-programming-stack" className={linkClass("/docs/natural-language-programming-stack")}>

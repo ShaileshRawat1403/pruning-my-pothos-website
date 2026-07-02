@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
+import SpotlightCard from "./SpotlightCard";
+import { runConsole } from "./ConsoleToastHost";
 
 interface PostItem {
   id: string;
   title: string;
   description: string;
   publishDate?: string;
+  readingTime?: number;
+  difficulty?: string;
+  featured?: boolean;
   tags?: string[];
   url: string;
   type: "reflections" | "calibrations" | "curations" | "systems";
@@ -30,76 +34,94 @@ interface SentimentsClientProps {
   stickyNotes: StickyNoteItem[];
 }
 
+const TABS = ["all", "reflections", "calibrations", "curations", "systems", "sticky-notes"] as const;
+
 export default function SentimentsClient({ initialPosts, stickyNotes }: SentimentsClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState<"all" | "reflections" | "calibrations" | "curations" | "systems" | "sticky-notes">("all");
+  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>("all");
   const [selectedNote, setSelectedNote] = useState<StickyNoteItem | null>(null);
 
-  // Filter posts (non-sticky notes)
+  const q = searchQuery.toLowerCase();
+
   const filteredPosts = initialPosts.filter((post) => {
     const matchesSearch =
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (post.tags && post.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase())));
-
+      post.title.toLowerCase().includes(q) ||
+      post.description.toLowerCase().includes(q) ||
+      post.tags?.some((t) => t.toLowerCase().includes(q));
     const matchesTab = activeTab === "all" || post.type === activeTab;
     return matchesSearch && matchesTab;
   });
 
-  // Filter sticky notes
   const filteredStickyNotes = stickyNotes.filter((note) => {
     const matchesSearch =
-      note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      note.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (note.tags && note.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase())));
-
+      note.title.toLowerCase().includes(q) ||
+      note.content.toLowerCase().includes(q) ||
+      note.tags?.some((t) => t.toLowerCase().includes(q));
     const matchesTab = activeTab === "all" || activeTab === "sticky-notes";
     return matchesSearch && matchesTab;
   });
 
-  // Sticky color helper
-  const getStickyBg = (color?: string) => {
-    if (color === "var(--color-sticky-1)" || !color) return "#fef08a"; // yellow
-    if (color === "var(--color-sticky-2)") return "#bbf7d0"; // green
-    if (color === "var(--color-sticky-3)") return "#bfdbfe"; // blue
-    if (color === "var(--color-sticky-4)") return "#fbcfe8"; // pink
-    return color; // fallback literal
-  };
+  const showingCount =
+    activeTab === "sticky-notes"
+      ? filteredStickyNotes.length
+      : filteredPosts.length + (activeTab === "all" ? filteredStickyNotes.length : 0);
+
+  useEffect(() => {
+    if (searchQuery.trim() && filteredPosts.length === 0 && filteredStickyNotes.length === 0) {
+      runConsole("grep", {
+        command: `grep -r "${searchQuery.trim().slice(0, 24)}" .`,
+        steps: [
+          { text: "0 matches.", status: "warn" },
+          { text: "Meaning is not indexed here. Try feeling.", status: "info" },
+        ],
+      }, { once: true });
+    }
+  }, [searchQuery, filteredPosts.length, filteredStickyNotes.length]);
 
   return (
     <div className="flex flex-col gap-8 w-full">
-      {/* Search & Filter Options */}
-      <div className="flex flex-col lg:flex-row gap-4 justify-between items-center relative z-10 border-b border-white/10 pb-4">
+      {/* Search & filter */}
+      <div
+        className="flex flex-col lg:flex-row gap-4 justify-between items-center relative z-10 pb-4"
+        style={{ borderBottom: "1px solid var(--card-border)" }}
+      >
         <div className="relative w-full lg:max-w-md">
           <input
             type="text"
             placeholder="Search notes, concepts, or tags..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#0a0a0a] border border-white/10 rounded-md px-4 py-2 text-sm text-white focus:outline-none focus:border-zinc-500 transition-colors"
+            className="w-full px-4 py-2 text-sm transition-colors focus:outline-none"
+            style={{
+              background: "var(--card-bg)",
+              border: "1px solid var(--card-border)",
+              borderRadius: "3px",
+              color: "var(--text-primary)",
+              fontFamily: "var(--font-mono)",
+            }}
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-2.5 text-zinc-500 hover:text-white text-xs"
+              className="absolute right-3 top-2.5 text-xs"
+              style={{ color: "var(--text-muted)" }}
             >
               ✕
             </button>
           )}
         </div>
 
-        {/* Tab selection */}
-        <div className="flex overflow-x-auto w-full lg:w-auto scrollbar-hide border-b border-transparent">
+        <div className="flex overflow-x-auto w-full lg:w-auto scrollbar-hide">
           <div className="flex gap-4 px-1">
-            {(["all", "reflections", "calibrations", "curations", "systems", "sticky-notes"] as const).map((tab) => (
+            {TABS.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`pb-2 whitespace-nowrap text-xs uppercase tracking-wider font-semibold transition-colors border-b-2 ${
-                  activeTab === tab
-                    ? "border-white text-white"
-                    : "border-transparent text-zinc-500 hover:text-zinc-300"
-                }`}
+                className="pb-2 whitespace-nowrap text-[11px] uppercase tracking-[0.12em] font-mono font-semibold transition-colors"
+                style={{
+                  color: activeTab === tab ? "var(--text-primary)" : "var(--text-muted)",
+                  borderBottom: `2px solid ${activeTab === tab ? "var(--accent-cyan)" : "transparent"}`,
+                }}
               >
                 {tab === "sticky-notes" ? "Sticky Notes" : tab}
               </button>
@@ -108,136 +130,146 @@ export default function SentimentsClient({ initialPosts, stickyNotes }: Sentimen
         </div>
       </div>
 
-      {/* Stats bar */}
-      <div className="flex justify-between items-center text-[10px] font-mono text-text-muted px-2">
-        <span>
-          SHOWING {activeTab === "sticky-notes" ? filteredStickyNotes.length : filteredPosts.length + (activeTab === "all" ? filteredStickyNotes.length : 0)} ITEMS
-        </span>
+      {/* Stats */}
+      <div className="flex justify-between items-center text-[10px] font-mono px-1" style={{ color: "var(--text-muted)" }}>
+        <span>SHOWING {showingCount} ITEMS</span>
         {searchQuery && <span>FILTERED BY &quot;{searchQuery}&quot;</span>}
       </div>
 
-      {/* Main content viewport */}
       <div className="flex flex-col gap-12 relative z-10">
-        
-        {/* Render standard articles grid if activeTab is NOT "sticky-notes" */}
+        {/* Articles grid */}
         {activeTab !== "sticky-notes" && filteredPosts.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {filteredPosts.map((post) => (
-              <div
+              <SpotlightCard
                 key={post.id}
-                className="card-glass p-6 bg-white/[0.02] flex flex-col justify-between border-t-2 hover:-translate-y-1 transition-all duration-300 group hover:shadow-premium"
-                style={{ borderTopColor: post.typeColor }}
+                href={post.url}
+                accent={post.typeColor}
+                className="justify-between"
               >
                 <div className="flex flex-col gap-3">
-                  <div className="flex justify-between items-center">
+                  <div className="flex flex-wrap justify-between items-center gap-2">
                     <span
-                      className="text-[9px] font-mono font-bold tracking-wider uppercase px-2 py-0.5 rounded"
-                      style={{ backgroundColor: `${post.typeColor}20`, color: post.typeColor }}
+                      className="text-[9px] font-mono font-bold tracking-wider uppercase px-2 py-0.5"
+                      style={{ background: `color-mix(in srgb, ${post.typeColor} 14%, transparent)`, color: post.typeColor, borderRadius: "2px" }}
                     >
                       {post.typeName}
                     </span>
+                    {post.featured && (
+                      <span className="text-[9px] font-mono uppercase" style={{ color: "var(--accent-cyan)" }}>
+                        Featured
+                      </span>
+                    )}
                     {post.publishDate && (
-                      <span className="text-[9px] font-mono text-white/50">
+                      <span className="text-[9px] font-mono" style={{ color: "var(--text-muted)" }}>
                         {post.publishDate}
                       </span>
                     )}
                   </div>
 
-                  <h3 className="font-heading text-lg font-bold text-white group-hover:text-accent-cyan transition-colors leading-snug mt-1">
-                    <Link href={post.url}>{post.title}</Link>
+                  <h3 className="font-heading text-lg font-semibold leading-snug" style={{ color: "var(--text-primary)" }}>
+                    {post.title}
                   </h3>
 
-                  <p className="text-sm text-white/70 font-light leading-relaxed line-clamp-3">
+                  <p className="text-sm leading-relaxed line-clamp-3" style={{ color: "var(--text-secondary)" }}>
                     {post.description}
                   </p>
                 </div>
 
                 <div className="flex flex-col gap-4 mt-6">
-                  {post.tags && post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
-                      {post.tags.slice(0, 4).map((tag) => (
+                  {((post.tags && post.tags.length > 0) || post.readingTime || post.difficulty) && (
+                    <div className="flex flex-wrap gap-1.5">
+                      {post.readingTime && (
+                        <span
+                          className="text-[9px] font-mono px-2 py-0.5"
+                          style={{ color: "var(--text-muted)", border: "1px solid var(--card-border)", borderRadius: "2px" }}
+                        >
+                          {post.readingTime} min
+                        </span>
+                      )}
+                      {post.difficulty && (
+                        <span
+                          className="text-[9px] font-mono px-2 py-0.5"
+                          style={{ color: "var(--text-muted)", border: "1px solid var(--card-border)", borderRadius: "2px" }}
+                        >
+                          {post.difficulty}
+                        </span>
+                      )}
+                      {post.tags?.slice(0, 4).map((tag) => (
                         <span
                           key={tag}
-                          className="text-[9px] font-mono text-text-muted border border-white/5 bg-white/5 px-2 py-0.5 rounded-full"
+                          className="text-[9px] font-mono px-2 py-0.5"
+                          style={{ color: "var(--text-muted)", border: "1px solid var(--card-border)", borderRadius: "2px" }}
                         >
                           #{tag}
                         </span>
                       ))}
                     </div>
                   )}
-
-                  <div className="flex justify-between items-center border-t border-white/5 pt-3">
-                    <Link
-                      href={post.url}
-                      className="text-xs font-semibold hover:underline flex items-center gap-1"
-                      style={{ color: post.typeColor }}
-                    >
-                      Read Entry &rarr;
-                    </Link>
-                  </div>
+                  <span
+                    className="text-xs font-mono font-semibold flex items-center gap-1 transition-all group-hover:gap-2"
+                    style={{ color: post.typeColor }}
+                  >
+                    Read Entry &rarr;
+                  </span>
                 </div>
-              </div>
+              </SpotlightCard>
             ))}
           </div>
         )}
 
-        {/* Sticky Notes Wall Section (rendered if activeTab is "all" or "sticky-notes") */}
+        {/* Sticky notes - orderly grid, not chaotic columns */}
         {(activeTab === "all" || activeTab === "sticky-notes") && filteredStickyNotes.length > 0 && (
-          <div className="flex flex-col gap-6 mt-4">
+          <div className="flex flex-col gap-6">
             {activeTab === "all" && (
-              <div className="border-b border-white/10 pb-2">
-                <h3 className="font-heading text-lg font-bold text-[var(--text-primary)] uppercase tracking-wider flex items-center gap-2">
-                  <span>📌</span> Sticky Notes Wall
+              <div className="pb-2" style={{ borderBottom: "1px solid var(--card-border)" }}>
+                <h3 className="font-heading text-lg font-semibold tracking-tight" style={{ color: "var(--text-primary)" }}>
+                  Marginalia
                 </h3>
-                <p className="text-[10px] text-text-muted font-mono mt-0.5">Messy, partial, raw insights worth revisiting. Click to read.</p>
+                <p className="text-[11px] font-mono mt-0.5" style={{ color: "var(--text-muted)" }}>
+                  Messy, partial, raw insights worth revisiting. Click to read.
+                </p>
               </div>
             )}
 
-            <div className="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6 [column-fill:_balance]">
-              {filteredStickyNotes.map((note) => {
-                const rotation = note.rotation || 0;
-                const bg = getStickyBg(note.color);
-                
-                return (
-                  <div
-                    key={note.id}
-                    onClick={() => setSelectedNote(note)}
-                    className="break-inside-avoid inline-block w-full p-6 rounded-xl border border-black/10 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-200 select-none hover:scale-[1.02] active:scale-[0.98]"
-                    style={{
-                      backgroundColor: bg,
-                      transform: `rotate(${rotation}deg)`,
-                      color: "#1e293b",
-                      fontFamily: "'Patrick Hand', 'Caveat', cursive",
-                    }}
-                  >
-                    <span className="block font-bold text-base leading-tight mb-2 text-slate-800">
-                      {note.title}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {filteredStickyNotes.map((note) => (
+                <div
+                  key={note.id}
+                  onClick={() => setSelectedNote(note)}
+                  className="card-glass p-5 cursor-pointer select-none flex flex-col gap-3 group h-full"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--accent-cyan)" }} />
+                    <span className="text-[9px] font-mono font-bold tracking-[0.16em] uppercase" style={{ color: "var(--text-muted)" }}>
+                      Sticky Note
                     </span>
-                    <div 
-                      className="text-xs leading-relaxed text-slate-700 pointer-events-none line-clamp-4"
-                      dangerouslySetInnerHTML={{ __html: note.content }}
-                    />
                   </div>
-                );
-              })}
+                  <span className="block font-heading font-semibold text-[15px]" style={{ color: "var(--text-primary)" }}>
+                    {note.title}
+                  </span>
+                  <div
+                    className="sticky-note-body text-xs leading-relaxed pointer-events-none line-clamp-4"
+                    style={{ color: "var(--text-secondary)" }}
+                    dangerouslySetInnerHTML={{ __html: note.content }}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         )}
 
-        {/* Render empty state */}
+        {/* Empty */}
         {filteredPosts.length === 0 && filteredStickyNotes.length === 0 && (
-          <div className="card-glass p-12 text-center bg-black/40 border-white/5 flex flex-col items-center justify-center gap-2">
-            <span className="text-2xl">🔍</span>
-            <h4 className="font-heading text-sm font-bold text-[var(--text-primary)]">No matches found</h4>
-            <p className="text-xs text-text-secondary max-w-xs">
-              Try adjusting your keywords or clearing the filter settings.
+          <div className="card-glass p-12 text-center flex flex-col items-center justify-center gap-2">
+            <h4 className="font-heading text-base font-semibold" style={{ color: "var(--text-primary)" }}>No matches found</h4>
+            <p className="text-xs max-w-xs" style={{ color: "var(--text-secondary)" }}>
+              Try adjusting your keywords or clearing the filter.
             </p>
             <button
-              onClick={() => {
-                setSearchQuery("");
-                setActiveTab("all");
-              }}
-              className="mt-4 px-3 py-1.5 bg-accent-purple hover:bg-accent-purple/80 text-white rounded-lg font-mono text-[10px] uppercase font-bold"
+              onClick={() => { setSearchQuery(""); setActiveTab("all"); }}
+              className="mt-4 btn-premium btn-secondary"
+              style={{ padding: "0.5rem 1rem" }}
             >
               Reset Filters
             </button>
@@ -245,49 +277,44 @@ export default function SentimentsClient({ initialPosts, stickyNotes }: Sentimen
         )}
       </div>
 
-      {/* Sticky Note Detail Modal Overlay */}
+      {/* Modal */}
       {selectedNote && (
-        <div 
-          className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in"
+          style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}
           onClick={() => setSelectedNote(null)}
         >
-          <div 
-            className="w-full max-w-md p-8 rounded-xl shadow-2xl relative border border-black/15 flex flex-col gap-4 animate-slide-up"
-            style={{ 
-              backgroundColor: getStickyBg(selectedNote.color), 
-              color: "#1e293b",
-              fontFamily: "'Patrick Hand', 'Caveat', cursive"
-            }}
+          <div
+            className="w-full max-w-md p-8 relative flex flex-col gap-4 animate-slide-up card-glass"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
-            <button 
+            <button
               onClick={() => setSelectedNote(null)}
-              className="absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-lg font-bold font-sans transition-colors"
+              className="absolute top-4 right-4 text-lg font-bold transition-colors"
+              style={{ color: "var(--text-muted)" }}
             >
               ✕
             </button>
-
             <div className="flex flex-col gap-1">
-              <span className="text-[9px] font-mono font-bold tracking-widest text-slate-500 uppercase">
-                PINNED STICKY NOTE
+              <span className="text-[9px] font-mono font-bold tracking-[0.16em] uppercase" style={{ color: "var(--accent-cyan)" }}>
+                Pinned Sticky Note
               </span>
-              <h2 className="text-2xl font-bold leading-tight text-slate-800">
+              <h2 className="text-2xl font-semibold leading-tight font-heading" style={{ color: "var(--text-primary)" }}>
                 {selectedNote.title}
               </h2>
             </div>
-
-            <div 
-              className="prose prose-slate text-sm leading-relaxed text-slate-700 mt-2 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin"
+            <div
+              className="sticky-note-body text-sm leading-relaxed mt-2 max-h-[300px] overflow-y-auto pr-2"
+              style={{ color: "var(--text-secondary)" }}
               dangerouslySetInnerHTML={{ __html: selectedNote.content }}
             />
-
             {selectedNote.tags && selectedNote.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1 mt-4 border-t border-slate-500/10 pt-3">
+              <div className="flex flex-wrap gap-1.5 mt-4 pt-4" style={{ borderTop: "1px solid var(--card-border)" }}>
                 {selectedNote.tags.map((tag) => (
-                  <span 
+                  <span
                     key={tag}
-                    className="text-[10px] font-mono bg-black/5 text-slate-600 px-2 py-0.5 rounded-full"
+                    className="text-[10px] font-mono px-2 py-0.5"
+                    style={{ color: "var(--text-muted)", border: "1px solid var(--card-border)", borderRadius: "2px" }}
                   >
                     #{tag}
                   </span>

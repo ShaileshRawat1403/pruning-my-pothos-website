@@ -2,6 +2,7 @@ import { allShelves } from "content-collections";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
+import SpotlightCard from "../../../components/SpotlightCard";
 import { constructMetadata } from "../../../lib/seo/metadata";
 import { getWebPageSchema } from "../../../lib/seo/jsonld";
 
@@ -36,7 +37,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     notes: "Notes Shelf",
     philosophy: "Philosophy & Beliefs",
     "shared-resources": "Shared Resources Shelf",
-    tools: "Developer Tools Stack"
+    tools: "Tools & Stack"
   };
 
   return constructMetadata({
@@ -63,7 +64,7 @@ export default async function ShelfCategoryIndexPage({ params }: PageProps) {
     notes: "Notes & Fragments",
     philosophy: "Philosophy & Beliefs",
     "shared-resources": "Shared Resources",
-    tools: "Tools & Developer Stack"
+    tools: "Tools & Stack"
   };
 
   const currentTitle = titleMap[category] || category;
@@ -75,55 +76,58 @@ export default async function ShelfCategoryIndexPage({ params }: PageProps) {
   });
 
   return (
-    <div className="sentiments-scope relative w-full flex flex-col gap-12 max-w-[800px] mx-auto py-12">
+    <div className="relative w-full flex flex-col gap-16 max-w-[800px] mx-auto py-12">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
 
-      <section className="flex flex-col gap-4 border-b border-[var(--card-border)] pb-8">
-        <span className="text-[10px] font-mono font-bold uppercase text-accent-cyan tracking-widest self-start">
-          SHELF CATEGORY
-        </span>
-        <h1 className="font-heading text-3xl sm:text-4xl font-extrabold text-[var(--text-primary)]">
+      <section className="flex flex-col gap-4 border-b pb-8" style={{ borderColor: "var(--card-border)" }}>
+        <div className="flex items-center gap-2">
+          <span className="h-px w-8" style={{ background: "var(--accent-cyan)" }} />
+          <span className="text-[10px] font-mono font-bold uppercase tracking-[0.18em]" style={{ color: "var(--text-muted)" }}>
+            Shelf Category
+          </span>
+        </div>
+        <h1 className="font-heading text-3xl sm:text-4xl font-extrabold" style={{ color: "var(--text-primary)" }}>
           {currentTitle}
         </h1>
-        <p className="text-text-secondary text-base leading-relaxed">
+        <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
           Index of items under the {category} catalog directory.
         </p>
       </section>
 
       {items.length === 0 ? (
-        <p className="text-text-muted text-sm italic">No entries published in this category yet.</p>
+        <p className="text-sm italic" style={{ color: "var(--text-muted)" }}>No entries published in this category yet.</p>
       ) : (
         <section className="flex flex-col gap-6">
           {items.map((item) => {
             const slug = item._meta.fileName.replace(/\.mdx?$/, "");
             return (
-              <div key={slug} className="card-glass p-6 flex flex-col gap-2 bg-black/10">
-                <span className="text-[10px] font-mono text-text-muted">
+              <SpotlightCard key={slug} href={`/shelf/${category}/${slug}`} accent="var(--accent-cyan)" className="gap-2">
+                <span className="text-[10px] font-mono" style={{ color: "var(--text-muted)" }}>
                   {item.publishDate ? new Date(item.publishDate).toLocaleDateString("en-US", { year: "numeric", month: "short" }) : "Archive"}
                 </span>
-                <h3 className="font-heading text-lg font-bold text-[var(--text-primary)] hover:text-accent-cyan transition-colors">
-                  <Link href={`/shelf/${category}/${slug}`}>{item.title}</Link>
+                <h3 className="font-heading text-lg font-bold" style={{ color: "var(--text-primary)" }}>
+                  {item.title}
                 </h3>
-                <p className="text-xs text-text-secondary leading-relaxed">
+                <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                   {item.description}
                 </p>
-                <Link
-                  href={`/shelf/${category}/${slug}`}
-                  className="text-xs font-semibold text-accent-purple hover:underline self-start mt-2 cursor-pointer"
+                <span
+                  className="text-xs font-semibold self-start mt-2 inline-flex items-center gap-1 transition-all duration-200 group-hover:gap-2"
+                  style={{ color: "var(--accent-cyan)" }}
                 >
                   Read entry &rarr;
-                </Link>
-              </div>
+                </span>
+              </SpotlightCard>
             );
           })}
         </section>
       )}
 
-      <div className="border-t border-[var(--card-border)] pt-8 mt-4 flex justify-between items-center text-xs font-mono">
-        <Link href="/shelf" className="text-accent-cyan hover:underline font-semibold">
+      <div className="border-t pt-8 mt-4 flex justify-between items-center text-xs font-mono" style={{ borderColor: "var(--card-border)" }}>
+        <Link href="/shelf" className="link-slide font-semibold" style={{ color: "var(--text-secondary)" }}>
           &larr; Back to Shelf
         </Link>
       </div>

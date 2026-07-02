@@ -1,7 +1,6 @@
 import { MetadataRoute } from "next";
 import { allSystems, allSentences, allSelves, allShelves } from "content-collections";
 import { SITE_CONFIG } from "../lib/seo/site";
-import { slugifyTag } from "../lib/tags";
 
 export const dynamic = "force-static";
 
@@ -19,7 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/portfolio",
     "/shelf",
-    "/tags",
     "/tools/prompt-to-json",
     "/tools/change-to-checklist",
     "/tools/csv-to-eval",
@@ -62,32 +60,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     };
   });
 
-  // Extract all slugified tag routes
-  const allTags = new Set<string>();
-  const items = [
-    ...allSystems.map((item) => item.tags || []),
-    ...allSentences.map((item) => item.tags || []),
-    ...allSelves.map((item) => item.tags || []),
-    ...allShelves.map((item) => item.tags || [])
-  ];
-  items.forEach((tags) => {
-    tags.forEach((tag) => {
-      const slug = slugifyTag(tag);
-      if (slug) allTags.add(slug);
-    });
-  });
-
-  const tagRoutes = Array.from(allTags).map((tag) => ({
-    url: `${SITE_CONFIG.url}/tags/${tag}/`,
-    lastModified: new Date(),
-  }));
-
   return [
     ...staticRoutes,
     ...systemRoutes,
     ...sentenceRoutes,
     ...selfRoutes,
     ...shelfRoutes,
-    ...tagRoutes,
   ];
 }

@@ -38,7 +38,7 @@ const fadeUp: Variants = {
 const stats = [
   { num: "260+", label: "Reflections" },
   { num: "55+",  label: "Systems posts" },
-  { num: "6",    label: "Live tools" },
+  { num: "14",   label: "Live tools" },
 ];
 
 export default function HeroSection() {
@@ -367,7 +367,7 @@ export default function HeroSection() {
               </svg>
             </span>
             <div>
-              <div className="text-[11px] font-semibold" style={{ color: "var(--text-primary)" }}>6 active tools</div>
+              <div className="text-[11px] font-semibold" style={{ color: "var(--text-primary)" }}>14 active tools</div>
               <div className="text-[9px] font-mono" style={{ color: "var(--text-muted)" }}>browser-native · no install</div>
             </div>
           </motion.div>

@@ -189,7 +189,7 @@ export default function Home() {
               border: "1px solid color-mix(in srgb, var(--accent-green) 24%, transparent)",
             }}
           >
-            ● 6 Active Sandboxes
+            ● 14 Active Sandboxes
           </span>
         </div>
 

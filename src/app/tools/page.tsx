@@ -83,6 +83,34 @@ export default function ToolsIndexPage() {
       accent: "var(--accent-green)"
     },
     {
+      title: "API Surface Mapper",
+      description: "Map curl commands and HTTP traces into a clean endpoint surface, with tokens and auth headers redacted first. Preview of the Tessera api pack.",
+      path: "/tools/api-surface-map",
+      status: "Live · Tessera",
+      accent: "var(--accent-blue)"
+    },
+    {
+      title: "Dependency Auditor",
+      description: "Flag unpinned versions, open ranges, duplicates, and version conflicts in package.json or requirements.txt. Preview of the Tessera deps pack.",
+      path: "/tools/dependency-audit",
+      status: "Live · Tessera",
+      accent: "var(--accent-pink)"
+    },
+    {
+      title: "OpenAPI Linter",
+      description: "Catalog every operation and catch missing or duplicate operationIds, undocumented endpoints, and missing success responses. Preview of the Tessera openapi pack.",
+      path: "/tools/openapi-lint",
+      status: "Live · Tessera",
+      accent: "var(--accent-purple)"
+    },
+    {
+      title: "License Classifier",
+      description: "Detect a license from its wording, name its SPDX id, and explain what it obligates: permissive, copyleft, or public domain. Preview of the Tessera license pack.",
+      path: "/tools/license-classify",
+      status: "Live · Tessera",
+      accent: "var(--accent-green)"
+    },
+    {
       title: "Prompt ➔ JSON Schema",
       description: "Convert raw prose specifications into typed, structured output JSON schemas and matching examples.",
       path: "/tools/prompt-to-json",

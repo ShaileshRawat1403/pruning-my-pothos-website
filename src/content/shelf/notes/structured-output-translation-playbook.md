@@ -8,6 +8,7 @@ tags:
   - notes
   - reliability
 coverUrl: '/covers/shelf/shared-dax-orchestration.svg'
+coverAlt: 'Cover illustration for Structured Output Translation Playbook'
 ---
 
 This note compiles our practices for designing and maintaining structured schemas at the interface boundaries of generative systems.

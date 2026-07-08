@@ -7,6 +7,7 @@ tags:
   - learning
   - culture
 coverUrl: "/covers/shelf/books-reading-stack.svg"
+coverAlt: "Cover illustration for Books that improve systems judgment"
 ---
 
 I come back to books when I need to repair my pace of thinking.

@@ -9,6 +9,7 @@ tags:
   - language
   - semantics
 coverUrl: "/covers/shelf/shared-intent-architecture-blueprint.svg"
+coverAlt: "Cover illustration for The Intent Architecture Blueprint deck"
 pdfUrl: "/resources/presentations/The_Intent_Architecture_Blueprint.pdf"
 resourceHighlights:
   - How intent becomes schemas, policies, and downstream actions

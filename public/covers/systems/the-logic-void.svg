@@ -1,26 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="title desc">
-  <title id="title">The Logic Void</title>
-  <desc id="desc">Gap diagram showing reasoning boundaries</desc>
-  <rect width="400" height="225" fill="#f9fafb"/>
-  <g stroke="#3b82f6" stroke-width="1.5" fill="none">
-    <rect x="40" y="60" width="120" height="110" rx="4"/>
-    <rect x="240" y="60" width="120" height="110" rx="4"/>
-  </g>
-  <g stroke="#d1d5db" stroke-width="1" fill="none" stroke-dasharray="4 3">
-    <rect x="160" y="60" width="80" height="155"/>
-  </g>
-  <g fill="#3b82f6">
-    <rect x="40" y="175" width="120" height="25" rx="4" opacity="0.3"/>
-    <rect x="240" y="175" width="120" height="25" rx="4" opacity="0.3"/>
-  </g>
-  <g font-family="system-ui, sans-serif" font-size="10" fill="#6b7280">
-    <text x="100" y="115" text-anchor="middle">logical</text>
-    <text x="300" y="115" text-anchor="middle">logical</text>
-    <text x="100" y="190" text-anchor="middle">pattern match</text>
-    <text x="300" y="190" text-anchor="middle">confidence</text>
-    <text x="200" y="145" text-anchor="middle" fill="#ef4444">void</text>
-  </g>
-  <g font-family="system-ui, sans-serif" font-size="11" fill="#6b7280">
-    <text x="200" y="210" text-anchor="middle">where logic breaks down</text>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-labelledby="t d">
+<title id="t">The Logic Void: Where AI Reasoning Breaks Down</title>
+<desc id="d">Ink-illustration cover for The Logic Void: Where AI Reasoning Breaks Down</desc>
+<rect width="400" height="225" fill="#f4ecd8"/>
+<rect x="0.75" y="0.75" width="398.5" height="223.5" fill="none" stroke="#e3d6b8" stroke-width="1.5"/>
+<path d="M 200.0 50.9 Q 96.0 44.9 96.0 120.2 Q 158.4 128.2 200.0 120.2" stroke="#2a2012" stroke-width="1.60" fill="none" stroke-linecap="round"/>
+<path d="M 200.0 50.9 Q 304.0 44.9 304.0 120.2 Q 241.6 128.2 200.0 120.2" stroke="#8c2f23" stroke-width="1.60" fill="none" stroke-linecap="round"/>
+<path d="M 127.2 68.2 Q 157.1 66.4 184.4 66.3" stroke="#9a7322" stroke-width="0.90" fill="none" opacity="0.7"/>
+<path d="M 127.2 85.5 Q 154.5 85.7 184.4 86.1" stroke="#9a7322" stroke-width="0.90" fill="none" opacity="0.7"/>
+<path d="M 127.2 102.8 Q 156.8 105.0 184.4 104.3" stroke="#9a7322" stroke-width="0.90" fill="none" opacity="0.7"/>
+<text x="90.0" y="42.9" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="8.5" fill="#2a2012" text-anchor="middle">SOURCE</text>
+<text x="310.0" y="42.9" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="8.5" fill="#8c2f23" text-anchor="middle">MEMORY</text>
+<text x="200.0" y="155.0" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="12.5" fill="#2a2012" font-weight="700" text-anchor="middle">LOGIC VOID</text>
+<text x="386" y="215" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="8.0" fill="#2a2012" opacity="0.5" text-anchor="end">SYSTEMS · EXPLANATIONS</text>
 </svg>

@@ -7,6 +7,7 @@ tags:
   - macos
   - apple-silicon
 coverUrl: "/covers/shelf/tool-macos.svg"
+coverAlt: "Cover illustration for Tools: macOS on Apple Silicon"
 ---
 
 ## Benefits

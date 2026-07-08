@@ -7,6 +7,7 @@ tags:
   - plaintext
   - workflow
 coverUrl: "/covers/shelf/notes-plaintext.svg"
+coverAlt: "Cover illustration for Notes/Tools: a plaintext logbook"
 ---
 
 Working notes. Subject to change.

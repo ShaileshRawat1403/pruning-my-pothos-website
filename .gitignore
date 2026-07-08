@@ -45,3 +45,7 @@ next-env.d.ts
 /site.zip
 /.content-collections/
 /.astro/
+
+# leftover cover-art preview/sample files (not linked from any page)
+/public/covers/_samples/
+/public/covers/_samples2/

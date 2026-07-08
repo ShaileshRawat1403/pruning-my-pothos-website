@@ -4,7 +4,7 @@ import { constructMetadata } from "../../../lib/seo/metadata";
 
 export const metadata = constructMetadata({
   title: "API Surface Mapper",
-  description: "Paste curl commands or a raw HTTP request and get a clean endpoint map with methods, hosts, and query params. Tokens and auth headers are redacted before they reach the map. Runs in your browser.",
+  description: "Paste curl commands or a raw HTTP request and get a clean endpoint map with methods, hosts, and params. Auth headers are redacted. Runs in your browser.",
   path: "/tools/api-surface-map",
 });
 

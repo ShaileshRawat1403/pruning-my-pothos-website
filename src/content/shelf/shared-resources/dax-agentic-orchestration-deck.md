@@ -9,6 +9,7 @@ tags:
   - handoff
   - multi-agent
 coverUrl: "/covers/shelf/shared-dax-orchestration.svg"
+coverAlt: "Cover illustration for DAX Agentic Orchestration deck"
 pdfUrl: "/resources/presentations/DAX_Agentic_Orchestration_(2).pdf"
 resourceHighlights:
   - Agent orchestration patterns and protocols

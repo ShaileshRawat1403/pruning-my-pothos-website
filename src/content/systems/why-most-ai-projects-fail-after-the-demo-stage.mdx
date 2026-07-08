@@ -1,5 +1,7 @@
 ---
 title: "Why Most AI Projects Fail After the Demo Stage"
+publishDate: "2026-03-14"
+updatedAt: "2026-04-15"
 description: "Why AI projects often stall after promising demos: weak integration, missing governance, low observability, and unclear adoption design."
 category: "How-things-fit-together"
 heroImage: '/covers/systems/why-most-ai-projects-fail-after-the-demo-stage.svg'
@@ -11,7 +13,6 @@ tags:
   - governance
   - observability
   - reliability
-updatedAt: "2026-03-14"
 proofPoints:
   - "This page ties together existing observability, governed execution, retrieval, and portfolio proof surfaces."
   - "Portfolio and Soothsayer links now support the article's emphasis on real systems over abstract demos."
@@ -109,22 +110,7 @@ Most projects only become real when they pass four tests:
 If any of these fail, the project often stays trapped in pilot mode.
 
 <figure class="diagram">
-  <svg viewBox="0 0 980 280" role="img" aria-labelledby="demo-gap-title demo-gap-desc">
-    <title id="demo-gap-title">From demo success to production failure points</title>
-    <desc id="demo-gap-desc">A sequence showing demo success followed by integration, governance, observability, and adoption tests.</desc>
-    <rect width="980" height="280" fill="var(--color-bg)" />
-    <rect x="48" y="104" width="132" height="60" rx="12" fill="none" stroke="currentColor" stroke-width="1.7" />
-    <rect x="226" y="104" width="150" height="60" rx="12" fill="none" stroke="currentColor" stroke-width="1.7" />
-    <rect x="422" y="104" width="150" height="60" rx="12" fill="none" stroke="var(--color-accent)" stroke-width="1.9" />
-    <rect x="618" y="104" width="150" height="60" rx="12" fill="none" stroke="currentColor" stroke-width="1.7" />
-    <rect x="814" y="104" width="118" height="60" rx="12" fill="none" stroke="currentColor" stroke-width="1.7" />
-    <text x="78" y="138" font-family="var(--font-mono)" font-size="11">Demo works</text>
-    <text x="252" y="138" font-family="var(--font-mono)" font-size="11">Integration test</text>
-    <text x="448" y="138" font-family="var(--font-mono)" font-size="11" fill="var(--color-accent)">Governance test</text>
-    <text x="646" y="138" font-family="var(--font-mono)" font-size="11">Observability test</text>
-    <text x="835" y="138" font-family="var(--font-mono)" font-size="11">Adoption test</text>
-    <path d="M180 134 H226 M376 134 H422 M572 134 H618 M768 134 H814" stroke="currentColor" stroke-width="1.7" />
-  </svg>
+  <iframe src="/scenes/demo-to-production-gaps.html" title="From demo success to production failure points" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The first strong answer is often the easiest part of the project.</figcaption>
 </figure>
 

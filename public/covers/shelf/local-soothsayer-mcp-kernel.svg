@@ -1,54 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">Soothsayer MCP Kernel cover</title>
-  <desc id="desc">Editorial cover with governance flow motif for deterministic MCP orchestration.</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
-    </linearGradient>
-    <linearGradient id="signal" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#fb923c"/>
-      <stop offset="100%" stop-color="#60a5fa"/>
-    </linearGradient>
-  </defs>
-
-  <rect width="1200" height="630" fill="url(#bg)"/>
-
-  <g opacity="0.28" stroke="#334155" stroke-width="1">
-    <path d="M120 180h960"/>
-    <path d="M120 450h960"/>
-    <path d="M300 120v390"/>
-    <path d="M600 120v390"/>
-    <path d="M900 120v390"/>
-  </g>
-
-  <g fill="#0b1220" stroke="#475569" stroke-width="2">
-    <rect x="170" y="240" width="180" height="130" rx="16"/>
-    <rect x="510" y="200" width="180" height="130" rx="16"/>
-    <rect x="850" y="240" width="180" height="130" rx="16"/>
-  </g>
-
-  <g stroke="url(#signal)" stroke-width="6" fill="none" stroke-linecap="round">
-    <path d="M350 305h160"/>
-    <path d="M690 265h160"/>
-  </g>
-
-  <g fill="#e2e8f0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24">
-    <text x="260" y="312" text-anchor="middle">Client</text>
-    <text x="600" y="272" text-anchor="middle">Kernel</text>
-    <text x="940" y="312" text-anchor="middle">Policy</text>
-  </g>
-
-  <g>
-    <text x="120" y="92" fill="#f8fafc" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700">
-      Soothsayer MCP Kernel
-    </text>
-    <text x="120" y="132" fill="#cbd5e1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" letter-spacing="1">
-      Deterministic orchestration, policy first
-    </text>
-  </g>
-
-  <g fill="#94a3b8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19">
-    <text x="120" y="565">RUN LIFECYCLE  ·  OWNER SCOPING  ·  BUNDLE HASHING  ·  CONTRACT FREEZE</text>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+<title id="t">Soothsayer MCP kernel: from prompts to controlled orchestration</title>
+<desc id="d">Ink-illustration cover for Soothsayer MCP kernel: from prompts to controlled orchestration</desc>
+<rect width="1200" height="675" fill="#f4ecd8"/>
+<rect x="0.75" y="0.75" width="1198.5" height="673.5" fill="none" stroke="#e3d6b8" stroke-width="1.5"/>
+<path d="M 424.6 256.5 Q 411.1 285.8 400.8 310.9 Q 375.6 324.1 350.9 340.8 Q 321.5 336.7 292.5 331.9 Q 272.7 309.2 253.3 286.6 Q 251.5 255.7 250.3 225.3 Q 270.2 204.3 293.5 182.8 Q 324.4 176.8 351.3 169.8 Q 378.6 184.3 406.0 197.8 Q 416.4 227.8 424.6 256.5 Z" stroke="#2a2012" stroke-width="4.80" fill="none"/>
+<path d="M 948.5 256.5 Q 937.7 284.4 931.7 313.3 Q 905.6 330.2 879.3 343.4 Q 848.6 341.2 818.9 334.6 Q 799.0 311.0 780.6 286.9 Q 777.3 257.9 778.0 225.2 Q 798.3 201.8 818.3 177.4 Q 847.6 174.9 879.2 170.6 Q 904.8 188.0 929.4 201.6 Q 937.4 230.9 948.5 256.5 Z" stroke="#8c2f23" stroke-width="4.80" fill="none"/>
+<path d="M 336.0 203.8 Q 600.0 175.5 864.0 203.8" stroke="#9a7322" stroke-width="6.00" fill="none" stroke-linecap="round"/>
+<text x="336.0" y="380.2" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="27.0" fill="#2a2012" font-weight="700" text-anchor="middle">MCP</text>
+<text x="864.0" y="380.2" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="27.0" fill="#8c2f23" font-weight="700" text-anchor="middle">POLICY</text>
+<text x="600.0" y="157.5" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="25.5" fill="#9a7322" text-anchor="middle">ORCHESTRATE</text>
+<text x="600.0" y="465.0" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="37.5" fill="#2a2012" font-weight="700" text-anchor="middle">SOOTHSAYER MCP KERNEL</text>
+<text x="1186" y="665" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="24.0" fill="#2a2012" opacity="0.5" text-anchor="end">SHELF · LOCAL EXPERIMENTS</text>
 </svg>

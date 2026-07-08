@@ -9,6 +9,7 @@ tags:
   - prompting
   - governance
 coverUrl: "/covers/shelf/shared-semantic-bridge.svg"
+coverAlt: "Cover illustration for AI skill design templates"
 resourceHighlights:
   - "Skill definition template for reusable task boundaries."
   - "Skill review template for versioned behavior changes."

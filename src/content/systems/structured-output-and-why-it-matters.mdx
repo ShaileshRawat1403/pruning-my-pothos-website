@@ -1,5 +1,7 @@
 ---
 title: "Structured Output and Why It Matters"
+publishDate: "2026-01-14"
+updatedAt: "2026-06-28"
 description: "Why format turns a response into a system you can trust."
 category: "How-things-fit-together"
 heroImage: '/covers/systems/structured-output-and-why-it-matters.svg'
@@ -85,59 +87,7 @@ By default, an LLM generates a continuous stream of text. This is fine for chatb
 To solve this, we need to constrain the model to produce output that conforms to a predefined schema. A schema is a formal definition of the expected structure, data types, and keys.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 240" role="img" aria-labelledby="structure-compare-title structure-compare-desc">
-    <title id="structure-compare-title">Unstructured vs. Structured Output</title>
-    <desc id="structure-compare-desc">
-      A diagram comparing a block of free-form text on the left with a clean JSON
-      object on the right, showing the same information in different formats.
-    </desc>
-
-    <text x="40" y="60" font-size="13" font-family="var(--font-mono)">
-      Unstructured Text:
-    </text>
-    <rect
-      x="40"
-      y="70"
-      width="300"
-      height="80"
-      rx="10"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-    />
-    <text x="60" y="95" font-size="12" font-family="var(--font-mono)">
-      "The capital of France is Paris."
-    </text>
-
-    <text x="500" y="60" font-size="13" font-family="var(--font-mono)">
-      Structured JSON:
-    </text>
-    <rect
-      x="500"
-      y="70"
-      width="360"
-      height="120"
-      rx="10"
-      fill="none"
-      stroke="var(--color-accent)"
-      stroke-width="2"
-    />
-
-    <text x="520" y="95" font-size="12" font-family="var(--font-mono)">
-      {"{"}
-    </text>
-    <text x="540" y="115" font-size="12" font-family="var(--font-mono)">
-      "country": "France",
-    </text>
-    <text x="540" y="135" font-size="12" font-family="var(--font-mono)">
-      "capital": "Paris"
-    </text>
-    <text x="520" y="155" font-size="12" font-family="var(--font-mono)">
-      {"}"}
-    </text>
-
-  </svg>
-
+  <iframe src="/scenes/structured-output-compare.html" title="Unstructured vs. Structured Output" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>
     Structured output makes information machine-readable and reliable.
   </figcaption>

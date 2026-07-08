@@ -6,6 +6,7 @@ tags:
   - philosophy
   - constraints
 coverUrl: "/covers/shelf/philosophy-constraints.svg"
+coverAlt: "Cover illustration for Constraints create clarity"
 ---
 
 I learned this from designing small systems: when options are endless, decisions drift. When options are constrained, intent surfaces and work starts.

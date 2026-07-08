@@ -1,5 +1,7 @@
 ---
 title: "Embeddings Explained Like You're Human"
+publishDate: "2026-01-14"
+updatedAt: "2026-04-15"
 description: "Similarity over meaning, and why search works until it doesn't."
 category: "Concepts"
 heroImage: '/covers/systems/embeddings-explained-like-youre-human.svg'
@@ -76,21 +78,7 @@ Imagine a library where books are not organized by author or title, but by the i
 An embedding model takes a piece of text and maps it to a vector. The model is trained on vast amounts of text to learn the relationships between words. For example, the vectors for "king" and "queen" will be closer together than the vectors for "king" and "cabbage." More interestingly, the relationship between vectors can capture meaning, as in the famous example: vector('king') - vector('man') + vector('woman') ≈ vector('queen').
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 280" role="img" aria-labelledby="embedding-space-title embedding-space-desc">
-    <title id="embedding-space-title">Embedding Space</title>
-    <desc id="embedding-space-desc">A 2D space showing related words clustered together, like 'dog' and 'puppy', and 'cat' and 'kitten'.</desc>
-    <rect x="40" y="40" width="820" height="200" rx="12" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 5" />
-    <circle cx="200" cy="100" r="5" fill="var(--color-accent)" />
-    <text x="210" y="105" font-size="13" font-family="var(--font-mono)">dog</text>
-    <circle cx="240" cy="120" r="5" fill="var(--color-accent)" />
-    <text x="250" y="125" font-size="13" font-family="var(--font-mono)">puppy</text>
-    <circle cx="650" cy="180" r="5" fill="var(--color-accent)" />
-    <text x="660" y="185" font-size="13" font-family="var(--font-mono)">cat</text>
-    <circle cx="680" cy="200" r="5" fill="var(--color-accent)" />
-    <text x="690" y="205" font-size="13" font-family="var(--font-mono)">kitten</text>
-    <circle cx="450" cy="140" r="5" fill="currentColor" />
-    <text x="460" y="145" font-size="13" font-family="var(--font-mono)">car</text>
-  </svg>
+  <iframe src="/scenes/embedding-cluster.html" title="Embedding Space" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>In embedding space, proximity represents semantic similarity.</figcaption>
 </figure>
 

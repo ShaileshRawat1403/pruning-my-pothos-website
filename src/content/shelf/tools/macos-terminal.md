@@ -7,6 +7,7 @@ tags:
   - terminal
   - macos
 coverUrl: "/covers/shelf/tool-terminal.svg"
+coverAlt: "Cover illustration for Tools: macOS Terminal"
 ---
 
 ## Benefits

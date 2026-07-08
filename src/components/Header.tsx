@@ -52,14 +52,25 @@ export default function Header() {
               width: "30px",
               height: "30px",
               borderRadius: "50%",
+              overflow: "hidden",
               backgroundColor: "var(--card-bg)",
-              backgroundImage: "url('/my-self-portrait.png')",
-              backgroundPosition: "center 32%",
-              backgroundSize: "cover",
               border: "1px solid var(--card-border-hover)",
               boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--bg-color) 28%, transparent)",
             }}
-          />
+          >
+            <img
+              src="/favicon.png"
+              alt=""
+              className="header-logo-badge"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center",
+                display: "block",
+              }}
+            />
+          </div>
           <span
             className="font-heading font-semibold text-[15px] tracking-tight"
             style={{ color: "var(--text-primary)" }}
@@ -69,7 +80,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden xl:flex items-center gap-1.5">
+        <div className="hidden lg:flex items-center gap-1.5">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
@@ -103,7 +114,7 @@ export default function Header() {
             href="https://github.com/ShaileshRawat1403"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden xl:flex items-center gap-1.5 px-3.5 py-1.5 transition-all duration-200"
+            className="hidden lg:flex items-center gap-1.5 px-3.5 py-1.5 transition-all duration-200"
             style={{
               color: "var(--text-secondary)",
               background: "var(--card-bg)",
@@ -125,7 +136,7 @@ export default function Header() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="xl:hidden flex flex-col gap-1.5 p-2"
+            className="lg:hidden flex flex-col gap-1.5 p-2"
             aria-label="Toggle menu"
           >
             <span className="block w-5 h-px transition-all duration-300" style={{ background: "var(--text-secondary)", transform: menuOpen ? "translateY(8px) rotate(45deg)" : "none" }} />
@@ -138,7 +149,7 @@ export default function Header() {
       {/* Mobile menu */}
       {menuOpen && (
         <div
-          className="xl:hidden mt-2 p-4 flex flex-col gap-1 animate-slide-down"
+          className="lg:hidden mt-2 p-4 flex flex-col gap-1 animate-slide-down"
           style={{
             background: "var(--header-bg-scrolled)",
             backdropFilter: "blur(18px)",

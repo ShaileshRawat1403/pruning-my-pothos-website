@@ -1,5 +1,7 @@
 ---
 title: "Observability First: How AI Systems Learn After Launch"
+publishDate: "2026-03-05"
+updatedAt: "2026-06-28"
 description: "Why observability is the missing layer between model output and reliable product behavior in production AI systems."
 category: "Explanations"
 heroImage: '/covers/systems/observability-first-ai-systems.svg'
@@ -11,7 +13,6 @@ tags:
   - orchestration
   - operations
   - geo
-updatedAt: "2026-03-05"
 proofPoints:
   - "Weekly observability review workflow has been documented across systems and self sections."
   - "Decision and verification terminology is now linked to canonical glossary anchors."
@@ -97,26 +98,7 @@ Most production issues reduce to three questions:
 If your telemetry cannot answer these quickly, incident response becomes guesswork. Guesswork usually leads to fragile patches that hide root causes.
 
 <figure class="diagram">
-  <svg viewBox="0 0 980 280" role="img" aria-labelledby="observability-loop-title observability-loop-desc">
-    <title id="observability-loop-title">Observability feedback loop for AI runtime decisions</title>
-    <desc id="observability-loop-desc">A loop from decision to execution to verification to trace analysis and back into runtime policy updates.</desc>
-    <rect width="980" height="280" fill="var(--color-bg)" />
-
-    <rect x="60" y="104" width="130" height="64" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="236" y="104" width="130" height="64" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="412" y="104" width="130" height="64" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="588" y="104" width="130" height="64" rx="12" fill="none" stroke="var(--color-accent)" stroke-width="1.8" />
-    <rect x="764" y="104" width="150" height="64" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-
-    <text x="89" y="130" font-size="11" font-family="var(--font-mono)">Decision</text>
-    <text x="262" y="130" font-size="11" font-family="var(--font-mono)">Execution</text>
-    <text x="434" y="130" font-size="11" font-family="var(--font-mono)">Verification</text>
-    <text x="615" y="130" font-size="11" font-family="var(--font-mono)" fill="var(--color-accent)">Trace</text>
-    <text x="790" y="130" font-size="11" font-family="var(--font-mono)">Policy update</text>
-
-    <path d="M190 136 H236 M366 136 H412 M542 136 H588 M718 136 H764" stroke="currentColor" stroke-width="1.7" />
-    <path d="M914 136 C944 136 944 52 490 52 C170 52 170 95 190 95" stroke="currentColor" stroke-width="1.3" fill="none" />
-  </svg>
+  <iframe src="/scenes/observability-loop.html" title="Observability feedback loop for AI runtime decisions" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>Observability closes the loop between runtime behavior and policy improvement.</figcaption>
 </figure>
 

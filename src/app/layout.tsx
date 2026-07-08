@@ -11,11 +11,10 @@ export const metadata: Metadata = {
   description: "Sans Serif Systems is a solo-builder systems laboratory and utility bench for making AI-assisted work predictable, verifiable, and secure. Built for anyone who builds by intent, not only by code. Natural language is the new API.",
   icons: {
     icon: [
-      { url: "/my-self-portrait.svg", type: "image/svg+xml" },
-      { url: "/my-self-portrait.png", type: "image/png" },
+      { url: "/favicon.png", type: "image/png" },
     ],
-    shortcut: "/my-self-portrait.png",
-    apple: "/my-self-portrait.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
   },
 };
 

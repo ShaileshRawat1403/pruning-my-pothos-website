@@ -7,6 +7,7 @@ tags:
   - inspiration
   - community
 coverUrl: "/covers/shelf/culture-shared-signals.svg"
+coverAlt: "Cover illustration for Culture as shared memory"
 ---
 
 Culture is one of the ways memory becomes collective.

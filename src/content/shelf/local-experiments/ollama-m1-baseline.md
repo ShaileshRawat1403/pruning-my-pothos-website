@@ -8,6 +8,7 @@ tags:
   - ollama
   - performance
 coverUrl: "/covers/shelf/local-ollama-m1.svg"
+coverAlt: "Cover illustration for Ollama on M1: thermal baseline"
 ---
 
 > **Key takeaways**

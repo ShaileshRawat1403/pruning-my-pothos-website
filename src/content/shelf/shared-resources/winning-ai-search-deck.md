@@ -9,6 +9,7 @@ tags:
   - geo
   - discoverability
 coverUrl: "/covers/shelf/shared-winning-ai-search.svg"
+coverAlt: "Cover illustration for Winning AI Search deck"
 pdfUrl: "/resources/presentations/Winning_AI_Search.pdf"
 resourceHighlights:
   - How SEO, AEO, and GEO reinforce each other when entities and structure stay stable

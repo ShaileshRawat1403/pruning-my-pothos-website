@@ -8,6 +8,7 @@ tags:
   - gcp
   - setup
 coverUrl: "/covers/shelf/local-gcp-baseline.svg"
+coverAlt: "Cover illustration for GCP GPU instance baseline"
 ---
 
 > **Key takeaways**

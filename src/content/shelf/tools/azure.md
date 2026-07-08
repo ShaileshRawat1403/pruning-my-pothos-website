@@ -7,6 +7,7 @@ tags:
   - azure
   - cloud
 coverUrl: "/covers/shelf/tool-azure.svg"
+coverAlt: "Cover illustration for Tools: Azure"
 ---
 
 ## Benefits

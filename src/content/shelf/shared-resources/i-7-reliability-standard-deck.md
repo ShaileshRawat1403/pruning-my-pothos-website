@@ -8,6 +8,7 @@ tags:
   - reliability
   - governance
 coverUrl: "/covers/shelf/shared-i7-reliability.svg"
+coverAlt: "Cover illustration for The I-7 Reliability Standard deck"
 pdfUrl: "/resources/presentations/The_I-7_Reliability_Standard.pdf"
 resourceHighlights:
   - Stage-by-stage reliability framing for the I-7 loop

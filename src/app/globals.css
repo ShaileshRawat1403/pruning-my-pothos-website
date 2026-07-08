@@ -57,6 +57,16 @@
   --header-border-scrolled: rgba(201, 154, 62, 0.24);
 }
 
+/* Header logo badge is a monochrome (near-black ink) portrait on a
+   transparent background — reads fine on parchment but disappears on
+   ink-dark backgrounds, so it's inverted to near-white in dark mode. */
+.header-logo-badge {
+  filter: invert(1) brightness(1.15);
+}
+[data-theme="light"] .header-logo-badge {
+  filter: none;
+}
+
 /* ── PARCHMENT (light) ── */
 [data-theme="light"] {
   --bg-color:    #efe6d2;
@@ -756,6 +766,23 @@ h1, h2, h3, h4, h5 {
 }
 .content-body .content-figure svg {
   min-width: 420px;
+}
+.content-body .diagram iframe {
+  display: block;
+  width: 100%;
+  min-width: 560px;
+  aspect-ratio: 980 / 240;
+  border: 0;
+  background: transparent;
+}
+/* Diagram labels without an explicit fill fall back to SVG's default
+   black, which reads fine in light mode but disappears in dark mode.
+   Inherit the theme-aware color set above instead. Accent-highlighted
+   labels (fill="var(--color-accent)" etc.) already set their own fill
+   and are left untouched. */
+.content-body .diagram svg text:not([fill]),
+.content-body .content-figure svg text:not([fill]) {
+  fill: currentColor;
 }
 .content-body figcaption {
   margin-top: 0.65rem;

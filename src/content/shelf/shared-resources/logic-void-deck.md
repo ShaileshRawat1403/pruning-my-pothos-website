@@ -9,6 +9,7 @@ tags:
   - boundaries
   - design
 coverUrl: "/covers/shelf/shared-logic-void.svg"
+coverAlt: "Cover illustration for The Logic Void deck"
 pdfUrl: "/resources/presentations/The_Logic_Void.pdf"
 resourceHighlights:
   - Identifying logical boundaries in AI reasoning

@@ -8,6 +8,7 @@ tags:
   - economics
   - architecture
 coverUrl: "/covers/shelf/shared-engineering-economics.svg"
+coverAlt: "Cover illustration for Engineering economics fundamentals deck"
 pdfUrl: "/resources/presentations/Engineering_Economics_Fundamentals.pdf"
 resourceHighlights:
   - Cost of delay vs cost of defects in AI systems

@@ -1,5 +1,7 @@
 ---
 title: "SEO, AEO, GEO: How Discoverability Actually Works"
+publishDate: "2026-03-05"
+updatedAt: "2026-04-15"
 description: "A practical system map of how search engines and answer engines discover, rank, retrieve, summarize, and cite your work."
 category: "How-things-fit-together"
 heroImage: '/covers/systems/seo-aeo-geo-how-things-fit-together.svg'
@@ -11,7 +13,6 @@ tags:
   - discoverability
   - retrieval
   - citation
-updatedAt: "2026-03-05"
 proofPoints:
   - "Systems detail pages now emit FAQPage schema when frontmatter FAQs are present."
   - "DefinedTerm URLs now point to canonical glossary anchors for recurring concepts."
@@ -77,37 +78,7 @@ In practice, <span class="highlight">clarity at boundaries reduces downstream er
 ### One system, three surfaces
 
 <figure class="diagram">
-  <svg viewBox="0 0 980 280" role="img" aria-labelledby="discoverability-map-title discoverability-map-desc">
-    <title id="discoverability-map-title">Discoverability pipeline from crawl to citation</title>
-    <desc id="discoverability-map-desc">A pipeline showing crawl, understanding, retrieval, and output surfaces: search results, answer snippets, and generated citations.</desc>
-    <rect width="980" height="280" fill="var(--color-bg)" />
-
-    <rect x="40" y="98" width="160" height="72" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="238" y="98" width="180" height="72" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="456" y="98" width="170" height="72" rx="12" fill="none" stroke="var(--color-accent)" stroke-width="1.8" />
-    <rect x="664" y="48" width="130" height="58" rx="10" fill="none" stroke="currentColor" stroke-width="1.5" />
-    <rect x="664" y="122" width="130" height="58" rx="10" fill="none" stroke="currentColor" stroke-width="1.5" />
-    <rect x="664" y="196" width="130" height="58" rx="10" fill="none" stroke="currentColor" stroke-width="1.5" />
-
-    <text x="95" y="128" font-size="11" font-family="var(--font-mono)">Crawl + access</text>
-    <text x="95" y="146" font-size="10" font-family="var(--font-mono)">robots, sitemap, links</text>
-
-    <text x="268" y="128" font-size="11" font-family="var(--font-mono)">Understanding</text>
-    <text x="268" y="146" font-size="10" font-family="var(--font-mono)">entities, schema, intent</text>
-
-    <text x="486" y="128" font-size="11" font-family="var(--font-mono)" fill="var(--color-accent)">Selection layer</text>
-    <text x="486" y="146" font-size="10" font-family="var(--font-mono)">ranking + retrieval + trust</text>
-
-    <text x="688" y="82" font-size="11" font-family="var(--font-mono)">SEO</text>
-    <text x="688" y="156" font-size="11" font-family="var(--font-mono)">AEO</text>
-    <text x="688" y="230" font-size="11" font-family="var(--font-mono)">GEO</text>
-
-    <path d="M200 134 H238" stroke="currentColor" stroke-width="1.8" />
-    <path d="M418 134 H456" stroke="currentColor" stroke-width="1.8" />
-    <path d="M626 134 H664" stroke="currentColor" stroke-width="1.8" />
-    <path d="M626 134 C646 134 646 77 664 77" stroke="currentColor" stroke-width="1.3" fill="none" />
-    <path d="M626 134 C646 134 646 225 664 225" stroke="currentColor" stroke-width="1.3" fill="none" />
-  </svg>
+  <iframe src="/scenes/discoverability-pipeline.html" title="Discoverability pipeline from crawl to citation" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>One pipeline, three output surfaces: ranking, direct answers, and generated citations.</figcaption>
 </figure>
 

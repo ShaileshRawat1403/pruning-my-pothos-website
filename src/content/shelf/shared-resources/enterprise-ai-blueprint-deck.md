@@ -9,6 +9,7 @@ tags:
   - governance
   - adoption
 coverUrl: "/covers/shelf/shared-enterprise-ai-blueprint.svg"
+coverAlt: "Cover illustration for The Enterprise AI Blueprint deck"
 pdfUrl: "/resources/presentations/The_Enterprise_AI_Blueprint_(2).pdf"
 resourceHighlights:
   - Enterprise AI governance and compliance frameworks

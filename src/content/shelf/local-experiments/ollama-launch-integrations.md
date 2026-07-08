@@ -8,6 +8,7 @@ tags:
   - ollama
   - workflow
 coverUrl: "/covers/shelf/local-ollama-launch.svg"
+coverAlt: "Cover illustration for Ollama launch: integration handoff"
 ---
 
 > **Key takeaways**

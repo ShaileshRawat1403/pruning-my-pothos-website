@@ -4,7 +4,7 @@ import { constructMetadata } from "../../../lib/seo/metadata";
 
 export const metadata = constructMetadata({
   title: "Dependency Auditor",
-  description: "Paste a package.json or requirements.txt and flag unpinned versions, open ranges, duplicates, and version conflicts. The checks that keep a build reproducible. Runs in your browser.",
+  description: "Paste a package.json or requirements.txt and flag unpinned versions, open ranges, duplicates, and conflicts. The checks that keep a build reproducible.",
   path: "/tools/dependency-audit",
 });
 

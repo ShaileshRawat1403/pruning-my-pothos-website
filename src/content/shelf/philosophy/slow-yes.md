@@ -6,6 +6,7 @@ tags:
   - philosophy
   - clarity
 coverUrl: "/covers/shelf/philosophy-slow-yes.svg"
+coverAlt: "Cover illustration for A slow yes beats a fast maybe"
 ---
 
 I learned to treat decisions as commitments, not reactions. A fast yes often hides an unspoken no. A slow yes is a sign that the idea can survive friction.

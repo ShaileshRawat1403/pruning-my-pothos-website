@@ -8,6 +8,7 @@ tags:
   - ollama
   - setup
 coverUrl: "/covers/shelf/local-ollama-setup.svg"
+coverAlt: "Cover illustration for Ollama setup: local baseline"
 ---
 
 > **Key takeaways**

@@ -8,6 +8,7 @@ tags:
   - aws
   - setup
 coverUrl: "/covers/shelf/local-aws-baseline.svg"
+coverAlt: "Cover illustration for AWS GPU instance baseline"
 ---
 
 > **Key takeaways**

@@ -1,5 +1,7 @@
 ---
 title: "Evaluation Is a Human Problem"
+publishDate: "2026-01-14"
+updatedAt: "2026-06-28"
 description: "Why benchmarks are not enough and judgment defines quality."
 category: "Explanations"
 heroImage: '/covers/systems/evaluation-is-a-human-problem.svg'
@@ -74,19 +76,7 @@ Early methods for evaluating language models relied on automated metrics that co
 The next step was the creation of large-scale benchmarks like MMLU (Massive Multitask Language Understanding), which test a model's ability to answer multiple-choice questions across a wide range of subjects. These are valuable for comparing the general knowledge of different models, but they do not tell you if a model is suitable for your specific application.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 300" role="img" aria-labelledby="eval-loop-title eval-loop-desc">
-    <title id="eval-loop-title">Human-in-the-Loop Evaluation Cycle</title>
-    <desc id="eval-loop-desc">A circular diagram showing the steps: Define Rubric, Generate, Score, Analyze, and Refine.</desc>
-    <path d="M 450, 50 A 200 200 0 0 1 450 250 A 200 200 0 0 1 450 50" fill="none" stroke="currentColor" stroke-width="2" />
-    <circle cx="450" cy="50" r="10" fill="var(--color-accent)" />
-    <text x="430" y="30" font-size="12" font-family="var(--font-mono)">1. Define Rubric</text>
-    <circle cx="633" cy="150" r="10" fill="var(--color-accent)" />
-    <text x="650" y="155" font-size="12" font-family="var(--font-mono)">2. Generate & Score</text>
-    <circle cx="450" cy="250" r="10" fill="var(--color-accent)" />
-    <text x="430" y="275" font-size="12" font-family="var(--font-mono)">3. Analyze Gaps</text>
-    <circle cx="267" cy="150" r="10" fill="var(--color-accent)" />
-    <text x="180" y="155" font-size="12" font-family="var(--font-mono)">4. Refine</text>
-  </svg>
+  <iframe src="/scenes/eval-human-cycle.html" title="Human-in-the-Loop Evaluation Cycle" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>Evaluation is a continuous loop where human judgment is used to refine the system's behavior.</figcaption>
 </figure>
 

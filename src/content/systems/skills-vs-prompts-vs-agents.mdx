@@ -1,5 +1,7 @@
 ---
 title: "Skills vs Prompts vs Agents"
+publishDate: "2026-03-08"
+updatedAt: "2026-04-15"
 description: "A systems-level comparison of prompts, skills, workflows, and agents so teams can stop mixing up instruction surfaces with execution architecture."
 category: "Explanations"
 heroImage: '/covers/systems/skills-vs-prompts-vs-agents.svg'
@@ -11,7 +13,6 @@ tags:
   - workflow
   - orchestration
   - governance
-updatedAt: "2026-03-08"
 proofPoints:
   - "This page gives the site a direct comparison surface for prompts, skills, workflows, and agents."
   - "The comparison now links directly to reusable skill templates and the Dual NLP framework."
@@ -148,22 +149,7 @@ This model pairs directly with [What a Skill Is in AI Systems](/systems/what-a-s
 Workflows are the bridge between skills and agents.
 
 <figure class="diagram">
-  <svg viewBox="0 0 960 250" role="img" aria-labelledby="skills-stack-title skills-stack-desc">
-    <title id="skills-stack-title">Prompt to skill to workflow to agent stack</title>
-    <desc id="skills-stack-desc">A stacked model showing prompt, skill, workflow, and agent as different layers of the system.</desc>
-    <rect width="960" height="250" fill="var(--color-bg)" />
-    <rect x="120" y="160" width="180" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="330" y="124" width="180" height="42" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="1.8" />
-    <rect x="540" y="88" width="180" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="750" y="52" width="140" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.8" />
-
-    <text x="176" y="186" font-size="11" font-family="var(--font-mono)">Prompt</text>
-    <text x="388" y="150" font-size="11" font-family="var(--font-mono)" fill="var(--color-accent)">Skill</text>
-    <text x="592" y="114" font-size="11" font-family="var(--font-mono)">Workflow</text>
-    <text x="785" y="78" font-size="11" font-family="var(--font-mono)">Agent</text>
-
-    <path d="M300 181 H330 M510 145 H540 M720 109 H750" stroke="currentColor" stroke-width="1.7" />
-  </svg>
+  <iframe src="/scenes/skills-staircase.html" title="Prompt to skill to workflow to agent stack" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>Workflows coordinate reusable skills, and agents execute those workflows inside a governed runtime.</figcaption>
 </figure>
 

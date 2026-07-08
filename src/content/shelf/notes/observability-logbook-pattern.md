@@ -8,6 +8,7 @@ tags:
   - workflow
   - reliability
 coverUrl: "/covers/shelf/observability-logbook-pattern.svg"
+coverAlt: "Cover illustration for Notes: Observability Logbook Pattern"
 ---
 
 This is the smallest review loop I have found that still creates learning.

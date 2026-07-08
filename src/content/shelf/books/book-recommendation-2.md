@@ -7,6 +7,7 @@ tags:
   - curiosity
   - thinking
 coverUrl: "/covers/shelf/books-reading-stack.svg"
+coverAlt: "Cover illustration for Books that slow the first answer"
 ---
 
 Some books are useful because they add content. Others are useful because they interfere with haste.

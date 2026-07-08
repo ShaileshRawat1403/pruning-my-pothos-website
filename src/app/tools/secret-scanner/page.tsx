@@ -70,19 +70,35 @@ export default function SecretScannerPage() {
             <p style={{ color: "var(--text-secondary)" }}>
               <span style={{ color: "var(--accent-green)" }}>$ </span>pip install tesserakit-config
             </p>
+            <p className="mt-1.5" style={{ color: "var(--text-secondary)" }}>
+              <span style={{ color: "var(--accent-green)" }}>$ </span>pipx install tesserakit-config<span style={{ color: "var(--text-muted)" }}> # isolated CLI install</span>
+            </p>
+            <p className="mt-1.5" style={{ color: "var(--text-secondary)" }}>
+              <span style={{ color: "var(--accent-green)" }}>$ </span>uv tool install tesserakit-config
+            </p>
             <p className="mt-2" style={{ color: "var(--text-secondary)" }}>
               <span style={{ color: "var(--accent-green)" }}>$ </span>tessera run --input . --output run
             </p>
             <p className="mt-2" style={{ color: "var(--text-muted)" }}># then open run/index.html</p>
           </div>
-          <a
-            href="https://github.com/ShaileshRawat1403/tessera"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-premium btn-secondary text-center"
-          >
-            See Tessera on GitHub &rarr;
-          </a>
+          <div className="flex gap-3">
+            <a
+              href="https://pypi.org/project/tesserakit-config/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-premium btn-secondary text-center flex-1"
+            >
+              View on PyPI &rarr;
+            </a>
+            <a
+              href="https://github.com/ShaileshRawat1403/tessera"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-premium btn-secondary text-center flex-1"
+            >
+              GitHub &rarr;
+            </a>
+          </div>
         </div>
       </section>
     </div>

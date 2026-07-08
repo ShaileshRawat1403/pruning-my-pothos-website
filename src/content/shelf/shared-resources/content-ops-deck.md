@@ -8,6 +8,7 @@ tags:
   - governance
   - documentation
 coverUrl: "/covers/shelf/shared-content-ops.svg"
+coverAlt: "Cover illustration for ContentOps deck"
 pdfUrl: "/resources/presentations/ContentOpsPDF.pdf"
 resourceHighlights:
   - Editorial workflows that preserve consistency at scale

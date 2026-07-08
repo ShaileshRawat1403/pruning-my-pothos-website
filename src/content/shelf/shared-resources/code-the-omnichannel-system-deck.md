@@ -8,6 +8,7 @@ tags:
   - systems
   - integration
 coverUrl: "/covers/shelf/shared-omnichannel-system.svg"
+coverAlt: "Cover illustration for Code the Omnichannel System deck"
 pdfUrl: "/resources/presentations/Code_The_Omnichannel_System.pdf"
 resourceHighlights:
   - Designing one service layer across fragmented channels

@@ -8,6 +8,7 @@ tags:
   - evaluation
   - context
 coverUrl: "/covers/shelf/local-context-stress.svg"
+coverAlt: "Cover illustration for Context window stress test"
 ---
 
 > **Key takeaways**

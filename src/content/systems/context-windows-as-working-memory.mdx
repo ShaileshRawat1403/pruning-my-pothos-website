@@ -1,5 +1,7 @@
 ---
 title: "Context Windows as Working Memory"
+publishDate: "2026-01-14"
+updatedAt: "2026-04-15"
 description: "Why context is limited, expensive, and shapes reliability."
 category: "Concepts"
 heroImage: '/covers/systems/context-windows-as-working-memory.svg'
@@ -79,19 +81,7 @@ A context window is the maximum number of tokens a model can process at once. Th
 This is a hard technical constraint. The computational resources required to process context grow quadratically with the number of tokens. A longer context window requires significantly more memory and processing power, making it more expensive and slower to operate.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 240" role="img" aria-labelledby="context-window-title context-window-desc">
-    <title id="context-window-title">Context Window as a Finite Buffer</title>
-    <desc id="context-window-desc">A diagram showing tokens filling up a limited context window, with older tokens being pushed out.</desc>
-    <rect x="40" y="70" width="820" height="100" rx="12" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="60" y="125" font-size="13" font-family="var(--font-mono)">[Token 1]</text>
-    <text x="160" y="125" font-size="13" font-family="var(--font-mono)">[Token 2]</text>
-    <text x="260" y="125" font-size="13" font-family="var(--font-mono)">...</text>
-    <text x="700" y="125" font-size="13" font-family="var(--font-mono)">[Token N]</text>
-    <path d="M 780 120 L 840 120" stroke="var(--color-accent)" stroke-width="2" />
-    <path d="M 830 120 L 840 115 L 840 125 Z" fill="var(--color-accent)" />
-    <text x="60" y="50" font-size="12" font-family="var(--font-mono)">Start of Context</text>
-    <text x="750" y="50" font-size="12" font-family="var(--font-mono)">End of Context (Limit)</text>
-  </svg>
+  <iframe src="/scenes/context-buffer.html" title="Context Window as a Finite Buffer" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The context window is a fixed-size buffer; once full, old information is lost.</figcaption>
 </figure>
 

@@ -7,6 +7,7 @@ tags:
   - git
   - workflow
 coverUrl: "/covers/shelf/tool-git.svg"
+coverAlt: "Cover illustration for Tools: Git"
 ---
 
 ## Benefits

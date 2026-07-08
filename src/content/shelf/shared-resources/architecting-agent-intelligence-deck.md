@@ -8,6 +8,7 @@ tags:
   - architecture
   - reliability
 coverUrl: "/covers/shelf/shared-agent-intelligence.svg"
+coverAlt: "Cover illustration for Architecting Agent Intelligence deck"
 pdfUrl: "/resources/presentations/Architecting_Agent_Intelligence.pdf"
 resourceHighlights:
   - Control points for planning, execution, and review in agent systems

@@ -1,5 +1,7 @@
 ---
 title: "What LLM-Ops Actually Means"
+publishDate: "2026-01-13"
+updatedAt: "2026-06-28"
 description: "LLM-Ops is governance over time. Understanding the lifecycle of probabilistic systems."
 category: "Explanations"
 heroImage: '/covers/systems/llm-ops-without-the-buzzwords.svg'
@@ -9,7 +11,6 @@ tags:
   - operations
   - evaluation
   - governance
-updatedAt: "2026-06-25"
 proofPoints:
   - Defines the circular LLM-Ops lifecycle
   - Referenced in observability-first-ai-systems.mdx
@@ -181,34 +182,7 @@ While live systems rely on runtime evaluations to monitor operational telemetry,
 For example, in document processing and extraction workloads, developers must benchmark OCR tools, layout parsers, and text extractors (such as PaddleOCR, Docling, LlamaParse, and Surya) to determine baseline accuracy, speed, and cost trade-offs before integrating them. As detailed in the comprehensive [NewTuple document parsing benchmark](https://www.newtuple.com/post/ocr-benchmark-paddleocr-docling-llamaparse-surya), selecting the right model combination based on static datasets is the first step in the LLMOps lifecycle. Once a baseline is selected, continuous runtime evaluation takes over to guard against live behavioral drift.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 180" role="img" aria-labelledby="eval-title eval-desc" style="width: 100%; height: auto; display: block;">
-    <title id="eval-title">The Evaluation Pipeline</title>
-    <desc id="eval-desc">Input flows to Model, then Output. Output flows to Evaluator (with Ground Truth), producing a Score.</desc>
-    <rect x="50" y="70" width="100" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="100" y="95" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">Input</text>
-
-    <path d="M 150 90 H 200" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
-
-    <rect x="200" y="50" width="120" height="80" rx="8" fill="var(--color-blockquote-bg)" stroke="currentColor" stroke-width="2" />
-    <text x="260" y="95" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">LLM</text>
-
-    <path d="M 320 90 H 370" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
-
-    <rect x="370" y="70" width="100" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="420" y="95" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">Output</text>
-
-    <path d="M 470 90 H 520" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
-
-    <rect x="520" y="50" width="140" height="80" rx="8" fill="none" stroke="var(--color-accent)" stroke-width="2" />
-    <text x="590" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="var(--color-accent)">Evaluator</text>
-    <text x="590" y="105" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--color-text-muted)">(vs Ground Truth)</text>
-
-    <path d="M 660 90 H 710" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
-
-    <circle cx="740" cy="90" r="30" fill="var(--color-accent)" />
-    <text x="740" y="95" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="#fff" font-weight="bold">92%</text>
-
-  </svg>
+  <iframe src="/scenes/eval-pipeline.html" title="The Evaluation Pipeline" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>If you can't measure it, you can't improve it.</figcaption>
 </figure>
 

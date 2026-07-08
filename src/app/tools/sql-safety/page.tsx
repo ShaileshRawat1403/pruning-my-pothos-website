@@ -4,7 +4,7 @@ import { constructMetadata } from "../../../lib/seo/metadata";
 
 export const metadata = constructMetadata({
   title: "SQL Migration Safety",
-  description: "Lint SQL and migrations for dangerous statements: DELETE or UPDATE without WHERE, DROP without IF EXISTS, NOT NULL columns without a default, SELECT *. Runs in your browser.",
+  description: "Lint SQL and migrations for dangerous statements: DELETE/UPDATE without WHERE, DROP without IF EXISTS, missing defaults, SELECT *. Runs in your browser.",
   path: "/tools/sql-safety",
 });
 

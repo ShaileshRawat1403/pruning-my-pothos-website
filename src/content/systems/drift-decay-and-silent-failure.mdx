@@ -1,5 +1,7 @@
 ---
 title: "Drift, Decay, and Silent Failure"
+publishDate: "2026-01-14"
+updatedAt: "2026-06-28"
 description: "How systems degrade quietly before they break loudly."
 category: "Explanations"
 heroImage: '/covers/systems/drift-decay-and-silent-failure.svg'
@@ -76,18 +78,7 @@ There are two primary ways an AI system's performance degrades:
 These issues are insidious because the system doesn't crash. It continues to produce outputs, but they become progressively less accurate or relevant.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 240" role="img" aria-labelledby="drift-chart-title drift-chart-desc">
-    <title id="drift-chart-title">Data Drift Leading to Performance Decay</title>
-    <desc id="drift-chart-desc">Two charts side-by-side. The left chart shows the distribution of input data changing over time. The right chart shows a corresponding drop in model accuracy.</desc>
-    <text x="40" y="40" font-size="13" font-family="var(--font-mono)">Input Data Distribution</text>
-    <path d="M 40 180 C 120 80, 200 80, 280 180" stroke="currentColor" stroke-width="2" fill="none" />
-    <path d="M 160 180 C 240 80, 320 80, 400 180" stroke="var(--color-accent)" stroke-width="2" fill="none" stroke-dasharray="5 5" />
-    <line x1="40" y1="180" x2="400" y2="180" stroke="currentColor" stroke-width="1" />
-    <text x="500" y="40" font-size="13" font-family="var(--font-mono)">Model Accuracy</text>
-    <path d="M 500 80 H 650 L 700 120 L 860 160" stroke="var(--color-accent)" stroke-width="2" fill="none" />
-    <line x1="500" y1="200" x2="860" y2="200" stroke="currentColor" stroke-width="1" />
-    <line x1="500" y1="80" x2="500" y2="200" stroke="currentColor" stroke-width="1" />
-  </svg>
+  <iframe src="/scenes/drift-decay.html" title="Data Drift Leading to Performance Decay" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>As the input data drifts away from the training distribution (left), model accuracy decays (right).</figcaption>
 </figure>
 

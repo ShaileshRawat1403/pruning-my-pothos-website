@@ -1,5 +1,7 @@
 ---
 title: "Evaluation as a Runtime Discipline"
+publishDate: "2026-03-08"
+updatedAt: "2026-04-15"
 description: "Why evaluation should live inside the operating loop of an AI system instead of being treated as an occasional review ritual."
 category: "Explanations"
 heroImage: '/covers/systems/evaluation-as-a-runtime-discipline.svg'
@@ -11,7 +13,6 @@ tags:
   - governance
   - workflow
   - runtime
-updatedAt: "2026-03-08"
 proofPoints:
   - "Evaluation language is now linked more directly to observability, agent handoff, and AI-assisted SDLC pages."
   - "The systems hub now surfaces evaluation-adjacent cornerstone docs as a coherent cluster."
@@ -92,24 +93,7 @@ This is why benchmark wins often fail to translate into durable system quality. 
 The useful unit of evaluation is not only the final answer. It is the decision chain that produced the answer.
 
 <figure class="diagram">
-  <svg viewBox="0 0 980 260" role="img" aria-labelledby="eval-loop-title eval-loop-desc">
-    <title id="eval-loop-title">Runtime evaluation loop</title>
-    <desc id="eval-loop-desc">A sequence showing intent, policy gate, action, verification, and evaluation record as one operating loop.</desc>
-    <rect width="980" height="260" fill="var(--color-bg)" />
-    <rect x="42" y="100" width="140" height="60" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="220" y="100" width="150" height="60" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="408" y="100" width="150" height="60" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="596" y="100" width="150" height="60" rx="12" fill="none" stroke="var(--color-accent)" stroke-width="1.8" />
-    <rect x="784" y="100" width="150" height="60" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-
-    <text x="82" y="134" font-size="11" font-family="var(--font-mono)">Intent</text>
-    <text x="258" y="134" font-size="11" font-family="var(--font-mono)">Policy gate</text>
-    <text x="452" y="134" font-size="11" font-family="var(--font-mono)">Action</text>
-    <text x="626" y="134" font-size="11" font-family="var(--font-mono)" fill="var(--color-accent)">Verification</text>
-    <text x="812" y="134" font-size="11" font-family="var(--font-mono)">Eval record</text>
-
-    <path d="M182 130 H220 M370 130 H408 M558 130 H596 M746 130 H784" stroke="currentColor" stroke-width="1.7" />
-  </svg>
+  <iframe src="/scenes/eval-runtime-loop.html" title="Runtime evaluation loop" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>Runtime evaluation works when intent, action, verification, and record-keeping stay connected.</figcaption>
 </figure>
 
@@ -211,4 +195,4 @@ Once evaluation lives inside the runtime loop, the system can improve faster bec
 
 ### What this changes in practice
 
-Evaluation stops being a report you visit after something goes wrong. It becomes part of how the system decides, verifies, and learns on every important run. For a compact companion, see the [Engineering Agentic Systems deck](/shelf/shared-resources/engineering-agentic-systems-deck/).
+Evaluation stops being a report you visit after something goes wrong. It becomes part of how the system decides, verifies, and learns on every important run. For a compact companion, see the [Engineering Agentic Systems deck](/shelf/shared-resources/engineering-agentic-systems-deck/). At the interaction level, this is Inspect and Iterate from the [I-7 Cognitive Loop](/systems/i-7-cognitive-loop/): verification against evidence, then folding corrections back into reusable memory instead of letting the same failure recur in new language.

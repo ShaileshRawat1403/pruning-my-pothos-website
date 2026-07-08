@@ -1,0 +1,154 @@
+---
+title: "The Architecture of In-Chat AI Apps"
+publishDate: "2026-07-07"
+updatedAt: "2026-07-07"
+description: "A chat reply can carry a sentence, not a workflow. What it takes to render structured interface pieces, cards, comparisons, actions, inside an AI assistant."
+category: "How-things-fit-together"
+heroImage: '/covers/systems/architecture-of-in-chat-ai-apps.svg'
+heroImageAlt: 'A chat bubble connecting to a structured widget panel'
+tags:
+  - agentic-ux
+  - mcp
+  - widgets
+  - interface-design
+  - chat-native
+featured: false
+contentType: 'deep-dive'
+readingTime: 8
+difficulty: 'intermediate'
+proofPoints:
+  - Distinguishes conversational reply from in-chat application
+  - Maps the widget layer that sits between a model and a completed task
+  - Names what a proof of concept leaves out before it can carry real traffic
+faq:
+  - question: What is an in-chat AI app?
+    answer: "An in-chat AI app is a structured interface, cards, comparisons, maps, calculators, action buttons, rendered live inside a conversation with an AI assistant, instead of a plain text reply. The assistant recognizes intent and opens the relevant app; the interaction happens inside the chat surface itself."
+  - question: Why can't a text reply carry a full workflow?
+    answer: "A workflow needs the user to compare options, see structured state, and take a bounded action, booking a slot, confirming a purchase, reviewing a flagged transaction. Prose can describe those things one at a time, but it cannot hold them side by side the way a card, a table, or a map can, and it gives the user nothing safe to click."
+  - question: Is a chat-native app the same as a chatbot?
+    answer: "No. A chatbot answers in text. A chat-native app renders interface components inside the same conversation and wires them to real actions, so the assistant is a surface for an application, not a substitute for one."
+---
+
+> **Key takeaways**
+> - A plain-text reply can answer a question; it cannot carry a workflow.
+> - In-chat apps work because they reuse one shared widget layer across different tasks, not because each app is custom-built.
+> - The surface, MCP-connected tool surfaces versus native discovery surfaces, should follow the audience and the governance need, not habit.
+> - A working demo and a production system differ mainly in what sits around the app: live data, auth, evaluation, and monitoring.
+
+A growing share of customer journeys now begins with a question typed into an assistant, before anyone opens a website or an app. That shift moves the first point of contact somewhere most interfaces were never designed to live: inside a conversation.
+
+This piece is about what changes when the assistant stops replying in text and starts rendering an actual interface. Not a chatbot bolted onto a product, but an application whose surface happens to be a chat window.
+
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The ceiling on text</summary>
+      <ol>
+        <li><a href="#why-a-reply-cannot-carry-a-workflow">Why a reply cannot carry a workflow</a></li>
+        <li><a href="#two-production-patterns">Two production patterns</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The widget layer</summary>
+      <ol>
+        <li><a href="#what-an-in-chat-app-actually-needs">What an in-chat app actually needs</a></li>
+        <li><a href="#choosing-a-surface">Choosing a surface</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Demo to production</summary>
+      <ol>
+        <li><a href="#a-worked-example">A worked example</a></li>
+        <li><a href="#what-a-production-build-adds">What a production build adds</a></li>
+        <li><a href="#what-this-changes-in-practice">What this changes in practice</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: The ceiling on text
+
+### Why a reply cannot carry a workflow
+
+An assistant can answer a question well. Moving someone from that question to a finished outcome, a booked appointment, a resolved dispute, a completed purchase, asks for more than text. It needs interface pieces that show options side by side, structured comparisons the user can act on, and safe actions wired to real systems.
+
+Prose is sequential. A workflow is not. The moment a user needs to compare three options, see a live number update as they adjust a variable, or trust that clicking a button will not silently do the wrong thing, text alone runs out of road.
+
+In practice, <span class="highlight">the entry point is moving into the assistant, and a plain reply does not travel with it</span>.
+
+<aside class="callout callout-insight">
+  <p><strong>Design note.</strong> The practical question is not whether to add a chatbot. It is where the experience should live, and how much of a workflow it can actually complete once it is there.</p>
+</aside>
+
+### Two production patterns
+
+Most teams building for assistants land on one of two shapes.
+
+<div class="table-scroll-wrap">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Pattern</th>
+        <th>What it delivers</th>
+        <th>Where it breaks down</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Reply-only chatbot</strong></td>
+        <td>Fast to ship, answers questions, links out to a website for anything transactional</td>
+        <td>Loses the user at the exact moment they were ready to act</td>
+      </tr>
+      <tr>
+        <td><strong>In-chat app</strong></td>
+        <td>Renders structured state and completes the action inside the conversation</td>
+        <td>Needs a shared widget system, or every task becomes a one-off build</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+The second pattern only stays affordable if the interface pieces are reusable across tasks. That reuse is the actual engineering problem.
+
+## Act II: The widget layer
+
+### What an in-chat app actually needs
+
+Underneath a chat-native app is a small library of interface pieces, composed differently per task rather than rebuilt from zero each time:
+
+- cards for discovery and comparison
+- charts, gauges, and structured summaries for decision support
+- maps for anything location-bound
+- selectors, steppers, and calculators for input
+- action components, checkout, booking, confirmation, that close the loop
+
+A commerce flow, a booking flow, and a support flow look different on the surface, but they draw from the same pieces underneath. Once that shared layer exists, adding a new task is closer to composition than to a fresh build.
+
+### Choosing a surface
+
+The same capability layer can usually be delivered through more than one surface, and the right choice depends on the job rather than on preference. Tool-connected surfaces suit governed workflows where the assistant needs deep access to documents and structured actions. Native discovery surfaces suit customer-facing journeys where reach and low-friction access matter more than depth of tool access. Picking the wrong one does not fail loudly; it just quietly limits what the app can safely do.
+
+This is a design and governance decision, not a technical afterthought. See [AI agents vs AI workflows](/systems/ai-agents-vs-ai-workflows/) for how that same choice plays out one layer down, at the orchestration level rather than the surface level.
+
+## Act III: Demo to production
+
+### A worked example
+
+A concrete illustration of this pattern: Newtuple published a [proof of concept](https://www.newtuple.com/post/native-ai-apps-inside-chatgpt-and-claude) spanning commerce, healthcare, finance, and real estate scenarios, each rendered as a live in-chat app inside two different assistants from one shared widget system. It is a useful reference point precisely because it shows the reuse claim above holding up across four genuinely different workflows rather than one narrow demo.
+
+### What a production build adds
+
+A proof of concept proves the experience layer. It usually runs on mock data, with no live backend behind it. Getting from there to something real adds a predictable set of layers:
+
+1. Live integration to real catalogs, records, and transaction systems in place of mock data.
+2. Authentication and permissions, so actions run against the right account with the right scope.
+3. Evaluation, so quality and safety are checked before and after release, not assumed.
+4. Monitoring and human approval for the steps that change real state.
+
+None of that is exotic. It is the same governance layer any production AI system needs, applied to a surface that happens to render inside a chat window instead of a page. For the runtime version of that governance layer, see [Engineering Agentic Systems for Reliability](/systems/engineering-agentic-systems-for-reliability/) and [Structured Output and Why It Matters](/systems/structured-output-and-why-it-matters/).
+
+### What this changes in practice
+
+Stop treating the assistant as a place to add a chatbot. Treat it as a surface your application can render on, with the same interface discipline and the same production controls you would demand anywhere else. The conversation is the entry point; the workflow still has to be engineered.

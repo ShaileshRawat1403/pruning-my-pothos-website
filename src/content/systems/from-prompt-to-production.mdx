@@ -1,5 +1,7 @@
 ---
 title: "From Prompt to Production: A Human Checklist"
+publishDate: "2026-01-13"
+updatedAt: "2026-04-15"
 description: "A rigorous 7-step framework to move from it works on my machine to a resilient, governed AI workflow."
 category: "How-things-fit-together"
 heroImage: '/covers/systems/from-prompt-to-production.svg'
@@ -184,30 +186,7 @@ Once deployed, the system will degrade. Not because the code rots, but because t
 Probabilistic systems **will** fail. You need a plan for when (not if) that happens.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 160" role="img" aria-labelledby="fallback-title fallback-desc" style="width: 100%; height: auto; display: block;">
-    <title id="fallback-title">Human Fallback Flow</title>
-    <desc id="fallback-desc">Flowchart showing AI Confidence check. High confidence goes to User. Low confidence routes to Human Review.</desc>
-    <rect x="50" y="60" width="120" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="110" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">AI Output</text>
-
-    <path d="M 170 80 H 220" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
-
-    <polygon points="220,80 270,40 320,80 270,120" fill="var(--color-blockquote-bg)" stroke="currentColor" stroke-width="2" />
-    <text x="270" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="currentColor">Confidence?</text>
-
-    {/* High Path */}
-    <path d="M 320 80 H 400" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead)" />
-    <text x="360" y="70" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--color-text-muted)">High</text>
-    <rect x="400" y="60" width="120" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="460" y="85" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">User</text>
-
-    {/* Low Path */}
-    <path d="M 270 120 V 140 H 400" stroke="var(--color-accent)" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
-    <text x="300" y="155" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--color-accent)">Low</text>
-    <rect x="400" y="120" width="120" height="40" rx="4" fill="none" stroke="var(--color-accent)" stroke-width="2" />
-    <text x="460" y="145" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--color-accent)">Human Review</text>
-
-  </svg>
+  <iframe src="/scenes/human-fallback-flow.html" title="Human Fallback Flow" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The "Human in the Loop" is not a bug; it's a feature of high-reliability systems.</figcaption>
 </figure>
 

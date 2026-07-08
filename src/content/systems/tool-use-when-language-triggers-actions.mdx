@@ -1,5 +1,7 @@
 ---
 title: "Tool Use: When Language Triggers Actions"
+publishDate: "2026-01-14"
+updatedAt: "2026-04-15"
 description: "Why execution changes accountability and requires guardrails."
 category: "How-things-fit-together"
 heroImage: '/covers/systems/tool-use-when-language-triggers-actions.svg'
@@ -75,28 +77,7 @@ By itself, an LLM can only process text. It cannot access real-time information,
 The process begins by providing the LLM with a list of available "tools." Each tool is a function in your application's code, described in natural language (e.g., `get_current_weather(location: string)`). When a user issues a prompt, the model can decide that it needs to use one of these tools. Instead of generating a text response, it generates a structured JSON object specifying the tool to call and the arguments to use.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 320" role="img" aria-labelledby="tool-use-loop-title tool-use-loop-desc">
-    <title id="tool-use-loop-title">Tool Use Loop</title>
-    <desc id="tool-use-loop-desc">A diagram showing the flow where a user prompt leads an LLM to request a tool call, which the application executes, returning the result to the LLM for a final answer.</desc>
-    <rect x="40" y="40" width="150" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="60" y="78" font-size="13" font-family="var(--font-mono)">User Prompt</text>
-    <path d="M 190 70 H 340" stroke="currentColor" stroke-width="2" />
-    <path d="M 330 70 L 340 65 L 340 75 Z" fill="currentColor" />
-    <rect x="350" y="40" width="200" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="370" y="78" font-size="13" font-family="var(--font-mono)">LLM: "Call Tool X"</text>
-    <path d="M 450 100 V 150" stroke="currentColor" stroke-width="2" />
-    <path d="M 450 140 L 445 150 L 455 150 Z" fill="currentColor" />
-    <rect x="350" y="160" width="200" height="60" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="2" />
-    <text x="370" y="198" font-size="13" font-family="var(--font-mono)">App: Execute Tool X</text>
-    <path d="M 450 220 V 270" stroke="var(--color-accent)" stroke-width="2" />
-    <path d="M 450 260 L 445 270 L 455 270 Z" fill="var(--color-accent)" />
-    <rect x="350" y="280" width="200" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="370" y="318" font-size="13" font-family="var(--font-mono)">LLM: Final Answer</text>
-    <path d="M 550 190 H 700" stroke="currentColor" stroke-width="2" />
-    <text x="560" y="210" font-size="12" font-family="var(--font-mono)">[Result of Tool X]</text>
-    <path d="M 700 190 V 70" stroke="currentColor" stroke-width="2" />
-    <path d="M 690 70 L 700 65 L 700 75 Z" fill="currentColor" />
-  </svg>
+  <iframe src="/scenes/tool-use-loop.html" title="Tool Use Loop" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The tool-use cycle: the LLM requests an action, the application executes it, and the result informs the final response.</figcaption>
 </figure>
 

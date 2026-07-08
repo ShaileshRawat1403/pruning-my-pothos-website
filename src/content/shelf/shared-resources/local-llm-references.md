@@ -8,6 +8,7 @@ tags:
   - documentation
   - tooling
 coverUrl: "/covers/shelf/shared-local-llm.svg"
+coverAlt: "Cover illustration for Local LLM references I keep open"
 ---
 
 - [Ollama documentation](https://ollama.com/docs) — Clear model lifecycle and CLI usage.

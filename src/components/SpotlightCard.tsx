@@ -10,13 +10,15 @@ interface SpotlightCardProps {
   children: React.ReactNode;
   /** accent color for the cursor glow + top rule */
   accent?: string;
+  /** true for links that leave the site (e.g. a PyPI project page) - opens in a new tab */
+  external?: boolean;
 }
 
 /**
  * A card that lifts on hover and renders a warm glow that follows the cursor.
  * Uses CSS custom props (--mx/--my) updated on pointer move - cheap, no re-render.
  */
-export default function SpotlightCard({ href, className = "", children, accent = "var(--accent-purple)" }: SpotlightCardProps) {
+export default function SpotlightCard({ href, className = "", children, accent = "var(--accent-purple)", external = false }: SpotlightCardProps) {
   const ref = useRef<HTMLAnchorElement>(null);
 
   const onMove = (e: React.MouseEvent) => {
@@ -35,6 +37,7 @@ export default function SpotlightCard({ href, className = "", children, accent =
         onMouseMove={onMove}
         className="spotlight-card group"
         style={{ ["--spot" as string]: accent }}
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         <span className="spotlight-glow" aria-hidden />
         <span className="spotlight-rule" aria-hidden />

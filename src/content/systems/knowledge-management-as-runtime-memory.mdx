@@ -1,5 +1,7 @@
 ---
 title: "Knowledge Management as Runtime Memory"
+publishDate: "2026-03-05"
+updatedAt: "2026-04-15"
 description: "Why modern AI teams should treat knowledge management as a live runtime memory system, not a static documentation archive."
 category: "How-things-fit-together"
 heroImage: '/covers/systems/knowledge-management-as-runtime-memory.svg'
@@ -11,7 +13,6 @@ tags:
   - evaluation
   - reliability
   - geo
-updatedAt: "2026-03-05"
 proofPoints:
   - "Knowledge-management topic now spans systems, sentences, self, and shelf/notes."
   - "Canonical glossary anchors are available for recurring term definitions."
@@ -107,30 +108,7 @@ A small, well-governed knowledge surface usually outperforms a massive, weakly-s
 This is also where SEO, AEO, and GEO converge. Stable structure improves indexing and ranking signals, increases answer extraction precision, and reduces citation ambiguity in generated responses.
 
 <figure class="diagram">
-  <svg viewBox="0 0 980 300" role="img" aria-labelledby="memory-surface-title memory-surface-desc">
-    <title id="memory-surface-title">Knowledge surface from source truth to runtime answer</title>
-    <desc id="memory-surface-desc">A layered view showing source artifacts, indexing layer, retrieval layer, and runtime decision layer.</desc>
-    <rect width="980" height="300" fill="var(--color-bg)" />
-
-    <rect x="52" y="98" width="190" height="80" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="278" y="98" width="190" height="80" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="504" y="98" width="190" height="80" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="730" y="88" width="198" height="100" rx="12" fill="none" stroke="var(--color-accent)" stroke-width="1.8" />
-
-    <text x="86" y="126" font-size="11" font-family="var(--font-mono)">Source truth</text>
-    <text x="86" y="143" font-size="10" font-family="var(--font-mono)">docs, notes, decisions</text>
-
-    <text x="311" y="126" font-size="11" font-family="var(--font-mono)">Index + metadata</text>
-    <text x="311" y="143" font-size="10" font-family="var(--font-mono)">entities, tags, freshness</text>
-
-    <text x="538" y="126" font-size="11" font-family="var(--font-mono)">Retrieval layer</text>
-    <text x="538" y="143" font-size="10" font-family="var(--font-mono)">ranking, filtering, scope</text>
-
-    <text x="760" y="126" font-size="11" font-family="var(--font-mono)" fill="var(--color-accent)">Runtime decision</text>
-    <text x="760" y="143" font-size="10" font-family="var(--font-mono)">answer + verification</text>
-
-    <path d="M242 138 H278 M468 138 H504 M694 138 H730" stroke="currentColor" stroke-width="1.7" />
-  </svg>
+  <iframe src="/scenes/knowledge-pipeline.html" title="Knowledge surface from source truth to runtime answer" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>Knowledge management is a pipeline: source truth, indexing, retrieval, and runtime verification.</figcaption>
 </figure>
 

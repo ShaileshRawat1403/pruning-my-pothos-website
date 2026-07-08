@@ -4,7 +4,7 @@ import { constructMetadata } from "../../../lib/seo/metadata";
 
 export const metadata = constructMetadata({
   title: "GitHub Actions Linter",
-  description: "Lint a GitHub Actions workflow for security: the pull_request_target plus PR-checkout RCE combo, unpinned actions, write-all permissions, and script injection from untrusted input. Runs in your browser.",
+  description: "Lint a GitHub Actions workflow: pull_request_target plus PR-checkout RCE, unpinned actions, write-all permissions, script injection. Runs in your browser.",
   path: "/tools/gha-lint",
 });
 

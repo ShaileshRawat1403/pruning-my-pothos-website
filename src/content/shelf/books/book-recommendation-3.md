@@ -7,6 +7,7 @@ tags:
   - ideas
   - culture
 coverUrl: "/covers/shelf/books-reading-stack.svg"
+coverAlt: "Cover illustration for Books I revisit for language and design"
 ---
 
 I rarely revisit a book for facts alone. I revisit it for the language it gives me.

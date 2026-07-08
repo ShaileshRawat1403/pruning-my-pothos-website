@@ -7,6 +7,7 @@ tags:
   - framework
   - ai
 coverUrl: "/covers/shelf/notes-i7.svg"
+coverAlt: "Cover illustration for Notes: I-7 Cognitive Loop (summary)"
 ---
 
 The I-7 loop is my attempt to make human-AI interaction governable. It keeps Norman’s logic but adds steps for intent, context, inspection, and intervention so the loop survives non-determinism.

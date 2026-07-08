@@ -1,5 +1,7 @@
 ---
 title: "Semantic Caching for Probabilistic Systems"
+publishDate: "2026-06-28"
+updatedAt: "2026-06-28"
 description: "How to reduce latency and cost in LLM applications by caching semantically equivalent queries using vector similarity."
 category: "Concepts"
 heroImage: '/covers/shelf/note-semantic-cache-policy-guide.svg'
@@ -10,7 +12,6 @@ tags:
   - performance
   - cost
   - optimization
-updatedAt: "2026-06-25"
 proofPoints:
   - Establishes the architecture of similarity-based caching.
   - Connects to the shelf policy guide and self debugging notes.
@@ -182,34 +183,7 @@ To govern a semantic cache safely, developers must build a multi-layered invalid
 Here is the operational lifecycle of a request passing through a governed semantic cache:
 
 <figure class="diagram">
-  <svg viewBox="0 0 980 260" role="img" aria-labelledby="cache-flow-title cache-flow-desc">
-    <title id="cache-flow-title">Governed Semantic Cache Workflow</title>
-    <desc id="cache-flow-desc">Sequence showing Query arriving, Vector Search, Similarity Gate check, Cache Hit, Cache Miss, LLM evaluation, and Cache Update.</desc>
-    <rect width="980" height="260" fill="var(--color-bg)" />
-    {/* Query Box */}
-    <rect x="40" y="100" width="120" height="60" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
-    <text x="100" y="135" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">1. Query</text>
-    {/* Arrow */}
-    <path d="M 160 130 H 220" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    {/* Vector Search */}
-    <rect x="220" y="100" width="160" height="60" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
-    <text x="300" y="135" text-anchor="middle" font-family="var(--font-mono)" font-size="14" fill="currentColor">2. Vector Search</text>
-    {/* Arrow */}
-    <path d="M 380 130 H 440" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    {/* Gate */}
-    <polygon points="520,70 600,130 520,190 440,130" fill="none" stroke="#ef7d32" stroke-width="2"/>
-    <text x="520" y="135" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="#ef7d32">3. Gate (&gt;0.92)</text>
-    {/* Hit Arrow */}
-    <path d="M 520 70 V 40 H 700" stroke="#ef7d32" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round"/>
-    {/* Hit Node */}
-    <rect x="700" y="20" width="180" height="40" rx="6" fill="#ef7d32" fill-opacity="0.1" stroke="#ef7d32" stroke-width="2"/>
-    <text x="790" y="45" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="#ef7d32">Cache Hit (Fast Path)</text>
-    {/* Miss Arrow */}
-    <path d="M 520 190 V 220 H 700" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    {/* LLM Node */}
-    <rect x="700" y="200" width="180" height="40" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
-    <text x="790" y="225" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="currentColor">4. LLM Generation &amp; Write</text>
-  </svg>
+  <iframe src="/scenes/semantic-cache-flow.html" title="Governed Semantic Cache Workflow" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The workflow separates the fast path (cache hit) from the slower, governed path (LLM generation and index update).</figcaption>
 </figure>
 

@@ -1,19 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
-  <title id="t">Engineering Agentic Systems cover</title>
-  <desc id="d">Editorial cover for Engineering Agentic Systems deck.</desc>
-  <rect width="1200" height="675" fill="#172554"/>
-  <rect x="108" y="122" width="984" height="430" rx="26" fill="#1e293b" stroke="#60a5fa" stroke-width="2"/>
-  <path d="M218 240 H968" stroke="#93c5fd" stroke-width="6" stroke-dasharray="16 14"/>
-  <circle cx="304" cy="240" r="26" fill="#38bdf8"/>
-  <circle cx="600" cy="240" r="26" fill="#22c55e"/>
-  <circle cx="896" cy="240" r="26" fill="#f59e0b"/>
-  <path d="M304 266 V430" stroke="#e2e8f0" stroke-width="6"/>
-  <path d="M600 266 V430" stroke="#e2e8f0" stroke-width="6"/>
-  <path d="M896 266 V430" stroke="#e2e8f0" stroke-width="6"/>
-  <rect x="240" y="430" width="128" height="62" rx="12" fill="#0ea5e9"/>
-  <rect x="536" y="430" width="128" height="62" rx="12" fill="#22c55e"/>
-  <rect x="832" y="430" width="128" height="62" rx="12" fill="#f59e0b"/>
-  <text x="96" y="82" fill="#dbeafe" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">Shared Resource</text>
-  <text x="96" y="596" fill="#eff6ff" font-family="Georgia, 'Times New Roman', serif" font-size="58">Engineering Agentic Systems</text>
-  <text x="96" y="638" fill="#bfdbfe" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28">Control points, guardrails, and observability</text>
+<title id="t">Engineering Agentic Systems deck</title>
+<desc id="d">Ink-illustration cover for Engineering Agentic Systems deck</desc>
+<rect width="1200" height="675" fill="#f4ecd8"/>
+<rect x="0.75" y="0.75" width="1198.5" height="673.5" fill="none" stroke="#e3d6b8" stroke-width="1.5"/>
+<path d="M 424.5 256.5 Q 413.3 283.4 403.5 313.2 Q 377.0 326.0 351.1 342.3 Q 320.6 336.6 292.8 331.3 Q 273.2 308.9 252.8 286.8 Q 252.0 255.8 252.3 226.0 Q 272.2 204.0 291.5 179.4 Q 320.4 175.9 350.7 173.1 Q 377.2 186.1 403.5 199.8 Q 414.2 227.0 424.5 256.5 Z" stroke="#2a2012" stroke-width="4.80" fill="none"/>
+<path d="M 947.9 256.5 Q 942.1 287.8 934.1 315.3 Q 904.4 325.9 878.8 340.7 Q 847.3 335.0 820.4 332.0 Q 800.8 311.2 780.8 286.8 Q 778.1 255.7 778.2 225.3 Q 799.3 203.0 818.5 177.8 Q 850.9 174.1 879.0 171.2 Q 905.5 184.9 932.1 199.3 Q 938.0 230.0 947.9 256.5 Z" stroke="#8c2f23" stroke-width="4.80" fill="none"/>
+<path d="M 336.0 203.8 Q 600.0 175.5 864.0 203.8" stroke="#9a7322" stroke-width="6.00" fill="none" stroke-linecap="round"/>
+<text x="336.0" y="380.2" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="27.0" fill="#2a2012" font-weight="700" text-anchor="middle">AGENTS</text>
+<text x="864.0" y="380.2" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="27.0" fill="#8c2f23" font-weight="700" text-anchor="middle">ENGINEERING</text>
+<text x="600.0" y="157.5" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="25.5" fill="#9a7322" text-anchor="middle">COORDINATE</text>
+<text x="600.0" y="465.0" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="37.5" fill="#2a2012" font-weight="700" text-anchor="middle">ENGINEERING AGENTIC SYSTEMS</text>
+<text x="1186" y="665" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="24.0" fill="#2a2012" opacity="0.5" text-anchor="end">SHELF · SHARED RESOURCES</text>
 </svg>

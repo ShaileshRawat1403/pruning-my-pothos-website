@@ -1,13 +1,14 @@
 import Link from "next/link";
 import GlowCard from "../../components/GlowCard";
 import SceneFigure from "../../components/SceneFigure";
+import I7LoopInteractive from "../../components/I7LoopInteractive";
 import { constructMetadata } from "../../lib/seo/metadata";
 import { getWebPageSchema } from "../../lib/seo/jsonld";
 
 export const metadata = constructMetadata({
   title: "Schema",
   description:
-    "The schema underneath the work: Sans Serif Sentiments, the two layers, the I-7 loop, and the operating principles that keep AI-assisted building clear and accountable.",
+    "The schema underneath the work: Sans Serif Sentiments, the two layers, the I-7 loop, and the principles that keep AI-assisted building clear and accountable.",
   path: "/schema",
 });
 
@@ -31,8 +32,6 @@ const TRIAD = [
     accent: "var(--accent-purple)",
   },
 ];
-
-const I7 = ["Intent", "Inform", "Interpret", "Initiate", "Inspect", "Intervene", "Iterate"];
 
 const PRINCIPLES = [
   { q: "Clarity should survive complexity.", g: "The one thread through the writing, the systems, and the AI workflows.", a: "var(--accent-purple)" },
@@ -182,17 +181,7 @@ export default function SchemaPage() {
             My structured model for building with AI. Each pass should reduce uncertainty, not multiply confusion.
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          {I7.map((s, i) => (
-            <div key={s} className="flex items-center">
-              <div className="flex items-center gap-2 px-3 py-2 rounded-sm" style={{ background: "var(--card-bg)", border: "1px solid var(--card-border)" }}>
-                <span className="text-[10px] font-mono" style={{ color: "var(--accent-amber)" }}>{String(i + 1).padStart(2, "0")}</span>
-                <span className="text-sm font-heading font-semibold" style={{ color: "var(--text-primary)" }}>{s}</span>
-              </div>
-              {i < I7.length - 1 && <span className="mx-1 font-mono text-xs" style={{ color: "var(--text-muted)" }}>→</span>}
-            </div>
-          ))}
-        </div>
+        <I7LoopInteractive />
       </section>
 
       <div className="section-divider" />

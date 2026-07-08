@@ -8,6 +8,7 @@ tags:
   - azure
   - setup
 coverUrl: "/covers/shelf/local-azure-setup.svg"
+coverAlt: "Cover illustration for Azure setup: first cloud pass"
 ---
 
 > **Key takeaways**

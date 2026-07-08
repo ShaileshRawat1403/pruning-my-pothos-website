@@ -1,5 +1,7 @@
 ---
 title: "What a Skill Is in AI Systems"
+publishDate: "2026-03-08"
+updatedAt: "2026-06-28"
 description: "A practical definition of skills as reusable execution units that sit between prompts and workflows in modern AI systems."
 category: "Concepts"
 heroImage: '/covers/systems/what-a-skill-is-in-ai-systems.svg'
@@ -11,7 +13,6 @@ tags:
   - orchestration
   - prompting
   - ai-assisted-sdlc
-updatedAt: "2026-03-08"
 proofPoints:
   - "Skills are introduced here as reusable execution units, not as standalone prompt tricks."
   - "The page links skills to workflows, agents, and the Dual NLP framework already used across the site."
@@ -94,24 +95,7 @@ That is the point where a repeated instruction should become a named capability.
 5. **Agent system**: what runtime executes and governs the workflow?
 
 <figure class="diagram">
-  <svg viewBox="0 0 980 240" role="img" aria-labelledby="skill-sequence-title skill-sequence-desc">
-    <title id="skill-sequence-title">Intent to skill to workflow sequence</title>
-    <desc id="skill-sequence-desc">A five-step sequence from intent to prompt to skill to workflow to agent system.</desc>
-    <rect width="980" height="240" fill="var(--color-bg)" />
-    <rect x="40" y="92" width="130" height="56" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="214" y="92" width="130" height="56" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="388" y="92" width="130" height="56" rx="12" fill="none" stroke="var(--color-accent)" stroke-width="1.8" />
-    <rect x="562" y="92" width="148" height="56" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-    <rect x="754" y="92" width="170" height="56" rx="12" fill="none" stroke="currentColor" stroke-width="1.8" />
-
-    <text x="78" y="125" font-size="11" font-family="var(--font-mono)">Intent</text>
-    <text x="255" y="125" font-size="11" font-family="var(--font-mono)">Prompt</text>
-    <text x="430" y="125" font-size="11" font-family="var(--font-mono)" fill="var(--color-accent)">Skill</text>
-    <text x="602" y="125" font-size="11" font-family="var(--font-mono)">Workflow</text>
-    <text x="786" y="125" font-size="11" font-family="var(--font-mono)">Agent system</text>
-
-    <path d="M170 120 H214 M344 120 H388 M518 120 H562 M710 120 H754" stroke="currentColor" stroke-width="1.8" />
-  </svg>
+  <iframe src="/scenes/skill-sequence.html" title="Intent to skill to workflow sequence" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>A skill is the reusable unit between a one-time prompt and a larger orchestrated workflow.</figcaption>
 </figure>
 

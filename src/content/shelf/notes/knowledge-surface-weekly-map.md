@@ -8,6 +8,7 @@ tags:
   - workflow
   - retrieval
 coverUrl: "/covers/shelf/knowledge-surface-weekly-map.svg"
+coverAlt: "Cover illustration for Notes: Knowledge Surface Weekly Map"
 ---
 
 This weekly pass keeps my notes from becoming a static archive.

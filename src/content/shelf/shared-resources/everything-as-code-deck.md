@@ -8,6 +8,7 @@ tags:
   - governance
   - workflow
 coverUrl: "/covers/shelf/shared-everything-as-code.svg"
+coverAlt: "Cover illustration for Everything as Code deck"
 pdfUrl: "/resources/presentations/Everything_as_Code.pdf"
 resourceHighlights:
   - Why executable policy improves delivery safety

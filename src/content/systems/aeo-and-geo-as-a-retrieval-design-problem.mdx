@@ -1,5 +1,7 @@
 ---
 title: "AEO and GEO as a Retrieval Design Problem"
+publishDate: "2026-03-05"
+updatedAt: "2026-04-15"
 description: "Answer and generative visibility improve when pages are designed as retrievable evidence, not only readable prose."
 category: "Explanations"
 heroImage: '/covers/systems/aeo-and-geo-as-a-retrieval-design-problem.svg'
@@ -97,25 +99,7 @@ A retrievable passage usually has four properties:
 Narrative writing often distributes these properties across multiple paragraphs. Humans connect them. Retrieval systems may not. That is why stable terminology matters as much as prose quality; the [Entity Glossary for AI Discoverability](/systems/entity-glossary-for-ai-discoverability/) is the canonical layer that keeps recurring terms retrievable across this site.
 
 <figure class="diagram">
-  <svg viewBox="0 0 940 250" role="img" aria-labelledby="retrieval-loop-title retrieval-loop-desc">
-    <title id="retrieval-loop-title">Retrieval and citation loop</title>
-    <desc id="retrieval-loop-desc">Passages are retrieved, ranked, composed, and then either cited or discarded depending on evidence quality.</desc>
-    <rect width="940" height="250" fill="var(--color-bg)" />
-
-    <rect x="44" y="96" width="160" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.7" />
-    <rect x="248" y="96" width="160" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.7" />
-    <rect x="452" y="96" width="160" height="56" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="1.7" />
-    <rect x="656" y="66" width="220" height="116" rx="12" fill="none" stroke="currentColor" stroke-width="1.7" />
-
-    <text x="76" y="128" font-size="11" font-family="var(--font-mono)">Retrieve</text>
-    <text x="278" y="128" font-size="11" font-family="var(--font-mono)">Rank</text>
-    <text x="480" y="128" font-size="11" font-family="var(--font-mono)" fill="var(--color-accent)">Compose</text>
-    <text x="684" y="100" font-size="11" font-family="var(--font-mono)">Output branch</text>
-    <text x="684" y="126" font-size="10" font-family="var(--font-mono)">- cited answer</text>
-    <text x="684" y="144" font-size="10" font-family="var(--font-mono)">- uncited summary</text>
-
-    <path d="M204 124 H248 M408 124 H452 M612 124 H656" stroke="currentColor" stroke-width="1.8" />
-  </svg>
+  <iframe src="/scenes/retrieval-loop.html" title="Retrieval and citation loop" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>Visibility in answer systems depends on passing retrieval and ranking gates before composition.</figcaption>
 </figure>
 

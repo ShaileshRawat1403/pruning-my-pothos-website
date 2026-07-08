@@ -120,34 +120,36 @@ export default function HeroSection() {
               className="font-heading tracking-tight"
               style={{ fontSize: "clamp(1.1rem, 2.3vw, 1.9rem)", color: "var(--text-muted)", fontWeight: 400, fontStyle: "italic" }}
             >
-              Become an
+              For builders,
             </span>
             <span
               className="font-heading gradient-text"
-              style={{ fontSize: "clamp(3rem, 6.4vw, 5.6rem)", letterSpacing: "-0.04em", lineHeight: 0.92, fontWeight: 600 }}
+              style={{ fontSize: "clamp(2.6rem, 5.6vw, 4.8rem)", letterSpacing: "-0.04em", lineHeight: 0.94, fontWeight: 600, whiteSpace: "nowrap" }}
             >
-              AI-First
+              Debugging
             </span>
             <span
               className="font-heading"
-              style={{ fontSize: "clamp(3rem, 6.4vw, 5.6rem)", letterSpacing: "-0.04em", lineHeight: 0.92, fontWeight: 600, color: "var(--text-primary)" }}
+              style={{ fontSize: "clamp(2.6rem, 5.6vw, 4.8rem)", letterSpacing: "-0.04em", lineHeight: 0.94, fontWeight: 600, color: "var(--text-primary)", whiteSpace: "nowrap" }}
             >
-              Architect
+              the Vibe
             </span>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="flex items-start gap-3.5">
-            <div
+          <motion.div variants={fadeUp} className="flex items-center gap-4">
+            <motion.div
               className="self-stretch shrink-0"
-              style={{ width: "2px", background: "linear-gradient(to bottom, var(--accent-purple), var(--accent-cyan))", minHeight: "52px" }}
+              style={{ width: "2px", background: "linear-gradient(to bottom, var(--accent-purple), var(--accent-cyan))", transformOrigin: "top" }}
+              initial={{ scaleY: 0 }}
+              animate={{ scaleY: 1 }}
+              transition={{ duration: 0.8, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
             />
-            <div className="flex flex-col gap-2">
-              <p className="text-base font-heading italic" style={{ color: "var(--accent-cyan)" }}>
+            <div className="flex flex-col gap-2 py-0.5">
+              <p className="text-base font-heading italic leading-snug" style={{ color: "var(--accent-cyan)" }}>
                 &ldquo;Natural language is the new API.&rdquo;
               </p>
               <p className="text-[15px] leading-relaxed max-w-[440px]" style={{ color: "var(--text-secondary)" }}>
-                Deconstructing fuzzy model workflows into inspectable, governed
-                structures. Reasoning over hype, contracts over vibes.
+                Think in structure. Build in language.
               </p>
             </div>
           </motion.div>

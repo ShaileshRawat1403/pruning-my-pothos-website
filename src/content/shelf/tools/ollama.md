@@ -7,6 +7,7 @@ tags:
   - ollama
   - local-llm
 coverUrl: "/covers/shelf/tool-ollama.svg"
+coverAlt: "Cover illustration for Tools: Ollama"
 ---
 
 ## Benefits

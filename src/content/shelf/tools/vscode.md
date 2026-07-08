@@ -7,6 +7,7 @@ tags:
   - vscode
   - editor
 coverUrl: "/covers/shelf/tool-vscode.svg"
+coverAlt: "Cover illustration for Tools: VS Code"
 ---
 
 ## Benefits

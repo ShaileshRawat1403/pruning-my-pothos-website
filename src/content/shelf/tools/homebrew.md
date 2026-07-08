@@ -7,6 +7,7 @@ tags:
   - homebrew
   - macos
 coverUrl: "/covers/shelf/tool-homebrew.svg"
+coverAlt: "Cover illustration for Tools: Homebrew"
 ---
 
 ## Benefits

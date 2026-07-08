@@ -1,5 +1,7 @@
 ---
 title: "Prompting Is Not the Skill You Think It Is"
+publishDate: "2026-01-14"
+updatedAt: "2026-06-28"
 description: "Why constraints, examples, and intent matter more than clever prompts."
 category: "Explanations"
 heroImage: '/covers/systems/prompting-is-not-the-skill-you-think-it-is.svg'
@@ -75,20 +77,7 @@ A prompt is the initial set of tokens you provide to a Large Language Model. The
 A vague prompt gives the model a wide range of plausible completions, leading to generic or irrelevant outputs. For example, asking a model to "write about marketing" could result in anything from a historical essay to a list of buzzwords. The model does not know your intent.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 240" role="img" aria-labelledby="prompt-evolution-title prompt-evolution-desc">
-    <title id="prompt-evolution-title">Prompt Evolution</title>
-    <desc id="prompt-evolution-desc">A diagram showing a vague prompt on the left leading to a wide, uncertain output cone, and a specific, constrained prompt on the right leading to a narrow, focused output.</desc>
-    <text x="40" y="60" font-size="13" font-family="var(--font-mono)">Vague Prompt:</text>
-    <rect x="40" y="70" width="200" height="40" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="60" y="95" font-size="13" font-family="var(--font-mono)">"Write about marketing"</text>
-    <path d="M 240 95 C 350 55, 350 135, 450 95" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="5 5" />
-    <text x="500" y="60" font-size="13" font-family="var(--font-mono)">Specific Prompt:</text>
-    <rect x="500" y="70" width="360" height="100" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="2" />
-    <text x="520" y="95" font-size="12" font-family="var(--font-mono)">"Write 3 marketing slogans for a new coffee brand.</text>
-    <text x="520" y="115" font-size="12" font-family="var(--font-mono)">Tone: playful. Audience: young professionals.</text>
-    <text x="520" y="135" font-size="12" font-family="var(--font-mono)">Constraint: Each slogan under 5 words."</text>
-    <path d="M 860 120 H 900" stroke="var(--color-accent)" stroke-width="2" fill="none" />
-  </svg>
+  <iframe src="/scenes/prompt-evolution.html" title="Prompt Evolution" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The more specific the prompt, the more constrained and predictable the output.</figcaption>
 </figure>
 

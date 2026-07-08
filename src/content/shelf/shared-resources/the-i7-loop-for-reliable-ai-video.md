@@ -8,6 +8,7 @@ tags:
   - i-7
   - reliability
 coverUrl: "/covers/shelf/shared-i7-loop-video.svg"
+coverAlt: "Cover illustration for The I-7 Loop for Reliable AI (video)"
 videoUrl: "/resources/videos/The_I-7_Loop_for_Reliable_AI.mp4"
 ---
 

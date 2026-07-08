@@ -1,5 +1,7 @@
 ---
 title: "What Large Language Models Are Optimized For"
+publishDate: "2026-01-14"
+updatedAt: "2026-04-15"
 description: "Why next-token prediction shapes both capability and failure modes."
 category: "Concepts"
 heroImage: '/covers/systems/what-llms-are-optimized-for.svg'
@@ -75,20 +77,7 @@ At its heart, an LLM is a sequence prediction engine. During training, it is fed
 This process is repeated trillions of time. The model isn't learning concepts, facts, or reasoning in the human sense. It is learning statistical patterns in language. A statement like "The sky is blue" is not stored as a fact, but as a high-probability sequence of tokens.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 240" role="img" aria-labelledby="next-token-title next-token-desc">
-    <title id="next-token-title">Next-Token Prediction Loop</title>
-    <desc id="next-token-desc">A diagram showing a sequence of tokens being fed into a model, which then predicts the most probable next token.</desc>
-    <rect x="40" y="90" width="200" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="60" y="128" font-size="13" font-family="var(--font-mono)">Input: "The cat sat on the"</text>
-    <rect x="350" y="50" width="200" height="140" rx="12" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="400" y="128" font-size="13" font-family="var(--font-mono)">LLM Predicts</text>
-    <rect x="660" y="90" width="200" height="60" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="2" />
-    <text x="680" y="128" font-size="13" font-family="var(--font-mono)">Output: "mat" (p=0.8)</text>
-    <path d="M 240 120 H 340" stroke="currentColor" stroke-width="2" />
-    <path d="M 330 120 L 340 115 L 340 125 Z" fill="currentColor" />
-    <path d="M 550 120 H 650" stroke="currentColor" stroke-width="2" />
-    <path d="M 640 120 L 650 115 L 650 125 Z" fill="currentColor" />
-  </svg>
+  <iframe src="/scenes/next-token-prediction.html" title="Next-Token Prediction Loop" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The model's core function is to find the most statistically likely token to complete a sequence.</figcaption>
 </figure>
 

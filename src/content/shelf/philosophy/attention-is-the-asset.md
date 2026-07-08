@@ -6,6 +6,7 @@ tags:
   - philosophy
   - attention
 coverUrl: "/covers/shelf/philosophy-attention.svg"
+coverAlt: "Cover illustration for Attention is the real asset"
 ---
 
 Every system I build competes for attention, including my own. If the system wastes attention, it wastes time. If it protects attention, it compounds time.

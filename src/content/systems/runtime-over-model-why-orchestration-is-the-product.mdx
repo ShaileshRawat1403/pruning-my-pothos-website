@@ -1,5 +1,7 @@
 ---
 title: "Runtime Over Model: Why Orchestration Is the Product"
+publishDate: "2026-03-05"
+updatedAt: "2026-06-28"
 description: "Reliable agents come from controlled execution loops, not model capability alone."
 category: "Explanations"
 heroImage: '/covers/systems/runtime-over-model-why-orchestration-is-the-product.svg'
@@ -77,34 +79,7 @@ In practice, <span class="highlight">clarity at boundaries reduces downstream er
 A chat loop optimizes for response quality. A control loop optimizes for execution integrity.
 
 <figure class="diagram">
-  <svg viewBox="0 0 980 260" role="img" aria-labelledby="runtime-shift-title runtime-shift-desc">
-    <title id="runtime-shift-title">Chat loop versus control loop</title>
-    <desc id="runtime-shift-desc">Comparison between direct model-to-tool flow and runtime-gated execution with verification and trace.</desc>
-    <rect width="980" height="260" fill="var(--color-bg)" />
-
-    <rect x="40" y="40" width="400" height="180" rx="14" fill="none" stroke="currentColor" stroke-width="1.5" />
-    <text x="65" y="70" font-size="12" font-family="var(--font-mono)" fill="currentColor">Chat loop</text>
-    <rect x="70" y="100" width="100" height="40" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" />
-    <rect x="205" y="100" width="100" height="40" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" />
-    <rect x="340" y="100" width="70" height="40" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" />
-    <text x="100" y="124" font-size="11" font-family="var(--font-mono)">User</text>
-    <text x="237" y="124" font-size="11" font-family="var(--font-mono)">Model</text>
-    <text x="360" y="124" font-size="11" font-family="var(--font-mono)">Tool</text>
-    <path d="M170 120 H205" stroke="currentColor" stroke-width="1.5" />
-    <path d="M305 120 H340" stroke="currentColor" stroke-width="1.5" />
-
-    <rect x="520" y="40" width="420" height="180" rx="14" fill="none" stroke="var(--color-accent)" stroke-width="1.5" />
-    <text x="545" y="70" font-size="12" font-family="var(--font-mono)" fill="var(--color-accent)">Control loop</text>
-    <rect x="550" y="100" width="90" height="40" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" />
-    <rect x="665" y="90" width="120" height="60" rx="8" fill="none" stroke="var(--color-accent)" stroke-width="1.2" />
-    <rect x="810" y="100" width="90" height="40" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" />
-    <text x="575" y="124" font-size="11" font-family="var(--font-mono)">Model</text>
-    <text x="696" y="114" font-size="10" font-family="var(--font-mono)">Runtime gate</text>
-    <text x="694" y="130" font-size="10" font-family="var(--font-mono)">policy/verify/trace</text>
-    <text x="836" y="124" font-size="11" font-family="var(--font-mono)">Tool</text>
-    <path d="M640 120 H665" stroke="currentColor" stroke-width="1.5" />
-    <path d="M785 120 H810" stroke="currentColor" stroke-width="1.5" />
-  </svg>
+  <iframe src="/scenes/chat-vs-control-loop.html" title="Chat loop versus control loop" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The runtime gate is where reliability is created.</figcaption>
 </figure>
 

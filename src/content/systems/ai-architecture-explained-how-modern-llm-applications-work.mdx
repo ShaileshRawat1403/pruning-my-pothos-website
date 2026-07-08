@@ -1,5 +1,7 @@
 ---
 title: "AI Architecture Explained: How Modern LLM Applications Work"
+publishDate: "2026-03-14"
+updatedAt: "2026-04-15"
 description: "A practical map of the layers that make modern LLM applications reliable: model access, retrieval, orchestration, interfaces, and governance."
 category: "How-things-fit-together"
 heroImage: '/covers/systems/ai-architecture-explained-how-modern-llm-applications-work.svg'
@@ -11,7 +13,6 @@ tags:
   - retrieval
   - governance
   - ai
-updatedAt: "2026-03-14"
 proofPoints:
   - "Architecture guidance is connected to existing runtime, observability, retrieval, and governed execution systems docs."
   - "Soothsayer is used as a working in-repo experiment for orchestration and controlled execution."
@@ -98,21 +99,7 @@ This is why many AI implementations look impressive in a meeting and fragile a m
 ### The five working layers
 
 <figure class="diagram">
-  <svg viewBox="0 0 980 310" role="img" aria-labelledby="architecture-stack-title architecture-stack-desc">
-    <title id="architecture-stack-title">Five-layer architecture for a modern LLM application</title>
-    <desc id="architecture-stack-desc">A stack showing model access, retrieval, orchestration, interface, and governance as connected layers around an LLM application.</desc>
-    <rect width="980" height="310" fill="var(--color-bg)" />
-    <rect x="180" y="32" width="620" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.7" />
-    <rect x="180" y="84" width="620" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.7" />
-    <rect x="180" y="136" width="620" height="42" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="1.9" />
-    <rect x="180" y="188" width="620" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.7" />
-    <rect x="180" y="240" width="620" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="1.7" />
-    <text x="210" y="58" font-family="var(--font-mono)" font-size="12">Layer 1: Model access and provider routing</text>
-    <text x="210" y="110" font-family="var(--font-mono)" font-size="12">Layer 2: Knowledge, retrieval, and memory</text>
-    <text x="210" y="162" font-family="var(--font-mono)" font-size="12" fill="var(--color-accent)">Layer 3: Orchestration, policy, and verification</text>
-    <text x="210" y="214" font-family="var(--font-mono)" font-size="12">Layer 4: Interface, workflow, and user state</text>
-    <text x="210" y="266" font-family="var(--font-mono)" font-size="12">Layer 5: Governance, observability, and operations</text>
-  </svg>
+  <iframe src="/scenes/architecture-stack.html" title="Five-layer architecture for a modern LLM application" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The orchestration layer is the bridge between intelligence, tools, user state, and operational control.</figcaption>
 </figure>
 

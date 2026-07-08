@@ -1,5 +1,7 @@
 ---
 title: "Retrieval-Augmented Generation in Plain Terms"
+publishDate: "2026-01-14"
+updatedAt: "2026-04-15"
 description: "How retrieval grounds outputs and where it can still fail."
 category: "How-things-fit-together"
 heroImage: '/covers/systems/retrieval-augmented-generation-in-plain-terms.svg'
@@ -79,28 +81,7 @@ RAG addresses this by combining two systems:
 The retriever's job is to find the right puzzle pieces; the generator's job is to assemble them.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 300" role="img" aria-labelledby="rag-flow-title rag-flow-desc">
-    <title id="rag-flow-title">RAG Pipeline</title>
-    <desc id="rag-flow-desc">A diagram showing a user query first going to a retriever, which pulls from a knowledge base, and then the augmented prompt is sent to an LLM to generate the final answer.</desc>
-    <text x="40" y="80" font-size="13" font-family="var(--font-mono)">1. Query</text>
-    <rect x="40" y="90" width="150" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="60" y="128" font-size="13" font-family="var(--font-mono)">User Question</text>
-    <path d="M 190 120 H 290" stroke="currentColor" stroke-width="2" />
-    <path d="M 280 120 L 290 115 L 290 125 Z" fill="currentColor" />
-    <text x="300" y="80" font-size="13" font-family="var(--font-mono)">2. Retrieve</text>
-    <rect x="300" y="90" width="150" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="320" y="128" font-size="13" font-family="var(--font-mono)">Search Docs</text>
-    <path d="M 375 150 V 200" stroke="currentColor" stroke-width="2" />
-    <path d="M 375 190 L 370 200 L 380 200 Z" fill="currentColor" />
-    <rect x="300" y="210" width="150" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 5" />
-    <text x="310" y="248" font-size="13" font-family="var(--font-mono)">Knowledge Base</text>
-    <path d="M 450 120 H 550" stroke="currentColor" stroke-width="2" />
-    <path d="M 540 120 L 550 115 L 550 125 Z" fill="currentColor" />
-    <text x="560" y="80" font-size="13" font-family="var(--font-mono)">3. Augment & 4. Generate</text>
-    <rect x="560" y="90" width="280" height="80" rx="10" fill="none" stroke="var(--color-accent)" stroke-width="2" />
-    <text x="580" y="120" font-size="13" font-family="var(--font-mono)">Prompt + Retrieved Docs</text>
-    <text x="650" y="150" font-size="13" font-family="var(--font-mono)">=> LLM</text>
-  </svg>
+  <iframe src="/scenes/rag-flow.html" title="RAG Pipeline" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The RAG process: retrieve relevant context, augment the prompt, and then generate the answer.</figcaption>
 </figure>
 

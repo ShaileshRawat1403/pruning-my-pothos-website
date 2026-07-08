@@ -9,6 +9,7 @@ tags:
   - reliability
   - governance
 coverUrl: "/covers/shelf/shared-engineering-agentic-systems.svg"
+coverAlt: "Cover illustration for Engineering Agentic Systems deck"
 pdfUrl: "/resources/presentations/Engineering_Agentic_Systems.pdf"
 resourceHighlights:
   - Execution loops that separate planning, action, and verification

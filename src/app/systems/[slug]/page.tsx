@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
 import { constructMetadata } from "../../../lib/seo/metadata";
-import { getWebPageSchema, getFaqSchema } from "../../../lib/seo/jsonld";
+import { getArticleSchema, getFaqSchema } from "../../../lib/seo/jsonld";
 import { renderMarkdown } from "../../../lib/markdown";
 
 interface PageProps {
@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return constructMetadata({
     title: system.title,
     description: system.description,
+    image: system.heroImage,
     path: `/systems/${slug}`,
     ogType: "article"
   });
@@ -40,10 +41,13 @@ export default async function SystemsDetailPage({ params }: PageProps) {
   const faqs = system.faq ?? [];
   const proofPoints = system.proofPoints ?? [];
 
-  const webpageSchema = getWebPageSchema({
+  const articleSchema = getArticleSchema({
     title: `${system.title} | Sans Serif Systems`,
     description: system.description,
-    path: `/systems/${slug}`
+    path: `/systems/${slug}`,
+    datePublished: system.publishDate,
+    dateModified: system.updatedAt ?? system.publishDate,
+    image: system.heroImage,
   });
   const faqSchema = faqs.length > 0 ? getFaqSchema({ faq: faqs }) : null;
 
@@ -51,7 +55,7 @@ export default async function SystemsDetailPage({ params }: PageProps) {
     <article className="max-w-[840px] mx-auto py-8 flex flex-col gap-8">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webpageSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       {faqSchema && (
         <script
@@ -73,6 +77,19 @@ export default async function SystemsDetailPage({ params }: PageProps) {
             <>
               <span>&bull;</span>
               <span>{system.difficulty}</span>
+            </>
+          )}
+          {system.updatedAt && (
+            <>
+              <span>&bull;</span>
+              <span>
+                Updated{" "}
+                {new Date(system.updatedAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
             </>
           )}
         </div>

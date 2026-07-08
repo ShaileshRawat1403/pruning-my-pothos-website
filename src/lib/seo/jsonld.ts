@@ -15,7 +15,7 @@ export function getOrgSchema() {
     "@type": "Organization",
     "name": SITE_CONFIG.name,
     "url": SITE_CONFIG.url,
-    "logo": `${SITE_CONFIG.url}/my-self-portrait.png`,
+    "logo": `${SITE_CONFIG.url}/favicon.png`,
   };
 }
 
@@ -23,9 +23,40 @@ interface WebPageInput {
   title: string;
   description: string;
   path: string;
+  image?: string;
 }
 
-export function getWebPageSchema({ title, description, path }: WebPageInput) {
+export function getWebPageSchema({ title, description, path, image }: WebPageInput) {
+  let cleanPath = path;
+  if (cleanPath && !cleanPath.endsWith("/")) {
+    cleanPath += "/";
+  }
+  if (cleanPath && !cleanPath.startsWith("/")) {
+    cleanPath = "/" + cleanPath;
+  }
+  const canonicalUrl = cleanPath === "/" ? SITE_CONFIG.url : `${SITE_CONFIG.url}${cleanPath}`;
+  const imageUrl = image ? (image.startsWith("http") ? image : `${SITE_CONFIG.url}${image}`) : undefined;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": title,
+    "description": description,
+    "url": canonicalUrl,
+    ...(imageUrl ? { "image": imageUrl } : {}),
+  };
+}
+
+interface ArticleInput {
+  title: string;
+  description: string;
+  path: string;
+  datePublished?: string;
+  dateModified?: string;
+  image?: string;
+}
+
+export function getArticleSchema({ title, description, path, datePublished, dateModified, image }: ArticleInput) {
   let cleanPath = path;
   if (cleanPath && !cleanPath.endsWith("/")) {
     cleanPath += "/";
@@ -37,10 +68,29 @@ export function getWebPageSchema({ title, description, path }: WebPageInput) {
 
   return {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": title,
+    "@type": "Article",
+    "headline": title,
     "description": description,
     "url": canonicalUrl,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl,
+    },
+    ...(datePublished ? { "datePublished": datePublished } : {}),
+    ...(dateModified ? { "dateModified": dateModified } : {}),
+    "author": {
+      "@type": "Person",
+      "name": SITE_CONFIG.author,
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": SITE_CONFIG.name,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${SITE_CONFIG.url}/favicon.png`,
+      },
+    },
+    ...(image ? { "image": image.startsWith("http") ? image : `${SITE_CONFIG.url}${image}` } : {}),
   };
 }
 

@@ -1,8 +1,8 @@
 export const SITE_CONFIG = {
   url: "https://pruningmypothos.com",
   name: "Sans Serif Systems",
-  defaultTitle: "Sans Serif Systems | Open Tools for Natural Language Programming",
-  defaultDescription: "Sans Serif Systems offers browser-native utilities, visual canvases, and evaluation harness templates to design, govern, and validate AI-assisted developer workflows.",
+  defaultTitle: "Sans Serif Systems | AI Systems, Learned in Public",
+  defaultDescription: "A living notebook on AI orchestration and governance: long-form writing and browser-native tools, shared as they are built, not after.",
   defaultImage: "/my-self-portrait.png",
   author: "Shailesh Rawat",
   twitterHandle: "@ShaileshRawat",

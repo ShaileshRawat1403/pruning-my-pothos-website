@@ -7,6 +7,7 @@ tags:
   - astro
   - web
 coverUrl: "/covers/shelf/tool-astro.svg"
+coverAlt: "Cover illustration for Tools: Astro"
 ---
 
 ## Benefits

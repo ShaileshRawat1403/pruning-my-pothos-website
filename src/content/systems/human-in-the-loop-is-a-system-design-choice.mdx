@@ -1,5 +1,7 @@
 ---
 title: "Human-in-the-Loop Is a System Design Choice"
+publishDate: "2026-01-14"
+updatedAt: "2026-06-28"
 description: "Why oversight is a design decision, not a safety blanket."
 category: "How-things-fit-together"
 heroImage: '/covers/systems/human-in-the-loop-is-a-system-design-choice.svg'
@@ -75,19 +77,7 @@ The role of the human changes as the level of automation increases. There are th
 -   **Human-out-of-the-loop (HOOTL):** The machine operates fully autonomously based on rules and models defined by humans upfront. This is used for high-speed, low-risk decisions like ad bidding or content filtering.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 240" role="img" aria-labelledby="hitl-spectrum-title hitl-spectrum-desc">
-    <title id="hitl-spectrum-title">Spectrum of Human Oversight</title>
-    <desc id="hitl-spectrum-desc">A slider diagram showing the progression from full manual control to full automation, with points for Human-in-the-loop and Human-on-the-loop.</desc>
-    <line x1="100" y1="120" x2="800" y2="120" stroke="currentColor" stroke-width="4" />
-    <circle cx="100" cy="120" r="10" fill="var(--color-accent)" />
-    <text x="80" y="160" font-size="13" font-family="var(--font-mono)">Manual</text>
-    <circle cx="350" cy="120" r="10" fill="var(--color-accent)" />
-    <text x="330" y="160" font-size="13" font-family="var(--font-mono)">HITL</text>
-    <circle cx="600" cy="120" r="10" fill="var(--color-accent)" />
-    <text x="580" y="160" font-size="13" font-family="var(--font-mono)">HOTL</text>
-    <circle cx="800" cy="120" r="10" fill="var(--color-accent)" />
-    <text x="760" y="160" font-size="13" font-family="var(--font-mono)">Autonomous</text>
-  </svg>
+  <iframe src="/scenes/hitl-spectrum.html" title="Spectrum of Human Oversight" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>Human oversight is a spectrum, not a binary choice.</figcaption>
 </figure>
 
@@ -113,7 +103,7 @@ To build an effective HITL or HOTL system:
 
 You should also define explicit "escalate-to-human" triggers before launch: confidence thresholds, policy-sensitive intents, or anomaly detection events. This avoids ad hoc handoffs and keeps review load predictable during traffic spikes.
 
-For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). For a detailed walk-through of policy-governed runtime kernels and human approval gates, check out the [Soothsayer MCP kernel local experiment](/shelf/local-experiments/soothsayer-mcp-kernel/).
+For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). For a detailed walk-through of policy-governed runtime kernels and human approval gates, check out the [Soothsayer MCP kernel local experiment](/shelf/local-experiments/soothsayer-mcp-kernel/). Framed as a stage inside a full interaction loop rather than a standalone feature, this maps to Intervene in the [I-7 Cognitive Loop](/systems/i-7-cognitive-loop/): the explicit authority to pause, redirect, or reject.
 
 ### What this changes in practice
 

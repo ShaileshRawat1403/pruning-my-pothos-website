@@ -9,6 +9,7 @@ tags:
   - grounding
   - reliability
 coverUrl: "/covers/shelf/shared-eval.svg"
+coverAlt: "Cover illustration for Retrieval and grounding evaluation kit"
 resourceHighlights:
   - "Evaluation patterns that separate retrieval quality from answer fluency."
   - "Practical references for grounding checks, RAG assessment, and evidence review."

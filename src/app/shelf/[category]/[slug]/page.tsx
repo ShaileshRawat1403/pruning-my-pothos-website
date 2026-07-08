@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { constructMetadata } from "../../../../lib/seo/metadata";
 import { getWebPageSchema } from "../../../../lib/seo/jsonld";
 import { renderMarkdown } from "../../../../lib/markdown";
+import ResourceLinks from "../../../../components/ResourceLinks";
 
 interface PageProps {
   params: Promise<{ category: string; slug: string }>;
@@ -32,6 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return constructMetadata({
     title: item.title,
     description: item.description,
+    image: item.coverUrl,
     path: `/shelf/${category}/${slug}`,
     ogType: "article"
   });
@@ -53,7 +55,8 @@ export default async function ShelfDetailPage({ params }: PageProps) {
   const webpageSchema = getWebPageSchema({
     title: `${item.title} | Sans Serif Systems`,
     description: item.description,
-    path: `/shelf/${category}/${slug}`
+    path: `/shelf/${category}/${slug}`,
+    image: item.coverUrl,
   });
 
   return (
@@ -77,15 +80,26 @@ export default async function ShelfDetailPage({ params }: PageProps) {
         {item.description}
       </p>
 
-      {/* Cover Image */}
+      {/* Cover Image — local covers are landscape-authored (decks, tools, notes),
+          external Apple Music art is square. Frame each so nothing gets cropped. */}
       {item.coverUrl && (
-        <figure className="w-full max-w-[280px] overflow-hidden rounded-lg border border-[color:var(--card-border)] aspect-[3/4] my-4 shadow-none self-center sm:self-start">
-          <img
-            src={item.coverUrl}
-            alt={item.title}
-            className="w-full h-full object-cover"
-          />
-        </figure>
+        item.coverUrl.startsWith("/covers/") ? (
+          <figure className="w-full max-w-[420px] overflow-hidden rounded-lg border border-[color:var(--card-border)] aspect-video my-4 shadow-none self-center sm:self-start bg-[color:var(--card-bg)]">
+            <img
+              src={item.coverUrl}
+              alt={item.coverAlt ?? item.description ?? item.title}
+              className="w-full h-full object-contain"
+            />
+          </figure>
+        ) : (
+          <figure className="w-full max-w-[280px] overflow-hidden rounded-lg border border-[color:var(--card-border)] aspect-[3/4] my-4 shadow-none self-center sm:self-start">
+            <img
+              src={item.coverUrl}
+              alt={item.coverAlt ?? item.description ?? item.title}
+              className="w-full h-full object-cover"
+            />
+          </figure>
+        )
       )}
 
       {/* Special Category Info (e.g. Music Album/Artist) */}
@@ -116,25 +130,12 @@ export default async function ShelfDetailPage({ params }: PageProps) {
       />
 
       {/* Dynamic PDFs or external embeds */}
-      {(item.pdfUrl || item.videoUrl || item.appleMusicUrl) && (
-        <div className="border-t border-[color:var(--card-border)] pt-6 mt-6 flex flex-wrap gap-4 text-xs font-mono">
-          {item.pdfUrl && (
-            <a href={item.pdfUrl} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-full bg-accent-cyan/10 border border-accent-cyan/25 text-[color:var(--text-primary)] font-bold hover:bg-accent-cyan/25 transition-all">
-              Download PDF Resource &rarr;
-            </a>
-          )}
-          {item.videoUrl && (
-            <a href={item.videoUrl} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-full bg-accent-purple/10 border border-accent-purple/25 text-[color:var(--text-primary)] font-bold hover:bg-accent-purple/25 transition-all">
-              Watch Video Presentation &rarr;
-            </a>
-          )}
-          {item.appleMusicUrl && (
-            <a href={item.appleMusicUrl} target="_blank" rel="noopener noreferrer" className="px-3.5 py-1.5 rounded-full bg-accent-pink/10 border border-accent-pink/25 text-[color:var(--text-primary)] font-bold hover:bg-accent-pink/25 transition-all">
-              Listen on Apple Music &rarr;
-            </a>
-          )}
-        </div>
-      )}
+      <ResourceLinks
+        title={item.title}
+        pdfUrl={item.pdfUrl}
+        videoUrl={item.videoUrl}
+        appleMusicUrl={item.appleMusicUrl}
+      />
 
       {/* Tag lists */}
       {item.tags && item.tags.length > 0 && (

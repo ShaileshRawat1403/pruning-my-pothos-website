@@ -8,6 +8,7 @@ tags:
   - cloud
   - ai
 coverUrl: "/covers/shelf/shared-ai-strategy-2026.svg"
+coverAlt: "Cover illustration for AI Strategy 2026 deck"
 pdfUrl: "/resources/presentations/AI_Strategy_2026.pdf"
 resourceHighlights:
   - Choosing an AI operating model before scaling delivery

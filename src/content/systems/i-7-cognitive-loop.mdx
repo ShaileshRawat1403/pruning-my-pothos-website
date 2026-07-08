@@ -1,5 +1,7 @@
 ---
 title: 'I-7 Cognitive Loop: A new standard for Human-AI interaction'
+publishDate: "2026-02-02"
+updatedAt: "2026-06-28"
 description: "A governance-first interaction model that extends Norman's stages for AI-assisted work."
 category: 'Concepts'
 heroImage: '/covers/systems/i-7-cognitive-loop.svg'
@@ -10,7 +12,9 @@ tags:
   - ai
   - agents
   - interaction
-featured: false
+  - i-7
+  - governance
+featured: true
 contentType: 'deep-dive'
 readingTime: 10
 difficulty: 'intermediate'
@@ -150,19 +154,7 @@ I-7 runs as a repeatable control cycle:
 The value is not the labels alone. The value is that each label marks a decision point where responsibility is explicit.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 360" role="img" aria-labelledby="i7-loop-title i7-loop-desc">
-    <title id="i7-loop-title">The I-7 loop</title>
-    <desc id="i7-loop-desc">A circular loop with seven labeled stages.</desc>
-    <rect width="900" height="360" fill="#f8fafc" />
-    <circle cx="450" cy="180" r="120" fill="none" stroke="currentColor" stroke-width="2" />
-    <text x="450" y="70" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Intent</text>
-    <text x="560" y="100" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Inform</text>
-    <text x="610" y="180" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Interpret</text>
-    <text x="560" y="260" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Initiate</text>
-    <text x="450" y="290" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Inspect</text>
-    <text x="340" y="260" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Intervene</text>
-    <text x="290" y="180" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Iterate</text>
-  </svg>
+  <iframe src="/scenes/i7-loop-ring.html" title="The I-7 loop" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The I-7 stages map responsibility across planning, execution, and governance.</figcaption>
 </figure>
 
@@ -266,25 +258,7 @@ Use this five-minute loop in any agent workflow:
 5. Save one correction as a reusable artifact.
 
 <figure class="diagram">
-  <svg viewBox="0 0 900 240" role="img" aria-labelledby="i7-gates-title i7-gates-desc">
-    <title id="i7-gates-title">I-7 control gates</title>
-    <desc id="i7-gates-desc">Linear execution with checkpoints before and after action.</desc>
-    <rect width="900" height="240" fill="#f8fafc" />
-    <rect x="60" y="100" width="120" height="40" rx="10" fill="white" stroke="currentColor" stroke-width="2" />
-    <rect x="220" y="100" width="120" height="40" rx="10" fill="white" stroke="currentColor" stroke-width="2" />
-    <rect x="380" y="100" width="120" height="40" rx="10" fill="white" stroke="currentColor" stroke-width="2" />
-    <rect x="540" y="100" width="120" height="40" rx="10" fill="white" stroke="currentColor" stroke-width="2" />
-    <rect x="700" y="100" width="120" height="40" rx="10" fill="white" stroke="currentColor" stroke-width="2" />
-    <line x1="180" y1="120" x2="220" y2="120" stroke="currentColor" stroke-width="2" />
-    <line x1="340" y1="120" x2="380" y2="120" stroke="currentColor" stroke-width="2" />
-    <line x1="500" y1="120" x2="540" y2="120" stroke="currentColor" stroke-width="2" />
-    <line x1="660" y1="120" x2="700" y2="120" stroke="currentColor" stroke-width="2" />
-    <text x="120" y="125" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Intent</text>
-    <text x="280" y="125" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Inform</text>
-    <text x="440" y="125" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Interpret</text>
-    <text x="600" y="125" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Initiate</text>
-    <text x="760" y="125" font-size="12" text-anchor="middle" font-family="var(--font-mono)">Inspect</text>
-  </svg>
+  <iframe src="/scenes/i7-gates-sequence.html" title="I-7 control gates" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>Execution is fast when checkpoints are explicit.</figcaption>
 </figure>
 
@@ -296,6 +270,15 @@ For adjacent concepts:
 - [Retrieval-Augmented Generation in plain terms](/systems/retrieval-augmented-generation-in-plain-terms/)
 - [Training vs inference](/systems/training-vs-inference/)
 - [Context windows as working memory](/systems/context-windows-as-working-memory/)
+
+For governance implementations of specific stages:
+
+- [Human-in-the-Loop Is a System Design Choice](/systems/human-in-the-loop-is-a-system-design-choice/) — the Intervene stage in practice
+- [Decision-Making Under Uncertainty in AI Runtimes](/systems/decision-making-under-uncertainty-in-ai-runtimes/) — Interpret and Inspect as allow/ask/deny/defer
+- [Agent Instructions and Handoff as an Operating System](/systems/agent-instructions-and-handoff-as-an-operating-system/) — Inform as a durable contract, not a one-off prompt
+- [Engineering Agentic Systems for Reliability](/systems/engineering-agentic-systems-for-reliability/) — Initiate and Inspect as reliability boundaries
+- [From Agent Intent to Governed Execution](/systems/from-agent-intent-to-governed-execution/) — the seven control stages, one runtime-level reading of this same loop
+- [Evaluation as a Runtime Discipline](/systems/evaluation-as-a-runtime-discipline/) — Iterate as a recurring operating habit, not a retrospective
 
 ### Related resources
 

@@ -9,6 +9,7 @@ tags:
   - engineering
   - reliability
 coverUrl: "/covers/shelf/shared-bounded-autonomy.svg"
+coverAlt: "Cover illustration for Engineering Bounded Autonomy deck"
 pdfUrl: "/resources/presentations/Engineering_Bounded_Autonomy_(2).pdf"
 resourceHighlights:
   - Designing autonomous systems with safety constraints

@@ -9,6 +9,7 @@ tags:
   - memory
   - systems
 coverUrl: "/covers/shelf/shared-intelligence-assembly.svg"
+coverAlt: "Cover illustration for The Intelligence Assembly deck"
 pdfUrl: "/resources/presentations/The_Intelligence_Assembly.pdf"
 resourceHighlights:
   - Why intelligence emerges from assembly design, not model choice alone

@@ -7,6 +7,7 @@ tags:
   - aws
   - cloud
 coverUrl: "/covers/shelf/tool-aws.svg"
+coverAlt: "Cover illustration for Tools: AWS"
 ---
 
 ## Benefits

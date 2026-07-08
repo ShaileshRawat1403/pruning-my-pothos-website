@@ -8,6 +8,7 @@ tags:
   - prompting
   - safety
 coverUrl: "/covers/shelf/shared-eval.svg"
+coverAlt: "Cover illustration for Evaluation and prompting references"
 ---
 
 - [Language Model Evaluation Harness](https://github.com/EleutherAI/lm-evaluation-harness) — A practical baseline for comparing model behavior.

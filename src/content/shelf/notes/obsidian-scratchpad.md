@@ -7,6 +7,7 @@ tags:
   - obsidian
   - workflow
 coverUrl: "/covers/shelf/notes-obsidian.svg"
+coverAlt: "Cover illustration for Notes/Tools: a daily Obsidian scratchpad"
 ---
 
 Working notes. Subject to change.

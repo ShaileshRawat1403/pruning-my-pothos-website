@@ -1,5 +1,7 @@
 ---
 title: "AI Agents vs AI Workflows"
+publishDate: "2026-03-14"
+updatedAt: "2026-04-15"
 description: "A practical explanation of the difference between autonomous-seeming agents and controlled workflows, and why the distinction matters in production systems."
 category: "Explanations"
 heroImage: '/covers/systems/ai-agents-vs-ai-workflows.svg'
@@ -11,7 +13,6 @@ tags:
   - governance
   - automation
   - reliability
-updatedAt: "2026-03-14"
 proofPoints:
   - "This page connects existing governed execution, skills, and observability docs into one direct comparison topic."
   - "Soothsayer remains the local experiment example for controlled orchestration rather than unconstrained autonomy."
@@ -110,19 +111,7 @@ Workflows are good at repeatable tasks with known states:
 The advantage is control. Teams can test expected branches, attach explicit approvals, and keep changes diffable over time.
 
 <figure class="diagram">
-  <svg viewBox="0 0 980 250" role="img" aria-labelledby="workflow-agent-title workflow-agent-desc">
-    <title id="workflow-agent-title">Workflow path versus agent path</title>
-    <desc id="workflow-agent-desc">A comparison between a linear workflow with defined gates and an agent path with runtime branching and review loops.</desc>
-    <rect width="980" height="250" fill="var(--color-bg)" />
-    <rect x="64" y="70" width="364" height="120" rx="14" fill="none" stroke="currentColor" stroke-width="1.6" />
-    <rect x="552" y="70" width="364" height="120" rx="14" fill="none" stroke="var(--color-accent)" stroke-width="1.8" />
-    <text x="88" y="100" font-family="var(--font-mono)" font-size="12">Workflow</text>
-    <text x="576" y="100" font-family="var(--font-mono)" font-size="12" fill="var(--color-accent)">Agent-like runtime</text>
-    <text x="88" y="136" font-family="var(--font-mono)" font-size="11">Intake -> classify -> route -> verify</text>
-    <text x="576" y="136" font-family="var(--font-mono)" font-size="11">Goal -> propose -> choose -> act -> revise</text>
-    <text x="88" y="158" font-family="var(--font-mono)" font-size="10">predefined states, bounded branches</text>
-    <text x="576" y="158" font-family="var(--font-mono)" font-size="10">runtime branching, policy needed</text>
-  </svg>
+  <iframe src="/scenes/workflow-vs-agent.html" title="Workflow path versus agent path" loading="lazy" scrolling="no" style="pointer-events: none;"></iframe>
   <figcaption>The main difference is not tool use. It is runtime freedom.</figcaption>
 </figure>
 

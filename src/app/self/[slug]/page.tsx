@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return constructMetadata({
     title: selfItem.title,
     description: selfItem.description,
+    image: selfItem.heroImage,
     path: `/self/${slug}`,
     ogType: "article"
   });
@@ -40,7 +41,8 @@ export default async function SelfDetailPage({ params }: PageProps) {
   const webpageSchema = getWebPageSchema({
     title: `${selfItem.title} | Sans Serif Systems`,
     description: selfItem.description,
-    path: `/self/${slug}`
+    path: `/self/${slug}`,
+    image: selfItem.heroImage,
   });
 
   return (

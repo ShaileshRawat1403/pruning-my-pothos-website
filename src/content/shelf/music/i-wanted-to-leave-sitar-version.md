@@ -8,6 +8,7 @@ tags:
   - reflection
   - focus
 coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/b5/28/d6/b528d688-d17b-29b3-a9ca-5d274d41d6c3/067003423762.png/600x600bb.jpg"
+coverAlt: "Album cover art for I Wanted to Leave (Sitar Version) - Single by SYML & Rishab Rikhiram Sharma"
 year: 2022
 album: "I Wanted to Leave (Sitar Version) - Single"
 artist: "SYML & Rishab Rikhiram Sharma"

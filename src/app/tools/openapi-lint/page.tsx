@@ -4,7 +4,7 @@ import { constructMetadata } from "../../../lib/seo/metadata";
 
 export const metadata = constructMetadata({
   title: "OpenAPI Linter",
-  description: "Paste an OpenAPI or Swagger spec and get an endpoint catalog plus hygiene findings: missing operationIds, duplicate operationIds, undocumented operations, and missing success responses. Runs in your browser.",
+  description: "Paste an OpenAPI spec and get an endpoint catalog plus hygiene findings: missing operationIds, undocumented ops, missing responses. Runs in your browser.",
   path: "/tools/openapi-lint",
 });
 

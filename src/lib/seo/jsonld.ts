@@ -1,5 +1,35 @@
 import { SITE_CONFIG } from "./site";
 
+const PERSON_ID = `${SITE_CONFIG.url}/about/#person`;
+
+export function getPersonSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": PERSON_ID,
+    "name": SITE_CONFIG.author,
+    "url": `${SITE_CONFIG.url}/about/`,
+    "jobTitle": "AI Systems Consultant and Technical Communicator",
+    "worksFor": {
+      "@type": "Organization",
+      "name": SITE_CONFIG.name,
+      "url": SITE_CONFIG.url,
+    },
+    "sameAs": [
+      "https://www.linkedin.com/in/shailesh-rawat",
+      "https://github.com/ShaileshRawat1403",
+    ],
+    "knowsAbout": [
+      "AI orchestration",
+      "AI governance",
+      "LLM systems design",
+      "Natural language programming",
+      "Human-in-the-loop workflows",
+      "Technical communication",
+    ],
+  };
+}
+
 export function getWebsiteSchema() {
   return {
     "@context": "https://schema.org",
@@ -80,7 +110,9 @@ export function getArticleSchema({ title, description, path, datePublished, date
     ...(dateModified ? { "dateModified": dateModified } : {}),
     "author": {
       "@type": "Person",
+      "@id": PERSON_ID,
       "name": SITE_CONFIG.author,
+      "url": `${SITE_CONFIG.url}/about/`,
     },
     "publisher": {
       "@type": "Organization",
@@ -90,7 +122,14 @@ export function getArticleSchema({ title, description, path, datePublished, date
         "url": `${SITE_CONFIG.url}/favicon.png`,
       },
     },
-    ...(image ? { "image": image.startsWith("http") ? image : `${SITE_CONFIG.url}${image}` } : {}),
+    ...(image
+      ? {
+          "image": (() => {
+            const raster = image.endsWith(".svg") ? image.replace(/\.svg$/, ".png") : image;
+            return raster.startsWith("http") ? raster : `${SITE_CONFIG.url}${raster}`;
+          })(),
+        }
+      : {}),
   };
 }
 

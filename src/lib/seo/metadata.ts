@@ -20,8 +20,11 @@ export function constructMetadata({
 }: MetadataInput = {}): Metadata {
   const metaTitle = title ? `${title} | Sans Serif Systems` : SITE_CONFIG.defaultTitle;
   const metaDesc = description || SITE_CONFIG.defaultDescription;
-  const metaImage = image 
-    ? (image.startsWith("http") ? image : `${SITE_CONFIG.url}${image}`) 
+  // Social platforms (LinkedIn, X, Slack) do not render SVG og:images.
+  // PNG variants are generated alongside each SVG cover.
+  const rasterImage = image?.endsWith(".svg") ? image.replace(/\.svg$/, ".png") : image;
+  const metaImage = rasterImage
+    ? (rasterImage.startsWith("http") ? rasterImage : `${SITE_CONFIG.url}${rasterImage}`)
     : `${SITE_CONFIG.url}${SITE_CONFIG.defaultImage}`;
   
   // Ensure paths start and end cleanly with trailing slashes to preserve Astro format
@@ -39,6 +42,9 @@ export function constructMetadata({
     description: metaDesc,
     alternates: {
       canonical: canonicalUrl,
+      types: {
+        "application/rss+xml": `${SITE_CONFIG.url}/rss.xml`,
+      },
     },
     robots: {
       index: !noindex,

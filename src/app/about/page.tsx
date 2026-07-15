@@ -2,7 +2,7 @@ import Link from "next/link";
 import GlowCard from "../../components/GlowCard";
 import SceneFigure from "../../components/SceneFigure";
 import { constructMetadata } from "../../lib/seo/metadata";
-import { getWebPageSchema } from "../../lib/seo/jsonld";
+import { getWebPageSchema, getPersonSchema } from "../../lib/seo/jsonld";
 
 export const metadata = constructMetadata({
   title: "About Systems",
@@ -24,6 +24,10 @@ export default function AboutPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getPersonSchema()) }}
       />
 
       {/* ── Page Header ── */}

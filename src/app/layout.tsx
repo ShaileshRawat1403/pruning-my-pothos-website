@@ -16,6 +16,11 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
     apple: "/favicon.png",
   },
+  alternates: {
+    types: {
+      "application/rss+xml": "https://pruningmypothos.com/rss.xml",
+    },
+  },
 };
 
 export default function RootLayout({

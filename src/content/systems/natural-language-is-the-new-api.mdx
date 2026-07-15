@@ -13,7 +13,6 @@ tags:
   - ai
   - llm
 proofPoints:
-  - Includes 3 architectural diagrams showing interface evolution
   - Core conceptual reference for natural language interfaces
 faq:
   - question: Why is natural language now considered an API?
@@ -24,10 +23,6 @@ faq:
     answer: "Traditional APIs accept structured, typed inputs and return structured outputs. NL interfaces accept free-form language and return free-form language. The flexibility of NL input makes contracts harder to enforce and requires explicit specification of intent."
 ---
 
-import InterfaceEvolution from '@/components/diagrams/InterfaceEvolution.astro';
-import EmbeddingFlow from '@/components/diagrams/EmbeddingFlow.astro';
-import SocioTechnicalLayers from '@/components/diagrams/SocioTechnicalLayers.astro';
-
 > **Key takeaways**
 >
 > - Natural language is now an <span class="highlight">interface</span> for system behavior.
@@ -36,7 +31,6 @@ import SocioTechnicalLayers from '@/components/diagrams/SocioTechnicalLayers.ast
 > - We are moving from "command-based" interfaces to "intent-based" interfaces, where the machine determines the implementation details.
 > - Documentation must treat prompts as code, capturing version history, expected outputs, and failure modes.
 
-<InterfaceEvolution />
 
 For decades, the Application Programming Interface (API) served as a stable, predictable contract for machine-to-machine communication. It demanded structure, precision, and technical knowledge. That era is giving way to a new abstraction layer: <span class="highlight">natural language</span>. Powered by Large Language Models (LLMs), the primary interface to complex systems is no longer a set of rigid commands but a human request.
 
@@ -126,7 +120,6 @@ The old model of APIs was built on discrete, well-defined endpoints. To create a
   </dd>
 </dl>
 
-<EmbeddingFlow />
 
 ## Act II: The modern paradigm
 
@@ -138,7 +131,6 @@ Let's revisit the marketing plan example through the lens of a socio-technical s
 
 This request initiates a flow across three layers:
 
-<SocioTechnicalLayers />
 
 1.  **Human Layer:** The manager supplies the strategic and ethical context. They know the product, the target audience, and the overall business goal.
 2.  **Machine Layer:** The LLM receives the intent. It doesn't look for a single endpoint called `generate_marketing_plan`. Instead, it uses its training to break the request down into a sequence of probable actions:

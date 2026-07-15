@@ -124,6 +124,12 @@ In production, this loop should be instrumented with explicit failure classes:
 
 Classified failures make incident review actionable and let teams improve policy, prompts, and tools independently.
 
+### Why the loop outlives the model
+
+Models get swapped. A better one ships, a cheaper one appears, a provider changes its terms, and the sensible move is to change the model without rewriting the system around it. That is only possible when the runtime, not the model, holds the contracts: what a step is allowed to do, what counts as done, and what evidence a decision leaves behind. When those live in the loop, the model becomes an interchangeable part that supplies suggestions, and the system keeps its shape across upgrades.
+
+The same property is what makes the system debuggable. A model you cannot inspect fails as a mood. A loop you can inspect fails as a specific step with a specific reason. When something goes wrong in production, you want to open a trace and see which stage denied, errored, or timed out, not re-run a prompt and hope the behaviour repeats. Orchestration is what turns a probabilistic tool into a system you can operate on a bad day.
+
 ### What this changes in practice
 
 When designing AI systems, treat the runtime loop as the primary product surface. Model quality matters, but orchestration discipline determines whether the system is safe, reproducible, and operationally useful.

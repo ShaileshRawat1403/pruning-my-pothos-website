@@ -16,6 +16,11 @@
 # next.js
 /.next/
 /out/
+# stray/backup build caches (created by tooling; never commit or watch these)
+.next-*
+/.turbo/
+# websiteops conform bridge — local staging area for draft packets
+/.websiteops/
 
 # production
 /build

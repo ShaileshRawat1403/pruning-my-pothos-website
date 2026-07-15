@@ -4,8 +4,8 @@ publishDate: "2026-07-02"
 updatedAt: "2026-07-02"
 description: "A case study in using Flowright WebsiteOps to prepare, verify, review, and hand off website content without autonomous publishing."
 category: "How-things-fit-together"
-heroImage: "/covers/systems/human-in-the-loop-is-a-system-design-choice.svg"
-heroImageAlt: "Human review gate between prepared website changes and publishing"
+heroImage: "/covers/systems/ai-website-publishing-with-human-in-the-loop-control.svg"
+heroImageAlt: "Prepare, review, and act loop with a human review gate before publishing"
 tags:
   - agents
   - governance
@@ -29,6 +29,13 @@ faq:
     answer: "The useful proof is that the workflow stopped at human review and did not treat validation as authority to publish."
 ---
 
+> **Key takeaways**
+>
+> - Flowright prepares and governs; humans approve and publish — the workflow paused at a declared human review gate and never crossed it.
+> - The proof isn't the draft. It's where the system stopped: intake, draft, verify, then <span class="highlight">human review before anything is exported</span>.
+> - Even after approval, Flowright does not publish to pruningmypothos.com — export is a handoff, not publication.
+> - Promotion denial is not a defect. It's the difference between "prepare this for me" and "ship this for me."
+
 This article is for builders and operators who want AI-assisted website maintenance without giving an agent the authority to publish directly. It is a small case study in using an agentic workflow to prepare a website post without letting the workflow publish on its own.
 
 The site goal was simple: draft a public article for pruningmypothos.com titled "AI website publishing with human-in-the-loop control." The larger goal was more important: show that an agent can help maintain a live website while staying inside an explicit governance boundary.
@@ -39,7 +46,34 @@ The distinction is simple:
 
 The agentic system can prepare the work, record evidence, and make the review packet easier to inspect. It does not own the final authority.
 
-## Why agentic publishing needs a boundary
+<div id="toc-anchor"></div>
+<nav class="toc" aria-label="On-page">
+  <h2 class="toc-title">Contents</h2>
+  <div class="toc-groups">
+    <details open>
+      <summary>Act I: The baseline problem</summary>
+      <ol>
+        <li><a href="#act-i-the-baseline-problem">The Baseline Problem</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act II: The WebsiteOps loop</summary>
+      <ol>
+        <li><a href="#act-ii-the-websiteops-loop">The WebsiteOps Loop</a></li>
+      </ol>
+    </details>
+    <details>
+      <summary>Act III: Validation and what changed</summary>
+      <ol>
+        <li><a href="#act-iii-validation-and-what-changed">Validation and What Changed</a></li>
+      </ol>
+    </details>
+  </div>
+</nav>
+
+## Act I: The baseline problem
+
+### Why agentic publishing needs a boundary
 
 A website is not only a place where words appear. It is a public interface for judgment, positioning, search visibility, reputation, and trust. That makes "let the agent publish it" a poor default.
 
@@ -49,7 +83,11 @@ A useful assistant can summarize site intent, turn source material into a draft,
 
 This matters more when the website is part of a broader operating system. A post about governed AI work should not be produced by an ungoverned publishing path. The method needs to match the message.
 
-## The baseline problem
+<aside class="callout">
+  <p><strong>Design note.</strong> The workflow's value isn't in what it can produce. It's in the fact that it stops. A workflow that can draft, verify, and package but cannot publish is more useful for real operations than one that publishes fast and asks forgiveness later.</p>
+</aside>
+
+### The baseline problem
 
 The baseline state was ordinary website maintenance: a human could ask an AI tool for a draft, copy material into the site, run a build, and publish.
 
@@ -64,7 +102,9 @@ That can work for a single post, but it leaves weak evidence. The missing record
 
 For this proof, those questions became the work. The goal was not only to write an article. The goal was to test whether the article could move through a governed loop.
 
-## The WebsiteOps loop
+## Act II: The WebsiteOps loop
+
+### The WebsiteOps loop
 
 The WebsiteOps workflow followed this shape:
 
@@ -85,7 +125,7 @@ It creates a repeatable path for a specific kind of work: prepare a public websi
 
 That is enough to change the operating model. Instead of treating website updates as loose prompting, the update becomes a governed run with declared inputs and a visible stop condition.
 
-## What was governed
+### What was governed
 
 The workflow can produce artifacts, but it cannot decide that those artifacts should go live. It can record evidence, but it cannot use that evidence as a substitute for human approval. It can export a packet, but the export is still a handoff, not publication.
 
@@ -99,7 +139,9 @@ The workflow can produce artifacts, but it cannot decide that those artifacts sh
 
 This is the useful part of the proof. The system does not become safer by saying "human-in-the-loop" in the abstract. It becomes safer when the workflow has a specific place where it must stop.
 
-## Validation
+## Act III: Validation and what changed
+
+### Validation
 
 The WebsiteOps run was created from a declared site goal and explicit publishing constraints. It produced a draft artifact, passed the workflow's validation step, and stopped at `human_review`.
 
@@ -109,7 +151,7 @@ Because the test environment could not reach the model gateway, the run used Flo
 
 The human review then becomes a real editorial checkpoint, not a decorative approval button. The reviewer can reject the packet, request revision, or approve it for export. Even after approval, Flowright does not publish the article to pruningmypothos.com. It only prepares the handoff.
 
-## Before and after
+### Before and after
 
 Before the loop, the website update could have been a normal AI-assisted writing task.
 
@@ -124,7 +166,7 @@ After the loop, the update has a clearer operating shape:
 
 That last point matters. Promotion denial is not a defect in this workflow. It is the proof that WebsiteOps is not an autonomous publishing tool. The denial preserves the difference between "prepare this for me" and "ship this for me."
 
-## What this changes in practice
+### What this changes in practice
 
 For a personal site, this is enough to create a repeatable WebsiteOps loop:
 

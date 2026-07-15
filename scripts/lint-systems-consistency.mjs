@@ -1,60 +1,16 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
+import { COLLECTIONS } from './content-contract.mjs';
 
-const SYSTEMS_DIR = path.resolve('src/content/systems');
-const MIN_WORDS = 800;
-
-const WORD_RE = /[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g;
+// Single source of truth: the systems body contract lives in
+// scripts/content-contract.mjs and is shared with the websiteops conform
+// bridge and the flowright drafting step. This gate just runs it over every
+// published systems doc.
+const SYSTEMS_DIR = path.resolve(COLLECTIONS.systems.dir);
 const FRONTMATTER_RE = /^---\r?\n[\s\S]*?\r?\n---\r?\n?/;
-
-function countWords(content) {
-  return (content.match(WORD_RE) || []).length;
-}
 
 function stripFrontmatter(content) {
   return content.replace(FRONTMATTER_RE, '');
-}
-
-function runChecks(content, wordCount) {
-  return [
-    {
-      label: `minimum word count (${MIN_WORDS})`,
-      ok: wordCount >= MIN_WORDS,
-      detail: `found ${wordCount}`,
-    },
-    {
-      label: 'key takeaways blockquote',
-      ok: /\*\*Key takeaways\*\*/i.test(content),
-    },
-    {
-      label: 'TOC anchor (#toc-anchor)',
-      ok: /id=["']toc-anchor["']/i.test(content),
-    },
-    {
-      label: 'TOC nav block (.toc)',
-      ok: /<nav\s+class=["']toc["']/i.test(content),
-    },
-    {
-      label: 'Act I section heading',
-      ok: /^##\s+Act I\b/mi.test(content),
-    },
-    {
-      label: 'Act II section heading',
-      ok: /^##\s+Act II\b/mi.test(content),
-    },
-    {
-      label: 'Act III section heading',
-      ok: /^##\s+Act III\b/mi.test(content),
-    },
-    {
-      label: 'at least one callout block',
-      ok: /<aside\s+class=["'][^"']*callout/i.test(content),
-    },
-    {
-      label: 'at least one highlight span',
-      ok: /<span\s+class=["']highlight["']>/i.test(content),
-    },
-  ];
 }
 
 async function getSystemsFiles() {
@@ -73,12 +29,9 @@ async function main() {
     const fileName = path.basename(filePath);
     const raw = await fs.readFile(filePath, 'utf8');
     const body = stripFrontmatter(raw);
-    const wordCount = countWords(body);
-    const checks = runChecks(raw, wordCount);
-    const fileFailures = checks.filter((check) => !check.ok);
-
-    if (fileFailures.length > 0) {
-      failures.push({ fileName, fileFailures });
+    const issues = COLLECTIONS.systems.body(raw, body);
+    if (issues.length > 0) {
+      failures.push({ fileName, issues });
     }
   }
 
@@ -90,9 +43,8 @@ async function main() {
   console.error('Systems consistency check failed.\n');
   for (const failure of failures) {
     console.error(`- ${failure.fileName}`);
-    for (const check of failure.fileFailures) {
-      const detail = check.detail ? ` (${check.detail})` : '';
-      console.error(`  - ${check.label}${detail}`);
+    for (const issue of failure.issues) {
+      console.error(`  - ${issue}`);
     }
   }
 

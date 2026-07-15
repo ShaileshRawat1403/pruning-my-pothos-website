@@ -1,9 +1,9 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
+import { COLLECTIONS, countWords } from './content-contract.mjs';
 
 const CONTENT_ROOT = path.resolve('src/content');
 const FRONTMATTER_RE = /^---\r?\n[\s\S]*?\r?\n---\r?\n?/;
-const WORD_RE = /[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g;
 const PLACEHOLDER_RE = /\bplaceholder\b|This is (?:another |a third )?placeholder|^Book Recommendation\b|^Movie Recommendation\b|^Culture Post\b/i;
 
 const sectionConfigs = [
@@ -11,13 +11,8 @@ const sectionConfigs = [
     name: 'self',
     dir: path.join(CONTENT_ROOT, 'self'),
     ext: '.md',
-    required: (raw, body, file) => {
-      const failures = [];
-      if (!/<p class="lead">/i.test(raw)) failures.push('missing lead paragraph');
-      if (!(/class="highlight"/i.test(raw) || /<figure\b/i.test(raw))) failures.push('missing highlight or figure');
-      if (countWords(body) < 140) failures.push(`body too short (${countWords(body)} words)`);
-      return failures;
-    },
+    // Body rules sourced from the shared contract (scripts/content-contract.mjs).
+    required: (raw, body) => COLLECTIONS.self.body(raw, body),
   },
   {
     name: 'sentences',
@@ -26,7 +21,8 @@ const sectionConfigs = [
     required: (raw, body) => {
       const failures = [];
       if (!/^summary:\s*["'][^"']+["']/m.test(raw)) failures.push('missing summary frontmatter');
-      if (countWords(body) < 28) failures.push(`body too short (${countWords(body)} words)`);
+      // Body length rule sourced from the shared contract.
+      failures.push(...COLLECTIONS.sentences.body(raw, body));
       return failures;
     },
   },
@@ -68,10 +64,6 @@ const sectionConfigs = [
 
 function stripFrontmatter(content) {
   return content.replace(FRONTMATTER_RE, '');
-}
-
-function countWords(content) {
-  return (content.match(WORD_RE) || []).length;
 }
 
 function countResourceHighlights(raw) {

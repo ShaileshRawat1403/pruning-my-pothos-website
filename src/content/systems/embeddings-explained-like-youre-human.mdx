@@ -109,6 +109,8 @@ For production use, monitor drift directly: sample recurring queries, track near
 
 For related systems context, see [Systems 001: Foundations](/systems/systems-001-foundations/) and [From Prompt to Production](/systems/from-prompt-to-production/). To see how embeddings and semantic retrieval are validated in practice, explore our [retrieval and grounding evaluation kit](/shelf/shared-resources/retrieval-and-grounding-evaluation-kit/).
 
+A useful discipline is to treat the embedding model as one replaceable component rather than a fixed source of truth. Different models draw the map differently, so the right one is the one whose neighbours match your domain, measured on your own queries, not the one with the best public benchmark. Swap it, re-index, and compare retrieval quality directly, because the map is only as good as the territory it was trained on.
+
 ### What this changes in practice
 
 Use embeddings for finding things that are "like" each other, but do not mistake that similarity for a guarantee of factual correctness or conceptual understanding.

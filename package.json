@@ -13,6 +13,7 @@
     "report:systems": "node scripts/report-topic-coverage.mjs",
     "verify:covers": "node scripts/verify-covers.mjs",
     "verify:deploy": "node scripts/verify-deploy.mjs",
+    "deploy:ftp": "bash scripts/deploy-ftp.sh",
     "blog:conform": "node scripts/websiteops-conform.mjs",
     "blog:publish": "node scripts/websiteops-publish.mjs"
   },

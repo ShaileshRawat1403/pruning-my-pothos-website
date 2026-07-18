@@ -1,11 +1,34 @@
 name: Deploy to Hostinger
 
+# Architecture: CI builds the static export and publishes it to the `deploy`
+# branch. Hostinger's Git integration watches `deploy` and auto-pulls on push
+# (via the Hostinger GitHub OAuth app). No FTP/SSH credentials live in GitHub —
+# the only auth is GitHub's built-in GITHUB_TOKEN, scoped to this repo.
+#
+# Never point Hostinger at `main`: main is source, `deploy` is the rendered
+# site. Hostinger does not build; it only copies what it pulls.
+
 on:
+  # Manual escape hatch — always available.
   workflow_dispatch:
+  # Autonomous path: fires when CI completes successfully on main.
+  # A red CI can never publish.
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: write
 
 jobs:
-  verify-manual-release:
+  publish:
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     steps:
       - uses: actions/checkout@v4
 
@@ -15,8 +38,17 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run lint:content
-      - run: npm run lint:systems
+      # CI already ran the full lint/verify gate before this fires; this build
+      # produces the artifact to ship.
       - run: npm run build
-      - name: Manual upload reminder
-        run: echo "FTP deploy disabled. Upload dist/ manually."
+
+      - name: Publish out/ to deploy branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          publish_branch: deploy
+          # Full replacement each time, so deleted files never linger on the
+          # server after Hostinger pulls a clean checkout.
+          force_orphan: true
+          commit_message: "deploy: ${{ github.sha }}"

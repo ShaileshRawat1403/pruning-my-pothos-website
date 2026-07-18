@@ -30,11 +30,12 @@ import { COLLECTIONS, SUPPORTED, slugify } from "./content-contract.mjs";
 const ROOT = process.cwd();
 
 function parseArgs(argv) {
-  const a = { enrich: false, "dry-run": false, base: "main" };
+  const a = { enrich: false, "dry-run": false, base: "main", "auto-merge": false };
   for (let i = 0; i < argv.length; i++) {
     const k = argv[i];
     if (k === "--enrich") a.enrich = true;
     else if (k === "--dry-run") a["dry-run"] = true;
+    else if (k === "--auto-merge") a["auto-merge"] = true;
     else if (k.startsWith("--")) a[k.slice(2)] = argv[++i];
   }
   return a;
@@ -103,9 +104,20 @@ const prBody = [
 
 if (hasGh) {
   run("gh", ["pr", "create", "--base", args.base, "--head", branch, "--title", `content(${collection}): ${data.title}`, "--body", prBody]);
+  if (args["auto-merge"]) {
+    // Squash-merge automatically once CI passes. The human decision already
+    // happened at the review gate that approved this packet; CI remains the
+    // technical gate. Deploy fires from CI success on main (workflow_run).
+    run("gh", ["pr", "merge", branch, "--squash", "--auto", "--delete-branch"]);
+    console.log("\n  ✓ Auto-merge armed: merges when CI passes, then Deploy to Hostinger fires automatically.");
+  }
 } else {
   console.log("\n  gh CLI not found. Push is done; open the PR manually:");
   console.log(`    base: ${args.base}  head: ${branch}`);
 }
 
-console.log(`\n  ✓ PR proposed for ${branch}. Review the rendered diff and MERGE to publish. Nothing deployed.\n`);
+if (args["auto-merge"]) {
+  console.log(`\n  ✓ PR proposed for ${branch} with auto-merge. Approval already given at the review gate; CI green = live.\n`);
+} else {
+  console.log(`\n  ✓ PR proposed for ${branch}. Review the rendered diff and MERGE to publish. Nothing deployed.\n`);
+}

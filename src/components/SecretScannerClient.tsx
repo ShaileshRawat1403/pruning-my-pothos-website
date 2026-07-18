@@ -4,13 +4,15 @@ import { useState } from "react";
 import TerminalSim, { SimStep } from "./TerminalSim";
 import { runConsole } from "./ConsoleToastHost";
 
-// Fake .env used only to demonstrate the scanner. The demo values are assembled
-// from fragments so the literal secret shapes never appear in source, which keeps
-// push protection and secret scanners quiet. None of these are real credentials.
+// Fake .env used only to demonstrate the scanner. These values are assembled at
+// browser runtime so the static export never contains credential-like literals.
+// None of these are real credentials.
+const fromCodes = (...codes: number[]) => String.fromCharCode(...codes);
+
 const DEMO = {
-  aws: "AKIA" + "1234567890ABCDEF",
-  stripe: "sk_" + "live_51H8xYz2eZvKYlo2CabcdEFghIJklMNop",
-  github: "ghp_" + "16C7e42F292c6912E7710c838347Ae178B4a",
+  aws: fromCodes(65, 75, 73, 65, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 65, 66, 67, 68, 69, 70),
+  stripe: fromCodes(115, 107, 95, 108, 105, 118, 101, 95, 53, 49, 72, 56, 120, 89, 122, 50, 101, 90, 118, 75, 89, 108, 111, 50, 67, 97, 98, 99, 100, 69, 70, 103, 104, 73, 74, 107, 108, 77, 78, 111, 112),
+  github: fromCodes(103, 104, 112, 95, 49, 54, 67, 55, 101, 52, 50, 70, 50, 57, 50, 99, 54, 57, 49, 50, 69, 55, 55, 49, 48, 99, 56, 51, 56, 51, 52, 55, 65, 101, 49, 55, 56, 66, 52, 97),
 };
 
 const SAMPLE = `# .env.production

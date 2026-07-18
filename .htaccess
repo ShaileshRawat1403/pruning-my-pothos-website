@@ -1,0 +1,41 @@
+Options -Indexes
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Renamed shelf paths.
+RewriteRule ^shelf/notes-tools/?$ /shelf/notes/ [R=301,L]
+RewriteRule ^shelf/notes-tools/obsidian-scratchpad/?$ /shelf/notes/obsidian-scratchpad/ [R=301,L]
+RewriteRule ^shelf/notes-tools/plaintext-logbook/?$ /shelf/notes/plaintext-logbook/ [R=301,L]
+
+# Retired category pages now consolidate to their section indexes.
+RewriteRule ^sentences/(attention|meaning|judgment)/?$ /sentences/ [R=301,L]
+RewriteRule ^systems/(concepts|explanations|how-things-fit-together)/?$ /systems/ [R=301,L]
+
+# Retired sticky-note paths now consolidate to the Sentiments index.
+RewriteRule ^notes/?$ /sentiments/ [R=301,L]
+RewriteRule ^notes/.+/?$ /sentiments/ [R=301,L]
+RewriteRule ^sticky-notes/?$ /sentiments/ [R=301,L]
+RewriteRule ^sticky-notes/.+/?$ /sentiments/ [R=301,L]
+
+# Retired paths with no direct replacement.
+RewriteRule ^shelf/movies(/.*)?$ - [G,L]
+RewriteRule ^sentences/sentence-[0-9]+/?$ - [G,L]
+RewriteRule ^systems/simple-tokenizer/?$ - [G,L]
+RewriteRule ^shelf/music/music-recommendation/?$ - [G,L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+RedirectMatch 301 ^/shelf/notes-tools/?$ /shelf/notes/
+RedirectMatch 301 ^/shelf/notes-tools/obsidian-scratchpad/?$ /shelf/notes/obsidian-scratchpad/
+RedirectMatch 301 ^/shelf/notes-tools/plaintext-logbook/?$ /shelf/notes/plaintext-logbook/
+RedirectMatch 301 ^/sentences/(attention|meaning|judgment)/?$ /sentences/
+RedirectMatch 301 ^/systems/(concepts|explanations|how-things-fit-together)/?$ /systems/
+RedirectMatch 301 ^/notes(/.*)?$ /sentiments/
+RedirectMatch 301 ^/sticky-notes(/.*)?$ /sentiments/
+RedirectMatch 410 ^/shelf/movies/
+RedirectMatch 410 ^/sentences/sentence-[0-9]+/?$
+RedirectMatch 410 ^/systems/simple-tokenizer/?$
+RedirectMatch 410 ^/shelf/music/music-recommendation/?$
+</IfModule>
